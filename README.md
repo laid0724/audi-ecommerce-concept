@@ -17,7 +17,7 @@ Database is being hosted on a dockerized pg sql instance. If you do not have doc
 3. `cd` to `API`, run `dotnet restore`, and set your aspnetcore environment to `Development`
 4. run `dotnet watch run` to setup db, seed data, and spin up APIs
 5. `cd` to `client` and run `npm i`
-6. run `ng serve --project=<projectName>` to spin up angular project
+6. run `npm run start:public` or `npm run start:sys` to spin up angular project accordingly
 7. have fun!
 
 ---
@@ -62,9 +62,13 @@ To quickly convert the models to typescript interfaces, use the JSON to TS exten
 
 `npm i`
 
-Run Project:
+Run ecommerce site project:
 
-`ng serve --project=<projectName>`
+`npm run start:public`
+
+Run backend CMS project:
+
+`npm run start:sys`
 
 ---
 
@@ -79,7 +83,7 @@ It is recommended that you generate your keys/password via https://passwordsgene
 3. Login to heroku via its CLI and add heroku to your remote: `heroku git:remote -a {appName}`
 4. Set dotnetcore buildpack for the app: `heroku buildpacks:set https://github.com/jincod/dotnetcore-buildpack`
 5. Set your heroku environment to production: `heroku config:set ASPNETCORE_ENVIRONMENT=Production`
-6. Build production output of angular project: `cd client` and `npm run build:prod` and commit them the output to the codebase (do not gitignore these, heroku needs the file!)
+6. Build production output of angular project: `cd client` and `npm run build` and commit them the output to the codebase (do not gitignore these, heroku needs the file!)
 7. Deploy dotnet project: `git push heroku master`
 
 Once you've setup your heroku app, you can just repeat steps 6 & 7 for continuous deployment, unless you need to add further environment variables.
