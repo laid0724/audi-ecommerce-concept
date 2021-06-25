@@ -43,12 +43,10 @@ namespace Audi.Services
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
-                    // convert image to size of 500x500, crop it to a square ratio around the face:
                     Transformation = new Transformation()
-                        .Height(500)
-                        .Width(500)
+                        .AspectRatio(16, 9)
                         .Crop("fill")
-                        .Gravity("face")
+                        .Gravity("center")
                 };
                 uploadResult = await _cloudinary.UploadAsync(uploadParams);
             }

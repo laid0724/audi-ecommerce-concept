@@ -1,11 +1,13 @@
 using System;
 using Audi.Entities;
+using Audi.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Newtonsoft.Json;
 
 namespace Audi.Data
 {
@@ -16,6 +18,10 @@ namespace Audi.Data
         public DataContext(DbContextOptions options) : base(options)
         {
         }
+
+        public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductPhoto> ProductPhotos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -32,6 +38,39 @@ namespace Audi.Data
                 .WithOne(u => u.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
+
+            builder.Entity<ProductCategory>()
+                .HasMany(e => e.Children)
+                .WithOne(e => e.Parent)
+                .HasForeignKey(e => e.ParentId)
+                .IsRequired(false);
+                
+            builder.Entity<ProductCategory>()
+                .HasMany(e => e.Products)
+                .WithOne(e => e.ProductCategory)
+                .HasForeignKey(e => e.ProductCategoryId);
+
+            builder.Entity<Product>()
+                .HasMany(e => e.Photos)
+                .WithOne(e => e.Product)
+                .HasForeignKey(e => e.ProductId)
+                .IsRequired();
+
+            builder.Entity<Product>()
+                .Property<WysiwygGrid>(e => e.WysiwygZh)
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v),
+                    v => JsonConvert.DeserializeObject<WysiwygGrid>(v))
+                .HasDefaultValueSql("'{}'");
+
+            builder.Entity<Product>()
+                .Property<WysiwygGrid>(e => e.WysiwygEn)
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    v => JsonConvert.SerializeObject(v),
+                    v => JsonConvert.DeserializeObject<WysiwygGrid>(v))
+                .HasDefaultValueSql("'{}'");
 
             builder.ApplyUtcDateTimeConverter();
         }

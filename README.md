@@ -24,7 +24,7 @@ Database is being hosted on a dockerized pg sql instance. If you do not have doc
 
 ### Dotnet API
 
-`cd` to `server`
+`cd` to `server/Audi`
 
 Generate Initial Migrations:
 
