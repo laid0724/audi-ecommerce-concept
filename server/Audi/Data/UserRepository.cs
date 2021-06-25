@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -27,7 +26,6 @@ namespace Audi.Data
             var user = await _context.Users
                 .Include(u => u.UserRoles)
                     .ThenInclude(r => r.Role)
-                .AsNoTracking()
                 .Where(u => u.UserRoles.Any(r => r.Role.Name == "Member"))
                 .Where(e => e.UserName.ToLower().Trim() == username.ToLower().Trim())
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
@@ -41,14 +39,11 @@ namespace Audi.Data
             var query = _context.Users
                 .Include(u => u.UserRoles)
                     .ThenInclude(r => r.Role)
-                .AsNoTracking()
                 .Where(u => u.UserRoles.Any(r => r.Role.Name == "Member"))
                 .AsQueryable();
 
             return await PagedList<MemberDto>.CreateAsync(
-                query
-                    .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-                    .AsNoTracking(), // read-only mode, wont trigger database changes
+                query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider),
                 paginationParams.PageNumber,
                 paginationParams.PageSize
             );
