@@ -1,0 +1,10 @@
+# server
+server/appsettings.Development.json
+server/bin/*
+server/obj/*
+server/*.db*
+
+# system files
+**/.DS_STORE
+**/Thumbs.db
+.vscode
