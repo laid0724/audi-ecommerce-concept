@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace server.Data.Migrations
+namespace Audi.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
     [Migration("20210625064749_InitialCreate")]

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace server.Data.Migrations
+namespace Audi.Data.Migrations
 {
     public partial class InitialCreate : Migration
     {
