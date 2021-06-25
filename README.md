@@ -91,4 +91,78 @@ Once you've setup your heroku app, you can just repeat steps 6 & 7 for continuou
 ---
 ##### Features to be implemented / Bugs to be fixed, in no particular order:
 
-- 
+#### API
+
+- Statistics table and repo / controller
+- Order table and repo / controller
+** these need language property zh/en **
+- ProductCategory table (recursive) and repo / controller
+- Product table and repo / controller
+- Photo table and repo / controller
+- Wysiwyg table and repo / controller
+- Article table and repo / controller
+- Carousel table and repo / controller
+**
+- SignalR for live chat
+- users management
+  - change pw, confirm email, disable acct, lockout, reset password, forget username etc.
+- email functionality
+
+#### Sys
+- setup clarity
+- homepage banner module
+- product category and product management module
+- news / event / announcement module
+- wysiwyg component
+- ngx charts for statistics
+- user management module
+- ng select control value accessor
+- live chat module with signalr
+- q & a management module
+- user complaints / forms module, bind this to email
+- not found
+- server error
+- user like product 1-to-M
+
+
+#### Public
+
+- RWD
+- Angular universal
+- Tailwind css
+- fullpage angular
+- Install audi ui / fonts / icons
+- Swiper - 3 styles
+  1. homepage banner
+  2. product recommendation
+  3. product photos
+- en/zh switch using transloco
+- not found
+- server error
+- live chat
+- product list
+- articles, e.g., news, events, promotions
+- single product page using fullpage - first page has product info and carousel, second page custom wysiwyg content and product recommendations in same category
+- cart
+- like product
+- checkout / order
+- login / register / update user info
+- cancel / track order
+- member's area
+- nav
+- footer
+- carve out audi ui as angular components
+- form control validation states
+- cards
+- breadcrumbs
+- notifications / badge
+- modal
+
+#### Data
+
+- JWT interceptor
+- Error interceptor
+- Loading Interceptor
+- Language interceptor (EN/ZH)
+- guards based on roles
+- busy service

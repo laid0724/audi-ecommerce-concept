@@ -4,9 +4,13 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "data": [
-        "dist/data/data",
-        "dist/data"
+      "@audi/data": [
+        // NOTE: below for development
+        "projects/data/src/public-api",
+        "projects/data/src/*"
+        // NOTE: below for production
+        // "dist/data/data",
+        // "dist/data"
       ]
     },
     "outDir": "./dist/out-tsc",
@@ -22,10 +26,7 @@
     "importHelpers": true,
     "target": "es2017",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "lib": ["es2018", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

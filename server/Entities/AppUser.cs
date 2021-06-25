@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Audi.Entities
 {
-    // TODO: add additional properties such as address, city, orders, liked products, email preferences, etc.
+    // TODO: add additional properties such as shipping & billing address, orders, liked products, email preferences, etc.
     public class AppUser : IdentityUser<int>
     {
         public string FirstName { get; set; }
