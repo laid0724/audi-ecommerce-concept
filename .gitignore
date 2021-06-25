@@ -41,10 +41,10 @@ client/testem.log
 client/typings
 
 # .NET Files
-server/appsettings.Development.json
-server/bin/*
-server/obj/*
-server/*.db*
+server/Audi/appsettings.Development.json
+server/Audi/bin/*
+server/Audi/obj/*
+server/Audi/*.db*
 
 # System FIles
 **/.DS_STORE
