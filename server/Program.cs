@@ -48,7 +48,7 @@ namespace Audi
                 // this will automatically run dotnet ef database update
                 await context.Database.MigrateAsync();
 
-                // TODO: seeder
+                await Seed.SeedUsers(userManager, roleManager, configuration);
             }
             catch (Exception ex)
             {

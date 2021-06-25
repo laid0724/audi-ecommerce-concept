@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Audi.DTOs;
 using Audi.Entities;
 using Audi.Extensions;
@@ -13,7 +12,12 @@ namespace Audi.Helpers
         public AutoMapperProfiles()
         {
             // Add all mappings here!
-            CreateMap<AppUser, MemberDto>();
+            CreateMap<AppUser, MemberDto>()
+                .ForMember(
+                    dest => dest.FullName,
+                    opt => opt.MapFrom(src => src.GetFullName())
+                );
+
             // reverse map from dto to entity model:
             CreateMap<RegisterDto, AppUser>();
 

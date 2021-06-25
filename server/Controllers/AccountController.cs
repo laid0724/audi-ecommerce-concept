@@ -36,10 +36,16 @@ namespace Audi.Controllers
                 return BadRequest("Username is taken");
             }
 
+            if (await EmailExists(registerDto.Email))
+            {
+                return BadRequest("Email is taken");
+            }
+
             // reverse map request to AppUser shape
             var user = _mapper.Map<AppUser>(registerDto);
             user.UserName = registerDto.UserName.ToLower().Trim(); // always use lowercase when storing emails & username!
-            
+            user.Email = registerDto.Email.ToLower().Trim(); // always use lowercase when storing emails & username!
+
             /*
                 when using identity user manager:
                 - pw hashing and salting comes out of the box when creating users
@@ -56,6 +62,7 @@ namespace Audi.Controllers
             return Ok(new UserDto
             {
                 UserName = user.UserName,
+                Email = user.Email,
                 Token = await _tokenService.CreateToken(user)
             });
         }
@@ -64,7 +71,10 @@ namespace Audi.Controllers
         public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
         {
             var user = await _userManager.Users
-                .SingleOrDefaultAsync(user => user.UserName.ToLower() == loginDto.UserName.ToLower());
+                .SingleOrDefaultAsync(user => 
+                    user.UserName.ToLower().Trim() == loginDto.UserName.ToLower().Trim() || 
+                    user.Email.ToLower().Trim() == loginDto.UserName.ToLower().Trim()
+                );
 
             if (user == null)
             {
@@ -82,13 +92,19 @@ namespace Audi.Controllers
             return Ok(new UserDto
             {
                 UserName = user.UserName,
+                Email = user.Email,
                 Token = await _tokenService.CreateToken(user),
             });
         }
 
         private async Task<bool> UserExists(string userName)
         {
-            return await _userManager.Users.AnyAsync(e => e.UserName == userName.ToLower());
+            return await _userManager.Users.AnyAsync(e => e.UserName == userName.ToLower().Trim());
+        }
+
+        private async Task<bool> EmailExists(string email)
+        {
+            return await _userManager.Users.AnyAsync(e => e.Email == email.ToLower().Trim());
         }
     }
 }
