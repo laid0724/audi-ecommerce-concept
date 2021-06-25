@@ -19,6 +19,7 @@ namespace Audi.Extensions
 
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IPhotoService, PhotoService>();
+            services.AddScoped<LogUserActivity>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly); // add Automapper and tell it where to find mapping profiles
 
             services.AddDbContext<DataContext>(options =>
