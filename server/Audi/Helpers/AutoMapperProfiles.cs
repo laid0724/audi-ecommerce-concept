@@ -18,8 +18,13 @@ namespace Audi.Helpers
                     opt => opt.MapFrom(src => src.GetFullName())
                 );
 
+            CreateMap<Product, ProductDto>();
+            CreateMap<ProductCategory, ProductCategoryDto>();
+            CreateMap<ProductPhoto, ProductPhotoDto>();
+
             // reverse map from dto to entity model:
             CreateMap<RegisterDto, AppUser>();
+            CreateMap<ProductDto, Product>();
 
             CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
         }
