@@ -59,10 +59,13 @@ namespace Audi.Controllers
 
             if (!roleResult.Succeeded) return BadRequest(result.Errors);
 
+            var userRoles = await _userManager.GetRolesAsync(user);
+
             return Ok(new UserDto
             {
                 UserName = user.UserName,
                 Email = user.Email,
+                Roles = userRoles.Select(r => r.ToString()).ToArray(),
                 Token = await _tokenService.CreateToken(user)
             });
         }
@@ -89,10 +92,13 @@ namespace Audi.Controllers
 
             if (!result.Succeeded) return Unauthorized();
 
+            var userRoles = await _userManager.GetRolesAsync(user);
+
             return Ok(new UserDto
             {
                 UserName = user.UserName,
                 Email = user.Email,
+                Roles = userRoles.Select(r => r.ToString()).ToArray(),
                 Token = await _tokenService.CreateToken(user),
             });
         }
