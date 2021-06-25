@@ -43,18 +43,22 @@ namespace Audi.Data
                 .HasMany(e => e.Children)
                 .WithOne(e => e.Parent)
                 .HasForeignKey(e => e.ParentId)
-                .IsRequired(false);
+                .IsRequired(false)
+                .OnDelete(DeleteBehavior.Cascade);
                 
             builder.Entity<ProductCategory>()
                 .HasMany(e => e.Products)
                 .WithOne(e => e.ProductCategory)
-                .HasForeignKey(e => e.ProductCategoryId);
+                .HasForeignKey(e => e.ProductCategoryId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Product>()
                 .HasMany(e => e.Photos)
                 .WithOne(e => e.Product)
                 .HasForeignKey(e => e.ProductId)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Product>()
                 .Property<WysiwygGrid>(e => e.WysiwygZh)
