@@ -33,6 +33,7 @@
             "styles": [
               "node_modules/@clr/icons/clr-icons.min.css",
               "node_modules/@clr/ui/clr-ui.min.css",
+              "node_modules/ngx-toastr/toastr.css",
               "projects/sys/src/styles.scss"
             ],
             "scripts": [
@@ -81,7 +82,8 @@
               "browserTarget": "sys:build:production"
             },
             "development": {
-              "browserTarget": "sys:build:development"
+              "browserTarget": "sys:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
@@ -168,7 +170,10 @@
               "projects/public/src/favicon.ico",
               "projects/public/src/assets"
             ],
-            "styles": ["projects/public/src/styles.scss"],
+            "styles": [
+              "node_modules/ngx-toastr/toastr.css",
+              "projects/public/src/styles.scss"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -211,7 +216,8 @@
               "browserTarget": "public:build:production"
             },
             "development": {
-              "browserTarget": "public:build:development"
+              "browserTarget": "public:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
