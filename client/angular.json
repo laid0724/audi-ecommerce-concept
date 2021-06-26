@@ -31,9 +31,15 @@
               "projects/sys/src/assets"
             ],
             "styles": [
+              "node_modules/@clr/icons/clr-icons.min.css",
+              "node_modules/@clr/ui/clr-ui.min.css",
               "projects/sys/src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "node_modules/@webcomponents/webcomponentsjs/custom-elements-es5-adapter.js",
+              "node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
+              "node_modules/@clr/icons/clr-icons.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -98,9 +104,7 @@
               "projects/sys/src/favicon.ico",
               "projects/sys/src/assets"
             ],
-            "styles": [
-              "projects/sys/src/styles.scss"
-            ],
+            "styles": ["projects/sys/src/styles.scss"],
             "scripts": []
           }
         }
@@ -164,9 +168,7 @@
               "projects/public/src/favicon.ico",
               "projects/public/src/assets"
             ],
-            "styles": [
-              "projects/public/src/styles.scss"
-            ],
+            "styles": ["projects/public/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -232,9 +234,7 @@
               "projects/public/src/favicon.ico",
               "projects/public/src/assets"
             ],
-            "styles": [
-              "projects/public/src/styles.scss"
-            ],
+            "styles": ["projects/public/src/styles.scss"],
             "scripts": []
           }
         }
