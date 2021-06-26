@@ -61,15 +61,7 @@ namespace Audi.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Product>()
-                .Property<WysiwygGrid>(e => e.WysiwygZh)
-                .HasColumnType("jsonb")
-                .HasConversion(
-                    v => JsonConvert.SerializeObject(v),
-                    v => JsonConvert.DeserializeObject<WysiwygGrid>(v))
-                .HasDefaultValueSql("'{}'");
-
-            builder.Entity<Product>()
-                .Property<WysiwygGrid>(e => e.WysiwygEn)
+                .Property<WysiwygGrid>(e => e.Wysiwyg)
                 .HasColumnType("jsonb")
                 .HasConversion(
                     v => JsonConvert.SerializeObject(v),

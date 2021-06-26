@@ -28,7 +28,7 @@ Database is being hosted on a dockerized pg sql instance. If you do not have doc
 
 Generate Initial Migrations:
 
-`dotnet ef migrations add ${MigrationName} -o Data/Migrations`
+`dotnet ef migrations add InitialCreate -o Data/Migrations`
 
 Generate Migrations:
 
@@ -123,6 +123,7 @@ Once you've setup your heroku app, you can just repeat steps 6 & 7 for continuou
 - not found
 - server error
 - user like product 1-to-M
+- add photo to product category
 
 
 #### Public

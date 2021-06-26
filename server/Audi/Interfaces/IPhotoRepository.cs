@@ -9,6 +9,7 @@ namespace Audi.Interfaces
     {
         Task<ProductPhotoDto> GetProductPhotoByIdAsync(int photoId);
         Task<IEnumerable<ProductPhotoDto>> GetProductPhotosByProductIdAsync(int productId);
+        void AddProductPhoto(ProductPhoto photo);
         void DeleteProductPhoto(ProductPhoto photo);
         Task SetMainProductPhoto(ProductPhoto photo);
     }

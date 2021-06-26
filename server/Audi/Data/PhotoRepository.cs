@@ -20,6 +20,11 @@ namespace Audi.Data
             _context = context;
         }
 
+        public void AddProductPhoto(ProductPhoto photo)
+        {
+            _context.ProductPhotos.Remove(photo);
+        }
+
         public void DeleteProductPhoto(ProductPhoto photo)
         {
             _context.ProductPhotos.Remove(photo);

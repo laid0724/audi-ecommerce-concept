@@ -25,6 +25,8 @@ namespace Audi.Helpers
             // reverse map from dto to entity model:
             CreateMap<RegisterDto, AppUser>();
             CreateMap<ProductDto, Product>();
+            CreateMap<ProductUpsertDto, Product>();
+            CreateMap<ProductCategoryUpsertDto, ProductCategory>();
 
             CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
         }

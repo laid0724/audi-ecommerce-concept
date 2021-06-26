@@ -25,7 +25,7 @@ namespace Audi.Data
             _context.ProductCategories.Add(productCategory);
         }
 
-        public void AddProducts(Product product)
+        public void AddProduct(Product product)
         {
             _context.Products.Add(product);
         }
@@ -44,7 +44,11 @@ namespace Audi.Data
         {
             var query = _context.ProductCategories
                 .Include(pc => pc.Children)
-                .Where(pc => pc.ParentId.HasValue && pc.ParentId.Value == productCategoryParams.ParentId.Value)
+                .Where(pc =>
+                    pc.ParentId.HasValue &&
+                    (pc.ParentId.Value == productCategoryParams.ParentId.Value) &&
+                    pc.Language.ToLower().Trim() == productCategoryParams.Language.ToLower().Trim()
+                )
                 .Select(pc => pc.Children)
                 .AsQueryable();
 
@@ -58,7 +62,10 @@ namespace Audi.Data
         public async Task<PagedList<ProductCategoryDto>> GetParentProductCategoriesAsync(ProductCategoryParams productCategoryParams)
         {
             var query = _context.ProductCategories
-                .Where(pc => !pc.ParentId.HasValue)
+                .Where(pc =>
+                    !pc.ParentId.HasValue &&
+                    pc.Language.ToLower().Trim() == productCategoryParams.Language.ToLower().Trim()
+                )
                 .AsQueryable();
 
             return await PagedList<ProductCategoryDto>.CreateAsync(
@@ -68,20 +75,37 @@ namespace Audi.Data
             );
         }
 
-        public async Task<ProductDto> GetProductAsync(int productId)
+        public async Task<Product> GetProductByIdAsync(int productId)
         {
             var product = await _context.Products
-                .Where(p => p.Id == productId)
-                .ProjectTo<ProductDto>(_mapper.ConfigurationProvider)
+                .Include(p => p.ProductCategory)
+                .Include(p => p.Photos)
+                .Where(p => p.Id == productId && p.IsVisible)
                 .FirstOrDefaultAsync();
 
             return product;
+        }
+
+        public async Task<ProductCategory> GetProductCategoryByIdAsync(int productCategoryId)
+        {
+            var productCategory = await _context.ProductCategories
+                .Include(pc => pc.Parent)
+                .Include(pc => pc.Children)
+                .Include(pc => pc.Products)
+                .Where(e => e.Id == productCategoryId)
+                .SingleOrDefaultAsync();
+
+            return productCategory;
         }
 
         public async Task<PagedList<ProductDto>> GetProductsAsync(ProductParams productParams)
         {
             var query = _context.Products
                 .Include(p => p.Photos)
+                .Where(p =>
+                    p.Language.ToLower().Trim() == productParams.Language.ToLower().Trim() &&
+                    p.IsVisible
+                )
                 .AsQueryable();
 
             if (productParams.ProductCategoryId.HasValue)
