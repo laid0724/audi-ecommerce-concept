@@ -1,7 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-
-const capitalize = require('lodash/capitalize');
-const kebabCase = require('lodash/kebabCase');
+import * as _ from 'lodash';
 
 /**
  * Change the casing of a text input
@@ -15,15 +13,15 @@ export class ToCasePipe implements PipeTransform {
     if (value && typeof value === 'string') {
       switch (type) {
         case 'pascal':
-          return capitalize(value);
+          return _.upperFirst(_.camelCase(value))
         case 'upper':
           return value.toUpperCase();
         case 'lower':
           return value.toLowerCase();
         case 'kebab':
-          return kebabCase(value);
+          return _.kebabCase(value);
         default:
-          return capitalize(value);
+          return _.capitalize(value);
       }
     }
 
