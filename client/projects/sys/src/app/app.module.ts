@@ -6,6 +6,12 @@ import { ClarityModule } from '@clr/angular';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import {
+  ErrorInterceptorProvider,
+  JwtInterceptorProvider,
+  LoadingInterceptorProvider,
+} from '@audi/data';
+
 @NgModule({
   declarations: [AppComponent],
   imports: [
@@ -17,6 +23,9 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     NgxSpinnerModule,
   ],
   providers: [
+    ErrorInterceptorProvider,
+    JwtInterceptorProvider,
+    LoadingInterceptorProvider,
   ],
   bootstrap: [AppComponent],
 })
