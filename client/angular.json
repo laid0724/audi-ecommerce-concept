@@ -34,6 +34,8 @@
               "node_modules/@clr/icons/clr-icons.min.css",
               "node_modules/@clr/ui/clr-ui.min.css",
               "node_modules/ngx-toastr/toastr.css",
+              "node_modules/bootstrap/scss/bootstrap-grid.scss",
+              "node_modules/bootstrap/scss/bootstrap-utilities.scss",
               "projects/sys/src/styles.scss"
             ],
             "scripts": [
@@ -172,6 +174,8 @@
             ],
             "styles": [
               "node_modules/ngx-toastr/toastr.css",
+              "node_modules/bootstrap/scss/bootstrap-grid.scss",
+              "node_modules/bootstrap/scss/bootstrap-utilities.scss",
               "projects/public/src/styles.scss"
             ],
             "scripts": []
