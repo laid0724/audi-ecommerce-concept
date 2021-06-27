@@ -47,21 +47,29 @@ const routes: Routes = [
                 (m) => m.HomeModule
               ),
           },
+          {
+            path: 'not-found',
+            component: NotFoundComponent,
+          },
+          {
+            path: 'server-error',
+            component: ServerErrorComponent,
+          },
         ],
       },
     ],
   },
   {
     path: 'not-found',
-    component: NotFoundComponent,
+    redirectTo: 'manage/not-found'
   },
   {
     path: 'server-error',
-    component: ServerErrorComponent,
+    redirectTo: 'manage/server-error'
   },
   {
     path: '**',
-    redirectTo: 'not-found',
+    redirectTo: 'manage/not-found',
   },
 ];
 

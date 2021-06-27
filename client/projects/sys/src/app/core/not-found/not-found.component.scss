@@ -1,0 +1,7 @@
+$top-nav-height: 60;
+$content-area-padding: 24 * 2;
+$height-to-account-for: $top-nav-height + $content-area-padding;
+
+.not-found-message-wrapper {
+  min-height: calc(100vh - #{$height-to-account-for}px);
+}
