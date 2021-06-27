@@ -5,6 +5,7 @@ import {
   ErrorInterceptorProvider,
   JwtInterceptorProvider,
   LoadingInterceptorProvider,
+  LanguageHeaderInterceptorProvider
 } from '@audi/data';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
@@ -24,6 +25,7 @@ import { AppComponent } from './app.component';
     ErrorInterceptorProvider,
     JwtInterceptorProvider,
     LoadingInterceptorProvider,
+    LanguageHeaderInterceptorProvider
   ],
   bootstrap: [AppComponent],
 })

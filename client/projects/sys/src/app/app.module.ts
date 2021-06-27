@@ -10,7 +10,12 @@ import {
   ErrorInterceptorProvider,
   JwtInterceptorProvider,
   LoadingInterceptorProvider,
+  LanguageHeaderInterceptorProvider,
+  LanguageSelectorResolver
 } from '@audi/data';
+import { CoreModule } from "./core/core.module";
+import { SHOW_LANGUAGE_SELECTOR } from "./tokens";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,13 +24,21 @@ import {
     AppRoutingModule,
     ClarityModule,
     BrowserAnimationsModule,
+    CoreModule,
     ToastrModule.forRoot(),
     NgxSpinnerModule,
+    HttpClientModule
   ],
   providers: [
     ErrorInterceptorProvider,
     JwtInterceptorProvider,
     LoadingInterceptorProvider,
+    LanguageHeaderInterceptorProvider,
+    {
+      provide: SHOW_LANGUAGE_SELECTOR,
+      useValue: true,
+    },
+    LanguageSelectorResolver,
   ],
   bootstrap: [AppComponent],
 })
