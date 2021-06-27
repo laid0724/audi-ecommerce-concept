@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, ReplaySubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { Role, User } from '../models/users';
@@ -28,13 +29,22 @@ export class AccountService {
   private currentUserSource = new ReplaySubject<User>(1); // only store one value from the stream when next is triggered
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   setCurrentUser(user: User): void {
     if (user !== null) {
+      const token = this.getDecodedToken(user.token);
+
       user.roles = [];
-      const roles = this.getDecodedToken(user.token).role as Role | Role[];
+      const roles = token.role as Role | Role[];
       Array.isArray(roles) ? (user.roles = roles) : user.roles.push(roles);
+
+      const { exp } = token;
+
+      if (this.isTokenExpired(exp)) {
+        this.logout();
+        return;
+      }
     }
 
     localStorage.setItem('user', JSON.stringify(user));
@@ -63,9 +73,19 @@ export class AccountService {
     );
   }
 
+  logout(): void {
+    localStorage.removeItem('user');
+    this.currentUserSource.next(undefined);
+    this.router.navigateByUrl('/');
+  }
+
   getDecodedToken(token: string): JwtToken {
     // atob is a method that allows us to decrypt the parts of a JWT token that does not require a signature
     // [1] refers to the payload property inside a JWT token
     return JSON.parse(atob(token.split('.')[1]));
+  }
+
+  isTokenExpired(exp: number): boolean {
+    return Date.now() < exp * 1000;
   }
 }
