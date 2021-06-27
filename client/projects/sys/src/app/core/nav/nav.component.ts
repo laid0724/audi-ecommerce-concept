@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from "@audi/data";
+import { AccountService, User } from "@audi/data";
+import { Observable } from "rxjs";
 
 @Component({
   selector: 'audi-sys-nav',
@@ -7,14 +8,16 @@ import { User } from "@audi/data";
   styleUrls: ['./nav.component.scss']
 })
 export class NavComponent implements OnInit {
-  user: Partial<User> = {
-    userName: 'admin',
-    email: 'admin@audi.com.tw',
-  }
+  user$: Observable<User | null>;
 
-  constructor() { }
+  constructor(private accountService: AccountService) { }
 
   ngOnInit(): void {
+    this.user$ = this.accountService.currentUser$
+  }
+
+  logout(): void {
+    this.accountService.logout();
   }
 
 }

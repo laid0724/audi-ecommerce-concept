@@ -9,14 +9,19 @@
     <div class="header-actions">
       <clr-dropdown>
         <button class="nav-text" clrDropdownTrigger>
-          <ng-container *ngIf="user">
+          <ng-container *ngIf="user$ | async; let user">
             {{ user.email }}
           </ng-container>
-          <cds-icon shape="user" size="sm" class="ms-1" style="margin-bottom: 3px;"></cds-icon>
+          <cds-icon
+            shape="user"
+            size="sm"
+            class="ms-1"
+            style="margin-bottom: 3px"
+          ></cds-icon>
         </button>
         <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-          <a clrDropdownItem> 更改密碼 Change Password</a>
-          <a clrDropdownItem>登出 Logout</a>
+          <a clrDropdownItem> 更改密碼 Change Password <span style="color: red">(TODO)</span></a>
+          <a clrDropdownItem (click)="logout()">登出 Logout</a>
         </clr-dropdown-menu>
       </clr-dropdown>
     </div>
