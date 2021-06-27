@@ -16,6 +16,11 @@ import {
 import { CoreModule } from "./core/core.module";
 import { SHOW_LANGUAGE_SELECTOR } from "./tokens";
 import { HttpClientModule } from "@angular/common/http";
+import { CdsModule } from '@cds/angular';
+
+// import '@cds/core/icon/register.js';
+// import { ClarityIcons, userIcon } from '@cds/core/icon';
+// ClarityIcons.addIcons(userIcon);
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,7 +36,8 @@ import { HttpClientModule } from "@angular/common/http";
       preventDuplicates: true
     }),
     NgxSpinnerModule,
-    HttpClientModule
+    HttpClientModule,
+    CdsModule
   ],
   providers: [
     ErrorInterceptorProvider,

@@ -31,6 +31,10 @@
               "projects/sys/src/assets"
             ],
             "styles": [
+              "node_modules/@cds/city/css/bundles/default.min.css",
+              "node_modules/@cds/core/styles/module.shims.min.css",
+              "node_modules/@cds/core/global.min.css",
+              "node_modules/normalize.css/normalize.css",
               "node_modules/@clr/icons/clr-icons.min.css",
               "node_modules/@clr/ui/clr-ui.min.css",
               "node_modules/ngx-toastr/toastr.css",
@@ -108,7 +112,9 @@
               "projects/sys/src/favicon.ico",
               "projects/sys/src/assets"
             ],
-            "styles": ["projects/sys/src/styles.scss"],
+            "styles": [
+              "projects/sys/src/styles.scss"
+            ],
             "scripts": []
           }
         }
@@ -244,7 +250,9 @@
               "projects/public/src/favicon.ico",
               "projects/public/src/assets"
             ],
-            "styles": ["projects/public/src/styles.scss"],
+            "styles": [
+              "projects/public/src/styles.scss"
+            ],
             "scripts": []
           }
         }

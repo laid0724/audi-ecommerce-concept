@@ -3,8 +3,22 @@
     <div class="branding">
       <a [routerLink]="['/manage/home']">
         <img src="assets/audi-logo-white.svg" class="audi-logo" />
-        <span class="title">Audi CMS</span>
+        <!-- <span class="title">Audi CMS</span> -->
       </a>
+    </div>
+    <div class="header-actions">
+      <clr-dropdown>
+        <button class="nav-text" clrDropdownTrigger>
+          <ng-container *ngIf="user">
+            {{ user.email }}
+          </ng-container>
+          <cds-icon shape="user" size="sm" class="ms-1" style="margin-bottom: 3px;"></cds-icon>
+        </button>
+        <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
+          <a clrDropdownItem> 更改密碼 Change Password</a>
+          <a clrDropdownItem>登出 Logout</a>
+        </clr-dropdown-menu>
+      </clr-dropdown>
     </div>
   </header>
   <div class="content-container">
