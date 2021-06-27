@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Roles } from '@audi/data';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { Role, User } from '../models/users';
+import { User } from '../models/users';
 
 interface UserCredential {
   userName: string;
@@ -26,22 +27,15 @@ interface JwtToken {
 export class AccountService {
   private endpoint = '/api/account';
 
-  private currentUserSource = new ReplaySubject<User>(1); // only store one value from the stream when next is triggered
+  private currentUserSource = new ReplaySubject<User | null>(1); // only store one value from the stream when next is triggered
   currentUser$ = this.currentUserSource.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  setCurrentUser(user: User): void {
-    if (user !== null) {
-      const token = this.getDecodedToken(user.token);
-
-      user.roles = [];
-      const roles = token.role as Role | Role[];
-      Array.isArray(roles) ? (user.roles = roles) : user.roles.push(roles);
-
-      const { exp } = token;
-
-      if (this.isTokenExpired(exp)) {
+  setCurrentUser(user: User | null): void {
+    if (user != null) {
+      this.addRoleToUserFromToken(user);
+      if (this.isTokenExpired(user.token)) {
         this.logout();
         return;
       }
@@ -85,7 +79,15 @@ export class AccountService {
     return JSON.parse(atob(token.split('.')[1]));
   }
 
-  isTokenExpired(exp: number): boolean {
-    return Date.now() < exp * 1000;
+  addRoleToUserFromToken(user: User): void {
+    const token = this.getDecodedToken(user.token);
+    user.roles = [];
+    const roles = token.role as Roles | Roles[];
+    Array.isArray(roles) ? (user.roles = roles) : user.roles.push(roles);
+  }
+
+  isTokenExpired(token: string): boolean {
+    const expiry = this.getDecodedToken(token).exp;
+    return Math.floor(new Date().getTime() / 1000) >= expiry;
   }
 }

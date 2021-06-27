@@ -7,6 +7,9 @@ export * from './lib/models/pagination';
 export * from './lib/models/users';
 export * from './lib/models/language-code';
 
+// Enums
+export * from './lib/enums'
+
 // Services
 export * from './lib/services/account.service'
 export * from './lib/services/busy.service'

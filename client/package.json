@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:public": "ng serve --project=public --port=4200 --open",
-    "start:sys": "ng serve --project=sys --port=4201 --open",
+    "start:public": "ng serve --project=public --port=4200",
+    "start:sys": "ng serve --project=sys --port=4201",
     "build": "ng build data && npm run build:public && npm run build:sys",
     "build:public": "ng build --prod --project=public",
     "build:sys": "ng build --prod --project=sys",

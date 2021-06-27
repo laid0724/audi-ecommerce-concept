@@ -9,21 +9,61 @@ import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'audi-sys-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  selector: 'audi-sys-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
+  @ViewChild(ClrForm, { static: false }) clrForm: ClrForm;
+
+  loginForm: FormGroup;
+  loginBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
+
   destroy$ = new Subject<boolean>();
 
   constructor(
     private router: Router,
     private accountService: AccountService,
+    private fb: FormBuilder,
     private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
-    this.setUserFromLocalStorage();
+    this.setUserFromLocalStorage()
+    this.initLoginForm();
+  }
+
+  initLoginForm(): void {
+    this.loginForm = this.fb.group({
+      userName: [null, [Validators.required]],
+      password: [null, [Validators.required]],
+    });
+  }
+
+  login(): void {
+    if (this.loginForm.invalid) {
+      this.clrForm.markAsTouched();
+      this.loginForm.markAllAsTouched();
+      return;
+    }
+
+    this.loginBtnState = ClrLoadingState.LOADING;
+
+    this.accountService
+      .login(this.loginForm.value)
+      .pipe(switchMap((user: User) => this.accountService.currentUser$))
+      .subscribe(
+        (user: User | null) => {
+          if (user != null) {
+            this.directUserBasedOnRole(this.userHasRightRole(user));
+          } else {
+            this.loginBtnState = ClrLoadingState.DEFAULT;
+          }
+        },
+        (error) => {
+          this.loginBtnState = ClrLoadingState.ERROR;
+        }
+      );
   }
 
   setUserFromLocalStorage(): void {
@@ -40,8 +80,6 @@ export class AppComponent implements OnInit, OnDestroy {
             this.directUserBasedOnRole(this.userHasRightRole(user));
           }
         });
-    } else {
-      this.accountService.setCurrentUser(null);
     }
   }
 
@@ -57,9 +95,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   directUserBasedOnRole(isRightRole: boolean): void {
     if (!isRightRole) {
+      this.loginBtnState = ClrLoadingState.ERROR;
       this.toastr.error('你不是管理員 You are not an admin');
       this.accountService.logout();
     } else {
+      this.loginBtnState = ClrLoadingState.SUCCESS;
       this.routeToHome();
     }
   }

@@ -1,0 +1,37 @@
+<div class="login-wrapper">
+  <form class="login">
+    <section class="title">
+      <h3 class="welcome">Welcome to</h3>
+      Audi CMS
+    </section>
+    <form
+      clrForm
+      clrLayout="vertical"
+      [formGroup]="loginForm"
+      (ngSubmit)="login()"
+      class="login-group"
+    >
+      <clr-input-container>
+        <label>帳號或信箱 Username or Email</label>
+        <input type="text" clrInput formControlName="userName" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-input-container>
+      <clr-password-container>
+        <label>密碼 Password</label>
+        <input type="password" clrPassword formControlName="password" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-password-container>
+      <button
+        type="submit"
+        class="btn btn-primary btn-block"
+        [clrLoading]="loginBtnState"
+      >
+        登入 Login
+      </button>
+    </form>
+  </form>
+</div>

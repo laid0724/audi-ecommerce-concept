@@ -8,10 +8,10 @@ import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import {
   ErrorInterceptorProvider,
-  JwtInterceptorProvider,
   LoadingInterceptorProvider,
   LanguageHeaderInterceptorProvider,
-  LanguageSelectorResolver
+  LanguageSelectorResolver,
+  JwtInterceptorProvider
 } from '@audi/data';
 import { CoreModule } from "./core/core.module";
 import { SHOW_LANGUAGE_SELECTOR } from "./tokens";
@@ -25,7 +25,11 @@ import { HttpClientModule } from "@angular/common/http";
     ClarityModule,
     BrowserAnimationsModule,
     CoreModule,
-    ToastrModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-bottom-right',
+      preventDuplicates: true
+    }),
     NgxSpinnerModule,
     HttpClientModule
   ],

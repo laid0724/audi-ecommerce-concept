@@ -9,7 +9,7 @@ import {
 import { Observable } from 'rxjs';
 import { AccountService } from '../services/account.service';
 import { User } from '../models/users';
-import { switchMap, take } from 'rxjs/operators';
+import { exhaustMap, take } from 'rxjs/operators';
 
 @Injectable()
 export class JwtInterceptor implements HttpInterceptor {
@@ -21,7 +21,7 @@ export class JwtInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<unknown>> {
     return this.accountService.currentUser$.pipe(
       take(1),
-      switchMap((currentUser: User) => {
+      exhaustMap((currentUser: User | null) => {
         if (currentUser) {
           request = request.clone({
             setHeaders: {
