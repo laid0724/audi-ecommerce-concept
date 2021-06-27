@@ -21,20 +21,10 @@ $audi-error: #bb0a30;
   outline: unset !important;
 }
 
-// .btn-primary--audi {
-//   background: $audi-black !important;
-//   border-color: $audi-black !important;
-//   transition: all .3s cubic-bezier(.75,.02,.5,1);
-//   &:active {
-//     box-shadow: unset !important;
-//   }
-//   &:focus {
-//     outline: unset !important;
-//   }
-//   &:hover {
-//     color: #fff !important;
-//     stroke: #fff !important;
-//     fill: #fff !important;
-//     background: $audi-grey-10 !important;
-//   }
-// }
+.login-wrapper {
+  background: url('assets/login-img.webp');
+}
+
+.aui-button {
+  font-size: 13px;
+}
