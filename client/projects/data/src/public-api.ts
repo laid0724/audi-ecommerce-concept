@@ -33,3 +33,6 @@ export * from './lib/pipes/pipes.module';
 export * from './lib/regex';
 export * from './lib/validators';
 export * from './lib/helpers';
+
+// Audi UI Library
+export * from './lib/audi-ui';

@@ -11,11 +11,11 @@ import {
   LoadingInterceptorProvider,
   LanguageHeaderInterceptorProvider,
   LanguageSelectorResolver,
-  JwtInterceptorProvider
+  JwtInterceptorProvider,
 } from '@audi/data';
-import { CoreModule } from "./core/core.module";
-import { SHOW_LANGUAGE_SELECTOR } from "./tokens";
-import { HttpClientModule } from "@angular/common/http";
+import { CoreModule } from './core/core.module';
+import { SHOW_LANGUAGE_SELECTOR } from './tokens';
+import { HttpClientModule } from '@angular/common/http';
 import { CdsModule } from '@cds/angular';
 
 // import '@cds/core/icon/register.js';
@@ -33,11 +33,11 @@ import { CdsModule } from '@cds/angular';
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-bottom-right',
-      preventDuplicates: true
+      preventDuplicates: true,
     }),
     NgxSpinnerModule,
     HttpClientModule,
-    CdsModule
+    CdsModule,
   ],
   providers: [
     ErrorInterceptorProvider,

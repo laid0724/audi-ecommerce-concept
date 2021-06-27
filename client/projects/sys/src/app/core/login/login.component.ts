@@ -7,6 +7,7 @@ import { ClrForm, ClrLoadingState } from '@clr/angular';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
+import { initAllAudiElements } from '@audi/data';
 
 @Component({
   selector: 'audi-sys-login',
@@ -29,8 +30,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.setUserFromLocalStorage()
+    this.setUserFromLocalStorage();
     this.initLoginForm();
+    initAllAudiElements();
   }
 
   initLoginForm(): void {

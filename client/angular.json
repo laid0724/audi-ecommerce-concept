@@ -40,6 +40,7 @@
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/bootstrap/scss/bootstrap-grid.scss",
               "node_modules/bootstrap/scss/bootstrap-utilities.scss",
+              "node_modules/@audi/audi-ui/dist/audi-ui.min.css",
               "projects/sys/src/styles.scss"
             ],
             "scripts": [
@@ -182,6 +183,7 @@
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/bootstrap/scss/bootstrap-grid.scss",
               "node_modules/bootstrap/scss/bootstrap-utilities.scss",
+              "node_modules/@audi/audi-ui/dist/audi-ui.min.css",
               "projects/public/src/styles.scss"
             ],
             "scripts": []
