@@ -17,6 +17,7 @@ namespace Audi.Extensions
 
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>(); // this will inject all repositories
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<LogUserActivity>();
