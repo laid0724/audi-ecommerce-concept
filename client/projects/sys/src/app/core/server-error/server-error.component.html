@@ -1,21 +1,62 @@
-<div class="container">
-  <div class="row">
-    <div class="col-12">
-      <div
-        class="
-          server-error-message-wrapper
-          h-100
-          w-100
-          d-flex
-          justify-content-center
-          align-items-center
-          flex-column
-        "
+<ng-container *ngIf="!isProductionEnv; else productionTemplate">
+  <div class="container">
+    <div class="text-center">
+      <h1 style="font-size: 100px;">DEV ONLY</h1>
+      <h2 class="mt-4 pt-2">
+        Internal server error - refreshing the page will make the error
+        disappear!
+      </h2>
+    </div>
+    <ng-container *ngIf="error">
+      <h5 class="text-danger text-center">Error: {{ error.message }}</h5>
+      <hr />
+      <p class="font-weight-bold">
+        Note: If you are seeing this, then Angular is probably not to blame.
+      </p>
+      <p>What to do next?</p>
+      <ol>
+        <li>Open the chrome dev tools</li>
+        <li>Inspect the network tab</li>
+        <li>Check the failing request</li>
+        <li>Examine request URL - make sure it is correct</li>
+        <li>
+          Reproduce the error in Swagger or Postman - if we see the same
+          response, then the issue is not with Angular.
+        </li>
+      </ol>
+      <p>
+        Following is the stack trace - this is where your investigation should
+        start!
+      </p>
+      <code
+        class="my-5"
+        style="background-color: whitesmoke; white-space: pre-wrap"
+        >{{ error.details }}</code
       >
-        <h1 style="font-size: 120px;">500</h1>
-        <h2 class="mt-4 pt-2">系統錯誤</h2>
-        <h3 class="mt-2">Internal Server Error</h3>
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #productionTemplate>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div
+          class="
+            server-error-message-wrapper
+            h-100
+            w-100
+            d-flex
+            justify-content-center
+            align-items-center
+            flex-column
+          "
+        >
+          <h1 style="font-size: 120px;">500</h1>
+          <h2 class="mt-4 pt-2">系統錯誤</h2>
+          <h3 class="mt-2">Internal Server Error</h3>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-template>
