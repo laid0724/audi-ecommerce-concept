@@ -1,8 +1,8 @@
 <ng-container *ngIf="!isProductionEnv; else productionTemplate">
   <div class="container">
     <div class="text-center">
-      <h1 style="font-size: 100px;">DEV ONLY</h1>
-      <h2 class="mt-4 pt-2">
+      <h1 style="font-size: 100px" class="text-center">DEV ONLY</h1>
+      <h2 class="mt-4 pt-2 text-center">
         Internal server error - refreshing the page will make the error
         disappear!
       </h2>
@@ -52,9 +52,9 @@
             flex-column
           "
         >
-          <h1 style="font-size: 120px;">500</h1>
-          <h2 class="mt-4 pt-2">系統錯誤</h2>
-          <h3 class="mt-2">Internal Server Error</h3>
+          <h1 style="font-size: 120px" class="text-center">500</h1>
+          <h2 class="mt-4 pt-2 text-center">系統錯誤</h2>
+          <h3 class="mt-2 text-center">Internal Server Error</h3>
         </div>
       </div>
     </div>
