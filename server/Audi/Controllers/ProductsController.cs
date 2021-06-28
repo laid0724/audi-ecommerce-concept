@@ -8,6 +8,7 @@ using Audi.Entities;
 using Audi.Helpers;
 using Audi.Interfaces;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,6 +32,7 @@ namespace Audi.Controllers
         }
 
         [Description("add a product category")]
+        [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("categories")]
         public async Task<ActionResult<ProductCategoryDto>> AddProductCategory([FromBody] ProductCategoryUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language)
         {
@@ -48,6 +50,7 @@ namespace Audi.Controllers
         }
 
         [Description("update a product category")]
+        [Authorize(Policy = "RequireModerateRole")]
         [HttpPut("categories")]
         public async Task<ActionResult<ProductCategoryDto>> UpdateProductCategory([FromBody] ProductCategoryUpsertDto request)
         {
@@ -85,6 +88,7 @@ namespace Audi.Controllers
         }
 
         [Description("delete a product category")]
+        [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("categories/{categoryId}")]
         public async Task<ActionResult> DeleteProductCategory(int categoryId)
         {
@@ -151,6 +155,7 @@ namespace Audi.Controllers
         }
 
         [Description("add a product")]
+        [Authorize(Policy = "RequireModerateRole")]
         [HttpPost]
         public async Task<ActionResult<ProductDto>> AddProduct([FromBody] ProductUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language)
         {
@@ -171,6 +176,7 @@ namespace Audi.Controllers
         }
 
         [Description("update a product")]
+        [Authorize(Policy = "RequireModerateRole")]
         [HttpPut]
         public async Task<ActionResult<ProductDto>> UpdateProduct([FromBody] ProductUpsertDto request)
         {
@@ -198,6 +204,7 @@ namespace Audi.Controllers
         }
 
         [Description("delete a product")]
+        [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("{productId}")]
         public async Task<ActionResult> DeleteProduct(int productId)
         {
@@ -213,6 +220,7 @@ namespace Audi.Controllers
         }
 
         [Description("Upload photo")]
+        [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("photos/{productId}")]
         public async Task<ActionResult<ProductPhotoDto>> AddProductPhoto(int productId, IFormFile file)
         {
@@ -263,6 +271,7 @@ namespace Audi.Controllers
         }
 
         [Description("Set product's main photo")]
+        [Authorize(Policy = "RequireModerateRole")]
         [HttpPut("photos/{photoId}/set-main-photo")]
         public async Task<ActionResult> SetProductMainPhoto(int photoId)
         {
@@ -297,6 +306,7 @@ namespace Audi.Controllers
         }
 
         [Description("Delete a product photo")]
+        [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("photos/{photoId}")]
         public async Task<ActionResult> DeleteProductPhoto(int photoId)
         {
