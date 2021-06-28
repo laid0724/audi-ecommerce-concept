@@ -51,16 +51,10 @@ export class AppComponent implements OnInit, OnDestroy {
     return isAdminOrModerator;
   }
 
-  routeToHome(): void {
-    this.router.navigateByUrl('/manage/home');
-  }
-
   directUserBasedOnRole(isRightRole: boolean): void {
     if (!isRightRole) {
       this.toastr.error('你不是管理員 You are not an admin');
       this.accountService.logout();
-    } else {
-      this.routeToHome();
     }
   }
 
