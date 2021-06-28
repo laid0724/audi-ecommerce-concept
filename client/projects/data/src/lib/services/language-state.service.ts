@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LanguageCode } from "../models/language-code";
+import { LanguageCode } from "../enums";
 import { BehaviorSubject } from "rxjs";
 import { distinctUntilChanged } from "rxjs/operators";
 
@@ -8,7 +8,7 @@ import { distinctUntilChanged } from "rxjs/operators";
 })
 export class LanguageStateService {
 
-  _language$ = new BehaviorSubject<LanguageCode>('zh');
+  _language$ = new BehaviorSubject<LanguageCode>(LanguageCode.Zh);
   language$ = this._language$.asObservable().pipe(distinctUntilChanged());
 
   constructor() {}

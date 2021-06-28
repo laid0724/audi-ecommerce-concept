@@ -10,7 +10,7 @@ import {
 import { Observable } from 'rxjs';
 import { LanguageStateService } from '../services/language-state.service';
 import { switchMap } from 'rxjs/operators';
-import { LanguageCode } from '../models/language-code';
+import { LanguageCode } from '../enums';
 
 @Injectable()
 export class LanguageHeaderInterceptor implements HttpInterceptor {
@@ -21,17 +21,13 @@ export class LanguageHeaderInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     return this.languageService.language$.pipe(
-      switchMap((language: LanguageCode) => {
-        let headers: HttpHeaders;
-        headers = request.headers.set('X-LANGUAGE', language);
-        headers = request.headers.set('Accept', 'application/json');
-
-        request = request.clone({
-          headers,
-        });
-
-        return next.handle(request);
-      })
+      switchMap((language: LanguageCode) =>
+        next.handle(
+          request.clone({
+            headers: request.headers.set('X-LANGUAGE', language),
+          })
+        )
+      )
     );
   }
 }

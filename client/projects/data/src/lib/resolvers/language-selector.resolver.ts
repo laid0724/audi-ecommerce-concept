@@ -4,7 +4,7 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
 } from '@angular/router';
-import { LanguageCode } from '../models/language-code';
+import { LanguageCode } from '../enums';
 import { LanguageStateService } from '../services/language-state.service';
 
 export interface LanguageSettings {
