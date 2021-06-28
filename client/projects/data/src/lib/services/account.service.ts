@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Roles } from '@audi/data';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { take, tap } from 'rxjs/operators';
 import { User } from '../models/users';
 
 interface UserCredential {
@@ -59,6 +59,7 @@ export class AccountService {
 
   login(userCredential: UserCredential): Observable<User> {
     return this.http.post<User>(this.endpoint + '/login', userCredential).pipe(
+      take(1),
       tap((user: User) => {
         if (user) {
           this.setCurrentUser(user);
