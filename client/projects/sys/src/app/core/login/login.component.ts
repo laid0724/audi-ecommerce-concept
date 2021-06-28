@@ -2,12 +2,18 @@ import { OnDestroy } from '@angular/core';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AccountService, User, Roles } from '@audi/data';
+import {
+  AccountService,
+  User,
+  Roles,
+  initAudiModules,
+  AudiModuleName,
+} from '@audi/data';
 import { ClrForm, ClrLoadingState } from '@clr/angular';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
-import { initAllAudiElements } from '@audi/data';
+import {} from '@audi/data';
 
 @Component({
   selector: 'audi-sys-login',
@@ -32,7 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.setUserFromLocalStorage();
     this.initLoginForm();
-    initAllAudiElements();
+    initAudiModules(AudiModuleName.Response);
   }
 
   initLoginForm(): void {
