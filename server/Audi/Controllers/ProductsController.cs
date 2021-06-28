@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Audi.DTOs;
 using Audi.Entities;
+using Audi.Extensions;
 using Audi.Helpers;
 using Audi.Interfaces;
 using AutoMapper;
@@ -105,7 +106,7 @@ namespace Audi.Controllers
 
         [Description("get parent product categories")]
         [HttpGet("categories/parents")]
-        public async Task<ActionResult<PagedList<ProductCategoryDto>>> GetParentProductCategories(ProductCategoryParams productCategoryParams, [FromHeader(Name = "X-LANGUAGE")] string language)
+        public async Task<ActionResult<PagedList<ProductCategoryDto>>> GetParentProductCategories([FromQuery] ProductCategoryParams productCategoryParams, [FromHeader(Name = "X-LANGUAGE")] string language)
         {
             if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
 
@@ -113,12 +114,14 @@ namespace Audi.Controllers
 
             var parentProductCategories = await _unitOfWork.ProductRepository.GetParentProductCategoriesAsync(productCategoryParams);
 
+            Response.AddPaginationHeader(parentProductCategories.CurrentPage, parentProductCategories.PageSize, parentProductCategories.TotalCount, parentProductCategories.TotalPages);
+
             return Ok(parentProductCategories);
         }
 
         [Description("get children product categories")]
         [HttpGet("categories/children")]
-        public async Task<ActionResult<PagedList<ProductCategoryDto>>> GetChildrenProductCategories(ProductCategoryParams productCategoryParams, [FromHeader(Name = "X-LANGUAGE")] string language)
+        public async Task<ActionResult<PagedList<ProductCategoryDto>>> GetChildrenProductCategories([FromQuery] ProductCategoryParams productCategoryParams, [FromHeader(Name = "X-LANGUAGE")] string language)
         {
             if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
             if (!productCategoryParams.ParentId.HasValue) return BadRequest("Parent Id missing");
@@ -127,20 +130,24 @@ namespace Audi.Controllers
 
             var childrenProductCategories = await _unitOfWork.ProductRepository.GetChildrenProductCategoriesAsync(productCategoryParams);
 
+            Response.AddPaginationHeader(childrenProductCategories.CurrentPage, childrenProductCategories.PageSize, childrenProductCategories.TotalCount, childrenProductCategories.TotalPages);
+
             return Ok(childrenProductCategories);
         }
 
         [Description("get all products")]
         [HttpGet]
-        public async Task<ActionResult<PagedList<ProductDto>>> GetProducts(ProductParams productParams, [FromHeader(Name = "X-LANGUAGE")] string language)
+        public async Task<ActionResult<PagedList<ProductDto>>> GetProducts([FromQuery] ProductParams productParams, [FromHeader(Name = "X-LANGUAGE")] string language)
         {
             if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
 
             productParams.Language = language;
 
-            var pagedProducts = await _unitOfWork.ProductRepository.GetProductsAsync(productParams);
+            var products = await _unitOfWork.ProductRepository.GetProductsAsync(productParams);
 
-            return Ok(pagedProducts);
+            Response.AddPaginationHeader(products.CurrentPage, products.PageSize, products.TotalCount, products.TotalPages);
+
+            return Ok(products);
         }
 
         [Description("get a product")]
