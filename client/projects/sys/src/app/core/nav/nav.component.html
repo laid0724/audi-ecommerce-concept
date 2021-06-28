@@ -20,7 +20,9 @@
           ></cds-icon>
         </button>
         <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-          <a clrDropdownItem> 更改密碼 Change Password <span style="color: red">(TODO)</span></a>
+          <a clrDropdownItem>
+            更改密碼 Change Password <span style="color: red">(TODO)</span></a
+          >
           <a clrDropdownItem (click)="logout()">登出 Logout</a>
         </clr-dropdown-menu>
       </clr-dropdown>
@@ -35,60 +37,49 @@
       [clrVerticalNavCollapsed]="false"
     >
       <clr-vertical-nav-group routerLinkActive="active">
-        Nav group 1
-        <clr-vertical-nav-group-children>
+        <cds-icon clrVerticalNavIcon shape="shopping-cart"></cds-icon>
+        產品 Products
+        <clr-vertical-nav-group-children *clrIfExpanded="false">
+          <a
+            clrVerticalNavLink
+            routerLink="/manage/products/categories"
+            routerLinkActive="active"
+          >
+            產品分類管理 Product Categories
+          </a>
+          <a
+            clrVerticalNavLink
+            routerLink="/manage/products/items"
+            routerLinkActive="active"
+          >
+            產品管理 Products
+          </a>
+        </clr-vertical-nav-group-children>
+      </clr-vertical-nav-group>
+
+      <clr-vertical-nav-group routerLinkActive="active">
+        Test
+        <clr-vertical-nav-group-children *clrIfExpanded="false">
           <a
             clrVerticalNavLink
             routerLink="/manage/server-error"
             routerLinkActive="active"
           >
-            link 1
+            500
           </a>
           <a
             clrVerticalNavLink
             routerLink="/manage/not-found"
             routerLinkActive="active"
           >
-            link 2
-          </a>
-          <a
-            clrVerticalNavLink
-            routerLink="/manage/1"
-            routerLinkActive="active"
-          >
-            link 3
+            404
           </a>
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>
+
       <clr-vertical-nav-group routerLinkActive="active">
-        Nav group 2
-        <clr-vertical-nav-group-children>
-          <a
-            clrVerticalNavLink
-            routerLink="/manage/1"
-            routerLinkActive="active"
-          >
-            link 1
-          </a>
-          <a
-            clrVerticalNavLink
-            routerLink="/manage/1"
-            routerLinkActive="active"
-          >
-            link 2
-          </a>
-          <a
-            clrVerticalNavLink
-            routerLink="/manage/1"
-            routerLinkActive="active"
-          >
-            link 3
-          </a>
-        </clr-vertical-nav-group-children>
-      </clr-vertical-nav-group>
-      <clr-vertical-nav-group routerLinkActive="active">
-        Nav group 3
-        <clr-vertical-nav-group-children>
+        Nav Group Placeholder
+        <clr-vertical-nav-group-children *clrIfExpanded="false">
           <a
             clrVerticalNavLink
             routerLink="/manage/1"

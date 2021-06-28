@@ -20,10 +20,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    // resolve: { data: LanguageSelectorResolver },
-    // data: {
-    //   languageSettings: DEFAULT_ZH_EN_ONLY,
-    // },
   },
   {
     path: 'manage',
@@ -48,6 +44,17 @@ const routes: Routes = [
               ),
           },
           {
+            path: 'products',
+            resolve: { data: LanguageSelectorResolver },
+            data: {
+              languageSettings: DEFAULT_ZH_EN_ONLY,
+            },
+            loadChildren: () =>
+              import('./feature-modules/products/products.module').then(
+                (m) => m.ProductsModule
+              ),
+          },
+          {
             path: 'not-found',
             component: NotFoundComponent,
           },
@@ -61,11 +68,11 @@ const routes: Routes = [
   },
   {
     path: 'not-found',
-    redirectTo: 'manage/not-found'
+    redirectTo: 'manage/not-found',
   },
   {
     path: 'server-error',
-    redirectTo: 'manage/server-error'
+    redirectTo: 'manage/server-error',
   },
   {
     path: '**',

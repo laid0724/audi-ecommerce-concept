@@ -18,9 +18,11 @@ import { SHOW_LANGUAGE_SELECTOR } from './tokens';
 import { HttpClientModule } from '@angular/common/http';
 import { CdsModule } from '@cds/angular';
 
-// import '@cds/core/icon/register.js';
-// import { ClarityIcons, userIcon } from '@cds/core/icon';
-// ClarityIcons.addIcons(userIcon);
+import '@cds/core/icon/register.js';
+
+import { ClarityIcons, shoppingCartIcon } from '@cds/core/icon';
+
+ClarityIcons.addIcons(shoppingCartIcon);
 
 @NgModule({
   declarations: [AppComponent],
@@ -32,7 +34,7 @@ import { CdsModule } from '@cds/angular';
     CoreModule,
     ToastrModule.forRoot({
       timeOut: 3000,
-      positionClass: 'toast-bottom-right',
+      positionClass: 'toast-bottom-center',
       preventDuplicates: true,
     }),
     NgxSpinnerModule,
