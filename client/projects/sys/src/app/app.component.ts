@@ -1,12 +1,9 @@
 import { OnDestroy } from '@angular/core';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { AccountService, User, Roles } from '@audi/data';
-import { ClrForm, ClrLoadingState } from '@clr/angular';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'audi-sys-root',
@@ -17,7 +14,6 @@ export class AppComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<boolean>();
 
   constructor(
-    private router: Router,
     private accountService: AccountService,
     private toastr: ToastrService
   ) {}
