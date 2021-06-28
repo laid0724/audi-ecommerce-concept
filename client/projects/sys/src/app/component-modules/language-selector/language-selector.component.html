@@ -1,0 +1,16 @@
+<ng-container *ngIf="languages$ | async; let languages">
+  <clr-button-group
+    class="m-0"
+    [clrMenuPosition]="'bottom-right'"
+    *ngIf="languageState.language$ | async; let current"
+  >
+    <clr-button
+      [type]="'button'"
+      *ngFor="let language of languages"
+      (click)="languageState.selectLanguage(language)"
+      class="btn btn-sm {{ language === current ? '' : 'btn-primary--audi' }}"
+      [disabled]="language === current"
+      >{{ language }}</clr-button
+    >
+  </clr-button-group>
+</ng-container>
