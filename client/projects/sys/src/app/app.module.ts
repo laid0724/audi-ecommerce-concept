@@ -14,7 +14,6 @@ import {
   JwtInterceptorProvider,
 } from '@audi/data';
 import { CoreModule } from './core/core.module';
-import { SHOW_LANGUAGE_SELECTOR } from './tokens';
 import { HttpClientModule } from '@angular/common/http';
 import { CdsModule } from '@cds/angular';
 
@@ -46,10 +45,6 @@ ClarityIcons.addIcons(shoppingCartIcon);
     JwtInterceptorProvider,
     LoadingInterceptorProvider,
     LanguageHeaderInterceptorProvider,
-    {
-      provide: SHOW_LANGUAGE_SELECTOR,
-      useValue: true,
-    },
     LanguageSelectorResolver,
   ],
   bootstrap: [AppComponent],
