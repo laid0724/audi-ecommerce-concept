@@ -5,9 +5,10 @@
 // Models
 export * from './lib/models/pagination';
 export * from './lib/models/users';
-export * from './lib/models/language-code';
+export * from './lib/models/product-category-params';
 export * from './lib/models/product-category';
 export * from './lib/models/product-photo';
+export * from './lib/models/product-params';
 export * from './lib/models/product';
 export * from './lib/models/wysiwyg';
 
