@@ -17,7 +17,7 @@ export class BusyService {
         - demo: https://napster2210.github.io/ngx-spinner/
     */
     this.spinner.show(undefined, {
-      type: 'ball-clip-rotat e',
+      type: 'ball-clip-rotate',
       bdColor: 'rgba(0, 0, 0, 0.8)',
       color: '#fff',
     });
