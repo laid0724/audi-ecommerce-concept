@@ -80,7 +80,7 @@ namespace Audi.Data
             var product = await _context.Products
                 .Include(p => p.ProductCategory)
                 .Include(p => p.Photos)
-                .Where(p => p.Id == productId && p.IsVisible)
+                .Where(p => p.Id == productId)
                 .FirstOrDefaultAsync();
 
             return product;
@@ -103,8 +103,7 @@ namespace Audi.Data
             var query = _context.Products
                 .Include(p => p.Photos)
                 .Where(p =>
-                    p.Language.ToLower().Trim() == productParams.Language.ToLower().Trim() &&
-                    p.IsVisible
+                    p.Language.ToLower().Trim() == productParams.Language.ToLower().Trim()
                 )
                 .AsQueryable();
 
