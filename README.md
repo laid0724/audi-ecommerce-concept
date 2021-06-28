@@ -96,8 +96,7 @@ Once you've setup your heroku app, you can just repeat steps 6 & 7 for continuou
 - Statistics table and repo / controller
 - Order table and repo / controller
 ** these need language property zh/en **
-- ProductCategory table (recursive) and repo / controller
-- Product table and repo / controller
+- add photo property to product category
 - Photo table and repo / controller
 - Wysiwyg table and repo / controller
 - Article table and repo / controller
@@ -109,7 +108,6 @@ Once you've setup your heroku app, you can just repeat steps 6 & 7 for continuou
 - email functionality
 
 #### Sys
-- setup clarity
 - homepage banner module
 - product category and product management module
 - news / event / announcement module
@@ -120,8 +118,6 @@ Once you've setup your heroku app, you can just repeat steps 6 & 7 for continuou
 - live chat module with signalr
 - q & a management module
 - user complaints / forms module, bind this to email
-- not found
-- server error
 - user like product 1-to-M
 - add photo to product category
 
@@ -161,9 +157,4 @@ Once you've setup your heroku app, you can just repeat steps 6 & 7 for continuou
 
 #### Data
 
-- JWT interceptor
-- Error interceptor
-- Loading Interceptor
-- Language interceptor (EN/ZH)
-- guards based on roles
-- busy service
+- carve out individual audi components, with control value accessor and all that. export as module
