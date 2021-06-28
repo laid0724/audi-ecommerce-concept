@@ -23,6 +23,10 @@ $audi-error: #bb0a30;
 
 .login-wrapper {
   background: url('assets/login-img.webp');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 }
 
 .aui-button {
