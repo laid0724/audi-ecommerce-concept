@@ -3,7 +3,6 @@
     <div class="branding">
       <a [routerLink]="['/manage/home']">
         <img src="assets/audi-logo-white.svg" class="audi-logo" />
-        <!-- <span class="title">Audi CMS</span> -->
       </a>
     </div>
     <div class="header-actions">
@@ -53,53 +52,6 @@
             routerLinkActive="active"
           >
             產品管理 Products
-          </a>
-        </clr-vertical-nav-group-children>
-      </clr-vertical-nav-group>
-
-      <clr-vertical-nav-group routerLinkActive="active">
-        Test
-        <clr-vertical-nav-group-children *clrIfExpanded="false">
-          <a
-            clrVerticalNavLink
-            routerLink="/manage/server-error"
-            routerLinkActive="active"
-          >
-            500
-          </a>
-          <a
-            clrVerticalNavLink
-            routerLink="/manage/not-found"
-            routerLinkActive="active"
-          >
-            404
-          </a>
-        </clr-vertical-nav-group-children>
-      </clr-vertical-nav-group>
-
-      <clr-vertical-nav-group routerLinkActive="active">
-        Nav Group Placeholder
-        <clr-vertical-nav-group-children *clrIfExpanded="false">
-          <a
-            clrVerticalNavLink
-            routerLink="/manage/1"
-            routerLinkActive="active"
-          >
-            link 1
-          </a>
-          <a
-            clrVerticalNavLink
-            routerLink="/manage/1"
-            routerLinkActive="active"
-          >
-            link 2
-          </a>
-          <a
-            clrVerticalNavLink
-            routerLink="/manage/1"
-            routerLinkActive="active"
-          >
-            link 3
           </a>
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>

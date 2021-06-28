@@ -1,1 +1,75 @@
-<p>products-category-list works!</p>
+<div class="row">
+  <div class="col-12 d-flex justify-content-end">
+    <audi-sys-language-selector></audi-sys-language-selector>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="card mt-3">
+      <div
+        class="
+          card-header
+          py-3
+          d-flex
+          align-items-center
+          justify-content-between
+        "
+      >
+        產品分類管理 | PRODUCT CATEGORIES
+        <button class="btn btn-primary--audi m-0">新增分類 New</button>
+      </div>
+      <div class="card-body">
+        <clr-datagrid
+          (clrDgRefresh)="refreshDatagrid($event)"
+        >
+          <clr-dg-column>Name</clr-dg-column>
+          <clr-dg-column>Description</clr-dg-column>
+
+          <clr-dg-row *ngFor="let productCategory of productCategories">
+            <clr-dg-action-overflow>
+              <button class="action-item" (click)="onEdit(productCategory.id)">
+                編輯 Edit
+              </button>
+              <button
+                class="action-item"
+                (click)="onDelete(productCategory.id)"
+              >
+                刪除 Delete
+              </button>
+            </clr-dg-action-overflow>
+
+            <clr-dg-cell>{{ productCategory.name }}</clr-dg-cell>
+            <clr-dg-cell>{{ productCategory.description }}</clr-dg-cell>
+          </clr-dg-row>
+
+          <clr-dg-footer>
+            <clr-dg-pagination
+              *ngIf="paging != null"
+              #pagination
+              [clrDgPage]="paging.currentPage"
+              [clrDgPageSize]="productCategoryParams.pageSize"
+              [clrDgTotalItems]="paging.totalItems"
+            >
+              <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50]">
+                每頁顯示筆數
+              </clr-dg-page-size>
+              {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} 之
+              {{ pagination.totalItems }} 筆
+            </clr-dg-pagination>
+          </clr-dg-footer>
+        </clr-datagrid>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <clr-modal [(clrModalOpen)]="openModal">
+  <h3 class="modal-title">I have a nice title</h3>
+  <div class="modal-body">
+    <p>But not much to say...</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="openModal = false">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="openModal = false">Ok</button>
+  </div>
+</clr-modal> -->

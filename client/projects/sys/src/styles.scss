@@ -23,6 +23,25 @@ $audi-error: #bb0a30;
   outline: unset !important;
 }
 
+.btn-primary--audi {
+  background: $audi-black !important;
+  border-color: $audi-black !important;
+  transition: all 0.3s cubic-bezier(0.75, 0.02, 0.5, 1);
+  color: $audi-white !important;
+  &:active {
+    box-shadow: unset !important;
+  }
+  &:focus {
+    outline: unset !important;
+  }
+  &:hover {
+    color: $audi-white !important;
+    stroke: $audi-white !important;
+    fill: $audi-white !important;
+    background: $audi-grey-10 !important;
+  }
+}
+
 .login-wrapper {
   background: url('assets/login-img.webp');
   background-size: 100%;
@@ -33,4 +52,11 @@ $audi-error: #bb0a30;
 
 .aui-button {
   font-size: 13px;
+}
+
+.card-body {
+  .datagrid {
+    margin-top: 0 !important;
+    border: unset;
+  }
 }
