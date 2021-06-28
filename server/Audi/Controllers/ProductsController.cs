@@ -145,7 +145,7 @@ namespace Audi.Controllers
 
         [Description("get a product")]
         [HttpGet("{productId}", Name = "GetProduct")]
-        public async Task<ActionResult<PagedList<ProductDto>>> GetProduct(int productId)
+        public async Task<ActionResult<ProductDto>> GetProduct(int productId)
         {
             var product = await _unitOfWork.ProductRepository.GetProductByIdAsync(productId);
 

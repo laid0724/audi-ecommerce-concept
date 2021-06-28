@@ -4,12 +4,10 @@ export interface Pagination {
   totalItems: number;
   totalPages: number;
 }
-
 export class PaginatedResult<T> {
   result: T;
   pagination: Pagination;
 }
-
 export interface PagedRequest {
   pageNumber: number;
   pageSize: number;

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Roles } from '@audi/data';
-import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
 import { User } from '../models/users';
 
@@ -47,7 +47,7 @@ export class AccountService {
 
   register(userCredential: UserCredential): Observable<User> {
     return this.http
-      .post<User>(this.endpoint + '/register', userCredential)
+      .post<User>(`${this.endpoint}/register`, userCredential)
       .pipe(
         tap((user: User) => {
           if (user) {
@@ -58,7 +58,7 @@ export class AccountService {
   }
 
   login(userCredential: UserCredential): Observable<User> {
-    return this.http.post<User>(this.endpoint + '/login', userCredential).pipe(
+    return this.http.post<User>(`${this.endpoint}/login`, userCredential).pipe(
       take(1),
       tap((user: User) => {
         if (user) {
