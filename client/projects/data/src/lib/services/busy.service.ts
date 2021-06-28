@@ -7,14 +7,19 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class BusyService {
   busyRequestCount = 0;
 
-  constructor(private spinnerService: NgxSpinnerService) {}
+  constructor(private spinner: NgxSpinnerService) {}
 
   busy(): void {
     this.busyRequestCount++;
-    this.spinnerService.show(undefined, {
-      type: 'line-scale-party',
-      bdColor: 'rgba(255, 255, 255, 0)',
-      color: '#333',
+    /*
+      for animations available:
+        - list: https://labs.danielcardoso.net/load-awesome/animations.html
+        - demo: https://napster2210.github.io/ngx-spinner/
+    */
+    this.spinner.show(undefined, {
+      type: 'ball-clip-rotat e',
+      bdColor: 'rgba(0, 0, 0, 0.8)',
+      color: '#fff',
     });
   }
 
@@ -22,7 +27,7 @@ export class BusyService {
     this.busyRequestCount--;
     if (this.busyRequestCount <= 0) {
       this.busyRequestCount = 0;
-      this.spinnerService.hide();
+      this.spinner.hide();
     }
   }
 }
