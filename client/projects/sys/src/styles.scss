@@ -27,6 +27,13 @@ $audi-error: #bb0a30;
   margin-bottom: 0 !important;
 }
 
+.clr-input-width {
+  width: 100% !important;
+  &.clr-error {
+    width: calc(100% - 20px) !important;
+  }
+}
+
 .btn-primary--audi {
   background: $audi-black !important;
   border-color: $audi-black !important;
