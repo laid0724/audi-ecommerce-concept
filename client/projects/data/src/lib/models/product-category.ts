@@ -7,4 +7,5 @@ export interface ProductCategory {
   parentId?: number;
   children: ProductCategory[];
   products: Product[]
+  isTopLevel: boolean;
 }

@@ -10,5 +10,6 @@ namespace Audi.DTOs
         public int? ParentId { get; set; }
         public ICollection<ProductCategoryDto> Children { get; set; }
         public ICollection<ProductDto> Products { get; set; }
+        public bool IsTopLevel { get => !this.ParentId.HasValue; }
     }
 }
