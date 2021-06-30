@@ -33,7 +33,6 @@ const PIPES = [
   DebouncePipe,
   CountPipe,
 ];
-
 @NgModule({
   declarations: [...PIPES],
   imports: [CommonModule],

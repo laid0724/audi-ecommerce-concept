@@ -23,22 +23,34 @@ $audi-error: #bb0a30;
   outline: unset !important;
 }
 
+[cds-text*=body]::before {
+  margin-bottom: 0 !important;
+}
+
 .btn-primary--audi {
   background: $audi-black !important;
   border-color: $audi-black !important;
-  transition: all 0.3s cubic-bezier(0.75, 0.02, 0.5, 1);
+  transition: all 0.3s cubic-bezier(0.75, 0.02, 0.5, 1) !important;
   color: $audi-white !important;
   &:active {
-    box-shadow: unset !important;
-  }
-  &:focus {
-    outline: unset !important;
+    box-shadow: 0 .1rem 0 0 $audi-grey-8 inset !important;
   }
   &:hover {
     color: $audi-white !important;
-    stroke: $audi-white !important;
-    fill: $audi-white !important;
     background: $audi-grey-10 !important;
+  }
+}
+
+.btn-primary-outline--audi {
+  border-color: $audi-black !important;
+  transition: all 0.3s cubic-bezier(0.75, 0.02, 0.5, 1) !important;
+  color: $audi-black !important;
+  &:active {
+    box-shadow: 0 .1rem 0 0 $audi-black inset !important;
+  }
+  &:hover {
+    color: $audi-black !important;
+    background: $audi-grey-1 !important;
   }
 }
 
@@ -58,5 +70,8 @@ $audi-error: #bb0a30;
   .datagrid {
     margin-top: 0 !important;
     border: unset;
+    &-footer {
+      border: unset;
+    }
   }
 }
