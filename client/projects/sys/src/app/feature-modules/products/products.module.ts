@@ -8,6 +8,8 @@ import { ProductsEditComponent } from './products-edit/products-edit.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { LanguageSelectorModule } from "../../component-modules/language-selector/language-selector.module";
 import { FormsComponentModule } from "../../component-modules/forms-component/forms-component.module";
+import { PipesModule } from "@audi/data";
+import { ClrDatagridUtilitiesModule } from "../../component-modules/clr-datagrid-utilities/clr-datagrid-utilities.module";
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { FormsComponentModule } from "../../component-modules/forms-component/fo
     ClarityModule,
     ProductsRoutingModule,
     LanguageSelectorModule,
-    FormsComponentModule
+    FormsComponentModule,
+    PipesModule,
+    ClrDatagridUtilitiesModule
   ]
 })
 export class ProductsModule { }

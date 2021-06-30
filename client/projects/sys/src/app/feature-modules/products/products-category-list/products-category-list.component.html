@@ -15,32 +15,154 @@
           justify-content-between
         "
       >
-        產品分類管理 | PRODUCT CATEGORIES
-        <button class="btn btn-primary--audi m-0">新增分類 New</button>
+        <span class="d-flex align-items-center">
+          產品分類管理 | PRODUCT CATEGORIES
+          <small class="ms-1 fw-bold"
+            ><ng-container *ngIf="parentCategory$ | async; let parent"
+              >({{ parent.name }})</ng-container
+            >
+          </small>
+        </span>
+
+        <clr-button-group class="me-0">
+          <ng-container
+            *ngIf="
+              parentCategory$ | async;
+              let parent;
+              else: noParentCategorySelected
+            "
+            ><clr-button
+              class="btn-primary-outline--audi m-0"
+              (click)="resetQueryParams()"
+            >
+              返回上一層 Back
+            </clr-button>
+            <clr-button
+              class="btn-primary--audi m-0"
+              (click)="this.promptAddSubcategory(parent.id)"
+              >新增分類 New</clr-button
+            ></ng-container
+          >
+          <ng-template #noParentCategorySelected>
+            <clr-button
+              class="btn-primary--audi m-0"
+              (click)="this.promptEdit()"
+              >新增分類 New</clr-button
+            >
+          </ng-template>
+        </clr-button-group>
       </div>
       <div class="card-body">
         <clr-datagrid
           (clrDgRefresh)="refreshDatagrid($event)"
+          [clrLoading]="datagridLoading"
         >
-          <clr-dg-column>Name</clr-dg-column>
-          <clr-dg-column>Description</clr-dg-column>
+          <clr-dg-column
+            >名稱 Name
+            <audi-sys-clr-dg-serverside-string-filter
+              [stringFilter]="productCategoryNameFilter"
+            ></audi-sys-clr-dg-serverside-string-filter>
+          </clr-dg-column>
+          <clr-dg-column
+            >敘述 Description
+            <audi-sys-clr-dg-serverside-string-filter
+              [stringFilter]="productCategoryDescriptionFilter"
+            ></audi-sys-clr-dg-serverside-string-filter>
+          </clr-dg-column>
 
-          <clr-dg-row *ngFor="let productCategory of productCategories">
+          <clr-dg-row
+            *ngFor="let productCategory of productCategories"
+            [clrDgItem]="productCategory"
+          >
             <clr-dg-action-overflow>
-              <button class="action-item" (click)="onEdit(productCategory.id)">
+              <button
+                class="action-item"
+                routerLink="/manage/products/items/new"
+                [queryParams]="{ productCategoryId: productCategory.id }"
+              >
+                新增產品 Add Products
+              </button>
+              <button
+                *ngIf="productCategory.products.length > 0"
+                class="action-item"
+                routerLink="/manage/products/items"
+                [queryParams]="{ productCategoryId: productCategory.id }"
+              >
+                查看相關商品 View Related Products
+              </button>
+              <button
+                *ngIf="productCategory.children.length > 0"
+                class="action-item"
+                (click)="
+                  resetQueryParams({
+                    parentId: productCategory.id,
+                    pageNumber: 1
+                  })
+                "
+              >
+                管理副分類 Manage Subcategories
+              </button>
+              <button
+                *ngIf="productCategory.parentId === null"
+                class="action-item"
+                (click)="promptAddSubcategory(productCategory.id)"
+              >
+                新增副分類 Add Subcategory
+              </button>
+              <button
+                class="action-item"
+                (click)="promptEdit(productCategory.id)"
+              >
                 編輯 Edit
               </button>
               <button
                 class="action-item"
-                (click)="onDelete(productCategory.id)"
+                (click)="promptDelete(productCategory)"
               >
                 刪除 Delete
               </button>
             </clr-dg-action-overflow>
 
             <clr-dg-cell>{{ productCategory.name }}</clr-dg-cell>
-            <clr-dg-cell>{{ productCategory.description }}</clr-dg-cell>
+            <clr-dg-cell>{{
+              productCategory.description | ellipsis: 50
+            }}</clr-dg-cell>
           </clr-dg-row>
+
+          <ng-template [(clrIfDetail)]="detailPaneState" let-productCategory>
+            <clr-dg-detail>
+              <clr-dg-detail-header>{{
+                productCategory.name
+              }}</clr-dg-detail-header>
+              <clr-dg-detail-body>
+                <h6 class="h6 mt-1">敘述 Description</h6>
+                <p class="mt-1">{{ productCategory.description }}</p>
+
+                <ng-container *ngIf="productCategory.children.length > 0">
+                  <h6 class="h6 mt-3">副分類 Subcategories</h6>
+                  <ul>
+                    <li *ngFor="let subCategory of productCategory.children">
+                      {{ subCategory.name }}
+                    </li>
+                  </ul>
+                </ng-container>
+
+                <ng-container *ngIf="productCategory.products.length > 0">
+                  <h6 class="h6 mt-3">產品 Products</h6>
+                  <ul>
+                    <li *ngFor="let product of productCategory.products">
+                      {{ product.name }}
+                    </li>
+                  </ul>
+                </ng-container>
+              </clr-dg-detail-body>
+            </clr-dg-detail>
+          </ng-template>
+
+          <clr-dg-placeholder>
+            <p class="text-center mt-0">查無資料</p>
+            <p class="text-center mt-0 mb-1">No Data Available</p>
+          </clr-dg-placeholder>
 
           <clr-dg-footer>
             <clr-dg-pagination
@@ -63,13 +185,94 @@
   </div>
 </div>
 
-<!-- <clr-modal [(clrModalOpen)]="openModal">
-  <h3 class="modal-title">I have a nice title</h3>
+<clr-modal [(clrModalOpen)]="editModalOpen" [clrModalClosable]="false">
+  <h3 class="modal-title">
+    <ng-container *ngIf="!productCategoryForm.get('id')?.value"
+      >新增分類 Add New Product Category</ng-container
+    >
+    <ng-container *ngIf="productCategoryForm.get('id')?.value"
+      >編輯分類 Edit Product Category</ng-container
+    >
+  </h3>
   <div class="modal-body">
-    <p>But not much to say...</p>
+    <form [formGroup]="productCategoryForm" clrForm clrLayout="vertical">
+      <clr-input-container class="w-100 mt-0">
+        <label>名稱 Category Name</label>
+        <input
+          type="text"
+          clrInput
+          formControlName="name"
+          class="clr-input-width"
+        />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-input-container>
+      <audi-sys-product-category-selector
+        formControlName="parentId"
+        [show]="'parent'"
+        [helperText]="
+          '若建立主分類請忽略該欄位 Ignore this field if not creating a sub-category'
+        "
+      ></audi-sys-product-category-selector>
+      <clr-textarea-container class="w-100">
+        <label>敘述 Description</label>
+        <textarea
+          clrTextarea
+          formControlName="description"
+          class="w-100"
+          rows="5"
+        ></textarea>
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-textarea-container>
+    </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline" (click)="openModal = false">Cancel</button>
-    <button type="button" class="btn btn-primary" (click)="openModal = false">Ok</button>
+    <button
+      type="button"
+      class="btn btn-primary-outline--audi"
+      (click)="cancelEdit()"
+    >
+      取消 Cancel
+    </button>
+    <button type="submit" class="btn btn-primary--audi" (click)="onSubmit()">
+      確認 Ok
+    </button>
   </div>
-</clr-modal> -->
+</clr-modal>
+
+<clr-modal [(clrModalOpen)]="confirmDeleteModalOpen" [clrModalClosable]="false">
+  <h3 class="modal-title">刪除產品分類 Delete Product Category</h3>
+  <div class="modal-body">
+    <ng-container *ngIf="productCategoryToDelete !== null">
+      <p class="my-1">
+        確定要刪除<strong>{{ productCategoryToDelete.name }}</strong
+        >? 該分類底下的副分類及產品也會被全數刪除!
+      </p>
+      <p class="mt-2 mb-1">
+        Are you sure you want to delete
+        <strong>{{ productCategoryToDelete.name }}</strong
+        >? All sub-categories and products under this category will be deleted
+        as well.
+      </p>
+    </ng-container>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary-outline--audi"
+      (click)="cancelDelete()"
+    >
+      取消 Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary--audi"
+      (click)="onDelete(productCategoryToDelete!.id)"
+    >
+      確認 Ok
+    </button>
+  </div>
+</clr-modal>
