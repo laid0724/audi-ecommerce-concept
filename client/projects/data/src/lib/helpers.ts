@@ -3,6 +3,7 @@ import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PaginatedResult } from './models/pagination';
+import { ActivatedRoute, QueryParamsHandling, Router } from '@angular/router';
 
 export function getPaginationHeaders(
   pageNumber: number,
@@ -43,6 +44,24 @@ export function getPaginatedResult<T>(
         return paginatedResult;
       })
     );
+}
+
+export function setQueryParams(
+  router: Router,
+  route: ActivatedRoute,
+  queryParams = {},
+  queryParamsHandling = '' as QueryParamsHandling
+): void {
+  // currently, no native angular method to clear query params on the same page
+  // this is a workaround to that - by passing in an empty object
+  // see: https://stackoverflow.com/questions/48552993/angular-5-remove-query-param
+  // but I also want to reuse this helper fn to hard set query params in the same page
+  // so i am making {} a default parameter value instead.
+  router.navigate([], {
+    relativeTo: route,
+    queryParams,
+    queryParamsHandling,
+  });
 }
 
 export function getAllErrors(
