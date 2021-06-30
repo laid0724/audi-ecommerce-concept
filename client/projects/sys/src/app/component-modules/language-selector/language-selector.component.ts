@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Data } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { LanguageCode, LanguageStateService } from '@audi/data';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -14,7 +14,8 @@ export class LanguageSelectorComponent implements OnInit {
 
   constructor(
     public languageState: LanguageStateService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -29,5 +30,21 @@ export class LanguageSelectorComponent implements OnInit {
             ]
       )
     );
+  }
+
+  clearQueryParams(): void {
+    // currently, no native angular method to clear query params on the same page
+    // this is a workaround to that
+    // see: https://stackoverflow.com/questions/48552993/angular-5-remove-query-param
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {},
+      queryParamsHandling: '',
+    });
+  }
+
+  onChangeLanguage(language: LanguageCode): void {
+    this.languageState.selectLanguage(language);
+    this.clearQueryParams();
   }
 }

@@ -7,7 +7,7 @@
     <clr-button
       [type]="'button'"
       *ngFor="let language of languages"
-      (click)="languageState.selectLanguage(language)"
+      (click)="onChangeLanguage(language)"
       class="btn btn-sm {{
         language === current ? 'btn-primary--audi' : 'btn-primary-outline--audi'
       }}"
