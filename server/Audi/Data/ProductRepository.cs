@@ -51,6 +51,16 @@ namespace Audi.Data
                 )
                 .AsQueryable();
 
+            if (!string.IsNullOrWhiteSpace(productCategoryParams.Name))
+            {
+                query = query.Where(pc => pc.Name.ToLower().Trim().Contains(productCategoryParams.Name.ToLower().Trim()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(productCategoryParams.Description))
+            {
+                query = query.Where(pc => pc.Description.ToLower().Trim().Contains(productCategoryParams.Description.ToLower().Trim()));
+            }
+
             return await PagedList<ProductCategoryDto>.CreateAsync(
                 query.ProjectTo<ProductCategoryDto>(_mapper.ConfigurationProvider),
                 productCategoryParams.PageNumber,
@@ -66,6 +76,16 @@ namespace Audi.Data
                     pc.Language.ToLower().Trim() == productCategoryParams.Language.ToLower().Trim()
                 )
                 .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(productCategoryParams.Name))
+            {
+                query = query.Where(pc => pc.Name.ToLower().Trim().Contains(productCategoryParams.Name.ToLower().Trim()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(productCategoryParams.Description))
+            {
+                query = query.Where(pc => pc.Description.ToLower().Trim().Contains(productCategoryParams.Description.ToLower().Trim()));
+            }
 
             return await PagedList<ProductCategoryDto>.CreateAsync(
                 query.ProjectTo<ProductCategoryDto>(_mapper.ConfigurationProvider),
