@@ -2,6 +2,6 @@ import { PagedRequest } from "./pagination";
 
 export interface ProductCategoryParams extends PagedRequest {
   parentId?: number;
-  name?: string;
-  description?: string;
+  name?: string | null;
+  description?: string | null;
 }

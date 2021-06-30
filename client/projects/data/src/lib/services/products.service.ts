@@ -6,7 +6,11 @@ import { Observable, throwError } from 'rxjs';
 import { ProductCategoryParams } from '../models/product-category-params';
 import { ProductParams } from '../models/product-params';
 import { PaginatedResult } from '../models/pagination';
-import { getPaginatedResult, getPaginationHeaders } from '../helpers';
+import {
+  getPaginatedResult,
+  getPaginationHeaders,
+  isNullOrEmptyString,
+} from '../helpers';
 import { WysiwygGrid } from '../models/wysiwyg';
 import { ReplaySubject } from 'rxjs';
 import {
@@ -122,13 +126,22 @@ export class ProductsService {
   getParentProductCategories(
     productCategoryParams: ProductCategoryParams
   ): Observable<PaginatedResult<ProductCategory[]>> {
-    const { pageNumber, pageSize, parentId } = productCategoryParams;
+    const { pageNumber, pageSize, parentId, name, description } =
+      productCategoryParams;
 
     let params = getPaginationHeaders(pageNumber, pageSize);
 
     if (parentId != null) {
       params = params.append('parentId', parentId.toString());
     }
+
+    !isNullOrEmptyString(name)
+      ? (params = params.append('name', name as string))
+      : params.delete('name');
+
+    !isNullOrEmptyString(description)
+      ? (params = params.append('description', description as string))
+      : params.delete('description');
 
     return getPaginatedResult<ProductCategory[]>(
       this.http,
@@ -140,7 +153,8 @@ export class ProductsService {
   getChildrenProductCategories(
     productCategoryParams: ProductCategoryParams
   ): Observable<PaginatedResult<ProductCategory[]>> {
-    const { pageNumber, pageSize, parentId } = productCategoryParams;
+    const { pageNumber, pageSize, parentId, name, description } =
+      productCategoryParams;
 
     if (parentId == null) {
       return throwError('No parentId provided');
@@ -149,6 +163,14 @@ export class ProductsService {
     let params = getPaginationHeaders(pageNumber, pageSize);
 
     params = params.append('parentId', parentId.toString());
+
+    !isNullOrEmptyString(name)
+      ? (params = params.append('name', name as string))
+      : params.delete('name');
+
+    !isNullOrEmptyString(description)
+      ? (params = params.append('description', description as string))
+      : params.delete('description');
 
     return getPaginatedResult<ProductCategory[]>(
       this.http,

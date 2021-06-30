@@ -64,6 +64,10 @@ export function setQueryParams(
   });
 }
 
+export function isNullOrEmptyString(val: string | null | undefined): boolean {
+  return val == null || (val && val.trim() === '') || val.length === 0;
+}
+
 export function getAllErrors(
   form: FormGroup | FormArray
 ): { [key: string]: any } | null {

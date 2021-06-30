@@ -23,6 +23,6 @@ export class ClrDgServersideStringFilterComponent {
     clearTimeout(this.debounce);
     this.debounce = setTimeout( () => {
       this.stringFilter.changes.next();
-    }, 200);
+    }, 300);
   }
 }
