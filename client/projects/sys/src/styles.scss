@@ -34,6 +34,17 @@ $audi-error: #bb0a30;
   }
 }
 
+.clr-select-width {
+  .clr-control-container,
+  .clr-select-wrapper,
+  .clr-select {
+    width: 100% !important;
+    &.clr-error {
+      width: calc(100% - 20px) !important;
+    }
+  }
+}
+
 .btn-primary--audi {
   background: $audi-black !important;
   border-color: $audi-black !important;
