@@ -2,13 +2,21 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ProductCategory } from '../models/product-category';
 import { Product } from '../models/product';
-import { ProductPhoto } from '../models/product-photo';
 import { Observable, throwError } from 'rxjs';
 import { ProductCategoryParams } from '../models/product-category-params';
 import { ProductParams } from '../models/product-params';
 import { PaginatedResult } from '../models/pagination';
 import { getPaginatedResult, getPaginationHeaders } from '../helpers';
 import { WysiwygGrid } from '../models/wysiwyg';
+import { ReplaySubject } from 'rxjs';
+import {
+  concatMap,
+  expand,
+  reduce,
+  startWith,
+  switchMap,
+  takeWhile,
+} from 'rxjs/operators';
 
 export interface ProductCategoryUpsertRequest {
   id?: number;
@@ -37,6 +45,46 @@ export class ProductsService {
   private endpoint = '/api/products';
 
   // TODO: implement caching with map
+
+  // recursively accumulate paged results from paged APIs, bound to a refresher to refetch everything
+  // see: https://stackoverflow.com/questions/56786261/recursively-combining-http-results-based-on-response
+  allParentCategoriesRefresher$ = new ReplaySubject(1);
+  allParentCategories$ = this.allParentCategoriesRefresher$.asObservable().pipe(
+    startWith(null),
+    switchMap(() =>
+      this.getParentProductCategories({
+        pageNumber: 1,
+        pageSize: 100,
+      }).pipe(
+        expand((pagedProductCategories: PaginatedResult<ProductCategory[]>) =>
+          this.getParentProductCategories({
+            pageNumber: pagedProductCategories.pagination.currentPage + 1,
+            pageSize: 100,
+          })
+        ),
+        takeWhile(
+          (pagedProductCategories: PaginatedResult<ProductCategory[]>) =>
+            pagedProductCategories.pagination.currentPage <
+            pagedProductCategories.pagination.totalPages,
+          true
+        ),
+        concatMap(
+          (pagedProductCategories: PaginatedResult<ProductCategory[]>) =>
+            pagedProductCategories.result
+        ),
+        reduce(
+          (
+            accumulator: ProductCategory[],
+            productCategory: ProductCategory
+          ) => {
+            accumulator.push(productCategory);
+            return accumulator;
+          },
+          []
+        )
+      )
+    )
+  );
 
   constructor(private http: HttpClient) {}
 
@@ -75,6 +123,7 @@ export class ProductsService {
     productCategoryParams: ProductCategoryParams
   ): Observable<PaginatedResult<ProductCategory[]>> {
     const { pageNumber, pageSize, parentId } = productCategoryParams;
+
     let params = getPaginationHeaders(pageNumber, pageSize);
 
     if (parentId != null) {
