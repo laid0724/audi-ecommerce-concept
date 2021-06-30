@@ -49,7 +49,6 @@ namespace Audi.Data
                     (pc.ParentId.Value == productCategoryParams.ParentId.Value) &&
                     pc.Language.ToLower().Trim() == productCategoryParams.Language.ToLower().Trim()
                 )
-                .Select(pc => pc.Children)
                 .AsQueryable();
 
             return await PagedList<ProductCategoryDto>.CreateAsync(
