@@ -1,0 +1,8 @@
+<clr-dg-filter [clrDgFilter]="stringFilter">
+  <input
+    type="text"
+    class="clr-input"
+    #stringFilterInputEl
+    (keyup)="triggerFilterChanges(stringFilterInputEl)"
+  />
+</clr-dg-filter>

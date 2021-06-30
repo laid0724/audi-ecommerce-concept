@@ -8,7 +8,7 @@ import { Subject } from 'rxjs';
 export class ClrServerSideStringFilter
   implements ClrDatagridFilterInterface<any> {
   changes = new Subject<any>();
-  value = null;
+  value: string | null = null;
 
   property: string;
 
