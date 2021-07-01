@@ -1,0 +1,87 @@
+* {
+  outline: unset !important;
+}
+
+[cds-text*='body']::before {
+  margin-bottom: 0 !important;
+}
+
+.clr-input-width {
+  width: 100% !important;
+  &.clr-error {
+    width: calc(100% - 20px) !important;
+  }
+}
+
+.clr-select-width {
+  .clr-control-container,
+  .clr-select-wrapper,
+  .clr-select {
+    width: 100% !important;
+    &.clr-error {
+      width: calc(100% - 20px) !important;
+    }
+  }
+}
+
+.btn-primary {
+  &--audi {
+    background: $audi-black !important;
+    border-color: $audi-black !important;
+    transition: all 0.3s cubic-bezier(0.75, 0.02, 0.5, 1) !important;
+    color: $audi-white !important;
+    &:active {
+      box-shadow: 0 0.1rem 0 0 $audi-grey-8 inset !important;
+    }
+    &:hover {
+      color: $audi-white !important;
+      background: $audi-grey-10 !important;
+    }
+  }
+}
+
+.btn-primary-outline {
+  &--audi {
+    border-color: $audi-black !important;
+    transition: all 0.3s cubic-bezier(0.75, 0.02, 0.5, 1) !important;
+    color: $audi-black !important;
+    &:active {
+      box-shadow: 0 0.1rem 0 0 $audi-black inset !important;
+    }
+    &:hover {
+      color: $audi-black !important;
+      background: $audi-grey-1 !important;
+    }
+  }
+}
+
+.btn-icon {
+  &--audi {
+    clr-icon {
+      color: $audi-white;
+    }
+  }
+}
+
+.login-wrapper {
+  background: url('../../assets/login-img.webp');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.card-body {
+  .datagrid {
+    margin-top: 0 !important;
+    border: unset;
+    &-footer {
+      border: unset;
+    }
+  }
+}
+
+.nav .nav-link:hover,
+.nav .nav-link.active {
+  box-shadow: 0 -0.15rem 0 $audi-black inset !important;
+}
