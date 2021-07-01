@@ -13,7 +13,7 @@ namespace Audi.DTOs
         public bool IsVisible { get; set; }
         public bool IsDiscounted { get; set; }
         public decimal DiscountAmount { get; set; }
-        public DateTime DiscountDeadline { get; set; }
+        public DateTime? DiscountDeadline { get; set; }
         public decimal Price { get; set; }
         public int Stock { get; set; }
     }

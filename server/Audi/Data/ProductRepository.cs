@@ -120,6 +120,7 @@ namespace Audi.Data
         public async Task<PagedList<ProductDto>> GetProductsAsync(ProductParams productParams)
         {
             var query = _context.Products
+                .Include(p => p.ProductCategory)
                 .Include(p => p.Photos)
                 .Where(p =>
                     p.Language.ToLower().Trim() == productParams.Language.ToLower().Trim()

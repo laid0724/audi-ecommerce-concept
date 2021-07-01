@@ -70,8 +70,8 @@ export class ProductsCategoryListComponent implements OnInit, OnDestroy {
   initialQueryParams = {
     pageNumber: 1,
     pageSize: 10,
-    name: null,
-    description: null
+    name: undefined,
+    description: undefined
   };
 
   productCategoryParams: ProductCategoryParams = this.initialQueryParams;
@@ -160,8 +160,8 @@ export class ProductsCategoryListComponent implements OnInit, OnDestroy {
       ...this.productCategoryParams,
       pageNumber: state.page?.current as number,
       pageSize: state.page?.size as number,
-      name: null,
-      description: null,
+      name: undefined,
+      description: undefined,
     };
 
     if (state.filters) {

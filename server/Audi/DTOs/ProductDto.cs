@@ -8,7 +8,7 @@ namespace Audi.DTOs
     public class ProductDto
     {
         public int Id { get; set; }
-        public int ProductCategoryId { get; set; }
+        public ProductCategoryDto ProductCategory { get; set; }
         public string Name { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdated { get; set; }

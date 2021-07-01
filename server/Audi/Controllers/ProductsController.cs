@@ -177,7 +177,10 @@ namespace Audi.Controllers
 
             _unitOfWork.ProductRepository.AddProduct(product);
 
-            if (_unitOfWork.HasChanges() && await _unitOfWork.Complete()) return Ok(_mapper.Map<ProductDto>(product));
+            if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
+            {
+                return Ok(_mapper.Map<ProductDto>(product));
+            }
 
             return BadRequest("Failed to add product");
         }

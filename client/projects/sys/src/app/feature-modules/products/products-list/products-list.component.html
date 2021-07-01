@@ -1,1 +1,81 @@
-<p>products-list works!</p>
+<div class="row">
+  <div class="col-12 d-flex justify-content-end">
+    <audi-sys-language-selector></audi-sys-language-selector>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card mt-3">
+      <div
+        class="
+          card-header
+          py-3
+          d-flex
+          align-items-center
+          justify-content-between
+        "
+      >
+        <span class="d-flex align-items-center"> 產品管理 | PRODUCTS </span>
+
+        <button
+          class="btn btn-primary m-0"
+          routerLink="/manage/products/items/new"
+        >
+          新增產品 New Product
+        </button>
+      </div>
+      <div class="card-body">
+        <clr-datagrid
+          (clrDgRefresh)="refreshDatagrid($event)"
+          [clrLoading]="datagridLoading"
+        >
+        <!-- TODO: filters -->
+          <clr-dg-column
+            >名稱 Name
+            <!-- <audi-sys-clr-dg-serverside-string-filter
+              [stringFilter]="productCategoryNameFilter"
+            ></audi-sys-clr-dg-serverside-string-filter> -->
+          </clr-dg-column>
+
+          <clr-dg-row *ngFor="let product of products" [clrDgItem]="product">
+            <clr-dg-action-overflow>
+              <button
+                class="action-item"
+                [routerLink]="['/manage/products/items/', product.id]"
+              >
+                編輯 Edit
+              </button>
+              <button class="action-item" (click)="promptDelete(product.id)">
+                刪除 Delete
+              </button>
+            </clr-dg-action-overflow>
+
+            <clr-dg-cell>{{ product.name }}</clr-dg-cell>
+          </clr-dg-row>
+
+          <clr-dg-placeholder>
+            <p class="text-center mt-0">查無資料</p>
+            <p class="text-center mt-0 mb-1">No Data Available</p>
+          </clr-dg-placeholder>
+
+          <clr-dg-footer>
+            <clr-dg-pagination
+              *ngIf="paging != null"
+              #pagination
+              [clrDgPage]="paging.currentPage"
+              [clrDgPageSize]="productParams.pageSize"
+              [clrDgTotalItems]="paging.totalItems"
+            >
+              <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50]">
+                每頁顯示筆數
+              </clr-dg-page-size>
+              {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} 之
+              {{ pagination.totalItems }} 筆
+            </clr-dg-pagination>
+          </clr-dg-footer>
+        </clr-datagrid>
+      </div>
+    </div>
+  </div>
+</div>

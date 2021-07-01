@@ -1,1 +1,171 @@
-<p>products-edit works!</p>
+<div class="row">
+  <div class="col-12 d-flex justify-content-end">
+    <audi-sys-language-selector></audi-sys-language-selector>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <form clrForm [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="card mt-3">
+        <div class="card-header py-3 d-flex align-items-center">
+          {{
+            productId
+              ? '產品管理 | MANAGE PRODUCT'
+              : '新增產品 | ADD NEW PRODUCT'
+          }}
+        </div>
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <clr-input-container>
+                  <label>商品名稱 Product Name</label>
+                  <input
+                    type="text"
+                    clrInput
+                    formControlName="name"
+                    class="w-100"
+                  />
+                  <clr-control-error *clrIfError="'required'"
+                    >必填 Required</clr-control-error
+                  >
+                </clr-input-container>
+
+                <audi-sys-product-category-selector
+                  formControlName="productCategoryId"
+                ></audi-sys-product-category-selector>
+
+                <clr-input-container>
+                  <label>價格 Price</label>
+                  <input type="number" clrInput formControlName="price" />
+                  <clr-control-error *clrIfError="'required'"
+                    >必填 Required</clr-control-error
+                  >
+                  <clr-control-error *clrIfError="'pattern'"
+                    >禁止非正數 Positive numbers only</clr-control-error
+                  >
+                </clr-input-container>
+
+                <clr-input-container>
+                  <label>庫存 Stock</label>
+                  <input type="number" clrInput formControlName="stock" />
+                  <clr-control-error *clrIfError="'required'"
+                    >必填 Required</clr-control-error
+                  >
+                  <clr-control-error *clrIfError="'pattern'"
+                    >禁止非正數 Positive numbers only</clr-control-error
+                  >
+                </clr-input-container>
+
+                <audi-sys-wysiwyg-grid
+                  formGroupName="wysiwygGrid"
+                  [allowImage]="true"
+                  [label]="'內容 Content'"
+                >
+                </audi-sys-wysiwyg-grid>
+
+                <clr-toggle-container>
+                  <label>顯示狀態 Visibility</label>
+                  <clr-toggle-wrapper>
+                    <input
+                      type="checkbox"
+                      clrToggle
+                      formControlName="isVisible"
+                    />
+                    <label>{{
+                      productForm.get('isVisible')?.value
+                        ? '開發 Visible'
+                        : '隱藏 Hidden'
+                    }}</label>
+                  </clr-toggle-wrapper>
+                  <clr-control-error *clrIfError="'required'"
+                    >必填 Required</clr-control-error
+                  >
+                </clr-toggle-container>
+
+                <clr-toggle-container>
+                  <label>折扣狀態 Discount Status</label>
+                  <clr-toggle-wrapper>
+                    <input
+                      type="checkbox"
+                      clrToggle
+                      formControlName="isDiscounted"
+                    />
+                    <label>{{
+                      productForm.get('isDiscounted')?.value
+                        ? '折扣中 Discounted'
+                        : '原價 No Discount'
+                    }}</label>
+                  </clr-toggle-wrapper>
+                  <clr-control-error *clrIfError="'required'"
+                    >必填 Required</clr-control-error
+                  >
+                </clr-toggle-container>
+
+                <clr-input-container
+                  *ngIf="productForm.get('isDiscounted')?.value === true"
+                >
+                  <label>折扣 Discount Amount</label>
+                  <input
+                    type="number"
+                    clrInput
+                    formControlName="discountAmount"
+                  />
+                  <clr-control-error *clrIfError="'required'"
+                    >必填 Required</clr-control-error
+                  >
+                  <clr-control-error *clrIfError="'pattern'"
+                    >禁止非正數 Positive numbers only</clr-control-error
+                  >
+                  <clr-control-error
+                    *clrIfError="'isGreaterThanAnotherControlValue'"
+                    >折扣不可比價格高 Discount amount cannot be greater than the
+                    product's price</clr-control-error
+                  >
+                </clr-input-container>
+
+                <clr-date-container
+                  *ngIf="productForm.get('isDiscounted')?.value === true"
+                >
+                  <label>折扣截止日期 Discount Deadline</label>
+                  <input
+                    type="date"
+                    clrDate
+                    formControlName="discountDeadline"
+                  />
+                  <clr-control-error *clrIfError="'required'"
+                    >必填 Required</clr-control-error
+                  >
+                </clr-date-container>
+
+                <audi-sys-photo-uploader
+                  *ngIf="product"
+                ></audi-sys-photo-uploader>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card-footer d-flex align-items-center mt-1 {{
+            productId ? 'justify-content-end' : 'justify-content-between'
+          }}"
+        >
+          <ng-container *ngIf="!productId">
+            <p class="p3 ms-2 mt-0" style="color: #8c8c8c">
+              *商品圖片須在建檔成功後才能新增 Product photos may only be added
+              after you have created the entry
+            </p>
+          </ng-container>
+
+          <clr-button-group class="me-0">
+            <clr-button type="button" class="btn-primary-outline"
+              >取消 Cancel</clr-button
+            >
+            <clr-button type="submit" class="btn-primary">儲存 Save</clr-button>
+          </clr-button-group>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

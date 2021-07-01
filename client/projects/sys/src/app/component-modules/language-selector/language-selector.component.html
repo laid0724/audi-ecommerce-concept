@@ -9,7 +9,7 @@
       *ngFor="let language of languages"
       (click)="onChangeLanguage(language)"
       class="btn btn-sm {{
-        language === current ? 'btn-primary--audi' : 'btn-primary-outline--audi'
+        language === current ? 'btn-primary' : 'btn-primary-outline'
       }}"
     >
       <ng-container [ngSwitch]="language">

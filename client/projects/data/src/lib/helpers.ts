@@ -121,17 +121,17 @@ export function controlHasError(
   return formControl.touched && formControl.invalid && errorCount > 0;
 }
 
-export function formatDateTimeToClrDate(date: string | Date): string | null {
+// export function formatClrDateToServerDate(date: string | Date): string | null {
+//   if (date == null) {
+//     return null;
+//   }
+//   const [m, d, y] = (date as string).split('T')[0].split('/');
+//   return [y, m, d].join('-');
+// }
+
+export function formatClrDateToUTCString(date: string): string | null {
   if (date == null) {
     return null;
   }
-  const [y, m, d] = (date as string).split('T')[0].split('-');
-  return [m, d, y].join('-');
-}
-export function formatClrDateToServerDate(date: string | Date): string | null {
-  if (date == null) {
-    return null;
-  }
-  const [m, d, y] = (date as string).split('T')[0].split('/');
-  return [y, m, d].join('-');
+  return new Date(date).toISOString();
 }

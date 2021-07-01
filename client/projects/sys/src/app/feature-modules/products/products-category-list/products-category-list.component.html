@@ -32,20 +32,20 @@
               else: noParentCategorySelected
             "
             ><clr-button
-              class="btn-primary-outline--audi m-0"
+              class="btn-primary-outline m-0"
               (click)="resetQueryParams()"
             >
               返回上一層 Back
             </clr-button>
             <clr-button
-              class="btn-primary--audi m-0"
+              class="btn-primary m-0"
               (click)="this.promptAddSubcategory(parent.id)"
               >新增分類 New</clr-button
             ></ng-container
           >
           <ng-template #noParentCategorySelected>
             <clr-button
-              class="btn-primary--audi m-0"
+              class="btn-primary m-0"
               (click)="this.promptEdit()"
               >新增分類 New</clr-button
             >
@@ -232,12 +232,12 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-primary-outline--audi"
+      class="btn btn-primary-outline"
       (click)="cancelEdit()"
     >
       取消 Cancel
     </button>
-    <button type="submit" class="btn btn-primary--audi" (click)="onSubmit()">
+    <button type="submit" class="btn btn-primary" (click)="onSubmit()">
       確認 Ok
     </button>
   </div>
@@ -262,14 +262,14 @@
   <div class="modal-footer">
     <button
       type="button"
-      class="btn btn-primary-outline--audi"
+      class="btn btn-primary-outline"
       (click)="cancelDelete()"
     >
       取消 Cancel
     </button>
     <button
       type="button"
-      class="btn btn-primary--audi"
+      class="btn btn-primary"
       (click)="onDelete(productCategoryToDelete!.id)"
     >
       確認 Ok
