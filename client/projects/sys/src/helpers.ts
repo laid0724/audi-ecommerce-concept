@@ -1,11 +1,16 @@
 import { PhotoService } from '@audi/data';
 import { ToastrService } from 'ngx-toastr';
-import Quill from 'quill';
+import Quill, { Delta } from 'quill';
 
 // see: https://github.com/quilljs/quill/issues/1400, and
 // see: https://github.com/quilljs/quill/issues/863
 export function addCustomQuillImageHandler(
   quill: Quill,
+  quillTextChangeHandlerRef: (
+    delta: Delta,
+    oldDelta: Delta,
+    source: string
+  ) => void,
   photoService: PhotoService,
   toastr: ToastrService
 ) {
@@ -54,6 +59,12 @@ export function addCustomQuillImageHandler(
     // push image url to rich editor.
     const range = quill.getSelection();
     quill.insertEmbed(range.index, 'image', `${url}`);
+    /*
+      HACK to solve bug: photo wont be inside content unless user hits enter or types soemthing,
+      so we use manually trigger the text change handler to force quill to detect changes
+    */
+    const fakeDelta = null as unknown as Delta;
+    quillTextChangeHandlerRef(fakeDelta, fakeDelta, 'user');
   }
 
   // quill editor add image handler

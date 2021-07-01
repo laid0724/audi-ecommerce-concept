@@ -110,7 +110,13 @@ export class QuillEditorComponent
       return delta;
     });
 
-    addCustomQuillImageHandler(quill, this.photoService, this.toastr);
+    /*
+      HACK to solve bug: photo wont be inside content unless user hits enter or types soemthing,
+      so we use manually trigger the text change handler to force quill to detect changes
+    */
+    const quillEditorTextChangeHandlerRef =
+      this.quillEditor.textChangeHandler.bind(this.quillEditor);
+    addCustomQuillImageHandler(quill, quillEditorTextChangeHandlerRef, this.photoService, this.toastr);
   }
 
   onEdit(): void {

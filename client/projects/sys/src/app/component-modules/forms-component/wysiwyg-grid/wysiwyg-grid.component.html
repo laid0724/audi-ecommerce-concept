@@ -1,4 +1,8 @@
-<form clrForm [formGroup]="formGroupAssertion(controlContainer.control)">
+<form
+  class="p-0"
+  clrForm
+  [formGroup]="formGroupAssertion(controlContainer.control)"
+>
   <clr-control-container class="clr-control-container--no-max-height wysiwyg">
     <label>
       {{ label }}
@@ -83,13 +87,7 @@
         <p class="p1 wysiwyg--no-content">無內容 No Content</p>
       </ng-template>
       <button
-        class="
-          btn
-          btn-primary
-          btn-sm btn-icon
-          d-block
-          mx-auto
-        "
+        class="btn btn-primary btn-sm btn-icon d-block mx-auto"
         style="margin-top: 10px"
         type="button"
         (click)="rowTypeSelectionModalOpen = true"
@@ -98,6 +96,15 @@
         增加內容行列 Add Row
       </button>
     </div>
+    <span
+      class="__clr-error clr-subtext"
+      *ngIf="
+        controlContainer.control?.hasError('required') &&
+        controlContainer.control?.touched
+      "
+    >
+      必填 Required
+    </span>
   </clr-control-container>
 </form>
 
@@ -109,7 +116,7 @@
   <div class="modal-header">Select a row format</div>
   <div class="modal-body">
     <clr-radio-container class="vertical-radio">
-      <label>內容格式<br>Row Format</label>
+      <label>內容格式<br />Row Format</label>
       <clr-radio-wrapper *ngFor="let option of types">
         <input
           type="radio"
