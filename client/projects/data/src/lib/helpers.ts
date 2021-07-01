@@ -1,4 +1,9 @@
-import { FormGroup, FormArray, FormControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormArray,
+  FormControl,
+  AbstractControl,
+} from '@angular/forms';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -66,6 +71,18 @@ export function setQueryParams(
 
 export function isNullOrEmptyString(val: string | null | undefined): boolean {
   return val == null || (val && val.trim() === '') || val.length === 0;
+}
+
+export function formControlAssertion(
+  abstractControl: AbstractControl | null
+): FormControl {
+  return abstractControl as FormControl;
+}
+
+export function formGroupAssertion(
+  abstractControl: AbstractControl | null
+): FormGroup {
+  return abstractControl as FormGroup;
 }
 
 export function getAllErrors(

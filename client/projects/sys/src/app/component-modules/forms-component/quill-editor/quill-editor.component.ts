@@ -7,6 +7,7 @@ import {
   ViewEncapsulation,
   forwardRef,
   Input,
+  AfterViewInit,
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -38,10 +39,13 @@ import { PhotoService } from '@audi/data';
     },
   ],
 })
-export class QuillEditorComponent implements OnInit, ControlValueAccessor {
+export class QuillEditorComponent
+  implements OnInit, AfterViewInit, ControlValueAccessor
+{
   @ViewChild(ClrForm) clrForm: ClrForm;
   @ViewChild('quillEditor', { static: false })
   quillEditor: NgxQuillEditorComponent;
+
   @Input() allowImage: boolean = false;
 
   quillModules: QuillModule;
@@ -51,11 +55,14 @@ export class QuillEditorComponent implements OnInit, ControlValueAccessor {
   wysiwygTabActive: boolean = true;
   htmlTabActive: boolean = false;
 
-  value: any;
+  value: string;
 
   innerForm: FormGroup = this.fb.group({
     content: [],
   });
+
+  private onChangeFn: any;
+  private onTouchedFn: any;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: object,
@@ -72,17 +79,22 @@ export class QuillEditorComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  writeValue(obj: string): void {
-    this.value = obj;
-    this.innerForm.get('content')?.patchValue(obj);
+  ngAfterViewInit(): void {
+    this.quillEditor.registerOnChange = this.onChangeFn;
+    this.quillEditor.registerOnTouched = this.onTouchedFn;
+  }
+
+  writeValue(value: string): void {
+    this.value = value;
+    this.innerForm.get('content')?.patchValue(value);
   }
 
   registerOnChange(fn: any): void {
-    this.quillEditor.registerOnChange = fn;
+    this.onChangeFn = fn;
   }
 
   registerOnTouched(fn: any): void {
-    this.quillEditor.registerOnTouched = fn;
+    this.onTouchedFn = fn;
   }
 
   onEditorInit(quill: Quill) {
@@ -103,17 +115,20 @@ export class QuillEditorComponent implements OnInit, ControlValueAccessor {
 
   onEdit(): void {
     this.modalOpen = true;
-    this.quillEditor.onModelTouched();
+    this.onTouchedFn();
+    this.quillEditor?.onModelTouched();
   }
 
   onCancel(): void {
     this.modalOpen = false;
-    this.quillEditor.onModelTouched();
+    this.onTouchedFn();
+    this.quillEditor?.onModelTouched();
   }
 
   onSubmit(): void {
     this.value = this.innerForm.get('content')!.value;
-    this.quillEditor.onModelChange(this.value);
+    this.quillEditor?.onModelChange(this.value);
+    this.onChangeFn(this.value);
     this.modalOpen = false;
   }
 }

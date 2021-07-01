@@ -6,10 +6,17 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ProductCategorySelectorComponent } from './product-category-selector/product-category-selector.component';
-import { QuillModule } from "ngx-quill";
-import { QuillEditorComponent } from "./quill-editor/quill-editor.component";
+import { QuillModule } from 'ngx-quill';
+import { QuillEditorComponent } from './quill-editor/quill-editor.component';
+import { WysiwygGridComponent } from './wysiwyg-grid/wysiwyg-grid.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
-const COMPONENTS = [PhotoUploaderComponent, ProductCategorySelectorComponent, QuillEditorComponent];
+const COMPONENTS = [
+  PhotoUploaderComponent,
+  ProductCategorySelectorComponent,
+  QuillEditorComponent,
+  WysiwygGridComponent,
+];
 
 @NgModule({
   declarations: [...COMPONENTS],
@@ -20,7 +27,8 @@ const COMPONENTS = [PhotoUploaderComponent, ProductCategorySelectorComponent, Qu
     FormsModule,
     ReactiveFormsModule,
     FileUploadModule,
-    QuillModule
+    QuillModule,
+    DragDropModule,
   ],
   exports: [NgSelectModule, FormsModule, ReactiveFormsModule, ...COMPONENTS],
 })

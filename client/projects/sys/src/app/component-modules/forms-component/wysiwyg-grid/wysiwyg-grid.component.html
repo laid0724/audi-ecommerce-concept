@@ -1,0 +1,141 @@
+<form clrForm [formGroup]="formGroupAssertion(controlContainer.control)">
+  <clr-control-container class="clr-control-container--no-max-height wysiwyg">
+    <label>
+      {{ label }}
+    </label>
+
+    <div
+      class="wysiwyg-preview-wrapper"
+      cdkDropList
+      (cdkDropListDropped)="onDrop($event)"
+    >
+      <ng-container *ngIf="rows.length > 0; else emptyRow">
+        <div
+          cdkDrag
+          class="clr-row wysiwyg-rows"
+          formArrayName="rows"
+          *ngFor="
+            let row of rows.controls;
+            let rowIndex = index;
+            let lastRow = last
+          "
+        >
+          <div class="clr-col-12">
+            <div
+              class="clr-row"
+              style="margin-top: 5px"
+              [ngStyle]="{ 'margin-bottom': !lastRow ? '5px' : null }"
+            >
+              <div class="clr-col-1 d-flex justify-content-between pe-0">
+                <div class="drag-drop-sort-icon" cdkDragHandle>
+                  <clr-icon shape="two-way-arrows right"></clr-icon>
+                </div>
+                <div
+                  class="swap-col-icon"
+                  *ngIf="is8or4Col(formGroupAssertion(row))"
+                  (click)="reverse8or4Col(formGroupAssertion(row))"
+                >
+                  <clr-icon shape="repeat"></clr-icon>
+                </div>
+              </div>
+              <div class="clr-col-10">
+                <div class="clr-row" [formGroupName]="rowIndex">
+                  <div
+                    formArrayName="columns"
+                    *ngFor="
+                      let column of getColumns(rowIndex).controls;
+                      let colIndex = index
+                    "
+                    [ngClass]="{
+                      'clr-col-4': column.get('width')?.value === 4,
+                      'clr-col-6': column.get('width')?.value === 6,
+                      'clr-col-8': column.get('width')?.value === 8,
+                      'clr-col-12': column.get('width')?.value === 12
+                    }"
+                  >
+                    <ng-container [formGroupName]="colIndex">
+                      <audi-sys-quill-editor
+                        class="w-100"
+                        [allowImage]="allowImage"
+                        clrControl
+                        formControlName="content"
+                      ></audi-sys-quill-editor>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+              <div class="clr-col-1">
+                <button
+                  class="btn btn-danger btn-sm btn-icon"
+                  type="button"
+                  (click)="removeRow(rowIndex)"
+                >
+                  <clr-icon shape="trash"></clr-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="drag-drop-placeholder" *cdkDragPlaceholder></div>
+        </div>
+      </ng-container>
+
+      <ng-template #emptyRow>
+        <p class="p1 wysiwyg--no-content">無內容 No Content</p>
+      </ng-template>
+      <button
+        class="
+          btn
+          btn-primary
+          btn-sm btn-icon
+          d-block
+          mx-auto
+        "
+        style="margin-top: 10px"
+        type="button"
+        (click)="rowTypeSelectionModalOpen = true"
+      >
+        <clr-icon shape="plus"></clr-icon>
+        增加內容行列 Add Row
+      </button>
+    </div>
+  </clr-control-container>
+</form>
+
+<clr-modal
+  [clrModalOpen]="rowTypeSelectionModalOpen"
+  [clrModalSize]="'md'"
+  [clrModalClosable]="true"
+>
+  <div class="modal-header">Select a row format</div>
+  <div class="modal-body">
+    <clr-radio-container class="vertical-radio">
+      <label>內容格式<br>Row Format</label>
+      <clr-radio-wrapper *ngFor="let option of types">
+        <input
+          type="radio"
+          clrRadio
+          name="selectedType"
+          [(ngModel)]="selectedType"
+          [value]="option"
+        />
+        <label>{{ option }}</label>
+      </clr-radio-wrapper>
+    </clr-radio-container>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary-outline"
+      (click)="rowTypeSelectionModalOpen = false"
+    >
+      取消 Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="addRow(selectedType)"
+    >
+      確認 Submit
+    </button>
+  </div>
+</clr-modal>
