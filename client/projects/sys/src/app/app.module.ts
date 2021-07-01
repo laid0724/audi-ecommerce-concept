@@ -16,6 +16,7 @@ import {
 import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
 import { CdsModule } from '@cds/angular';
+import { QuillModule } from "ngx-quill";
 
 import '@cds/core/icon/register.js';
 
@@ -39,6 +40,7 @@ ClarityIcons.addIcons(shoppingCartIcon);
     NgxSpinnerModule,
     HttpClientModule,
     CdsModule,
+    QuillModule.forRoot(),
   ],
   providers: [
     ErrorInterceptorProvider,

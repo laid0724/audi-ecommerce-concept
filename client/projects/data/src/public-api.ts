@@ -20,6 +20,7 @@ export * from './lib/services/account.service'
 export * from './lib/services/busy.service'
 export * from './lib/services/language-state.service'
 export * from './lib/services/products.service'
+export * from './lib/services/photo.service'
 
 // Interceptors
 export * from './lib/interceptors/error.interceptor'

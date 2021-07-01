@@ -6,8 +6,10 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ProductCategorySelectorComponent } from './product-category-selector/product-category-selector.component';
+import { QuillModule } from "ngx-quill";
+import { QuillEditorComponent } from "./quill-editor/quill-editor.component";
 
-const COMPONENTS = [PhotoUploaderComponent, ProductCategorySelectorComponent];
+const COMPONENTS = [PhotoUploaderComponent, ProductCategorySelectorComponent, QuillEditorComponent];
 
 @NgModule({
   declarations: [...COMPONENTS],
@@ -18,6 +20,7 @@ const COMPONENTS = [PhotoUploaderComponent, ProductCategorySelectorComponent];
     FormsModule,
     ReactiveFormsModule,
     FileUploadModule,
+    QuillModule
   ],
   exports: [NgSelectModule, FormsModule, ReactiveFormsModule, ...COMPONENTS],
 })
