@@ -12,7 +12,7 @@
             {{ user.email }}
           </ng-container>
           <clr-icon
-            shape="user"
+            shape="administrator"
             size="sm"
             class="ms-1"
             style="margin-bottom: 3px"
@@ -36,6 +36,15 @@
       [clrVerticalNavCollapsed]="true"
     >
       <clr-vertical-nav-group routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="home"></clr-icon>
+        首頁 Homepage
+        <clr-vertical-nav-group-children *clrIfExpanded="false">
+          <a clrVerticalNavLink routerLink="/manage" routerLinkActive="active">
+            TBD
+          </a>
+        </clr-vertical-nav-group-children>
+      </clr-vertical-nav-group>
+      <clr-vertical-nav-group routerLinkActive="active">
         <clr-icon clrVerticalNavIcon shape="shopping-cart"></clr-icon>
         產品 Products
         <clr-vertical-nav-group-children *clrIfExpanded="false">
@@ -52,6 +61,69 @@
             routerLinkActive="active"
           >
             產品管理 Products
+          </a>
+        </clr-vertical-nav-group-children>
+      </clr-vertical-nav-group>
+      <clr-vertical-nav-group routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="users"></clr-icon>
+        會員 Members
+        <clr-vertical-nav-group-children *clrIfExpanded="false">
+          <a clrVerticalNavLink routerLink="/manage" routerLinkActive="active">
+            TBD
+          </a>
+        </clr-vertical-nav-group-children>
+      </clr-vertical-nav-group>
+      <clr-vertical-nav-group routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="truck"></clr-icon>
+        訂單 Orders
+        <clr-vertical-nav-group-children *clrIfExpanded="false">
+          <a clrVerticalNavLink routerLink="/manage" routerLinkActive="active">
+            TBD
+          </a>
+        </clr-vertical-nav-group-children>
+      </clr-vertical-nav-group>
+      <clr-vertical-nav-group routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="new"></clr-icon>
+        新聞 News
+        <clr-vertical-nav-group-children *clrIfExpanded="false">
+          <a clrVerticalNavLink routerLink="/manage" routerLinkActive="active">
+            TBD
+          </a>
+        </clr-vertical-nav-group-children>
+      </clr-vertical-nav-group>
+      <clr-vertical-nav-group routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="event"></clr-icon>
+        活動 Events
+        <clr-vertical-nav-group-children *clrIfExpanded="false">
+          <a clrVerticalNavLink routerLink="/manage" routerLinkActive="active">
+            TBD
+          </a>
+        </clr-vertical-nav-group-children>
+      </clr-vertical-nav-group>
+      <clr-vertical-nav-group routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="help-info"></clr-icon>
+        疑難雜症 FAQs
+        <clr-vertical-nav-group-children *clrIfExpanded="false">
+          <a clrVerticalNavLink routerLink="/manage" routerLinkActive="active">
+            TBD
+          </a>
+        </clr-vertical-nav-group-children>
+      </clr-vertical-nav-group>
+      <clr-vertical-nav-group routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="envelope"></clr-icon>
+        信箱 Inbox
+        <clr-vertical-nav-group-children *clrIfExpanded="false">
+          <a clrVerticalNavLink routerLink="/manage" routerLinkActive="active">
+            TBD
+          </a>
+        </clr-vertical-nav-group-children>
+      </clr-vertical-nav-group>
+      <clr-vertical-nav-group routerLinkActive="active">
+        <clr-icon clrVerticalNavIcon shape="talk-bubbles"></clr-icon>
+        線上客服 Live Chat
+        <clr-vertical-nav-group-children *clrIfExpanded="false">
+          <a clrVerticalNavLink routerLink="/manage" routerLinkActive="active">
+            TBD
           </a>
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>

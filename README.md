@@ -98,7 +98,6 @@ Once you've setup your heroku app, you can just repeat steps 6 & 7 for continuou
 ** these need language property zh/en **
 - add photo property to product category
 - Photo table and repo / controller
-- Wysiwyg table and repo / controller
 - Article table and repo / controller
 - Carousel table and repo / controller
 **
@@ -109,9 +108,7 @@ Once you've setup your heroku app, you can just repeat steps 6 & 7 for continuou
 
 #### Sys
 - homepage banner module
-- product category and product management module
 - news / event / announcement module
-- wysiwyg component
 - ngx charts for statistics
 - user management module
 - ng select control value accessor
@@ -120,7 +117,6 @@ Once you've setup your heroku app, you can just repeat steps 6 & 7 for continuou
 - user complaints / forms module, bind this to email
 - user like product 1-to-M
 - add photo to product category
-
 
 #### Public
 
