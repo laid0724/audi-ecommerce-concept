@@ -12,6 +12,7 @@ import {
   isEqualOrGreaterThanValidator,
   NON_NEGATIVE_NUMBER_REGEX,
   Product,
+  ProductPhoto,
   ProductsService,
   WysiwygRowType,
 } from '@audi/data';
@@ -24,13 +25,16 @@ import {
   wysiwygGridValidatorBuilderFn,
 } from '../../../component-modules/forms-component/wysiwyg-grid/wysiwyg-grid.component';
 
+// TODO: can deactivate guard and dynamically generate modal component to confirm
+// FIXME: if you are in an en product, you refresh the page the the language state
+//        will default to zh and the product category selector will show zh categories
+
 @Component({
   selector: 'audi-sys-products-edit',
   templateUrl: './products-edit.component.html',
   styleUrls: ['./products-edit.component.scss'],
 })
 export class ProductsEditComponent implements OnInit, OnDestroy {
-  // TODO: can deactivate guard and dynamically generate modal component to confirm
   @ViewChild(ClrForm, { static: false }) clrForm: ClrForm;
 
   productId: number | null = null;
@@ -146,7 +150,6 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
 
   initForm(): void {
     this.productForm = this.fb.group({
-      // TODO: photos
       name: [null, Validators.required],
       productCategoryId: [null, Validators.required],
       price: [
@@ -181,9 +184,11 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  onSetMainPhoto(): void {}
-  onAddPhoto(): void {}
-  onDeletePhoto(): void {}
+  onPhotoChanges(photos: ProductPhoto[]): void {
+    if (this.product != null) {
+      this.product.photos = photos;
+    }
+  }
 
   onSubmit(): void {
     if (this.productForm.invalid) {

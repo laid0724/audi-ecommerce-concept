@@ -58,7 +58,7 @@ export function addCustomQuillImageHandler(
   function insertToEditor(url: string) {
     // push image url to rich editor.
     const range = quill.getSelection();
-    quill.insertEmbed(range.index, 'image', `${url}`);
+    quill.insertEmbed(range!.index, 'image', `${url}`);
     /*
       HACK to solve bug: photo wont be inside content unless user hits enter or types soemthing,
       so we use manually trigger the text change handler to force quill to detect changes

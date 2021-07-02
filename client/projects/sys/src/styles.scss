@@ -1,6 +1,17 @@
 @import '~@ng-select/ng-select/themes/default.theme.css';
 @import 'scss/index.scss';
 
+.debug {
+  border: 1px solid red !important;
+  * {
+    border: 1px solid red !important;
+  }
+}
+
+.pointer {
+  cursor: pointer !important;
+}
+
 quill-editor {
   display: block;
   &.clr-input {

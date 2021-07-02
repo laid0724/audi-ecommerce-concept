@@ -1,19 +1,33 @@
-<div class="row">
-  <div class="col-12 d-flex justify-content-end">
-    <audi-sys-language-selector></audi-sys-language-selector>
+<ng-container *ngIf="!productId">
+  <div class="row">
+    <div class="col-12 d-flex justify-content-end">
+      <audi-sys-language-selector></audi-sys-language-selector>
+    </div>
   </div>
-</div>
+</ng-container>
 
-<div class="row">
+<div class="row" [ngClass]="{ 'mt-3': !productId }">
   <div class="col-12">
     <form clrForm [formGroup]="productForm" (ngSubmit)="onSubmit()">
-      <div class="card mt-3">
-        <div class="card-header py-3 d-flex align-items-center">
+      <div class="card mt-0">
+        <div
+          class="card-header py-3 d-flex align-items-center"
+          [ngClass]="{ 'justify-content-between': productId }"
+        >
           {{
             productId
               ? '產品管理 | MANAGE PRODUCT'
               : '新增產品 | ADD NEW PRODUCT'
           }}
+          <button
+            *ngIf="productId"
+            class="btn btn-primary btn-sm m-0"
+            type="button"
+            routerLink="/manage/products/items/new"
+            routerLinkActive="router-link-active"
+          >
+            新增產品 Add New Product
+          </button>
         </div>
         <div class="card-body">
           <div class="container">
@@ -34,7 +48,8 @@
 
                 <audi-sys-product-category-selector
                   formControlName="productCategoryId"
-                ></audi-sys-product-category-selector>
+                >
+                </audi-sys-product-category-selector>
 
                 <clr-input-container>
                   <label>價格 Price</label>
@@ -139,14 +154,15 @@
                     >必填 Required</clr-control-error
                   >
                   <clr-control-error *clrIfError="'isEarlierThanToday'"
-                    >需晚於今日 Must be later than today</clr-control-error
-                  >
+                    >需晚於今日 Must be later than today
+                  </clr-control-error>
                 </clr-date-container>
 
-                <!-- TODO: photos integration -->
-                <!-- <audi-sys-photo-uploader
-                  *ngIf="product"
-                ></audi-sys-photo-uploader> -->
+                <audi-sys-product-photo-uploader
+                  *ngIf="product !== null"
+                  [product]="product"
+                  (photoChanges)="onPhotoChanges($any($event))"
+                ></audi-sys-product-photo-uploader>
               </div>
             </div>
           </div>

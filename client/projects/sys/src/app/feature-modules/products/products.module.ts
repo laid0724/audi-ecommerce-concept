@@ -2,20 +2,23 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ProductsRoutingModule } from './products-routing.module';
-import { ClarityModule } from "@clr/angular";
+import { ClarityModule } from '@clr/angular';
 import { ProductsCategoryListComponent } from './products-category-list/products-category-list.component';
 import { ProductsEditComponent } from './products-edit/products-edit.component';
 import { ProductsListComponent } from './products-list/products-list.component';
-import { LanguageSelectorModule } from "../../component-modules/language-selector/language-selector.module";
-import { FormsComponentModule } from "../../component-modules/forms-component/forms-component.module";
-import { PipesModule } from "@audi/data";
-import { ClrDatagridUtilitiesModule } from "../../component-modules/clr-datagrid-utilities/clr-datagrid-utilities.module";
+import { LanguageSelectorModule } from '../../component-modules/language-selector/language-selector.module';
+import { FormsComponentModule } from '../../component-modules/forms-component/forms-component.module';
+import { PipesModule } from '@audi/data';
+import { ClrDatagridUtilitiesModule } from '../../component-modules/clr-datagrid-utilities/clr-datagrid-utilities.module';
+import { ProductPhotoUploaderComponent } from './product-photo-uploader/product-photo-uploader.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
     ProductsCategoryListComponent,
     ProductsEditComponent,
-    ProductsListComponent
+    ProductsListComponent,
+    ProductPhotoUploaderComponent,
   ],
   imports: [
     CommonModule,
@@ -24,7 +27,8 @@ import { ClrDatagridUtilitiesModule } from "../../component-modules/clr-datagrid
     LanguageSelectorModule,
     FormsComponentModule,
     PipesModule,
-    ClrDatagridUtilitiesModule
-  ]
+    ClrDatagridUtilitiesModule,
+    FileUploadModule,
+  ],
 })
-export class ProductsModule { }
+export class ProductsModule {}
