@@ -44,9 +44,7 @@
             ></ng-container
           >
           <ng-template #noParentCategorySelected>
-            <clr-button
-              class="btn-primary m-0"
-              (click)="this.promptEdit()"
+            <clr-button class="btn-primary m-0" (click)="this.promptEdit()"
               >新增分類 New</clr-button
             >
           </ng-template>
@@ -142,7 +140,11 @@
                   <h6 class="h6 mt-3">副分類 Subcategories</h6>
                   <ul>
                     <li *ngFor="let subCategory of productCategory.children">
-                      {{ subCategory.name }}
+                      <a
+                        routerLink="/manage/products/items"
+                        [queryParams]="{ productCategoryId: subCategory.id }"
+                        >{{ subCategory.name }}</a
+                      >
                     </li>
                   </ul>
                 </ng-container>
@@ -151,7 +153,9 @@
                   <h6 class="h6 mt-3">產品 Products</h6>
                   <ul>
                     <li *ngFor="let product of productCategory.products">
-                      {{ product.name }}
+                      <a [routerLink]="['/manage/products/items/', product.id]">
+                        {{ product.name }}</a
+                      >
                     </li>
                   </ul>
                 </ng-container>

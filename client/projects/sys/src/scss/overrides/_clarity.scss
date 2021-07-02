@@ -82,6 +82,16 @@
   .datagrid {
     margin-top: 0 !important;
     border: unset;
+    &-detail {
+      &-body {
+        padding-bottom: 20px;
+        overflow-y: auto;
+      }
+      &-pane {
+        margin-top: 0;
+        border: unset;
+      }
+    }
     &-footer {
       border: unset;
     }
