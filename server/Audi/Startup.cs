@@ -37,7 +37,7 @@ namespace Audi
                 swagger.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "AudiAPI with JWT authorization",
+                    Title = "Audi API with JWT authorization",
                     Description = "ASP.NET Core 5 Web API"
                 });
                 // To Enable authorization using Swagger (JWT)  
