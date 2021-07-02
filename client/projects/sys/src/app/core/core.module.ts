@@ -8,14 +8,6 @@ import { ClarityModule } from '@clr/angular';
 import { ServerErrorComponent } from './server-error/server-error.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { CdsModule } from '@cds/angular';
-
-import '@cds/core/icon/register.js';
-
-import { ClarityIcons, userIcon } from '@cds/core/icon';
-
-ClarityIcons.addIcons(userIcon);
-
 @NgModule({
   declarations: [
     LoginComponent,
@@ -29,7 +21,6 @@ ClarityIcons.addIcons(userIcon);
     BrowserAnimationsModule,
     ReactiveFormsModule,
     RouterModule,
-    CdsModule,
   ],
 })
 export class CoreModule {}

@@ -15,14 +15,7 @@ import {
 } from '@audi/data';
 import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
-import { CdsModule } from '@cds/angular';
-import { QuillModule } from "ngx-quill";
-
-import '@cds/core/icon/register.js';
-
-import { ClarityIcons, shoppingCartIcon } from '@cds/core/icon';
-
-ClarityIcons.addIcons(shoppingCartIcon);
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [AppComponent],
@@ -39,7 +32,6 @@ ClarityIcons.addIcons(shoppingCartIcon);
     }),
     NgxSpinnerModule,
     HttpClientModule,
-    CdsModule,
     QuillModule.forRoot(),
   ],
   providers: [

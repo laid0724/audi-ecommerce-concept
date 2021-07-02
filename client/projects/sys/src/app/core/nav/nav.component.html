@@ -11,12 +11,12 @@
           <ng-container *ngIf="user$ | async; let user">
             {{ user.email }}
           </ng-container>
-          <cds-icon
+          <clr-icon
             shape="user"
             size="sm"
             class="ms-1"
             style="margin-bottom: 3px"
-          ></cds-icon>
+          ></clr-icon>
         </button>
         <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
           <a clrDropdownItem>
@@ -36,7 +36,7 @@
       [clrVerticalNavCollapsed]="true"
     >
       <clr-vertical-nav-group routerLinkActive="active">
-        <cds-icon clrVerticalNavIcon shape="shopping-cart"></cds-icon>
+        <clr-icon clrVerticalNavIcon shape="shopping-cart"></clr-icon>
         產品 Products
         <clr-vertical-nav-group-children *clrIfExpanded="false">
           <a

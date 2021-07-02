@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ClarityModule } from '@clr/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { PhotoUploaderComponent } from './photo-uploader/photo-uploader.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ProductCategorySelectorComponent } from './product-category-selector/product-category-selector.component';
 import { QuillModule } from 'ngx-quill';
@@ -12,7 +11,6 @@ import { WysiwygGridComponent } from './wysiwyg-grid/wysiwyg-grid.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
 const COMPONENTS = [
-  PhotoUploaderComponent,
   ProductCategorySelectorComponent,
   QuillEditorComponent,
   WysiwygGridComponent,
