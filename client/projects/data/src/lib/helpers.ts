@@ -141,3 +141,7 @@ export function formatClrDateToUTCString(date: string): string | null {
   }
   return new Date(date).toISOString();
 }
+
+export function clrDateFormat(date: Date): string {
+  return format(date, 'yyyy-MM-dd');
+}

@@ -133,9 +133,13 @@
                     type="date"
                     clrDate
                     formControlName="discountDeadline"
+                    [min]="today"
                   />
                   <clr-control-error *clrIfError="'required'"
                     >必填 Required</clr-control-error
+                  >
+                  <clr-control-error *clrIfError="'isEarlierThanToday'"
+                    >需晚於今日 Must be later than today</clr-control-error
                   >
                 </clr-date-container>
 

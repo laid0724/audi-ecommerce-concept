@@ -4,9 +4,11 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
   BusyService,
+  clrDateFormat,
   formatClrDateToUTCString,
   formatServerTimeToClrDate,
   getAllErrors,
+  isEarlierThanTodayValidator,
   isEqualOrGreaterThanValidator,
   NON_NEGATIVE_NUMBER_REGEX,
   Product,
@@ -35,6 +37,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
   product: Product | null = null;
 
   productForm: FormGroup;
+  today = clrDateFormat(new Date());
 
   destroy$ = new Subject<boolean>();
 
@@ -97,7 +100,9 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
               const wysiwygControl = this.productForm.get('wysiwyg');
 
               if (wysiwygControl) {
-                const rowsFA: FormArray = wysiwygControl.get('rows') as FormArray;
+                const rowsFA: FormArray = wysiwygControl.get(
+                  'rows'
+                ) as FormArray;
 
                 rowsFA.clear();
 
@@ -165,12 +170,14 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
       discountAmount: [
         { value: null, disabled: true },
         [
-          // TODO: cannot be earlier than today validator
           Validators.pattern(NON_NEGATIVE_NUMBER_REGEX),
           isEqualOrGreaterThanValidator('price'),
         ],
       ],
-      discountDeadline: [{ value: null, disabled: true }],
+      discountDeadline: [
+        { value: null, disabled: true },
+        [isEarlierThanTodayValidator],
+      ],
     });
   }
 
