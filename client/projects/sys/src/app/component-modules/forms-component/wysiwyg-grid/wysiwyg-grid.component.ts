@@ -11,7 +11,12 @@ import {
   ValidationErrors,
   ValidatorFn,
 } from '@angular/forms';
-import { Column, formControlAssertion, formGroupAssertion, WysiwygRowType } from '@audi/data';
+import {
+  Column,
+  formControlAssertion,
+  formGroupAssertion,
+  WysiwygRowType,
+} from '@audi/data';
 
 // EXAMPLE USAGE:
 // this.form = this.fb.group({
@@ -226,9 +231,8 @@ export class WysiwygGridComponent implements ControlValueAccessor {
     abstractControl: AbstractControl | null
   ) => FormControl = formControlAssertion;
 
-  formGroupAssertion: (
-    abstractControl: AbstractControl | null
-  ) => FormGroup = formGroupAssertion;
+  formGroupAssertion: (abstractControl: AbstractControl | null) => FormGroup =
+    formGroupAssertion;
 
   writeValue(value: string): void {
     this.value = value;
@@ -247,10 +251,14 @@ export class WysiwygGridComponent implements ControlValueAccessor {
     this.disabled = isDisabled;
   }
 
+  toggleRowSelectionModal(): void {
+    this.rowTypeSelectionModalOpen = !this.rowTypeSelectionModalOpen;
+    this.controlContainer.control?.updateValueAndValidity();
+  }
+
   addRow(type: WysiwygRowType): void {
     addWysiwygRow(this.fb, this.rows, type);
-    this.rowTypeSelectionModalOpen = false;
-    this.controlContainer.control?.updateValueAndValidity();
+    this.toggleRowSelectionModal();
   }
 
   removeRow(rowIndex: number): void {
@@ -268,7 +276,6 @@ export class WysiwygGridComponent implements ControlValueAccessor {
     const draggedRow = this.rows.at(dropEvent.previousIndex);
     this.rows.removeAt(dropEvent.previousIndex);
     this.rows.insert(dropEvent.currentIndex, draggedRow);
-
     this.controlContainer.control?.updateValueAndValidity();
   }
 

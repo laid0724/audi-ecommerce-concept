@@ -9,6 +9,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PaginatedResult } from './models/pagination';
 import { ActivatedRoute, QueryParamsHandling, Router } from '@angular/router';
+import { utcToZonedTime } from "date-fns-tz";
+import { format } from "date-fns";
 
 export function getPaginationHeaders(
   pageNumber: number,
@@ -121,13 +123,17 @@ export function controlHasError(
   return formControl.touched && formControl.invalid && errorCount > 0;
 }
 
-// export function formatClrDateToServerDate(date: string | Date): string | null {
-//   if (date == null) {
-//     return null;
-//   }
-//   const [m, d, y] = (date as string).split('T')[0].split('/');
-//   return [y, m, d].join('-');
-// }
+export function formatServerTimeToClrDate(date: string | Date): string | null {
+  if (date == null) {
+    return null;
+  }
+
+  const jsDateObject = new Date(date);
+  const timeZone = 'Asia/Taipei';
+  const zonedDate = utcToZonedTime(jsDateObject, timeZone);
+  const clrDateFormat = format(zonedDate, 'MM/dd/yyyy');
+  return clrDateFormat;
+}
 
 export function formatClrDateToUTCString(date: string): string | null {
   if (date == null) {

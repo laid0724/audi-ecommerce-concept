@@ -90,7 +90,7 @@
         class="btn btn-primary btn-sm btn-icon d-block mx-auto"
         style="margin-top: 10px"
         type="button"
-        (click)="rowTypeSelectionModalOpen = true"
+        (click)="toggleRowSelectionModal()"
       >
         <clr-icon shape="plus"></clr-icon>
         增加內容行列 Add Row
@@ -133,7 +133,7 @@
     <button
       type="button"
       class="btn btn-primary-outline"
-      (click)="rowTypeSelectionModalOpen = false"
+      (click)="toggleRowSelectionModal()"
     >
       取消 Cancel
     </button>

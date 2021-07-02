@@ -3,7 +3,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
+  BusyService,
   formatClrDateToUTCString,
+  formatServerTimeToClrDate,
   getAllErrors,
   isEqualOrGreaterThanValidator,
   NON_NEGATIVE_NUMBER_REGEX,
@@ -14,7 +16,7 @@ import {
 import { ClrForm } from '@clr/angular';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
-import { startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import {
   addWysiwygRow,
   wysiwygGridValidatorBuilderFn,
@@ -41,7 +43,8 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductsService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private busyService: BusyService
   ) {}
 
   ngOnInit(): void {
@@ -81,14 +84,20 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
           this.productId = productId;
           return this.productService.getProduct(productId).pipe(
             tap((product: Product) => {
-              this.productForm.patchValue(product);
+              this.product = product;
+              this.productForm.patchValue({
+                ...product,
+                discountDeadline: formatServerTimeToClrDate(
+                  product?.discountDeadline as Date
+                ),
+              });
 
               const { wysiwyg } = product;
 
-              const wysiwygGrid = this.productForm.get('wysiwygGrid');
+              const wysiwygControl = this.productForm.get('wysiwyg');
 
-              if (wysiwygGrid) {
-                const rowsFA: FormArray = wysiwygGrid.get('rows') as FormArray;
+              if (wysiwygControl) {
+                const rowsFA: FormArray = wysiwygControl.get('rows') as FormArray;
 
                 rowsFA.clear();
 
@@ -100,7 +109,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
                       .replace(',', '-') as WysiwygRowType;
                     addWysiwygRow(this.fb, rowsFA, widthLayout);
                   });
-                  wysiwygGrid.patchValue(wysiwyg);
+                  wysiwygControl.patchValue(wysiwyg);
                 }
               }
             })
@@ -125,7 +134,9 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     );
 
-    getProductInfoFromParams$.subscribe();
+    getProductInfoFromParams$.subscribe((_) => {
+      this.busyService.idle();
+    });
   }
 
   initForm(): void {
@@ -141,7 +152,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
         null,
         [Validators.required, Validators.pattern(NON_NEGATIVE_NUMBER_REGEX)],
       ],
-      wysiwygGrid: this.fb.group(
+      wysiwyg: this.fb.group(
         {
           rows: this.fb.array([]),
         },
@@ -154,6 +165,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
       discountAmount: [
         { value: null, disabled: true },
         [
+          // TODO: cannot be earlier than today validator
           Validators.pattern(NON_NEGATIVE_NUMBER_REGEX),
           isEqualOrGreaterThanValidator('price'),
         ],
@@ -174,11 +186,11 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // const { discountDeadline } = this.productForm.value;
+    const { discountDeadline } = this.productForm.value;
 
     let formValue = {
       ...this.productForm.value,
-      // discountDeadline: formatClrDateToUTCString(discountDeadline),
+      discountDeadline: formatClrDateToUTCString(discountDeadline),
     };
 
     let upsertObservable$;
@@ -186,15 +198,16 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
     if (this.productId != null) {
       formValue = {
         ...formValue,
-        productId: this.productId,
+        id: this.productId,
       };
+
       upsertObservable$ = this.productService.updateProduct(formValue);
     } else {
       upsertObservable$ = this.productService.addProduct(formValue);
     }
 
     if (upsertObservable$ != undefined) {
-      upsertObservable$.subscribe((product: Product) => {
+      upsertObservable$.pipe(take(1)).subscribe((product: Product) => {
         if (this.productId == null) {
           this.router.navigate([`/manage/products/items/${product.id}`], {
             queryParamsHandling: '',
