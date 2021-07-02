@@ -22,7 +22,7 @@ namespace Audi.Data
 
         public void AddProductPhoto(ProductPhoto photo)
         {
-            _context.ProductPhotos.Remove(photo);
+            _context.ProductPhotos.Add(photo);
         }
 
         public void DeleteProductPhoto(ProductPhoto photo)

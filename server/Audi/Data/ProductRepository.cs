@@ -148,5 +148,17 @@ namespace Audi.Data
         {
             _context.ProductCategories.Update(productCategory);
         }
+
+        public Task<Product> GetProductByProductPhotoIdAsync(int productPhotoId)
+        {
+            var product = _context.ProductPhotos
+                .Include(photo => photo.Product)
+                    .ThenInclude(product => product.Photos)
+                .Where(photo => photo.Id == productPhotoId)
+                .Select(photo => photo.Product)
+                .SingleOrDefaultAsync();
+
+            return product;
+        }
     }
 }

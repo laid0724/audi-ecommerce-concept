@@ -149,7 +149,7 @@ namespace Audi.Controllers
         }
 
         [Description("get a product")]
-        [HttpGet("{productId}", Name = "GetProduct")]
+        [HttpGet("{productId}")]
         public async Task<ActionResult<ProductDto>> GetProduct(int productId)
         {
             var product = await _unitOfWork.ProductRepository.GetProductByIdAsync(productId);
@@ -265,19 +265,7 @@ namespace Audi.Controllers
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
             {
-                /* 
-                    return a 201 Created response when we add resource to the server
-                    - here, we assign the GetProduct method with a Name attribute so its route can be accessed here
-                        - we also pass in a route value of productId so that the route parameter is supplied
-                    
-                    this way, the response from the server will come back with a "Location" property, indicating the url
-                    of where the photo is stored - in this case, under the product's Photos array
-                */
-                return CreatedAtRoute(
-                    "GetProduct",
-                    new { productId = productId },  // this supplies the route param with the username for this method
-                    _mapper.Map<ProductPhotoDto>(photo)
-                );
+                return Ok(_mapper.Map<ProductPhotoDto>(photo));
             }
 
             return BadRequest("Problem adding photo");
@@ -288,12 +276,13 @@ namespace Audi.Controllers
         [HttpPut("photos/{photoId}/set-main-photo")]
         public async Task<ActionResult> SetProductMainPhoto(int photoId)
         {
-            var product = await _unitOfWork.ProductRepository.GetProductByIdAsync(photoId);
+            var product = await _unitOfWork.ProductRepository.GetProductByProductPhotoIdAsync(photoId);
 
             if (product == null) return NotFound("Product does not exist.");
 
-            var photo = product.Photos.FirstOrDefault(e => e.Id == photoId);
+            var photo = product.Photos.SingleOrDefault(p => p.Id == photoId);
 
+            // this should never be null if the product is found but whatever just to be safe
             if (photo == null) return NotFound("Photo does not exist.");
 
             if (photo.IsMain)
@@ -301,14 +290,7 @@ namespace Audi.Controllers
                 return BadRequest("This is already a main photo.");
             }
 
-            var currentMain = product.Photos.FirstOrDefault(e => e.IsMain);
-
-            if (currentMain != null)
-            {
-                currentMain.IsMain = false;
-            }
-
-            photo.IsMain = true;
+            await _unitOfWork.PhotoRepository.SetMainProductPhoto(photo);
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
             {
@@ -323,12 +305,13 @@ namespace Audi.Controllers
         [HttpDelete("photos/{photoId}")]
         public async Task<ActionResult> DeleteProductPhoto(int photoId)
         {
-            var product = await _unitOfWork.ProductRepository.GetProductByIdAsync(photoId);
+            var product = await _unitOfWork.ProductRepository.GetProductByProductPhotoIdAsync(photoId);
 
             if (product == null) return NotFound("Product does not exist.");
 
-            var photo = product.Photos.FirstOrDefault(e => e.Id == photoId);
+            var photo = product.Photos.SingleOrDefault(p => p.Id == photoId);
 
+            // this should never be null if the product is found but whatever just to be safe
             if (photo == null) return NotFound("Photo does not exist.");
 
             if (photo.IsMain)
@@ -345,7 +328,7 @@ namespace Audi.Controllers
                 }
             }
 
-            product.Photos.Remove(photo);
+            _unitOfWork.PhotoRepository.DeleteProductPhoto(photo);
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
             {
