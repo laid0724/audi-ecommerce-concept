@@ -1,0 +1,137 @@
+<ng-container *ngIf="product">
+  <div class="clr-form-control clr-row">
+    <label class="clr-control-label clr-col-12 clr-col-md-2">圖片 Photos</label>
+    <div class="clr-col-12 clr-col-md-10">
+      <div class="row">
+        <div
+          class="
+            col-12 col-sm-12 col-lg-6 col-xl-4
+            d-flex
+            justify-content-center
+            align-items-center
+            flex-column
+            mb-2
+          "
+          *ngFor="let photo of product.photos"
+        >
+          <div class="img-wrapper" style="--aspect-ratio: 16/9">
+            <img [src]="photo.url" [alt]="photo.url" />
+          </div>
+          <clr-button-group class="mt-1 me-0">
+            <clr-button
+              type="button"
+              (click)="!photo.isMain ? setMainPhoto(photo) : null"
+              class="btn btn-sm {{
+                photo.isMain ? 'btn-primary' : 'btn-primary-outline'
+              }}"
+            >
+              預設圖 Main
+            </clr-button>
+            <clr-button
+              type="button"
+              [disabled]="photo.isMain"
+              (click)="deletePhoto(photo.id)"
+              class="btn btn-sm btn-danger"
+            >
+              刪除 Delete
+            </clr-button>
+          </clr-button-group>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12" *ngIf="uploader?.queue?.length">
+          <h3 class="h3 mt-3">上傳順序 Upload queue</h3>
+          <p class="">檔案數量 Queue length: {{ uploader?.queue?.length }}</p>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th width="50%">檔案名稱 Name</th>
+                <th>檔案大小 Size</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of uploader.queue">
+                <td>
+                  <strong>{{ item?.file?.name }}</strong>
+                </td>
+                <td *ngIf="uploader.options.isHTML5" nowrap>
+                  {{ item?.file?.size / 1024 / 1024 | number: '.2' }} MB
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div>
+            <div class="my-3">
+              上傳進度 Queue progress:
+              <div class="progress" [ngClass]="{ loop: uploader.progress }">
+                <progress></progress>
+              </div>
+            </div>
+            <button
+              type="button"
+              class="btn btn-success btn-sm"
+              (click)="uploader.uploadAll()"
+              [disabled]="!uploader.getNotUploadedItems().length"
+            >
+              <clr-icon shape="upload"></clr-icon> 上傳 Upload
+            </button>
+            <button
+              type="button"
+              class="btn btn-warning btn-sm"
+              (click)="uploader.cancelAll()"
+              [disabled]="!uploader.isUploading"
+            >
+              <clr-icon shape="cancel"></clr-icon> 取消上傳 Cancel
+            </button>
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              (click)="uploader.clearQueue()"
+              [disabled]="!uploader.queue.length"
+            >
+              <clr-icon shape="trash"></clr-icon> 刪除 Remove
+            </button>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <h3 class="h3 mt-3 text-bold">增加圖片 Add Photos</h3>
+          <div
+            ng2FileDrop
+            [ngClass]="{ 'nv-file-over': hasBaseDropZoneOver }"
+            (fileOver)="fileOverBase($event)"
+            [uploader]="uploader"
+            class="card p-3 text-center mb-3"
+          >
+            <clr-icon shape="upload"></clr-icon>
+            Drop Photos Here
+          </div>
+
+          <div class="my-1">
+            <p class="p4 m-0" style="font-size: 13px">數張 Multiple</p>
+            <input
+              type="file"
+              ng2FileSelect
+              [uploader]="uploader"
+              multiple
+              class="file-input"
+            />
+          </div>
+
+          <div class="my-1">
+            <p class="p4 m-0" style="font-size: 13px">單張 Single</p>
+            <input
+              type="file"
+              ng2FileSelect
+              [uploader]="uploader"
+              class="file-input"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

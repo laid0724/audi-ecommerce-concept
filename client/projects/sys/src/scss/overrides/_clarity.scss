@@ -11,6 +11,7 @@
   --clr-btn-default-hover-bg-color: var(--audi-grey-1);
   --clr-btn-default-hover-color: var(--audi-black);
   --clr-btn-default-box-shadow-color: var(--audi-black);
+  --clr-btn-success-disabled-border-color: #666666;
   --clr-forms-focused-color: var(--audi-black);
   --clr-forms-invalid-color: var(--audi-red);
   --clr-forms-textarea-focused-outline: 0 0 0.1rem 0.1rem var(--audi-grey-6);
@@ -21,8 +22,10 @@
   outline: unset !important;
 }
 
-[cds-text*='body']::before {
-  margin-bottom: 0 !important;
+.btn:disabled {
+  clr-icon {
+    color: #666 !important;
+  }
 }
 
 .clr-input-width {

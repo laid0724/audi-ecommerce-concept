@@ -1,0 +1,29 @@
+.file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+.file-input::before {
+  content: '選擇檔案 Select file';
+  display: inline-block;
+  padding: 5px 12px;
+  border: 1px solid $audi-black;
+  border-radius: 3px;
+  outline: none;
+  background: $audi-black;
+  font-family: 'Clarity City', 'Avenir Next', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1.44px;
+  text-shadow: 1px 1px $audi-white;
+  text-transform: uppercase;
+  white-space: nowrap;
+  word-spacing: 0px;
+  cursor: pointer;
+  user-select: auto;
+  -webkit-user-select: none;
+}
+.file-input:hover::before {
+  background: $audi-grey-10;
+}
+.file-input:active::before {
+  background: $audi-grey-10;
+}

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   AccountService,
   Product,
@@ -12,13 +12,17 @@ import { environment } from 'projects/sys/src/environments/environment';
 import { take } from 'rxjs/operators';
 // see https://github.com/valor-software/ng2-file-upload
 
+// TODO: add photo uploader to product category
+// TODO: sort photo order
+
 @Component({
-  selector: 'audi-sys-photo-uploader',
-  templateUrl: './photo-uploader.component.html',
-  styleUrls: ['./photo-uploader.component.scss'],
+  selector: 'audi-sys-product-photo-uploader',
+  templateUrl: './product-photo-uploader.component.html',
+  styleUrls: ['./product-photo-uploader.component.scss'],
 })
-export class PhotoUploaderComponent implements OnInit {
+export class ProductPhotoUploaderComponent implements OnInit {
   @Input() product: Product;
+  @Output() photoChanges = new EventEmitter<ProductPhoto[]>();
 
   uploader: FileUploader;
   hasBaseDropZoneOver = false;
@@ -71,25 +75,34 @@ export class PhotoUploaderComponent implements OnInit {
       if (response) {
         const photo: ProductPhoto = JSON.parse(response);
         this.product.photos.push(photo);
+        this.photoChanges.emit(this.product.photos);
       }
     };
   }
 
   setMainPhoto(photo: ProductPhoto): void {
-    this.productsService.setMainProductPhoto(photo.id).subscribe(() => {
-      this.toastr.success('Success', '成功');
-      this.product.photos.forEach((p) => {
-        p.isMain = p.id === photo.id;
+    this.productsService
+      .setMainProductPhoto(photo.id)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.toastr.success('成功 Success');
+        this.product.photos.forEach((p) => {
+          p.isMain = p.id === photo.id;
+        });
+        this.photoChanges.emit(this.product.photos);
       });
-    });
   }
 
   deletePhoto(photoId: number): void {
-    this.productsService.deleteProductPhoto(photoId).subscribe(() => {
-      this.toastr.success('Success', '成功');
-      this.product.photos = [
-        ...this.product.photos.filter((p) => p.id !== photoId),
-      ];
-    });
+    this.productsService
+      .deleteProductPhoto(photoId)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.toastr.success('成功 Success');
+        this.product.photos = [
+          ...this.product.photos.filter((p) => p.id !== photoId),
+        ];
+        this.photoChanges.emit(this.product.photos);
+      });
   }
 }
