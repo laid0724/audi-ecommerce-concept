@@ -11,7 +11,7 @@ export interface Product {
   isVisible: boolean;
   isDiscounted: boolean;
   discountAmount: number;
-  discountDeadline: Date;
+  discountDeadline?: Date;
   price: number;
   stock: number;
   photos: ProductPhoto[];

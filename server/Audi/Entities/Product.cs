@@ -17,7 +17,7 @@ namespace Audi.Entities
         public bool IsVisible { get; set; } = false;
         public bool IsDiscounted { get; set; } = false;
         public decimal DiscountAmount { get; set; }
-        public DateTime DiscountDeadline { get; set; }
+        public DateTime? DiscountDeadline { get; set; }
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public ICollection<ProductPhoto> Photos { get; set; }

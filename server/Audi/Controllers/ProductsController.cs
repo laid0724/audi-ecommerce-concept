@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,7 +11,6 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace Audi.Controllers
@@ -205,6 +203,11 @@ namespace Audi.Controllers
             product.Price = request.Price;
             product.Stock = request.Stock;
             product.LastUpdated = DateTime.UtcNow;
+
+            if (request.DiscountDeadline.HasValue)
+            {
+                product.DiscountDeadline = request.DiscountDeadline.Value;
+            }
 
             _unitOfWork.ProductRepository.UpdateProduct(product);
 
