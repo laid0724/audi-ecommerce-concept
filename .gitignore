@@ -39,13 +39,15 @@ client/npm-debug.log
 client/yarn-error.log
 client/testem.log
 client/typings
+.vscode
 
 # .NET Files
 server/Audi/appsettings.Development.json
+server/Audi/appsettings.Development.Sqlite.json
 server/Audi/bin/*
 server/Audi/obj/*
 server/Audi/*.db*
 
-# System FIles
+# System Files
 **/.DS_STORE
 **/Thumbs.db
