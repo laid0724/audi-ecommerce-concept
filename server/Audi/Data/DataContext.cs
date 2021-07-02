@@ -1,4 +1,5 @@
 using System;
+using Audi.Data.Extensions;
 using Audi.Entities;
 using Audi.Models;
 using Microsoft.AspNetCore.Identity;
@@ -45,7 +46,7 @@ namespace Audi.Data
                 .HasForeignKey(e => e.ParentId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
-                
+
             builder.Entity<ProductCategory>()
                 .HasMany(e => e.Products)
                 .WithOne(e => e.ProductCategory)
@@ -69,6 +70,10 @@ namespace Audi.Data
                 .HasDefaultValueSql("'{}'");
 
             builder.ApplyUtcDateTimeConverter();
+
+            builder
+                .OverrideIdentityPrefixing()
+                .OverrideEntityFrameworkNamingConventions();
         }
     }
 
