@@ -8,9 +8,13 @@ import {
   FormControlDirective,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import { ProductCategory, ProductsService } from '@audi/data';
+import {
+  LanguageStateService,
+  ProductCategory,
+  ProductsService,
+} from '@audi/data';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 
 type CategoriesToShow = 'all' | 'parent' | 'children';
 
@@ -62,12 +66,17 @@ export class ProductCategorySelectorComponent
 
   constructor(
     private controlContainer: ControlContainer,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private languageState: LanguageStateService
   ) {}
 
   ngOnInit(): void {
-    this.productsService.allParentCategories$
-      .pipe(takeUntil(this.destroy$))
+    // we are chaining from the language state so that when language is selected this is refreshed accordingly
+    this.languageState.language$
+      .pipe(
+        switchMap((_) => this.productsService.allParentCategories$),
+        takeUntil(this.destroy$)
+      )
       .subscribe((parentCategories: ProductCategory[]) => {
         switch (this.show) {
           case 'parent':

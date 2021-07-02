@@ -71,7 +71,7 @@ export class ProductsCategoryListComponent implements OnInit, OnDestroy {
     pageNumber: 1,
     pageSize: 10,
     name: undefined,
-    description: undefined
+    description: undefined,
   };
 
   productCategoryParams: ProductCategoryParams = this.initialQueryParams;
@@ -222,7 +222,7 @@ export class ProductsCategoryListComponent implements OnInit, OnDestroy {
       apiToHit = this.productsService.addProductCategory(formValue);
     }
 
-    apiToHit.subscribe((productCategory: ProductCategory) => {
+    apiToHit.pipe(take(1)).subscribe((productCategory: ProductCategory) => {
       this.refresher$.next(this.productCategoryParams);
       this.productsService.allParentCategoriesRefresher$.next();
       this.editModalOpen = false;
@@ -240,11 +240,14 @@ export class ProductsCategoryListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(categoryId: number): void {
-    this.productsService.deleteProductCategory(categoryId).subscribe(() => {
-      this.productCategoryToDelete = null;
-      this.confirmDeleteModalOpen = false;
-      this.refresher$.next(this.productCategoryParams);
-    });
+    this.productsService
+      .deleteProductCategory(categoryId)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.productCategoryToDelete = null;
+        this.confirmDeleteModalOpen = false;
+        this.refresher$.next(this.productCategoryParams);
+      });
   }
 
   resetQueryParams(queryParams = {}, queryParamsHandling = ''): void {
