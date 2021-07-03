@@ -182,12 +182,15 @@ export class ProductsService {
   getProducts(
     productParams: ProductParams
   ): Observable<PaginatedResult<Product[]>> {
-    const { pageNumber, pageSize, productCategoryId } = productParams;
+    const { pageNumber, pageSize, ...restOfProductParams } = productParams;
     let params = getPaginationHeaders(pageNumber, pageSize);
 
-    if (productCategoryId != null) {
-      params = params.append('productCategoryId', productCategoryId.toString());
-    }
+    Object.keys(restOfProductParams).forEach((key) => {
+      const property = (restOfProductParams as unknown as any)[key];
+      if (property != null) {
+        params = params.append(key, property.toString());
+      }
+    });
 
     return getPaginatedResult<Product[]>(this.http, this.endpoint, params);
   }
