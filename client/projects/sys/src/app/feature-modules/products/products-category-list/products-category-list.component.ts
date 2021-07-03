@@ -9,6 +9,8 @@ import {
 } from '@angular/router';
 import {
   BusyService,
+  LanguageCode,
+  LanguageStateService,
   PaginatedResult,
   Pagination,
   ProductCategory,
@@ -18,7 +20,7 @@ import {
 } from '@audi/data';
 import { ClrDatagridStateInterface, ClrForm } from '@clr/angular';
 import { Observable, of, Subject } from 'rxjs';
-import { startWith, switchMap, take, takeUntil } from 'rxjs/operators';
+import { map, startWith, switchMap, take, takeUntil } from 'rxjs/operators';
 import { ClrServerSideStringFilter } from '../../../component-modules/clr-datagrid-utilities/datagrid-filters';
 
 @Component({
@@ -78,16 +80,24 @@ export class ProductsCategoryListComponent implements OnInit, OnDestroy {
 
   productCategoryParams: ProductCategoryParams = this.initialQueryParams;
 
+  currentLanguage: LanguageCode;
+
   refresher$ = new Subject<ProductCategoryParams>();
   destroy$ = new Subject<boolean>();
 
   constructor(
     private productsService: ProductsService,
+    private busyService: BusyService,
+    private languageService: LanguageStateService,
     private route: ActivatedRoute,
     private router: Router,
-    private busyService: BusyService,
     private fb: FormBuilder
-  ) {}
+  ) {
+    // this will restart component when hitting the same route,
+    // this way refresher will fire again when we reset query params
+    // e.g., when we switch language
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
   ngOnInit(): void {
     this.initProductCategoryForm();
@@ -95,6 +105,29 @@ export class ProductsCategoryListComponent implements OnInit, OnDestroy {
     this.refresher$
       .pipe(
         startWith(this.productCategoryParams),
+        switchMap((productCategoryParams: ProductCategoryParams) =>
+          /*
+            HACK:
+              we are refreshing our query param state because clarity cannot
+              detect the param changes when the filters are wiped when we change the language between zh <--> en
+
+            FIXME: clear all datagrid filter values on the UI on language change
+          */
+          this.languageService.language$.pipe(
+            map((lang: LanguageCode) => {
+              if (this.currentLanguage == null) {
+                this.currentLanguage = lang;
+              }
+
+              if (this.currentLanguage != lang) {
+                this.currentLanguage = lang;
+                this.productCategoryParams = this.initialQueryParams;
+                return this.productCategoryParams;
+              }
+              return productCategoryParams;
+            })
+          )
+        ),
         switchMap((productCategoryParams: ProductCategoryParams) => {
           // HACK: move this assignment to the back of the call stack so ExpressionChangedAfterItHasBeenCheckedError wont be triggered
           setTimeout(() => {

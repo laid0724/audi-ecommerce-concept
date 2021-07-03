@@ -134,8 +134,10 @@ export class ProductsListComponent implements OnInit, OnDestroy {
                   therefore, we are detecting our language changes in the following manner and then re-calling the parent categories
                   again with our language interceptor header to refresh the data.
 
-                  we are also refreshing our query param state because clarity ui cannot
+                  we are also refreshing our query param state because clarity cannot
                   detect the param changes when the filters are wiped when we change the language between zh <--> en
+
+                FIXME: clear all datagrid filter values on the UI on language change
               */
               this.languageService.language$.pipe(
                 map((lang: LanguageCode) => {
