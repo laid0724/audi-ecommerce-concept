@@ -15,6 +15,7 @@ import { FilterPipe } from './filter.pipe';
 import { DurationPipe } from './duration.pipe';
 import { DebouncePipe } from './debounce.pipe';
 import { CountPipe } from './count.pipe';
+import { ToZhPipe } from './to-zh.pipe';
 
 const PIPES = [
   SpacedCommaPipe,
@@ -32,6 +33,7 @@ const PIPES = [
   DurationPipe,
   DebouncePipe,
   CountPipe,
+  ToZhPipe
 ];
 @NgModule({
   declarations: [...PIPES],

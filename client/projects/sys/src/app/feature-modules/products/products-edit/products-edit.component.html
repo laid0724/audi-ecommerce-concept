@@ -58,7 +58,7 @@
                     >必填 Required</clr-control-error
                   >
                   <clr-control-error *clrIfError="'pattern'"
-                    >禁止非正數 Positive numbers only</clr-control-error
+                    >需大於零 Must be greater than 0</clr-control-error
                   >
                 </clr-input-container>
 
@@ -69,7 +69,7 @@
                     >必填 Required</clr-control-error
                   >
                   <clr-control-error *clrIfError="'pattern'"
-                    >禁止非正數 Positive numbers only</clr-control-error
+                    >禁止負數 Positive numbers only</clr-control-error
                   >
                 </clr-input-container>
 
@@ -89,9 +89,7 @@
                       formControlName="isVisible"
                     />
                     <label>{{
-                      productForm.get('isVisible')?.value
-                        ? '開發 Visible'
-                        : '隱藏 Hidden'
+                      productForm.get('isVisible')?.value | toZh: 'isVisible'
                     }}</label>
                   </clr-toggle-wrapper>
                   <clr-control-error *clrIfError="'required'"
@@ -109,8 +107,7 @@
                     />
                     <label>{{
                       productForm.get('isDiscounted')?.value
-                        ? '折扣中 Discounted'
-                        : '原價 No Discount'
+                        | toZh: 'isDiscounted'
                     }}</label>
                   </clr-toggle-wrapper>
                   <clr-control-error *clrIfError="'required'"
@@ -131,10 +128,10 @@
                     >必填 Required</clr-control-error
                   >
                   <clr-control-error *clrIfError="'pattern'"
-                    >禁止非正數 Positive numbers only</clr-control-error
+                    >需大於零 Must be greater than 0</clr-control-error
                   >
                   <clr-control-error
-                    *clrIfError="'isGreaterThanAnotherControlValue'"
+                    *clrIfError="'isEqualOrGreaterThanAnotherControlValue'"
                     >折扣不可比價格高 Discount amount cannot be greater than the
                     product's price</clr-control-error
                   >

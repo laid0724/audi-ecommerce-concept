@@ -30,12 +30,49 @@
           (clrDgRefresh)="refreshDatagrid($event)"
           [clrLoading]="datagridLoading"
         >
-        <!-- TODO: filters -->
           <clr-dg-column
             >名稱 Name
-            <!-- <audi-sys-clr-dg-serverside-string-filter
-              [stringFilter]="productCategoryNameFilter"
-            ></audi-sys-clr-dg-serverside-string-filter> -->
+            <audi-sys-clr-dg-serverside-string-filter
+              [filter]="productNameFilter"
+            ></audi-sys-clr-dg-serverside-string-filter>
+          </clr-dg-column>
+
+          <clr-dg-column>
+            類別 Category
+            <audi-sys-clr-dg-product-category-filter
+              [filter]="productCategoryIdFilter"
+            ></audi-sys-clr-dg-product-category-filter>
+          </clr-dg-column>
+
+          <clr-dg-column>
+            價格 Price
+            <audi-sys-clr-dg-serverside-range-filter
+              [filter]="priceFilter"
+            ></audi-sys-clr-dg-serverside-range-filter>
+          </clr-dg-column>
+          <clr-dg-column>
+            庫存 Stock
+            <audi-sys-clr-dg-serverside-range-filter
+              [filter]="stockFilter"
+            ></audi-sys-clr-dg-serverside-range-filter>
+          </clr-dg-column>
+
+          <clr-dg-column>
+            顯示狀態 Visibility
+            <audi-sys-clr-dg-custom-btn-filter
+              [filter]="isVisibleFilter"
+              [trueDisplayValue]="true | toZh: 'isVisible'"
+              [falseDisplayValue]="false | toZh: 'isVisible'"
+            ></audi-sys-clr-dg-custom-btn-filter>
+          </clr-dg-column>
+
+          <clr-dg-column
+            >折扣狀態 Discount Status
+            <audi-sys-clr-dg-custom-btn-filter
+              [filter]="isDiscountedFilter"
+              [trueDisplayValue]="true | toZh: 'isDiscounted'"
+              [falseDisplayValue]="false | toZh: 'isDiscounted'"
+            ></audi-sys-clr-dg-custom-btn-filter>
           </clr-dg-column>
 
           <clr-dg-row *ngFor="let product of products" [clrDgItem]="product">
@@ -46,12 +83,32 @@
               >
                 編輯 Edit
               </button>
-              <button class="action-item" (click)="promptDelete(product.id)">
+              <button class="action-item" (click)="promptDelete(product)">
                 刪除 Delete
               </button>
             </clr-dg-action-overflow>
 
             <clr-dg-cell>{{ product.name }}</clr-dg-cell>
+            <clr-dg-cell>
+              {{
+                (
+                  product.productCategoryId
+                  | map: productCategoryMapperFn(productCategories)
+                )?.name
+              }}
+            </clr-dg-cell>
+
+            <clr-dg-cell>{{ product.price }}</clr-dg-cell>
+
+            <clr-dg-cell>{{ product.stock }}</clr-dg-cell>
+
+            <clr-dg-cell>{{
+              product.isVisible | toZh: 'isVisible'
+            }}</clr-dg-cell>
+
+            <clr-dg-cell>{{
+              product.isDiscounted | toZh: 'isDiscounted'
+            }}</clr-dg-cell>
           </clr-dg-row>
 
           <clr-dg-placeholder>
@@ -79,3 +136,37 @@
     </div>
   </div>
 </div>
+
+<clr-modal [(clrModalOpen)]="confirmDeleteModalOpen" [clrModalClosable]="false">
+  <h3 class="modal-title">刪除產品 Delete Product</h3>
+  <div class="modal-body">
+    <ng-container *ngIf="productToDelete !== null">
+      <p class="my-1">
+        確定要刪除
+        <strong>{{ productToDelete.name }}</strong
+        >?
+      </p>
+      <p class="mt-2 mb-1">
+        Are you sure you want to delete
+        <strong>{{ productToDelete.name }}</strong
+        >?
+      </p>
+    </ng-container>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary-outline"
+      (click)="cancelDelete()"
+    >
+      取消 Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="onDelete(productToDelete!.id)"
+    >
+      確認 Ok
+    </button>
+  </div>
+</clr-modal>

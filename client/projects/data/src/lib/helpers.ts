@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PaginatedResult } from './models/pagination';
 import { ActivatedRoute, QueryParamsHandling, Router } from '@angular/router';
-import { utcToZonedTime } from "date-fns-tz";
-import { format } from "date-fns";
+import { utcToZonedTime } from 'date-fns-tz';
+import { format } from 'date-fns';
 
 export function getPaginationHeaders(
   pageNumber: number,
@@ -73,6 +73,10 @@ export function setQueryParams(
 
 export function isNullOrEmptyString(val: string | null | undefined): boolean {
   return val == null || (val && val.trim() === '') || val.length === 0;
+}
+
+export function stringToBoolean(string: string) {
+  return string === 'false' ? false : !!string;
 }
 
 export function formControlAssertion(

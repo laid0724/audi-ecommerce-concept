@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ProductCategoryResolver } from './product-category.resolver';
 import { ProductsCategoryListComponent } from './products-category-list/products-category-list.component';
 import { ProductsEditComponent } from './products-edit/products-edit.component';
 import { ProductsListComponent } from './products-list/products-list.component';
@@ -30,6 +31,8 @@ const routes: Routes = [
   },
   {
     path: 'items',
+    runGuardsAndResolvers: 'always',
+    resolve: { productCategories: ProductCategoryResolver },
     children: [
       {
         path: '',

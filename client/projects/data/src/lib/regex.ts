@@ -21,6 +21,9 @@ export const NUMBER_REGEX = /^\d*$/;
 // Check if a string only contains non-negative numbers.
 export const NON_NEGATIVE_NUMBER_REGEX = /^\d+$/;
 
+// Check if a string has number greater than 0, and also cannot be negative
+export const GREATER_THAN_ZERO_REGEX = /^[1-9]\d*$/;
+
 // Check if a string only contain numbers, limited to 4 places
 // eg., 2019
 export const YEAR_REGEX = '^[1-2][0-9]{3}$';

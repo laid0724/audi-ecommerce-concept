@@ -58,8 +58,10 @@ export class ProductsCategoryListComponent implements OnInit, OnDestroy {
   editModalOpen = false;
   confirmDeleteModalOpen = false;
 
-  productCategoryNameFilter: ClrServerSideStringFilter;
-  productCategoryDescriptionFilter: ClrServerSideStringFilter;
+  productCategoryNameFilter: ClrServerSideStringFilter =
+    new ClrServerSideStringFilter('name');
+  productCategoryDescriptionFilter: ClrServerSideStringFilter =
+    new ClrServerSideStringFilter('description');
   datagridLoading = true;
 
   parentCategory$: Observable<ProductCategory>;
@@ -85,12 +87,7 @@ export class ProductsCategoryListComponent implements OnInit, OnDestroy {
     private router: Router,
     private busyService: BusyService,
     private fb: FormBuilder
-  ) {
-    this.productCategoryNameFilter = new ClrServerSideStringFilter('name');
-    this.productCategoryDescriptionFilter = new ClrServerSideStringFilter(
-      'description'
-    );
-  }
+  ) {}
 
   ngOnInit(): void {
     this.initProductCategoryForm();

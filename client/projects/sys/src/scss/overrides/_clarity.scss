@@ -97,3 +97,15 @@
     }
   }
 }
+
+.datagrid-filter {
+  form {
+    audi-sys-product-category-selector {
+      clr-select-container {
+        &.clr-form-control {
+          margin-top: 0;
+        }
+      }
+    }
+  }
+}

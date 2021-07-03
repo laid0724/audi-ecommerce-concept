@@ -9,12 +9,12 @@ import { ClrServerSideStringFilter } from '../datagrid-filters';
 })
 export class ClrDgServersideStringFilterComponent {
   @Input()
-  stringFilter: ClrServerSideStringFilter;
+  filter: ClrServerSideStringFilter;
 
   debounce: any;
 
   triggerFilterChanges(stringFilterInputEl: HTMLInputElement) {
-    this.stringFilter.value = stringFilterInputEl.value;
+    this.filter.value = stringFilterInputEl.value;
 
     // couldn't pipe debounceTime into stringFilter.changes.next() because it's a subject
     // gotta use setTimeout to manually mimick this effect, and everytime the user types
@@ -22,7 +22,7 @@ export class ClrDgServersideStringFilterComponent {
     // see: https://stackoverflow.com/questions/50275945/how-to-implement-a-debounce-time-in-keyup-event-in-angular-6
     clearTimeout(this.debounce);
     this.debounce = setTimeout( () => {
-      this.stringFilter.changes.next();
+      this.filter.changes.next();
     }, 300);
   }
 }

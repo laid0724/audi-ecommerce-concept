@@ -1,0 +1,38 @@
+<clr-dg-filter [clrDgFilter]="filter">
+  <form clrForm [formGroup]="form" clrLayout="vertical">
+    <div class="row">
+      <div class="col-6">
+        <clr-input-container class="mt-0">
+          <label>{{ minLabel }}</label>
+          <input type="number" clrInput formControlName="min" />
+          <clr-control-error *clrIfError="'pattern'"
+            >需大於零 Must be greater than 0</clr-control-error
+          >
+        </clr-input-container>
+      </div>
+      <div class="col-6">
+        <clr-input-container class="mt-0">
+          <label>{{ maxLabel }}</label>
+          <input type="number" clrInput formControlName="max" />
+          <clr-control-error *clrIfError="'pattern'"
+            >需大於零 Must be greater than 0</clr-control-error
+          >
+        </clr-input-container>
+      </div>
+    </div>
+
+    <clr-alert
+      class="mt-2 d-flex w-100"
+      style="flex-wrap: wrap"
+      clrAlertType="danger"
+      [clrAlertClosable]="false"
+      *ngIf="form.getError('hasRangeError')"
+    >
+      各欄位不可少於零，最少數值亦不可大於最大數值
+      <br />
+      The values cannot be less than 0 and the minimum
+      <br />
+      value cannot be greater than the max value
+    </clr-alert>
+  </form>
+</clr-dg-filter>

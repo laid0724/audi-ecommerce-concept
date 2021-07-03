@@ -8,6 +8,7 @@ import {
   formatClrDateToUTCString,
   formatServerTimeToClrDate,
   getAllErrors,
+  GREATER_THAN_ZERO_REGEX,
   isEarlierThanTodayValidator,
   isEqualOrGreaterThanValidator,
   NON_NEGATIVE_NUMBER_REGEX,
@@ -154,7 +155,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
       productCategoryId: [null, Validators.required],
       price: [
         null,
-        [Validators.required, Validators.pattern(NON_NEGATIVE_NUMBER_REGEX)],
+        [Validators.required, Validators.pattern(GREATER_THAN_ZERO_REGEX)],
       ],
       stock: [
         null,
@@ -173,7 +174,8 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
       discountAmount: [
         { value: null, disabled: true },
         [
-          Validators.pattern(NON_NEGATIVE_NUMBER_REGEX),
+          Validators.required,
+          Validators.pattern(GREATER_THAN_ZERO_REGEX),
           isEqualOrGreaterThanValidator('price'),
         ],
       ],

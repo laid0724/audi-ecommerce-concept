@@ -1,9 +1,11 @@
+import { ProductCategory } from "./product-category";
 import { ProductPhoto } from './product-photo';
 import { WysiwygGrid } from './wysiwyg';
 
 export interface Product {
   id: number;
   productCategoryId: number;
+  productCategory?: ProductCategory;
   name: string;
   createdAt: Date;
   lastUpdated: Date;
