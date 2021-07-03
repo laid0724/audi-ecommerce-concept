@@ -132,6 +132,11 @@ namespace Audi.Data
                 query = query.Where(p => p.ProductCategoryId == productParams.ProductCategoryId.Value);
             }
 
+            if (!string.IsNullOrWhiteSpace(productParams.Name))
+            {
+                query = query.Where(p => p.Name.ToLower().Trim().Contains(productParams.Name.ToLower().Trim()));
+            }
+
             if (productParams.IsVisible.HasValue)
             {
                 query = query.Where(p => p.IsVisible == productParams.IsVisible.Value);
