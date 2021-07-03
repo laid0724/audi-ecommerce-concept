@@ -132,6 +132,36 @@ namespace Audi.Data
                 query = query.Where(p => p.ProductCategoryId == productParams.ProductCategoryId.Value);
             }
 
+            if (productParams.IsVisible.HasValue)
+            {
+                query = query.Where(p => p.IsVisible == productParams.IsVisible.Value);
+            }
+
+            if (productParams.IsDiscounted.HasValue)
+            {
+                query = query.Where(p => p.IsDiscounted == productParams.IsDiscounted.Value);
+            }
+
+            if (productParams.PriceMin.HasValue)
+            {
+                query = query.Where(p => p.Price >= productParams.PriceMin.Value);
+            }
+
+            if (productParams.PriceMax.HasValue)
+            {
+                query = query.Where(p => p.Price <= productParams.PriceMax.Value);
+            }
+
+            if (productParams.StockMin.HasValue)
+            {
+                query = query.Where(p => p.Stock >= productParams.StockMin.Value);
+            }
+
+            if (productParams.StockMax.HasValue)
+            {
+                query = query.Where(p => p.Stock <= productParams.StockMax.Value);
+            }
+
             return await PagedList<ProductDto>.CreateAsync(
                 query.ProjectTo<ProductDto>(_mapper.ConfigurationProvider),
                 productParams.PageNumber,
