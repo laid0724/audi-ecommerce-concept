@@ -1,9 +1,17 @@
+input[type='file'] {
+  z-index: 2;
+  max-width: 170px;
+  cursor: pointer;
+}
+
 .file-input::-webkit-file-upload-button {
   visibility: hidden;
 }
+
 .file-input::before {
   content: '選擇檔案 Select file';
   display: inline-block;
+  z-index: 1;
   padding: 5px 12px;
   border: 1px solid $audi-black;
   border-radius: 3px;
@@ -11,19 +19,21 @@
   background: $audi-black;
   font-family: 'Clarity City', 'Avenir Next', sans-serif;
   font-size: 12px;
-  font-weight: 700;
+  font-weight: 500;
   letter-spacing: 1.44px;
   text-shadow: 1px 1px $audi-white;
   text-transform: uppercase;
   white-space: nowrap;
   word-spacing: 0px;
   cursor: pointer;
-  user-select: auto;
+  user-select: none;
   -webkit-user-select: none;
 }
+
 .file-input:hover::before {
   background: $audi-grey-10;
 }
+
 .file-input:active::before {
   background: $audi-grey-10;
 }

@@ -226,7 +226,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
           });
           this.toastr.success('成功建立產品 Product created successfully');
         } else {
-          this.toastr.info('更新成功 Product');
+          this.toastr.info('更新成功 Product updated');
         }
       });
     }
