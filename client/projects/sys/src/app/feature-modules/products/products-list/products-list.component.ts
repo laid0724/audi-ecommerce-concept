@@ -9,6 +9,8 @@ import {
 } from '@angular/router';
 import {
   BusyService,
+  LanguageCode,
+  LanguageStateService,
   PaginatedResult,
   Pagination,
   Product,
@@ -16,10 +18,18 @@ import {
   ProductParams,
   ProductsService,
   setQueryParams,
+  stringToBoolean,
 } from '@audi/data';
 import { ClrDatagridStateInterface } from '@clr/angular';
 import { Subject } from 'rxjs';
-import { startWith, switchMap, take, takeUntil, tap } from 'rxjs/operators';
+import {
+  map,
+  startWith,
+  switchMap,
+  take,
+  takeUntil,
+  tap,
+} from 'rxjs/operators';
 import {
   ClrCustomBtnFilter,
   ClrMinMaxRangeFilter,
@@ -86,12 +96,15 @@ export class ProductsListComponent implements OnInit, OnDestroy {
 
   productToDelete: Product | null = null;
 
+  currentLanguage: LanguageCode;
+
   refresher$ = new Subject<ProductParams>();
   destroy$ = new Subject<boolean>();
 
   constructor(
     private productsService: ProductsService,
     private busyService: BusyService,
+    private languageService: LanguageStateService,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -111,9 +124,49 @@ export class ProductsListComponent implements OnInit, OnDestroy {
         switchMap((_) =>
           this.refresher$.pipe(
             startWith(this.productParams),
+            switchMap((productParams: ProductParams) =>
+              /*
+                HACK:
+                  since we are getting our initial product categories from the resolver,
+                  which calls the api based on our selected language header, the product categories mapper
+                  will malfunction because none of the en product category id can be mapped.
+                  we therefore need to refetch the product categories for the mapper, but we cannot re-call the resolver again.
+                  therefore, we are detecting our language changes in the following manner and then re-calling the parent categories
+                  again with our language interceptor header to refresh the data.
+
+                  we are also refreshing our query param state because clarity ui cannot
+                  detect the param changes when the filters are wiped when we change the language between zh <--> en
+              */
+              this.languageService.language$.pipe(
+                map((lang: LanguageCode) => {
+                  if (this.currentLanguage == null) {
+                    this.currentLanguage = lang;
+                  }
+
+                  if (this.currentLanguage != lang) {
+                    this.currentLanguage = lang;
+                    this.productParams = this.initialQueryParams;
+                    this.productsService.allParentCategories$
+                      .pipe(
+                        map((productCategories: ProductCategory[]) =>
+                          productCategories.flatMap((pc) => [
+                            pc,
+                            ...pc.children,
+                          ])
+                        ),
+                        take(1)
+                      )
+                      .subscribe((pc) => (this.productCategories = pc));
+                    return this.productParams;
+                  }
+                  return productParams;
+                })
+              )
+            ),
             switchMap((productParams: ProductParams) => {
               return this.route.queryParamMap.pipe(
                 switchMap((params: ParamMap) => {
+                  console.log(productParams);
                   if (
                     params.has('productCategoryId') &&
                     params.get('productCategoryId') !== null
@@ -194,6 +247,12 @@ export class ProductsListComponent implements OnInit, OnDestroy {
             [property]: value,
           };
         }
+        if (['isVisible', 'isDiscounted'].includes(property)) {
+          this.productParams = {
+            ...this.productParams,
+            [property]: stringToBoolean(value),
+          };
+        }
         if (['price', 'stock'].includes(property)) {
           this.productParams = {
             ...this.productParams,
@@ -203,6 +262,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
         }
       }
     }
+
+    console.log(this.productParams);
 
     this.refresher$.next(this.productParams);
   }
