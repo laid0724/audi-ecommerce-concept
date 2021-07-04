@@ -168,7 +168,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
             switchMap((productParams: ProductParams) => {
               return this.route.queryParamMap.pipe(
                 switchMap((params: ParamMap) => {
-                  console.log(productParams);
                   if (
                     params.has('productCategoryId') &&
                     params.get('productCategoryId') !== null
@@ -264,8 +263,6 @@ export class ProductsListComponent implements OnInit, OnDestroy {
         }
       }
     }
-
-    console.log(this.productParams);
 
     this.refresher$.next(this.productParams);
   }
