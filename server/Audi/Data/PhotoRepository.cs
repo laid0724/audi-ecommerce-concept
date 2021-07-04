@@ -20,21 +20,31 @@ namespace Audi.Data
             _context = context;
         }
 
-        public void AddProductPhoto(ProductPhoto photo)
+        public void AddPhoto(Photo photo)
         {
-            _context.ProductPhotos.Add(photo);
+            _context.Photos.Add(photo);
         }
 
-        public void DeleteProductPhoto(ProductPhoto photo)
+        public void AddProductPhoto(ProductPhoto productPhoto)
         {
-            _context.ProductPhotos.Remove(photo);
+            _context.ProductPhotos.Add(productPhoto);
         }
 
-        public async Task<ProductPhotoDto> GetProductPhotoByIdAsync(int photoId)
+        public void DeletePhoto(Photo photo)
+        {
+            _context.Photos.Remove(photo);
+        }
+
+        public void DeleteProductPhoto(ProductPhoto productPhoto)
+        {
+            _context.ProductPhotos.Remove(productPhoto);
+        }
+
+        public async Task<ProductPhotoDto> GetProductPhotoByIdAsync(int productPhotoId)
         {
             var photo = await _context.ProductPhotos
                 .ProjectTo<ProductPhotoDto>(_mapper.ConfigurationProvider)
-                .SingleOrDefaultAsync(p => p.Id == photoId);
+                .SingleOrDefaultAsync(p => p.Id == productPhotoId);
 
             return photo;
         }
@@ -43,27 +53,27 @@ namespace Audi.Data
         {
             var photos = await _context.Products
                 .Where(p => p.Id == productId)
-                .Select(p => p.Photos)
+                .Select(p => p.ProductPhotos)
                 .ProjectTo<ProductPhotoDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
             return photos;
         }
 
-        public async Task SetMainProductPhoto(ProductPhoto photo)
+        public async Task SetMainProductPhoto(ProductPhoto productPhoto)
         {
-            var productId = photo.ProductId;
+            var productId = productPhoto.ProductId;
 
             var product = await _context.Products
-                .Include(p => p.Photos)
+                .Include(p => p.ProductPhotos)
                 .FirstOrDefaultAsync(p => p.Id == productId);
 
-            foreach (var p in product.Photos)
+            foreach (var p in product.ProductPhotos)
             {
-                p.IsMain = p.Id == photo.Id;
+                p.IsMain = p.PhotoId == productPhoto.PhotoId;
             }
-            
-            _context.ProductPhotos.UpdateRange(product.Photos);
+
+            _context.ProductPhotos.UpdateRange(product.ProductPhotos);
         }
     }
 }

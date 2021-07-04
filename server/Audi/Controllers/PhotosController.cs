@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Audi.Entities;
 using Audi.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -13,9 +14,11 @@ namespace Audi.Controllers
     {
         private readonly ILogger<PhotosController> _logger;
         private readonly IPhotoService _photoService;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public PhotosController(IPhotoService photoService, ILogger<PhotosController> logger)
+        public PhotosController(IPhotoService photoService, IUnitOfWork unitOfWork, ILogger<PhotosController> logger)
         {
+            _unitOfWork = unitOfWork;
             _photoService = photoService;
             _logger = logger;
         }
@@ -30,10 +33,20 @@ namespace Audi.Controllers
             {
                 return BadRequest(uploadResult.Error.Message);
             }
-            
+
             var fileUrl = uploadResult.SecureUrl.AbsoluteUri;
 
-            return Ok(fileUrl);
+            var photo = new Photo
+            {
+                Url = fileUrl,
+                PublicId = uploadResult.PublicId,
+            };
+
+            _unitOfWork.PhotoRepository.AddPhoto(photo);
+
+            if (_unitOfWork.HasChanges() && await _unitOfWork.Complete()) return Ok(fileUrl);
+
+            return BadRequest("Failed to upload photo");
         }
     }
 }
