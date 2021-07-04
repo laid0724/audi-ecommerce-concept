@@ -20,6 +20,6 @@ namespace Audi.Entities
         public DateTime? DiscountDeadline { get; set; }
         public decimal Price { get; set; }
         public int Stock { get; set; }
-        public ICollection<ProductPhoto> Photos { get; set; }
+        public ICollection<ProductPhoto> ProductPhotos { get; set; }
     }
 }

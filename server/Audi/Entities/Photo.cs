@@ -1,6 +1,7 @@
 using System;
+using System.Collections.Generic;
 
-namespace Audi.Models
+namespace Audi.Entities
 {
     public class Photo
     {
@@ -8,5 +9,6 @@ namespace Audi.Models
         public string Url { get; set; }
         public string PublicId { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public ICollection<ProductPhoto> ProductPhotos { get; set; }
     }
 }
