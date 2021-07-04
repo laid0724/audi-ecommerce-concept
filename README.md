@@ -88,8 +88,24 @@ It is recommended that you generate your keys/password via https://passwordsgene
 
 Once you've setup your heroku app, you can just repeat steps 6 & 7 for continuous deployment, unless you need to add further environment variables.
 
+**heroku is fucking slow since the only hosting options are in US/Europe, i need a better free alternative that supports node.js / dotnet.
+it also fucking shuts down when it hasn't been accessed in a while, and boots up only when someone visits the site, which takes forever too.**
+
 ---
 ##### Features to be implemented / Bugs to be fixed, in no particular order:
+
+TODO: 
+products - need a 'variations' property save as jsonb or as a table? probably table (ProductVariations).
+might also need SKU for stock, see this design: https://stackoverflow.com/questions/45627859/entity-framework-core-challenge-modeling-product-variants-database-design-with
+[
+  {
+    id: int,
+    productId: int (not nullable)
+    size: string,
+    color: string,
+    stock: int
+  }
+]
 
 #### API
 
@@ -105,6 +121,7 @@ Once you've setup your heroku app, you can just repeat steps 6 & 7 for continuou
 - users management
   - change pw, confirm email, disable acct, lockout, reset password, forget username etc.
 - email functionality
+- site-wide search
 
 #### Sys
 - homepage banner module
