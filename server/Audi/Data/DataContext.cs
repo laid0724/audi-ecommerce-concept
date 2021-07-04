@@ -22,6 +22,7 @@ namespace Audi.Data
 
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Photo> Photos { get; set; }
         public DbSet<ProductPhoto> ProductPhotos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -55,7 +56,7 @@ namespace Audi.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Product>()
-                .HasMany(e => e.Photos)
+                .HasMany(e => e.ProductPhotos)
                 .WithOne(e => e.Product)
                 .HasForeignKey(e => e.ProductId)
                 .IsRequired()
@@ -68,6 +69,27 @@ namespace Audi.Data
                     v => JsonConvert.SerializeObject(v),
                     v => JsonConvert.DeserializeObject<WysiwygGrid>(v))
                 .HasDefaultValueSql("'{}'");
+
+            // relationship for: Product <-> ProductPhoto <-> Photo
+            builder.Entity<ProductPhoto>()
+                .HasKey(e => new { e.ProductId, e.PhotoId });
+
+            builder
+                .Entity<ProductPhoto>()
+                .HasOne(e => e.Product)
+                .WithMany(e => e.ProductPhotos)
+                .HasForeignKey(e => e.ProductId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .Entity<ProductPhoto>()
+                .HasOne(e => e.Photo)
+                .WithMany(e => e.ProductPhotos)
+                .HasForeignKey(e => e.PhotoId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+            // relationship end
 
             builder.ApplyUtcDateTimeConverter();
 

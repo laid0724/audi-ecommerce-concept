@@ -19,6 +19,6 @@ namespace Audi.DTOs
         public DateTime? DiscountDeadline { get; set; }
         public decimal Price { get; set; }
         public int Stock { get; set; }
-        public ICollection<ProductPhotoDto> Photos { get; set; }
+        public ICollection<ProductPhotoDto> Photos { get; set; } = new List<ProductPhotoDto>();
     }
 }

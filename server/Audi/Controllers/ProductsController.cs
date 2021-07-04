@@ -248,24 +248,32 @@ namespace Audi.Controllers
                 return BadRequest(result.Error.Message);
             }
 
-            var photo = new ProductPhoto
+            var photo = new Photo
             {
                 Url = result.SecureUrl.AbsoluteUri,
                 PublicId = result.PublicId,
-                ProductId = productId,
-                Product = product
             };
 
-            if (!product.Photos.Any())
+            _unitOfWork.PhotoRepository.AddPhoto(photo);
+
+            if (!(await _unitOfWork.Complete())) return BadRequest("Failed to add photo");
+
+            var productPhoto = new ProductPhoto
             {
-                photo.IsMain = true;
+                ProductId = product.Id,
+                PhotoId = photo.Id
+            };
+
+            if (!product.ProductPhotos.Any())
+            {
+                productPhoto.IsMain = true;
             }
 
-            _unitOfWork.PhotoRepository.AddProductPhoto(photo);
+            _unitOfWork.PhotoRepository.AddProductPhoto(productPhoto);
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
             {
-                return Ok(_mapper.Map<ProductPhotoDto>(photo));
+                return Ok(_mapper.Map<ProductPhotoDto>(productPhoto));
             }
 
             return BadRequest("Problem adding photo");
@@ -276,21 +284,21 @@ namespace Audi.Controllers
         [HttpPut("photos/{photoId}/set-main-photo")]
         public async Task<ActionResult> SetProductMainPhoto(int photoId)
         {
-            var product = await _unitOfWork.ProductRepository.GetProductByProductPhotoIdAsync(photoId);
+            var product = await _unitOfWork.ProductRepository.GetProductByPhotoIdAsync(photoId);
 
             if (product == null) return NotFound("Product does not exist.");
 
-            var photo = product.Photos.SingleOrDefault(p => p.Id == photoId);
+            var productPhoto = product.ProductPhotos.SingleOrDefault(p => p.PhotoId == photoId);
 
             // this should never be null if the product is found but whatever just to be safe
-            if (photo == null) return NotFound("Photo does not exist.");
+            if (productPhoto == null) return NotFound("Photo does not exist.");
 
-            if (photo.IsMain)
+            if (productPhoto.IsMain)
             {
                 return BadRequest("This is already a main photo.");
             }
 
-            await _unitOfWork.PhotoRepository.SetMainProductPhoto(photo);
+            await _unitOfWork.PhotoRepository.SetMainProductPhoto(productPhoto);
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
             {
@@ -305,30 +313,30 @@ namespace Audi.Controllers
         [HttpDelete("photos/{photoId}")]
         public async Task<ActionResult> DeleteProductPhoto(int photoId)
         {
-            var product = await _unitOfWork.ProductRepository.GetProductByProductPhotoIdAsync(photoId);
+            var product = await _unitOfWork.ProductRepository.GetProductByPhotoIdAsync(photoId);
 
             if (product == null) return NotFound("Product does not exist.");
 
-            var photo = product.Photos.SingleOrDefault(p => p.Id == photoId);
+            var productPhoto = product.ProductPhotos.SingleOrDefault(p => p.PhotoId == photoId);
 
-            // this should never be null if the product is found but whatever just to be safe
-            if (photo == null) return NotFound("Photo does not exist.");
+            if (productPhoto == null) return NotFound("Photo does not exist.");
 
-            if (photo.IsMain)
+            if (productPhoto.IsMain)
             {
                 return BadRequest("Cannot delete your main photo.");
             }
 
-            if (photo.PublicId != null)
+            if (productPhoto.Photo.PublicId != null)
             {
-                var result = await _photoService.DeletePhotoAsync(photo.PublicId);
+                var result = await _photoService.DeletePhotoAsync(productPhoto.Photo.PublicId);
                 if (result.Error != null)
                 {
                     return BadRequest(result.Error.Message);
                 }
             }
 
-            _unitOfWork.PhotoRepository.DeleteProductPhoto(photo);
+            _unitOfWork.PhotoRepository.DeleteProductPhoto(productPhoto);
+            _unitOfWork.PhotoRepository.DeletePhoto(productPhoto.Photo);
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
             {

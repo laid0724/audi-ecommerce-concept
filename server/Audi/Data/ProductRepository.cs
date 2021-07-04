@@ -98,7 +98,8 @@ namespace Audi.Data
         {
             var product = await _context.Products
                 .Include(p => p.ProductCategory)
-                .Include(p => p.Photos)
+                .Include(p => p.ProductPhotos)
+                    .ThenInclude(p => p.Photo)
                 .Where(p => p.Id == productId)
                 .FirstOrDefaultAsync();
 
@@ -121,7 +122,8 @@ namespace Audi.Data
         {
             var query = _context.Products
                 .Include(p => p.ProductCategory)
-                .Include(p => p.Photos)
+                .Include(p => p.ProductPhotos)
+                    .ThenInclude(p => p.Photo)
                 .Where(p =>
                     p.Language.ToLower().Trim() == productParams.Language.ToLower().Trim()
                 )
@@ -184,13 +186,14 @@ namespace Audi.Data
             _context.ProductCategories.Update(productCategory);
         }
 
-        public Task<Product> GetProductByProductPhotoIdAsync(int productPhotoId)
+        public Task<Product> GetProductByPhotoIdAsync(int photoId)
         {
             var product = _context.ProductPhotos
-                .Include(photo => photo.Product)
-                    .ThenInclude(product => product.Photos)
-                .Where(photo => photo.Id == productPhotoId)
-                .Select(photo => photo.Product)
+                .Include(productPhoto => productPhoto.Product)
+                    .ThenInclude(product => product.ProductPhotos)
+                        .ThenInclude(productPhoto => productPhoto.Photo)
+                .Where(productPhoto => productPhoto.PhotoId == photoId)
+                .Select(productPhoto => productPhoto.Product)
                 .SingleOrDefaultAsync();
 
             return product;

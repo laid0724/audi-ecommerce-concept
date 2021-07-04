@@ -18,9 +18,28 @@ namespace Audi.Helpers
                     opt => opt.MapFrom(src => src.GetFullName())
                 );
 
-            CreateMap<Product, ProductDto>();
             CreateMap<ProductCategory, ProductCategoryDto>();
-            CreateMap<ProductPhoto, ProductPhotoDto>();
+            
+            CreateMap<ProductPhoto, ProductPhotoDto>()
+                .ForMember(
+                    dest => dest.Url,
+                    opt => opt.MapFrom(src => src.Photo.Url)
+                )
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.PhotoId)
+                )
+                .ForMember(
+                    dest => dest.CreatedAt,
+                    opt => opt.MapFrom(src => src.Photo.CreatedAt)
+                );
+
+            CreateMap<Product, ProductDto>()
+                .ForMember(
+                    dest => dest.Photos,
+                    opt => opt.MapFrom(src => src.ProductPhotos)
+                );
+
 
             // reverse map from dto to entity model:
             CreateMap<RegisterDto, AppUser>();

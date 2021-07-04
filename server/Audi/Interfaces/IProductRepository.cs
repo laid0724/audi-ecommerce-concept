@@ -9,7 +9,7 @@ namespace Audi.Interfaces
     {
         void UpdateProduct(Product product);
         Task<Product> GetProductByIdAsync(int productId);
-        Task<Product> GetProductByProductPhotoIdAsync(int productPhotoId);
+        Task<Product> GetProductByPhotoIdAsync(int photoId);
         Task<PagedList<ProductDto>> GetProductsAsync(ProductParams productParams);
         void AddProduct(Product product);
         void DeleteProduct(Product product);
