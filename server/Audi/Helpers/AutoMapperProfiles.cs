@@ -1,3 +1,4 @@
+using System.Linq;
 using System;
 using Audi.DTOs;
 using Audi.Entities;
@@ -19,7 +20,7 @@ namespace Audi.Helpers
                 );
 
             CreateMap<ProductCategory, ProductCategoryDto>();
-            
+
             CreateMap<ProductPhoto, ProductPhotoDto>()
                 .ForMember(
                     dest => dest.Url,
@@ -38,8 +39,47 @@ namespace Audi.Helpers
                 .ForMember(
                     dest => dest.Photos,
                     opt => opt.MapFrom(src => src.ProductPhotos)
+                )
+                .ForMember(
+                    dest => dest.Variants,
+                    opt => opt.MapFrom(src => src.ProductVariants)
                 );
 
+            CreateMap<ProductVariantValue, ProductVariantValueDto>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.VariantValueId)
+                )
+                .ForMember(
+                    dest => dest.Stock,
+                    opt => opt.MapFrom(src => src.ProductSKUValues
+                        .Select(skuVal => skuVal.Stock)
+                        .Aggregate(0, (sum, val) => sum + val)
+                    )
+                );
+
+            CreateMap<ProductVariant, ProductVariantDto>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.VariantId)
+                )
+                .ForMember(
+                    dest => dest.VariantValues,
+                    opt => opt.MapFrom(src => src.ProductVariantValues)
+                );
+
+            CreateMap<ProductSKU, ProductSKUDto>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.SkuId)
+                )
+                .ForMember(
+                    dest => dest.Stock,
+                    opt => opt.MapFrom(src => src.ProductSKUValues
+                        .Select(skuVal => skuVal.Stock)
+                        .Aggregate(0, (sum, val) => sum + val)
+                    )
+                );
 
             // reverse map from dto to entity model:
             CreateMap<RegisterDto, AppUser>();
