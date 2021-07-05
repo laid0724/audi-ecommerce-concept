@@ -159,16 +159,6 @@ namespace Audi.Data
                 query = query.Where(p => p.Price <= productParams.PriceMax.Value);
             }
 
-            // if (productParams.StockMin.HasValue)
-            // {
-            //     query = query.Where(p => p.Stock >= productParams.StockMin.Value);
-            // }
-
-            // if (productParams.StockMax.HasValue)
-            // {
-            //     query = query.Where(p => p.Stock <= productParams.StockMax.Value);
-            // }
-
             return await PagedList<ProductDto>.CreateAsync(
                 query.ProjectTo<ProductDto>(_mapper.ConfigurationProvider),
                 productParams.PageNumber,
@@ -186,9 +176,9 @@ namespace Audi.Data
             _context.ProductCategories.Update(productCategory);
         }
 
-        public Task<Product> GetProductByPhotoIdAsync(int photoId)
+        public async Task<Product> GetProductByPhotoIdAsync(int photoId)
         {
-            var product = _context.ProductPhotos
+            var product = await _context.ProductPhotos
                 .Include(productPhoto => productPhoto.Product)
                     .ThenInclude(product => product.ProductPhotos)
                     .Include(productPhoto => productPhoto.Photo)
@@ -197,6 +187,150 @@ namespace Audi.Data
                 .SingleOrDefaultAsync();
 
             return product;
+        }
+
+        public async Task<ProductVariant> GetProductVariantById(int variantId)
+        {
+            var productVariant = await _context.ProductVariants
+                .Include(e => e.ProductSKUValues)
+                .Include(e => e.ProductVariantValues)
+                .SingleOrDefaultAsync(e => e.VariantId == variantId);
+
+            return productVariant;
+        }
+
+        public async Task<ICollection<ProductVariant>> GetProductVariantsByProductId(int productId)
+        {
+            var productVariants = await _context.ProductVariants
+                .Include(e => e.ProductSKUValues)
+                .Include(e => e.ProductVariantValues)
+                .Where(e => e.ProductId == productId)
+                .ToListAsync();
+
+            return productVariants;
+        }
+
+        public void AddProductVariant(int productId, string variantName)
+        {
+            _context.ProductVariants.Add(new ProductVariant
+            {
+                Name = variantName,
+                ProductId = productId,
+            });
+        }
+
+        public void UpdateProductVariant(ProductVariant productVariant)
+        {
+            _context.ProductVariants.Update(productVariant);
+        }
+
+        public void DeleteProductVariant(ProductVariant productVariant)
+        {
+            _context.ProductVariants.Remove(productVariant);
+        }
+
+        public async Task<ProductVariantValue> GetProductVariantValueById(int variantValueId)
+        {
+            var productVariantValue = await _context.ProductVariantValues
+                .Include(e => e.ProductSKUValues)
+                .SingleOrDefaultAsync(e => e.VariantValueId == variantValueId);
+
+            return productVariantValue;
+        }
+
+        public async Task<ICollection<ProductVariantValue>> GetProductVariantValuesByVariantId(int variantId)
+        {
+            var productVariantValues = await _context.ProductVariantValues
+                .Include(e => e.ProductSKUValues)
+                .Where(e => e.VariantId == variantId)
+                .ToListAsync();
+
+            return productVariantValues;
+        }
+
+        public void AddProductVariantValue(int productId, int variantId, string variantValueName)
+        {
+            _context.ProductVariantValues.Add(new ProductVariantValue
+            {
+                ProductId = productId,
+                VariantId = variantId,
+                Name = variantValueName
+            });
+        }
+
+        public void UpdateProductVariantValue(ProductVariantValue productVariantValue)
+        {
+            _context.ProductVariantValues.Add(productVariantValue);
+        }
+
+        public void DeleteProductVariantValue(ProductVariantValue productVariantValue)
+        {
+            _context.ProductVariantValues.Remove(productVariantValue);
+        }
+
+        public async Task<ProductSKU> GetProductSKUById(int skuId)
+        {
+            var productSKU = await _context.ProductSKUs
+                .Include(e => e.ProductSKUValues)
+                .SingleOrDefaultAsync(e => e.SkuId == skuId);
+
+            return productSKU;
+        }
+
+        public async Task<ICollection<ProductSKU>> GetProductSKUsByProductId(int productId)
+        {
+            var productSKUs = await _context.ProductSKUs
+                .Include(e => e.ProductSKUValues)
+                .Where(e => e.ProductId == productId)
+                .ToListAsync();
+
+            return productSKUs;
+        }
+
+        public void AddProductSKU(int productId, string sku)
+        {
+            _context.ProductSKUs.Add(new ProductSKU
+            {
+                ProductId = productId,
+                Sku = sku.ToLower().Trim()
+            });
+        }
+
+        public void UpdateProductSKU(ProductSKU productSKU)
+        {
+            productSKU.Sku = productSKU.Sku.ToLower().Trim();
+
+            _context.ProductSKUs.Add(productSKU);
+        }
+
+        public void DeleteProductSKU(ProductSKU productSKU)
+        {
+            _context.ProductSKUs.Remove(productSKU);
+        }
+
+        public async Task<ICollection<ProductSKUValue>> GetProductSKUValuesByProductId(int productId)
+        {
+            var productSKUValues = await _context.ProductSKUValues
+                .Include(e => e.ProductSKU)
+                .Where(e => e.ProductId == productId)
+                .ToListAsync();
+            
+            return productSKUValues;
+        }
+
+        public void AddProductSKUValue(ProductSKUValue productSKUValue)
+        {
+            _context.ProductSKUValues.Add(productSKUValue);
+        }
+
+        public void UpdateProductSKUValue(ProductSKUValue productSKUValue)
+        {
+            _context.ProductSKUValues.Update(productSKUValue);
+        }
+
+        public void DeleteProductSKUValue(ProductSKUValue productSKUValue)
+        {
+            _context.Remove(productSKUValue);
         }
     }
 }
