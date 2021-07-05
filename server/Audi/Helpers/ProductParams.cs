@@ -9,7 +9,5 @@ namespace Audi.Helpers
         public bool? IsDiscounted { get; set; }
         public decimal? PriceMin { get; set; }
         public decimal? PriceMax { get; set; }
-        // public int? StockMin { get; set; }
-        // public int? StockMax { get; set; }
     }
 }

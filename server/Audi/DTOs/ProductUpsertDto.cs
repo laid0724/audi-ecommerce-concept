@@ -15,6 +15,5 @@ namespace Audi.DTOs
         public decimal DiscountAmount { get; set; }
         public DateTime? DiscountDeadline { get; set; }
         public decimal Price { get; set; }
-        // public int Stock { get; set; }
     }
 }
