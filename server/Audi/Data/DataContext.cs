@@ -75,6 +75,8 @@ namespace Audi.Data
                 .HasDefaultValueSql("'{}'");
 
             // relationship for Product, ProductVariant, ProductVariantValue, ProductSKU, ProductSKUValue
+            
+            // ProductSKU
             builder
                 .Entity<ProductSKU>()
                 .HasKey(sku => new { sku.ProductId, sku.SkuId });
@@ -94,6 +96,7 @@ namespace Audi.Data
                 .WithMany(p => p.ProductSKUs)
                 .HasForeignKey(sku => sku.ProductId);
 
+            // ProductSKUValue
             builder
                 .Entity<ProductSKUValue>()
                 .HasKey(skuval => new { skuval.ProductId, skuval.SkuId, skuval.VariantId });
@@ -119,21 +122,7 @@ namespace Audi.Data
                 .HasForeignKey(skuval => new { skuval.ProductId, skuval.VariantId })
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder
-                .Entity<ProductVariantValue>()
-                .HasKey(pvv => new { pvv.ProductId, pvv.VariantId, pvv.VariantValueId });
-
-            builder
-                .Entity<ProductVariantValue>()
-                .Property(pvv => pvv.VariantValueId)
-                .ValueGeneratedOnAdd();
-
-            builder
-                .Entity<ProductVariantValue>()
-                .HasOne(pvv => pvv.ProductVariant)
-                .WithMany(pv => pv.ProductVariantValues)
-                .HasForeignKey(pvv => new { pvv.ProductId, pvv.VariantId });
-
+            //ProductVariant
             builder
                 .Entity<ProductVariant>()
                 .HasKey(pv => new { pv.ProductId, pv.VariantId });
@@ -149,6 +138,22 @@ namespace Audi.Data
                 .WithMany(p => p.ProductVariants)
                 .HasForeignKey(pv => new { pv.ProductId })
                 .OnDelete(DeleteBehavior.Restrict);
+
+            // ProductVariantValue
+            builder
+                .Entity<ProductVariantValue>()
+                .HasKey(pvv => new { pvv.ProductId, pvv.VariantId, pvv.VariantValueId });
+
+            builder
+                .Entity<ProductVariantValue>()
+                .Property(pvv => pvv.VariantValueId)
+                .ValueGeneratedOnAdd();
+
+            builder
+                .Entity<ProductVariantValue>()
+                .HasOne(pvv => pvv.ProductVariant)
+                .WithMany(pv => pv.ProductVariantValues)
+                .HasForeignKey(pvv => new { pvv.ProductId, pvv.VariantId });
 
             // relationship end
 
