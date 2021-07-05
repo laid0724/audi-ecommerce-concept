@@ -47,6 +47,7 @@ namespace Audi.Interfaces
 
         // product sku value
         Task<ICollection<ProductSKUValue>> GetProductSKUValuesByProductId(int productId);
+        Task<ProductSKUValue> GetProductSKUValueByVariantValueId(int variantValueId);
         void AddProductSKUValue(ProductSKUValue productSKUValue);
         void UpdateProductSKUValue(ProductSKUValue productSKUValue);
         void DeleteProductSKUValue(ProductSKUValue productSKUValue);

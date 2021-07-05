@@ -308,6 +308,16 @@ namespace Audi.Data
             _context.ProductSKUs.Remove(productSKU);
         }
 
+        public async Task<ProductSKUValue> GetProductSKUValueByVariantValueId(int variantValueId)
+        {
+            var productSKUValue = await _context.ProductSKUValues
+                .Include(e => e.ProductSKU)
+                .Where(e => e.VariantValueId == variantValueId)
+                .FirstOrDefaultAsync();
+            
+            return productSKUValue;
+        }
+        
         public async Task<ICollection<ProductSKUValue>> GetProductSKUValuesByProductId(int productId)
         {
             var productSKUValues = await _context.ProductSKUValues
