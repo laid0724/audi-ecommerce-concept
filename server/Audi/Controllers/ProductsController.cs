@@ -201,7 +201,7 @@ namespace Audi.Controllers
             product.IsDiscounted = request.IsDiscounted;
             product.DiscountAmount = request.DiscountAmount;
             product.Price = request.Price;
-            product.Stock = request.Stock;
+            // product.Stock = request.Stock;
             product.LastUpdated = DateTime.UtcNow;
 
             if (request.DiscountDeadline.HasValue)

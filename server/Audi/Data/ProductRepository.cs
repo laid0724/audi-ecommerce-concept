@@ -159,15 +159,15 @@ namespace Audi.Data
                 query = query.Where(p => p.Price <= productParams.PriceMax.Value);
             }
 
-            if (productParams.StockMin.HasValue)
-            {
-                query = query.Where(p => p.Stock >= productParams.StockMin.Value);
-            }
+            // if (productParams.StockMin.HasValue)
+            // {
+            //     query = query.Where(p => p.Stock >= productParams.StockMin.Value);
+            // }
 
-            if (productParams.StockMax.HasValue)
-            {
-                query = query.Where(p => p.Stock <= productParams.StockMax.Value);
-            }
+            // if (productParams.StockMax.HasValue)
+            // {
+            //     query = query.Where(p => p.Stock <= productParams.StockMax.Value);
+            // }
 
             return await PagedList<ProductDto>.CreateAsync(
                 query.ProjectTo<ProductDto>(_mapper.ConfigurationProvider),
@@ -191,7 +191,7 @@ namespace Audi.Data
             var product = _context.ProductPhotos
                 .Include(productPhoto => productPhoto.Product)
                     .ThenInclude(product => product.ProductPhotos)
-                        .ThenInclude(productPhoto => productPhoto.Photo)
+                    .Include(productPhoto => productPhoto.Photo)
                 .Where(productPhoto => productPhoto.PhotoId == photoId)
                 .Select(productPhoto => productPhoto.Product)
                 .SingleOrDefaultAsync();

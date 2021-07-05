@@ -94,19 +94,6 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 ---
 ##### Features to be implemented / Bugs to be fixed, in no particular order:
 
-TODO: 
-products - need a 'variations' property save as jsonb or as a table? probably table (ProductVariations).
-might also need SKU for stock, see this design: https://stackoverflow.com/questions/45627859/entity-framework-core-challenge-modeling-product-variants-database-design-with
-[
-  {
-    id: int,
-    productId: int (not nullable)
-    size: string,
-    color: string,
-    stock: int
-  }
-]
-
 #### API
 
 - Statistics table and repo / controller

@@ -20,9 +20,13 @@ namespace Audi.Data
         {
         }
 
+        public DbSet<Photo> Photos { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<Photo> Photos { get; set; }
+        public DbSet<ProductVariant> ProductVariants { get; set; }
+        public DbSet<ProductVariantValue> ProductVariantValues { get; set; }
+        public DbSet<ProductSKU> ProductSKUs { get; set; }
+        public DbSet<ProductSKUValue> ProductSKUValues { get; set; }
         public DbSet<ProductPhoto> ProductPhotos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -30,45 +34,123 @@ namespace Audi.Data
             base.OnModelCreating(builder);
 
             builder.Entity<AppUser>()
-                .HasMany(ur => ur.UserRoles)
-                .WithOne(u => u.User)
-                .HasForeignKey(ur => ur.UserId)
+                .HasMany(u => u.UserRoles)
+                .WithOne(ur => ur.User)
+                .HasForeignKey(u => u.UserId)
                 .IsRequired();
 
             builder.Entity<AppRole>()
-                .HasMany(ur => ur.UserRoles)
-                .WithOne(u => u.Role)
+                .HasMany(ar => ar.UserRoles)
+                .WithOne(ur => ur.Role)
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
 
             builder.Entity<ProductCategory>()
-                .HasMany(e => e.Children)
-                .WithOne(e => e.Parent)
-                .HasForeignKey(e => e.ParentId)
+                .HasMany(pc => pc.Children)
+                .WithOne(pc => pc.Parent)
+                .HasForeignKey(pc => pc.ParentId)
                 .IsRequired(false)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<ProductCategory>()
-                .HasMany(e => e.Products)
-                .WithOne(e => e.ProductCategory)
-                .HasForeignKey(e => e.ProductCategoryId)
+                .HasMany(pc => pc.Products)
+                .WithOne(pc => pc.ProductCategory)
+                .HasForeignKey(pc => pc.ProductCategoryId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Product>()
-                .HasMany(e => e.ProductPhotos)
-                .WithOne(e => e.Product)
-                .HasForeignKey(e => e.ProductId)
+                .HasMany(p => p.ProductPhotos)
+                .WithOne(pp => pp.Product)
+                .HasForeignKey(pp => pp.ProductId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.Entity<Product>()
-                .Property<WysiwygGrid>(e => e.Wysiwyg)
+                .Property<WysiwygGrid>(p => p.Wysiwyg)
                 .HasColumnType("jsonb")
                 .HasConversion(
-                    v => JsonConvert.SerializeObject(v),
-                    v => JsonConvert.DeserializeObject<WysiwygGrid>(v))
+                    w => JsonConvert.SerializeObject(w),
+                    w => JsonConvert.DeserializeObject<WysiwygGrid>(w))
                 .HasDefaultValueSql("'{}'");
+
+            // relationship for Product, ProductVariant, ProductVariantValue, ProductSKU, ProductSKUValue
+            builder
+                .Entity<ProductSKU>()
+                .HasKey(sku => new { sku.ProductId, sku.SkuId });
+
+            builder
+                .Entity<ProductSKU>()
+                .HasIndex(sku => sku.Sku);
+
+            builder
+                .Entity<ProductSKU>()
+                .Property(sku => sku.SkuId)
+                .ValueGeneratedOnAdd();
+
+            builder
+                .Entity<ProductSKU>()
+                .HasOne(sku => sku.Product)
+                .WithMany(p => p.ProductSKUs)
+                .HasForeignKey(sku => sku.ProductId);
+
+            builder
+                .Entity<ProductSKUValue>()
+                .HasKey(skuval => new { skuval.ProductId, skuval.SkuId, skuval.VariantId });
+
+            builder
+                .Entity<ProductSKUValue>()
+                .HasOne(skuval => skuval.ProductSKU)
+                .WithMany(sku => sku.ProductSKUValues)
+                .HasForeignKey(skuval => new { skuval.ProductId, skuval.SkuId })
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<ProductSKUValue>()
+                .HasOne(skuval => skuval.ProductVariantValue)
+                .WithMany(pvv => pvv.ProductSKUValues)
+                .HasForeignKey(skuval => new { skuval.ProductId, skuval.VariantId, skuval.VariantValueId })
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<ProductSKUValue>()
+                .HasOne(skuval => skuval.ProductVariant)
+                .WithMany(pv => pv.ProductSKUValues)
+                .HasForeignKey(skuval => new { skuval.ProductId, skuval.VariantId })
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+                .Entity<ProductVariantValue>()
+                .HasKey(pvv => new { pvv.ProductId, pvv.VariantId, pvv.VariantValueId });
+
+            builder
+                .Entity<ProductVariantValue>()
+                .Property(pvv => pvv.VariantValueId)
+                .ValueGeneratedOnAdd();
+
+            builder
+                .Entity<ProductVariantValue>()
+                .HasOne(pvv => pvv.ProductVariant)
+                .WithMany(pv => pv.ProductVariantValues)
+                .HasForeignKey(pvv => new { pvv.ProductId, pvv.VariantId });
+
+            builder
+                .Entity<ProductVariant>()
+                .HasKey(pv => new { pv.ProductId, pv.VariantId });
+
+            builder
+                .Entity<ProductVariant>()
+                .Property(pv => pv.VariantId)
+                .ValueGeneratedOnAdd();
+
+            builder
+                .Entity<ProductVariant>()
+                .HasOne(pv => pv.Product)
+                .WithMany(p => p.ProductVariants)
+                .HasForeignKey(pv => new { pv.ProductId })
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // relationship end
 
             // relationship for: Product <-> ProductPhoto <-> Photo
             builder.Entity<ProductPhoto>()
