@@ -45,6 +45,21 @@ namespace Audi.Helpers
                     opt => opt.MapFrom(src => src.ProductVariants)
                 );
 
+            CreateMap<ProductSKU, ProductSKUDto>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.SkuId)
+                )
+                .ForMember(
+                    dest => dest.Stock,
+                    opt => opt.MapFrom(src => src.ProductSKUValues
+                        .Select(skuVal => skuVal.Stock)
+                        .Sum()
+                        // EF Core cannot query with aggregate, use Sum instead
+                        // .Aggregate(0, (sum, val) => sum + val)
+                    )
+                );
+
             CreateMap<ProductVariantValue, ProductVariantValueDto>()
                 .ForMember(
                     dest => dest.Id,
@@ -53,8 +68,10 @@ namespace Audi.Helpers
                 .ForMember(
                     dest => dest.Stock,
                     opt => opt.MapFrom(src => src.ProductSKUValues
-                        .Select(skuVal => skuVal.Stock)
-                        .Aggregate(0, (sum, val) => sum + val)
+                        .Select(skuValue => skuValue.Stock)
+                        .Sum()
+                        // EF Core cannot query with aggregate, use Sum instead
+                        // .Aggregate(0, (sum, val) => sum + val)
                     )
                 );
 
@@ -68,24 +85,16 @@ namespace Audi.Helpers
                     opt => opt.MapFrom(src => src.ProductVariantValues)
                 );
 
-            CreateMap<ProductSKU, ProductSKUDto>()
-                .ForMember(
-                    dest => dest.Id,
-                    opt => opt.MapFrom(src => src.SkuId)
-                )
-                .ForMember(
-                    dest => dest.Stock,
-                    opt => opt.MapFrom(src => src.ProductSKUValues
-                        .Select(skuVal => skuVal.Stock)
-                        .Aggregate(0, (sum, val) => sum + val)
-                    )
-                );
-
             // reverse map from dto to entity model:
             CreateMap<RegisterDto, AppUser>();
             CreateMap<ProductDto, Product>();
             CreateMap<ProductUpsertDto, Product>();
             CreateMap<ProductCategoryUpsertDto, ProductCategory>();
+            CreateMap<ProductVariantUpsertDto, ProductVariant>()
+                .ForMember(
+                    dest => dest.VariantId,
+                    opt => opt.MapFrom(src => src.Id)
+                );
 
             CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
         }
