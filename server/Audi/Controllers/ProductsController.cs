@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -229,6 +230,82 @@ namespace Audi.Controllers
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest("Failed to delete product");
+        }
+
+        [Description("Get product variant by id")]
+        [HttpGet("variants/{variantId}")]
+        public async Task<ActionResult<ProductVariantDto>> GetProductVariant(int variantId)
+        {
+            var productVariant = await _unitOfWork.ProductRepository.GetProductVariantById(variantId);
+
+            if (productVariant == null) return NotFound();
+
+            return Ok(_mapper.Map<ProductVariantDto>(productVariant));
+        }
+
+        [Description("Get product variants by product id")]
+        [HttpGet("variants/all/{productId}")]
+        public async Task<ActionResult<List<ProductVariantDto>>> GetProductVariants(int productId)
+        {
+            var productVariants = await _unitOfWork.ProductRepository.GetProductVariantsByProductId(productId);
+
+            return Ok(_mapper.Map<List<ProductVariantDto>>(productVariants));
+        }
+
+        [Description("Add product variant")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPost("variants")]
+        public async Task<ActionResult<ProductVariantDto>> AddProductVariant([FromBody] ProductVariantUpsertDto request)
+        {
+            var productVariant = _mapper.Map<ProductVariant>(request);
+
+            _unitOfWork.ProductRepository.AddProductVariant(productVariant.ProductId, productVariant.Name);
+
+            if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
+            {
+                return Ok(_mapper.Map<ProductVariantDto>(productVariant));
+            }
+
+            return BadRequest("Failed to add product variant");
+        }
+
+        [Description("Update product variant")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPut("variants")]
+        public async Task<ActionResult<ProductVariantDto>> UpdateProductVariant([FromBody] ProductVariantUpsertDto request)
+        {
+            if (!request.Id.HasValue) return BadRequest("no variant id provided");
+
+            var productVariant = await _unitOfWork.ProductRepository.GetProductVariantById(request.Id.Value);
+            
+            if (productVariant == null) return NotFound();
+
+            productVariant.Name = request.Name;
+
+            _unitOfWork.ProductRepository.UpdateProductVariant(productVariant);
+
+            if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
+            {
+                return Ok(_mapper.Map<ProductVariantDto>(productVariant));
+            }
+
+            return BadRequest("Failed to update product variant");
+        }
+
+        [Description("Delete a product variant")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpDelete("variants/{variantId}")]
+        public async Task<ActionResult> DeleteProductVariant(int variantId)
+        {
+            var productVariant = await _unitOfWork.ProductRepository.GetProductVariantById(variantId);
+
+            if (productVariant == null) return NotFound();
+
+            _unitOfWork.ProductRepository.DeleteProductVariant(productVariant);
+
+            if (_unitOfWork.HasChanges() && await _unitOfWork.Complete()) return NoContent();
+
+            return BadRequest("Failed to delete product variant");
         }
 
         [Description("Upload photo")]
