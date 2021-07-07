@@ -59,8 +59,9 @@ namespace Audi.Entities
         public decimal DiscountAmount { get; set; }
         public DateTime? DiscountDeadline { get; set; }
         public decimal Price { get; set; }
+        public bool IsDeleted { get; set; } = false;
         public ICollection<ProductPhoto> ProductPhotos { get; set; }
         public ICollection<ProductVariant> ProductVariants { get; set; }
-        public ICollection<ProductSKU> ProductSKUs { get; set; }
+        public ICollection<ProductSku> ProductSkus { get; set; }
     }
 }

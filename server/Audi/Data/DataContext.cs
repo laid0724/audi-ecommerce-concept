@@ -50,21 +50,21 @@ namespace Audi.Data
                 .WithOne(pc => pc.Parent)
                 .HasForeignKey(pc => pc.ParentId)
                 .IsRequired(false)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<ProductCategory>()
                 .HasMany(pc => pc.Products)
                 .WithOne(pc => pc.ProductCategory)
                 .HasForeignKey(pc => pc.ProductCategoryId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Product>()
                 .HasMany(p => p.ProductPhotos)
                 .WithOne(pp => pp.Product)
                 .HasForeignKey(pp => pp.ProductId)
                 .IsRequired()
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Product>()
                 .Property<WysiwygGrid>(p => p.Wysiwyg)
@@ -75,7 +75,7 @@ namespace Audi.Data
                 .HasDefaultValueSql("'{}'");
 
             // relationship for Product, ProductVariant, ProductVariantValue, ProductSku, ProductSkuValue
-            
+
             // ProductSku
             builder
                 .Entity<ProductSku>()
@@ -177,6 +177,19 @@ namespace Audi.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
             // relationship end
+
+            builder.Entity<ProductCategory>()
+                .HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<Product>()
+                .HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<ProductVariant>()
+                .HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<ProductVariantValue>()
+                .HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<ProductSku>()
+                .HasQueryFilter(p => !p.IsDeleted);
+            builder.Entity<ProductSkuValue>()
+                .HasQueryFilter(p => !p.IsDeleted);
 
             builder.ApplyUtcDateTimeConverter();
 

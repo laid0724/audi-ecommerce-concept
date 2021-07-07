@@ -10,6 +10,7 @@ namespace Audi.Entities
         public string Description { get; set; }
         public int? ParentId { get; set; }
         public ProductCategory Parent { get; set; }
+        public bool IsDeleted { get; set; } = false;
         public ICollection<ProductCategory> Children { get; set; }
         public ICollection<Product> Products { get; set; }
     }
