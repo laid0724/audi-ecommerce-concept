@@ -30,14 +30,76 @@ namespace Audi.Data
             _context.Products.Add(product);
         }
 
-        public void DeleteProduct(Product product)
+        public async Task DeleteProductAsync(Product product)
         {
-            _context.Products.Remove(product);
+            var productWithLinkedEntities = await _context.Products
+                .Include(p => p.ProductVariants)
+                    .ThenInclude(pv => pv.ProductVariantValues)
+                .Include(p => p.ProductSkus)
+                    .ThenInclude(pv => pv.ProductSkuValues)
+                .Where(p => p == product)
+                .SingleOrDefaultAsync();
+
+            foreach (var productVariant in productWithLinkedEntities.ProductVariants)
+            {
+                productVariant.IsDeleted = true;
+
+                foreach (var productVariantValue in productVariant.ProductVariantValues)
+                {
+                    productVariantValue.IsDeleted = true;
+                }
+            }
+
+            foreach (var productSku in productWithLinkedEntities.ProductSkus)
+            {
+                productSku.IsDeleted = true;
+                foreach (var productSkuValue in productSku.ProductSkuValues)
+                {
+                    productSkuValue.IsDeleted = true;
+                }
+            }
+
+            productWithLinkedEntities.IsDeleted = true;
+            _context.Products.Update(productWithLinkedEntities);
         }
 
-        public void DeleteProductCategory(ProductCategory productCategory)
+        public async Task DeleteProductCategoryAsync(ProductCategory productCategory)
         {
-            _context.ProductCategories.Remove(productCategory);
+            var productCategoryWithLinkedEntities = await _context.ProductCategories
+                .Include(pc => pc.Products)
+                    .ThenInclude(p => p.ProductVariants)
+                        .ThenInclude(pv => pv.ProductVariantValues)
+                .Include(pc => pc.Products)
+                    .ThenInclude(p => p.ProductSkus)
+                        .ThenInclude(pv => pv.ProductSkuValues)
+                .Where(pc => pc == productCategory)
+                .SingleOrDefaultAsync();
+
+            foreach (var product in productCategoryWithLinkedEntities.Products)
+            {
+                product.IsDeleted = true;
+                foreach (var productVariant in product.ProductVariants)
+                {
+                    productVariant.IsDeleted = true;
+
+                    foreach (var productVariantValue in productVariant.ProductVariantValues)
+                    {
+                        productVariantValue.IsDeleted = true;
+                    }
+                }
+
+                foreach (var productSku in product.ProductSkus)
+                {
+                    productSku.IsDeleted = true;
+                    foreach (var productSkuValue in productSku.ProductSkuValues)
+                    {
+                        productSkuValue.IsDeleted = true;
+                    }
+                }
+            }
+
+            productCategory.IsDeleted = true;
+            _context.ProductCategories.Update(productCategoryWithLinkedEntities);
         }
 
         public async Task<PagedList<ProductCategoryDto>> GetChildrenProductCategoriesAsync(ProductCategoryParams productCategoryParams)
@@ -100,6 +162,8 @@ namespace Audi.Data
                 .Include(p => p.ProductCategory)
                 .Include(p => p.ProductPhotos)
                     .ThenInclude(p => p.Photo)
+                .Include(p => p.ProductSkus)
+                .Include(p => p.ProductVariants)
                 .Where(p => p.Id == productId)
                 .FirstOrDefaultAsync();
 
@@ -181,7 +245,7 @@ namespace Audi.Data
             var product = await _context.ProductPhotos
                 .Include(productPhoto => productPhoto.Product)
                     .ThenInclude(product => product.ProductPhotos)
-                    .Include(productPhoto => productPhoto.Photo)
+                        .ThenInclude(productPhoto => productPhoto.Photo)
                 .Where(productPhoto => productPhoto.PhotoId == photoId)
                 .Select(productPhoto => productPhoto.Product)
                 .SingleOrDefaultAsync();
@@ -192,7 +256,8 @@ namespace Audi.Data
         public async Task<ProductVariant> GetProductVariantById(int variantId)
         {
             var productVariant = await _context.ProductVariants
-                .Include(e => e.ProductSKUValues)
+                .Include(e => e.Product)
+                .Include(e => e.ProductSkuValues)
                 .Include(e => e.ProductVariantValues)
                 .SingleOrDefaultAsync(e => e.VariantId == variantId);
 
@@ -202,7 +267,7 @@ namespace Audi.Data
         public async Task<ICollection<ProductVariant>> GetProductVariantsByProductId(int productId)
         {
             var productVariants = await _context.ProductVariants
-                .Include(e => e.ProductSKUValues)
+                .Include(e => e.ProductSkuValues)
                 .Include(e => e.ProductVariantValues)
                 .Where(e => e.ProductId == productId)
                 .ToListAsync();
@@ -210,13 +275,9 @@ namespace Audi.Data
             return productVariants;
         }
 
-        public void AddProductVariant(int productId, string variantName)
+        public void AddProductVariant(ProductVariant productVariant)
         {
-            _context.ProductVariants.Add(new ProductVariant
-            {
-                Name = variantName,
-                ProductId = productId,
-            });
+            _context.ProductVariants.Add(productVariant);
         }
 
         public void UpdateProductVariant(ProductVariant productVariant)
@@ -224,15 +285,26 @@ namespace Audi.Data
             _context.ProductVariants.Update(productVariant);
         }
 
-        public void DeleteProductVariant(ProductVariant productVariant)
+        public async Task DeleteProductVariantAsync(ProductVariant productVariant)
         {
-            _context.ProductVariants.Remove(productVariant);
+            var productVariantWithLinkedEntities = await _context.ProductVariants
+                .Include(pv => pv.ProductVariantValues)
+                .Where(pv => pv == productVariant)
+                .SingleOrDefaultAsync();
+
+            foreach (var productVariantValue in productVariantWithLinkedEntities.ProductVariantValues)
+            {
+                productVariantValue.IsDeleted = true;
+            }
+
+            productVariant.IsDeleted = true;
+            _context.ProductVariants.Update(productVariant);
         }
 
         public async Task<ProductVariantValue> GetProductVariantValueById(int variantValueId)
         {
             var productVariantValue = await _context.ProductVariantValues
-                .Include(e => e.ProductSKUValues)
+                .Include(e => e.ProductSkuValues)
                 .SingleOrDefaultAsync(e => e.VariantValueId == variantValueId);
 
             return productVariantValue;
@@ -241,106 +313,110 @@ namespace Audi.Data
         public async Task<ICollection<ProductVariantValue>> GetProductVariantValuesByVariantId(int variantId)
         {
             var productVariantValues = await _context.ProductVariantValues
-                .Include(e => e.ProductSKUValues)
+                .Include(e => e.ProductSkuValues)
                 .Where(e => e.VariantId == variantId)
                 .ToListAsync();
 
             return productVariantValues;
         }
 
-        public void AddProductVariantValue(int productId, int variantId, string variantValueName)
-        {
-            _context.ProductVariantValues.Add(new ProductVariantValue
-            {
-                ProductId = productId,
-                VariantId = variantId,
-                Name = variantValueName
-            });
-        }
-
-        public void UpdateProductVariantValue(ProductVariantValue productVariantValue)
+        public void AddProductVariantValue(ProductVariantValue productVariantValue)
         {
             _context.ProductVariantValues.Add(productVariantValue);
         }
 
-        public void DeleteProductVariantValue(ProductVariantValue productVariantValue)
+        public void UpdateProductVariantValue(ProductVariantValue productVariantValue)
         {
-            _context.ProductVariantValues.Remove(productVariantValue);
+            _context.ProductVariantValues.Update(productVariantValue);
         }
 
-        public async Task<ProductSKU> GetProductSKUById(int skuId)
+        public void DeleteProductVariantValue(ProductVariantValue productVariantValue)
         {
-            var productSKU = await _context.ProductSKUs
-                .Include(e => e.ProductSKUValues)
+            productVariantValue.IsDeleted = true;
+            _context.Entry<ProductVariantValue>(productVariantValue).State = EntityState.Modified;
+        }
+
+        public async Task<ProductSku> GetProductSkuById(int skuId)
+        {
+            var productSKU = await _context.ProductSkus
+                .Include(e => e.ProductSkuValues)
                 .SingleOrDefaultAsync(e => e.SkuId == skuId);
 
             return productSKU;
         }
 
-        public async Task<ICollection<ProductSKU>> GetProductSKUsByProductId(int productId)
+        public async Task<ICollection<ProductSku>> GetProductSkusByProductId(int productId)
         {
-            var productSKUs = await _context.ProductSKUs
-                .Include(e => e.ProductSKUValues)
+            var productSKUs = await _context.ProductSkus
+                .Include(e => e.ProductSkuValues)
                 .Where(e => e.ProductId == productId)
                 .ToListAsync();
 
             return productSKUs;
         }
 
-        public void AddProductSKU(int productId, string sku)
+        public void AddProductSku(ProductSku productSku)
         {
-            _context.ProductSKUs.Add(new ProductSKU
+            _context.ProductSkus.Add(productSku);
+        }
+
+        public void UpdateProductSku(ProductSku productSku)
+        {
+            productSku.Sku = productSku.Sku.ToLower().Trim();
+
+            _context.ProductSkus.Update(productSku);
+        }
+
+        public async Task DeleteProductSkuAsync(ProductSku productSku)
+        {
+            var productSkuWithLinkedEntities = await _context.ProductSkus
+                .Include(pv => pv.ProductSkuValues)
+                .Where(pv => pv == productSku)
+                .SingleOrDefaultAsync();
+
+            foreach (var productSkuValue in productSkuWithLinkedEntities.ProductSkuValues)
             {
-                ProductId = productId,
-                Sku = sku.ToLower().Trim()
-            });
+                productSkuValue.IsDeleted = true;
+            }
+
+            productSku.IsDeleted = true;
+            _context.ProductSkus.Update(productSku);
         }
 
-        public void UpdateProductSKU(ProductSKU productSKU)
+        public async Task<ProductSkuValue> GetProductSkuValueByVariantValueId(int variantValueId)
         {
-            productSKU.Sku = productSKU.Sku.ToLower().Trim();
-
-            _context.ProductSKUs.Add(productSKU);
-        }
-
-        public void DeleteProductSKU(ProductSKU productSKU)
-        {
-            _context.ProductSKUs.Remove(productSKU);
-        }
-
-        public async Task<ProductSKUValue> GetProductSKUValueByVariantValueId(int variantValueId)
-        {
-            var productSKUValue = await _context.ProductSKUValues
-                .Include(e => e.ProductSKU)
+            var productSkuValue = await _context.ProductSkuValues
+                .Include(e => e.ProductSku)
                 .Where(e => e.VariantValueId == variantValueId)
                 .FirstOrDefaultAsync();
-            
-            return productSKUValue;
+
+            return productSkuValue;
         }
-        
-        public async Task<ICollection<ProductSKUValue>> GetProductSKUValuesByProductId(int productId)
+
+        public async Task<ICollection<ProductSkuValue>> GetProductSkuValuesByProductId(int productId)
         {
-            var productSKUValues = await _context.ProductSKUValues
-                .Include(e => e.ProductSKU)
+            var productSkuValues = await _context.ProductSkuValues
+                .Include(e => e.ProductSku)
                 .Where(e => e.ProductId == productId)
                 .ToListAsync();
-            
-            return productSKUValues;
+
+            return productSkuValues;
         }
 
-        public void AddProductSKUValue(ProductSKUValue productSKUValue)
+        public void AddProductSkuValue(ProductSkuValue productSkuValue)
         {
-            _context.ProductSKUValues.Add(productSKUValue);
+            _context.ProductSkuValues.Add(productSkuValue);
         }
 
-        public void UpdateProductSKUValue(ProductSKUValue productSKUValue)
+        public void UpdateProductSkuValue(ProductSkuValue productSkuValue)
         {
-            _context.ProductSKUValues.Update(productSKUValue);
+            _context.ProductSkuValues.Update(productSkuValue);
         }
 
-        public void DeleteProductSKUValue(ProductSKUValue productSKUValue)
+        public void DeleteProductSkuValue(ProductSkuValue productSkuValue)
         {
-            _context.Remove(productSKUValue);
+            productSkuValue.IsDeleted = true;
+            _context.Entry<ProductSkuValue>(productSkuValue).State = EntityState.Modified;
         }
     }
 }

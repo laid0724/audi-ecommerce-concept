@@ -45,14 +45,14 @@ namespace Audi.Helpers
                     opt => opt.MapFrom(src => src.ProductVariants)
                 );
 
-            CreateMap<ProductSKU, ProductSKUDto>()
+            CreateMap<ProductSku, ProductSkuDto>()
                 .ForMember(
                     dest => dest.Id,
                     opt => opt.MapFrom(src => src.SkuId)
                 )
                 .ForMember(
                     dest => dest.Stock,
-                    opt => opt.MapFrom(src => src.ProductSKUValues
+                    opt => opt.MapFrom(src => src.ProductSkuValues
                         .Select(skuVal => skuVal.Stock)
                         .Sum()
                         // EF Core cannot query with aggregate, use Sum instead
@@ -67,7 +67,7 @@ namespace Audi.Helpers
                 )
                 .ForMember(
                     dest => dest.Stock,
-                    opt => opt.MapFrom(src => src.ProductSKUValues
+                    opt => opt.MapFrom(src => src.ProductSkuValues
                         .Select(skuValue => skuValue.Stock)
                         .Sum()
                         // EF Core cannot query with aggregate, use Sum instead
@@ -93,6 +93,11 @@ namespace Audi.Helpers
             CreateMap<ProductVariantUpsertDto, ProductVariant>()
                 .ForMember(
                     dest => dest.VariantId,
+                    opt => opt.MapFrom(src => src.Id)
+                );
+            CreateMap<ProductVariantValueUpsertDto, ProductVariantValue>()
+                .ForMember(
+                    dest => dest.VariantValueId,
                     opt => opt.MapFrom(src => src.Id)
                 );
 

@@ -14,7 +14,7 @@ namespace Audi.Interfaces
         Task<PagedList<ProductCategoryDto>> GetChildrenProductCategoriesAsync(ProductCategoryParams productCategoryParams);
         void AddProductCategory(ProductCategory productCategory);
         void UpdateProductCategory(ProductCategory productCategory);
-        void DeleteProductCategory(ProductCategory productCategory);
+        Task DeleteProductCategoryAsync(ProductCategory productCategory);
 
         // product
         Task<Product> GetProductByIdAsync(int productId);
@@ -22,34 +22,34 @@ namespace Audi.Interfaces
         Task<PagedList<ProductDto>> GetProductsAsync(ProductParams productParams);
         void AddProduct(Product product);
         void UpdateProduct(Product product);
-        void DeleteProduct(Product product);
+        Task DeleteProductAsync(Product product);
 
         // product variant
         Task<ProductVariant> GetProductVariantById(int variantId);
         Task<ICollection<ProductVariant>> GetProductVariantsByProductId(int productId);
-        void AddProductVariant(int productId, string variantName);
+        void AddProductVariant(ProductVariant productVariant);
         void UpdateProductVariant(ProductVariant productVariant);
-        void DeleteProductVariant(ProductVariant productVariant);
+        Task DeleteProductVariantAsync(ProductVariant productVariant);
 
         // product variant value
         Task<ProductVariantValue> GetProductVariantValueById(int variantValueId);
         Task<ICollection<ProductVariantValue>> GetProductVariantValuesByVariantId(int variantId);
-        void AddProductVariantValue(int productId, int variantId, string variantValueName);
+        void AddProductVariantValue(ProductVariantValue productVariantValue);
         void UpdateProductVariantValue(ProductVariantValue productVariantValue);
         void DeleteProductVariantValue(ProductVariantValue productVariantValue);
 
         // product sku
-        Task<ProductSKU> GetProductSKUById(int skuId);
-        Task<ICollection<ProductSKU>> GetProductSKUsByProductId(int productId);
-        void AddProductSKU(int productId, string sku);
-        void UpdateProductSKU(ProductSKU productSKU);
-        void DeleteProductSKU(ProductSKU productSKU);
+        Task<ProductSku> GetProductSkuById(int skuId);
+        Task<ICollection<ProductSku>> GetProductSkusByProductId(int productId);
+        void AddProductSku(ProductSku productSku);
+        void UpdateProductSku(ProductSku productSku);
+        Task DeleteProductSkuAsync(ProductSku productSku);
 
         // product sku value
-        Task<ICollection<ProductSKUValue>> GetProductSKUValuesByProductId(int productId);
-        Task<ProductSKUValue> GetProductSKUValueByVariantValueId(int variantValueId);
-        void AddProductSKUValue(ProductSKUValue productSKUValue);
-        void UpdateProductSKUValue(ProductSKUValue productSKUValue);
-        void DeleteProductSKUValue(ProductSKUValue productSKUValue);
+        Task<ProductSkuValue> GetProductSkuValueByVariantValueId(int variantValueId);
+        Task<ICollection<ProductSkuValue>> GetProductSkuValuesByProductId(int productId);
+        void AddProductSkuValue(ProductSkuValue productSkuValue);
+        void UpdateProductSkuValue(ProductSkuValue productSkuValue);
+        void DeleteProductSkuValue(ProductSkuValue productSkuValue);
     }
 }

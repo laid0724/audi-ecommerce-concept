@@ -1,6 +1,6 @@
 namespace Audi.DTOs
 {
-    public class ProductSKUDto
+    public class ProductSkuDto
     {
         public int Id { get; set; }
         public string Sku { get; set; }
