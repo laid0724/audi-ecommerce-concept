@@ -25,8 +25,8 @@ namespace Audi.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductVariant> ProductVariants { get; set; }
         public DbSet<ProductVariantValue> ProductVariantValues { get; set; }
-        public DbSet<ProductSKU> ProductSKUs { get; set; }
-        public DbSet<ProductSKUValue> ProductSKUValues { get; set; }
+        public DbSet<ProductSku> ProductSkus { get; set; }
+        public DbSet<ProductSkuValue> ProductSkuValues { get; set; }
         public DbSet<ProductPhoto> ProductPhotos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -74,51 +74,51 @@ namespace Audi.Data
                     w => JsonConvert.DeserializeObject<WysiwygGrid>(w))
                 .HasDefaultValueSql("'{}'");
 
-            // relationship for Product, ProductVariant, ProductVariantValue, ProductSKU, ProductSKUValue
+            // relationship for Product, ProductVariant, ProductVariantValue, ProductSku, ProductSkuValue
             
-            // ProductSKU
+            // ProductSku
             builder
-                .Entity<ProductSKU>()
+                .Entity<ProductSku>()
                 .HasKey(sku => new { sku.ProductId, sku.SkuId });
 
             builder
-                .Entity<ProductSKU>()
+                .Entity<ProductSku>()
                 .HasIndex(sku => sku.Sku);
 
             builder
-                .Entity<ProductSKU>()
+                .Entity<ProductSku>()
                 .Property(sku => sku.SkuId)
                 .ValueGeneratedOnAdd();
 
             builder
-                .Entity<ProductSKU>()
+                .Entity<ProductSku>()
                 .HasOne(sku => sku.Product)
-                .WithMany(p => p.ProductSKUs)
+                .WithMany(p => p.ProductSkus)
                 .HasForeignKey(sku => sku.ProductId);
 
-            // ProductSKUValue
+            // ProductSkuValue
             builder
-                .Entity<ProductSKUValue>()
+                .Entity<ProductSkuValue>()
                 .HasKey(skuval => new { skuval.ProductId, skuval.SkuId, skuval.VariantId });
 
             builder
-                .Entity<ProductSKUValue>()
-                .HasOne(skuval => skuval.ProductSKU)
-                .WithMany(sku => sku.ProductSKUValues)
+                .Entity<ProductSkuValue>()
+                .HasOne(skuval => skuval.ProductSku)
+                .WithMany(sku => sku.ProductSkuValues)
                 .HasForeignKey(skuval => new { skuval.ProductId, skuval.SkuId })
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
-                .Entity<ProductSKUValue>()
+                .Entity<ProductSkuValue>()
                 .HasOne(skuval => skuval.ProductVariantValue)
-                .WithMany(pvv => pvv.ProductSKUValues)
+                .WithMany(pvv => pvv.ProductSkuValues)
                 .HasForeignKey(skuval => new { skuval.ProductId, skuval.VariantId, skuval.VariantValueId })
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder
-                .Entity<ProductSKUValue>()
+                .Entity<ProductSkuValue>()
                 .HasOne(skuval => skuval.ProductVariant)
-                .WithMany(pv => pv.ProductSKUValues)
+                .WithMany(pv => pv.ProductSkuValues)
                 .HasForeignKey(skuval => new { skuval.ProductId, skuval.VariantId })
                 .OnDelete(DeleteBehavior.Restrict);
 
