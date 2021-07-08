@@ -6,6 +6,8 @@ import { Observable, throwError } from 'rxjs';
 import { ProductCategoryParams } from '../models/product-category-params';
 import { ProductParams } from '../models/product-params';
 import { PaginatedResult } from '../models/pagination';
+import { ProductVariant } from '../models/product-variant';
+import { ProductVariantValue } from '../models/product-variant-value';
 import {
   getPaginatedResult,
   getPaginationHeaders,
@@ -40,6 +42,19 @@ export interface ProductUpsertRequest {
   discountDeadline: Date;
   price: number;
   stock: number;
+}
+
+export interface ProductVariantUpsertRequest {
+  id?: number;
+  name: string;
+  productId: number;
+}
+export interface ProductVariantValueUpsertRequest {
+  id?: number;
+  name: string;
+  variantId: number;
+  productId: number;
+  stock?: number;
 }
 
 @Injectable({
@@ -212,6 +227,46 @@ export class ProductsService {
 
   deleteProduct(productId: number): Observable<null> {
     return this.http.delete<null>(`${this.endpoint}/${productId}`);
+  }
+
+  getProductVariant(variantId: number): Observable<ProductVariant> {
+    return this.http.get<ProductVariant>(`${this.endpoint}/variants/${variantId}`);
+  }
+
+  getProductVariants(productId: number): Observable<ProductVariant[]> {
+    return this.http.get<ProductVariant[]>(`${this.endpoint}/variants/all/${productId}`);
+  }
+
+  addProductVariants(request: ProductVariantUpsertRequest): Observable<ProductVariant> {
+    return this.http.post<ProductVariant>(`${this.endpoint}/variants`, request);
+  }
+
+  updateProductVariants(request: ProductVariantUpsertRequest): Observable<ProductVariant> {
+    return this.http.put<ProductVariant>(`${this.endpoint}/variants`, request);
+  }
+
+  deleteProductVariant(variantId: number): Observable<null> {
+    return this.http.delete<null>(`${this.endpoint}/variants/${variantId}`);
+  }
+
+  getProductVariantValue(variantValueId: number): Observable<ProductVariantValue> {
+    return this.http.get<ProductVariantValue>(`${this.endpoint}/variants/values/${variantValueId}`);
+  }
+
+  getProductVariantValues(variantId: number): Observable<ProductVariantValue[]> {
+    return this.http.get<ProductVariantValue[]>(`${this.endpoint}/variants/values/all/${variantId}`);
+  }
+
+  addProductVariantValues(request: ProductVariantValueUpsertRequest): Observable<ProductVariantValue> {
+    return this.http.post<ProductVariantValue>(`${this.endpoint}/variants/values`, request);
+  }
+
+  updateProductVariantValues(request: ProductVariantValueUpsertRequest): Observable<ProductVariantValue> {
+    return this.http.put<ProductVariantValue>(`${this.endpoint}/variants/values`, request);
+  }
+
+  deleteProductVariantValue(variantValueId: number): Observable<null> {
+    return this.http.delete<null>(`${this.endpoint}/variants/values/${variantValueId}`);
   }
 
   setMainProductPhoto(photoId: number): Observable<null> {
