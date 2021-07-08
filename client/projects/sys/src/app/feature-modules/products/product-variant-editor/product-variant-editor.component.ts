@@ -14,6 +14,7 @@ import {
   ProductVariantValue,
 } from '@audi/data';
 import { ClrForm } from '@clr/angular';
+import { indexOf } from 'lodash';
 import { take } from 'rxjs/operators';
 
 @Component({
@@ -28,8 +29,14 @@ export class ProductVariantEditorComponent implements OnInit {
     if (this.editVariantModalOpen) {
       this.toggleEditVariantModal();
     }
+    if (this.editVariantValueModalOpen) {
+      this.toggleEditVariantValueModal();
+    }
     if (this.confirmDeleteVariantModalOpen) {
       this.toggleDeleteVariantModal();
+    }
+    if (this.confirmDeleteVariantValueModalOpen) {
+      this.toggleDeleteVariantValueModal();
     }
   }
 
@@ -41,14 +48,23 @@ export class ProductVariantEditorComponent implements OnInit {
         ? this.addVariant()
         : this.updateVariant(this.variantId as unknown as number);
     }
-
+    if (this.editVariantValueModalOpen) {
+      this.variantValueId == null
+        ? this.addVariantValue()
+        : this.updateVariantValue(this.variantValueId as unknown as number);
+    }
     if (this.confirmDeleteVariantModalOpen) {
       this.deleteVariant(this.variantToDelete!.id);
     }
+    if (this.confirmDeleteVariantValueModalOpen) {
+      this.deleteVariantValue(this.variantValueToDelete!.id);
+    }
   }
 
-  @ViewChild('variantValueClrForm', { static: false }) variantClrForm: ClrForm;
-  @ViewChild('variantClrForm', { static: false }) variantValueClrForm: ClrForm;
+  @ViewChild('variantClrForm', { read: ClrForm })
+  variantClrForm: ClrForm;
+  @ViewChild('variantValueClrForm', { read: ClrForm })
+  variantValueClrForm: ClrForm;
 
   @Input()
   product: Product;
@@ -77,7 +93,12 @@ export class ProductVariantEditorComponent implements OnInit {
     return variantId;
   }
 
-  _productVariants: ProductVariant[] = [];
+  get variantValueId(): number | null {
+    const variantValueId = this.variantValueForm.get('id')?.value;
+    return variantValueId;
+  }
+
+  private _productVariants: ProductVariant[] = [];
 
   get productVariants(): ProductVariant[] {
     return this._productVariants ?? [];
@@ -129,6 +150,8 @@ export class ProductVariantEditorComponent implements OnInit {
       .pipe(take(1))
       .subscribe((productVariant: ProductVariant) => {
         this.productVariants = [...this.productVariants, productVariant];
+
+        this.checkValidityForErrorState();
         this.toggleEditVariantModal();
       });
   }
@@ -170,15 +193,20 @@ export class ProductVariantEditorComponent implements OnInit {
           (pv) => pv.id !== variantId
         );
 
+        this.checkValidityForErrorState();
         this.toggleDeleteVariantModal();
       });
   }
 
   toggleEditVariantModal(variantId?: number): void {
     const variantIdControl = this.variantForm.get('id');
+    const variantNameControl = this.variantForm.get('name');
 
     if (variantId) {
       variantIdControl?.patchValue(variantId);
+      variantNameControl?.patchValue(
+        this.productVariants.find((pv) => pv.id === variantId)?.name
+      );
     } else {
       this.variantForm.reset({
         productId: this.productId,
@@ -196,5 +224,150 @@ export class ProductVariantEditorComponent implements OnInit {
     }
 
     this.confirmDeleteVariantModalOpen = !this.confirmDeleteVariantModalOpen;
+  }
+
+  addVariantValue(): void {
+    if (this.variantValueForm.invalid) {
+      this.variantValueClrForm.markAsTouched();
+      this.variantValueForm.markAllAsTouched();
+      return;
+    }
+
+    this.productService
+      .addProductVariantValue(this.variantValueForm.value)
+      .pipe(take(1))
+      .subscribe((variantValue: ProductVariantValue) => {
+        const affectedVariant = this.productVariants.find(
+          (pv) => pv.id === variantValue.variantId
+        );
+
+        if (affectedVariant !== undefined) {
+          affectedVariant.variantValues = [
+            ...affectedVariant.variantValues,
+            variantValue,
+          ];
+        }
+
+        this.checkValidityForErrorState();
+        this.toggleEditVariantValueModal();
+      });
+  }
+
+  updateVariantValue(variantValueId: number): void {
+    if (this.variantValueForm.invalid) {
+      this.variantValueClrForm.markAsTouched();
+      this.variantValueForm.markAllAsTouched();
+      return;
+    }
+
+    this.productService
+      .updateProductVariantValue({
+        ...this.variantValueForm.value,
+        id: variantValueId,
+      })
+      .pipe(take(1))
+      .subscribe((updatedVariantValue: ProductVariantValue) => {
+        const affectedVariant = this.productVariants.find((pv) =>
+          pv.variantValues.map((vv) => vv.id).includes(updatedVariantValue.id)
+        );
+
+        if (affectedVariant !== undefined) {
+          const indexOfAffectedVariant =
+            this.productVariants.indexOf(affectedVariant);
+
+          const previousVariantValues =
+            this.productVariants[indexOfAffectedVariant].variantValues;
+
+          const previousVariantValue = previousVariantValues.find(
+            (vv) => vv.id === updatedVariantValue.id
+          );
+
+          if (previousVariantValue != null) {
+            const indexOfPreviousVariantValue =
+              previousVariantValues.indexOf(previousVariantValue);
+
+            previousVariantValues[indexOfPreviousVariantValue] =
+              updatedVariantValue;
+          }
+        }
+
+        this.toggleEditVariantValueModal();
+      });
+  }
+
+  deleteVariantValue(variantValueId: number): void {
+    this.productService
+      .deleteProductVariantValue(variantValueId)
+      .pipe(take(1))
+      .subscribe(() => {
+        const variant = this.productVariants.find(
+          (pv) =>
+            pv.variantValues.find((vv) => vv.id === variantValueId) !==
+            undefined
+        );
+
+        if (variant !== undefined) {
+          const indexOfVariant = this.productVariants.indexOf(variant);
+
+          this.productVariants[indexOfVariant].variantValues =
+            this.productVariants[indexOfVariant].variantValues.filter(
+              (vv) => vv.id !== variantValueId
+            );
+        }
+
+        this.checkValidityForErrorState();
+        this.toggleDeleteVariantValueModal();
+      });
+  }
+
+  toggleEditVariantValueModal(
+    variantId?: number,
+    variantValueId?: number
+  ): void {
+    const variantIdControl = this.variantValueForm.get('variantId');
+    const variantValueIdControl = this.variantValueForm.get('id');
+    const variantValueNameControl = this.variantValueForm.get('name');
+    const variantValueStockControl = this.variantValueForm.get('stock');
+
+    if (variantId) {
+      variantIdControl?.patchValue(variantId);
+      if (variantValueId) {
+        variantValueIdControl?.patchValue(variantValueId);
+
+        const matchingVariantValue = this.productVariants
+          .find((pv) => pv.id === variantId)
+          ?.variantValues.find((vv) => vv.id === variantValueId);
+
+        if (matchingVariantValue != null) {
+          variantValueNameControl?.patchValue(matchingVariantValue.name);
+          variantValueStockControl?.patchValue(matchingVariantValue.stock);
+        }
+      }
+    } else {
+      this.variantValueForm.reset({
+        productId: this.productId,
+      });
+    }
+
+    this.editVariantValueModalOpen = !this.editVariantValueModalOpen;
+  }
+
+  toggleDeleteVariantValueModal(variantValue?: ProductVariantValue): void {
+    if (variantValue) {
+      this.variantValueToDelete = variantValue;
+    } else {
+      this.variantValueToDelete = null;
+    }
+
+    this.confirmDeleteVariantValueModalOpen =
+      !this.confirmDeleteVariantValueModalOpen;
+  }
+
+  checkValidityForErrorState(): void {
+    const someVariantHasValue: boolean = this.productVariants.some(
+      (v) => v.variantValues.length > 0
+    );
+
+    this.hasError = !someVariantHasValue;
   }
 }
