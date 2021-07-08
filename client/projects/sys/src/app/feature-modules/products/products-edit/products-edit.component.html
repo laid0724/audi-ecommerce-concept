@@ -62,16 +62,18 @@
                   >
                 </clr-input-container>
 
-                <clr-input-container>
-                  <label>庫存 Stock</label>
-                  <input type="number" clrInput formControlName="stock" />
+                <clr-textarea-container class="w-100">
+                  <label>敘述 Description</label>
+                  <textarea
+                    clrTextarea
+                    formControlName="description"
+                    rows="5"
+                    class="w-100"
+                  ></textarea>
                   <clr-control-error *clrIfError="'required'"
                     >必填 Required</clr-control-error
                   >
-                  <clr-control-error *clrIfError="'pattern'"
-                    >禁止負數 Positive numbers only</clr-control-error
-                  >
-                </clr-input-container>
+                </clr-textarea-container>
 
                 <audi-sys-wysiwyg-grid
                   formGroupName="wysiwyg"

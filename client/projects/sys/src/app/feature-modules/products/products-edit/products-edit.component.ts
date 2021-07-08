@@ -152,14 +152,11 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
   initForm(): void {
     this.productForm = this.fb.group({
       name: [null, Validators.required],
+      description: [null, Validators.required],
       productCategoryId: [null, Validators.required],
       price: [
         null,
         [Validators.required, Validators.pattern(GREATER_THAN_ZERO_REGEX)],
-      ],
-      stock: [
-        null,
-        [Validators.required, Validators.pattern(NON_NEGATIVE_NUMBER_REGEX)],
       ],
       wysiwyg: this.fb.group(
         {
