@@ -237,11 +237,11 @@ export class ProductsService {
     return this.http.get<ProductVariant[]>(`${this.endpoint}/variants/all/${productId}`);
   }
 
-  addProductVariants(request: ProductVariantUpsertRequest): Observable<ProductVariant> {
+  addProductVariant(request: ProductVariantUpsertRequest): Observable<ProductVariant> {
     return this.http.post<ProductVariant>(`${this.endpoint}/variants`, request);
   }
 
-  updateProductVariants(request: ProductVariantUpsertRequest): Observable<ProductVariant> {
+  updateProductVariant(request: ProductVariantUpsertRequest): Observable<ProductVariant> {
     return this.http.put<ProductVariant>(`${this.endpoint}/variants`, request);
   }
 
@@ -257,11 +257,11 @@ export class ProductsService {
     return this.http.get<ProductVariantValue[]>(`${this.endpoint}/variants/values/all/${variantId}`);
   }
 
-  addProductVariantValues(request: ProductVariantValueUpsertRequest): Observable<ProductVariantValue> {
+  addProductVariantValue(request: ProductVariantValueUpsertRequest): Observable<ProductVariantValue> {
     return this.http.post<ProductVariantValue>(`${this.endpoint}/variants/values`, request);
   }
 
-  updateProductVariantValues(request: ProductVariantValueUpsertRequest): Observable<ProductVariantValue> {
+  updateProductVariantValue(request: ProductVariantValueUpsertRequest): Observable<ProductVariantValue> {
     return this.http.put<ProductVariantValue>(`${this.endpoint}/variants/values`, request);
   }
 
