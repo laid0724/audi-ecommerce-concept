@@ -1,11 +1,10 @@
-import { ProductCategory } from "./product-category";
 import { ProductPhoto } from './product-photo';
+import { ProductVariant } from "./product-variant";
 import { WysiwygGrid } from './wysiwyg';
 
 export interface Product {
   id: number;
   productCategoryId: number;
-  productCategory?: ProductCategory;
   name: string;
   descripion: string;
   createdAt: Date;
@@ -18,4 +17,5 @@ export interface Product {
   price: number;
   stock: number;
   photos: ProductPhoto[];
+  variants: ProductVariant[];
 }
