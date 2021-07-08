@@ -9,6 +9,8 @@ export * from './lib/models/product-category-params';
 export * from './lib/models/product-category';
 export * from './lib/models/product-photo';
 export * from './lib/models/product-params';
+export * from './lib/models/product-variant';
+export * from './lib/models/product-variant-value';
 export * from './lib/models/product';
 export * from './lib/models/wysiwyg';
 
