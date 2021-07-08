@@ -198,6 +198,7 @@ namespace Audi.Controllers
 
             product.ProductCategoryId = request.ProductCategoryId;
             product.Name = request.Name;
+            product.Description = request.Description;
             product.Wysiwyg = request.Wysiwyg;
             product.IsVisible = request.IsVisible;
             product.IsDiscounted = request.IsDiscounted;
