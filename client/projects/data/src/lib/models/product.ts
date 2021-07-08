@@ -7,6 +7,7 @@ export interface Product {
   productCategoryId: number;
   productCategory?: ProductCategory;
   name: string;
+  descripion: string;
   createdAt: Date;
   lastUpdated: Date;
   wysiwyg: WysiwygGrid;
