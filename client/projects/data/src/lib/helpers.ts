@@ -95,7 +95,8 @@ export function getAllErrors(
   form: FormGroup | FormArray
 ): { [key: string]: any } | null {
   let hasError = false;
-  const result = (Object.keys(form.controls) as string[]).reduce((acc, key) => {
+
+  let result = (Object.keys(form.controls) as string[]).reduce((acc, key) => {
     const control = form.get(key);
     const errors =
       control instanceof FormGroup || control instanceof FormArray
@@ -107,6 +108,15 @@ export function getAllErrors(
     }
     return acc;
   }, {} as { [key: string]: any });
+
+  if (form instanceof FormGroup && form.errors) {
+    hasError = true;
+    result = {
+      ...result,
+      form: form.errors,
+    };
+  }
+
   return hasError ? result : null;
 }
 

@@ -3,15 +3,17 @@ using System;
 using Audi.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace server.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20210705092052_AddProductVariants")]
+    partial class AddProductVariants
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,10 +229,6 @@ namespace server.Data.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("discount_deadline");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
-
                     b.Property<bool>("IsDiscounted")
                         .HasColumnType("boolean")
                         .HasColumnName("is_discounted");
@@ -286,10 +284,6 @@ namespace server.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("description");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
-
                     b.Property<string>("Language")
                         .HasColumnType("text")
                         .HasColumnName("language");
@@ -334,7 +328,7 @@ namespace server.Data.Migrations
                     b.ToTable("product_photos");
                 });
 
-            modelBuilder.Entity("Audi.Entities.ProductSku", b =>
+            modelBuilder.Entity("Audi.Entities.ProductSKU", b =>
                 {
                     b.Property<int>("ProductId")
                         .HasColumnType("integer")
@@ -345,10 +339,6 @@ namespace server.Data.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("sku_id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
 
                     b.Property<string>("Sku")
                         .IsRequired()
@@ -364,7 +354,7 @@ namespace server.Data.Migrations
                     b.ToTable("product_skus");
                 });
 
-            modelBuilder.Entity("Audi.Entities.ProductSkuValue", b =>
+            modelBuilder.Entity("Audi.Entities.ProductSKUValue", b =>
                 {
                     b.Property<int>("ProductId")
                         .HasColumnType("integer")
@@ -378,10 +368,6 @@ namespace server.Data.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("variant_id");
 
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
-
                     b.Property<int>("Stock")
                         .HasColumnType("integer")
                         .HasColumnName("stock");
@@ -391,12 +377,12 @@ namespace server.Data.Migrations
                         .HasColumnName("variant_value_id");
 
                     b.HasKey("ProductId", "SkuId", "VariantId")
-                        .HasName("pk_product_sku_values");
+                        .HasName("pk_product_skuvalues");
 
                     b.HasIndex("ProductId", "VariantId", "VariantValueId")
-                        .HasDatabaseName("ix_product_sku_values_product_id_variant_id_variant_value_id");
+                        .HasDatabaseName("ix_product_skuvalues_product_id_variant_id_variant_value_id");
 
-                    b.ToTable("product_sku_values");
+                    b.ToTable("product_skuvalues");
                 });
 
             modelBuilder.Entity("Audi.Entities.ProductVariant", b =>
@@ -410,10 +396,6 @@ namespace server.Data.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("variant_id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
 
                     b.Property<string>("Name")
                         .HasColumnType("text")
@@ -440,10 +422,6 @@ namespace server.Data.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("variant_value_id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_deleted");
 
                     b.Property<string>("Name")
                         .HasColumnType("text")
@@ -588,7 +566,7 @@ namespace server.Data.Migrations
                     b.HasOne("Audi.Entities.ProductCategory", "ProductCategory")
                         .WithMany("Products")
                         .HasForeignKey("ProductCategoryId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ProductCategory");
@@ -599,7 +577,7 @@ namespace server.Data.Migrations
                     b.HasOne("Audi.Entities.ProductCategory", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Parent");
                 });
@@ -623,10 +601,10 @@ namespace server.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Audi.Entities.ProductSku", b =>
+            modelBuilder.Entity("Audi.Entities.ProductSKU", b =>
                 {
                     b.HasOne("Audi.Entities.Product", "Product")
-                        .WithMany("ProductSkus")
+                        .WithMany("ProductSKUs")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -634,7 +612,7 @@ namespace server.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Audi.Entities.ProductSkuValue", b =>
+            modelBuilder.Entity("Audi.Entities.ProductSKUValue", b =>
                 {
                     b.HasOne("Audi.Entities.Product", "Product")
                         .WithMany()
@@ -642,27 +620,27 @@ namespace server.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Audi.Entities.ProductSku", "ProductSku")
-                        .WithMany("ProductSkuValues")
+                    b.HasOne("Audi.Entities.ProductSKU", "ProductSKU")
+                        .WithMany("ProductSKUValues")
                         .HasForeignKey("ProductId", "SkuId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Audi.Entities.ProductVariant", "ProductVariant")
-                        .WithMany("ProductSkuValues")
+                        .WithMany("ProductSKUValues")
                         .HasForeignKey("ProductId", "VariantId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Audi.Entities.ProductVariantValue", "ProductVariantValue")
-                        .WithMany("ProductSkuValues")
+                        .WithMany("ProductSKUValues")
                         .HasForeignKey("ProductId", "VariantId", "VariantValueId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Product");
 
-                    b.Navigation("ProductSku");
+                    b.Navigation("ProductSKU");
 
                     b.Navigation("ProductVariant");
 
@@ -754,7 +732,7 @@ namespace server.Data.Migrations
                 {
                     b.Navigation("ProductPhotos");
 
-                    b.Navigation("ProductSkus");
+                    b.Navigation("ProductSKUs");
 
                     b.Navigation("ProductVariants");
                 });
@@ -766,21 +744,21 @@ namespace server.Data.Migrations
                     b.Navigation("Products");
                 });
 
-            modelBuilder.Entity("Audi.Entities.ProductSku", b =>
+            modelBuilder.Entity("Audi.Entities.ProductSKU", b =>
                 {
-                    b.Navigation("ProductSkuValues");
+                    b.Navigation("ProductSKUValues");
                 });
 
             modelBuilder.Entity("Audi.Entities.ProductVariant", b =>
                 {
-                    b.Navigation("ProductSkuValues");
+                    b.Navigation("ProductSKUValues");
 
                     b.Navigation("ProductVariantValues");
                 });
 
             modelBuilder.Entity("Audi.Entities.ProductVariantValue", b =>
                 {
-                    b.Navigation("ProductSkuValues");
+                    b.Navigation("ProductSKUValues");
                 });
 #pragma warning restore 612, 618
         }

@@ -10,6 +10,7 @@ namespace Audi.DTOs
         public int Id { get; set; }
         public int ProductCategoryId { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime LastUpdated { get; set; }
         public WysiwygGrid Wysiwyg { get; set; }
@@ -20,5 +21,6 @@ namespace Audi.DTOs
         public decimal Price { get; set; }
         public int Stock { get; set; }
         public ICollection<ProductPhotoDto> Photos { get; set; } = new List<ProductPhotoDto>();
+        public ICollection<ProductVariantDto> Variants { get; set; } = new List<ProductVariantDto>();
     }
 }

@@ -12,6 +12,7 @@ import { PipesModule } from '@audi/data';
 import { ClrDatagridUtilitiesModule } from '../../component-modules/clr-datagrid-utilities/clr-datagrid-utilities.module';
 import { ProductPhotoUploaderComponent } from './product-photo-uploader/product-photo-uploader.component';
 import { FileUploadModule } from 'ng2-file-upload';
+import { ProductVariantEditorComponent } from './product-variant-editor/product-variant-editor.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     ProductsEditComponent,
     ProductsListComponent,
     ProductPhotoUploaderComponent,
+    ProductVariantEditorComponent,
   ],
   imports: [
     CommonModule,

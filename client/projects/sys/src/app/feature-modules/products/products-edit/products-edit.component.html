@@ -8,7 +8,7 @@
 
 <div class="row" [ngClass]="{ 'mt-3': !productId }">
   <div class="col-12">
-    <form clrForm [formGroup]="productForm" (ngSubmit)="onSubmit()">
+    <form clrForm [formGroup]="productForm">
       <div class="card mt-0">
         <div
           class="card-header py-3 d-flex align-items-center"
@@ -62,16 +62,24 @@
                   >
                 </clr-input-container>
 
-                <clr-input-container>
-                  <label>庫存 Stock</label>
-                  <input type="number" clrInput formControlName="stock" />
+                <clr-textarea-container class="w-100">
+                  <label>敘述 Description</label>
+                  <textarea
+                    clrTextarea
+                    formControlName="description"
+                    rows="5"
+                    class="w-100"
+                  ></textarea>
                   <clr-control-error *clrIfError="'required'"
                     >必填 Required</clr-control-error
                   >
-                  <clr-control-error *clrIfError="'pattern'"
-                    >禁止負數 Positive numbers only</clr-control-error
-                  >
-                </clr-input-container>
+                </clr-textarea-container>
+
+                <audi-sys-product-variant-editor
+                  *ngIf="product != null"
+                  [product]="product"
+                  [hasError]="hasVariantValueError"
+                ></audi-sys-product-variant-editor>
 
                 <audi-sys-wysiwyg-grid
                   formGroupName="wysiwyg"
@@ -171,8 +179,8 @@
         >
           <ng-container *ngIf="!productId">
             <p class="p3 ms-2 mt-0" style="color: #8c8c8c">
-              *商品圖片須在建檔成功後才能新增 Product photos may only be added
-              after you have created the entry
+              *商品圖片及選項須在建檔成功後才能新增 Product photos and options
+              may only be added after you have created the entry
             </p>
           </ng-container>
 
@@ -180,7 +188,12 @@
             <clr-button type="button" class="btn-primary-outline"
               >取消 Cancel</clr-button
             >
-            <clr-button type="submit" class="btn-primary">儲存 Save</clr-button>
+            <clr-button
+              type="button"
+              class="btn-primary"
+              (click)="productId ? onSave() : onCreate()"
+              >儲存 Save</clr-button
+            >
           </clr-button-group>
         </div>
       </div>
