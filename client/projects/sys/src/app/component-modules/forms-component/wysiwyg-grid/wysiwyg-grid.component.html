@@ -9,7 +9,7 @@
     </label>
 
     <div
-      class="wysiwyg-preview-wrapper"
+      class="wysiwyg-preview-wrapper mt-2 mt-md-0"
       cdkDropList
       (cdkDropListDropped)="onDrop($event)"
     >
@@ -96,15 +96,20 @@
         增加內容行列 Add Row
       </button>
     </div>
-    <span
-      class="__clr-error clr-subtext"
+    <clr-alert
+      class="mt-2"
       *ngIf="
         controlContainer.control?.hasError('required') &&
         controlContainer.control?.touched
       "
+      [clrAlertIcon]="'exclamation-circle'"
+      [clrAlertType]="'danger'"
+      [clrAlertClosable]="false"
     >
-      必填 Required
-    </span>
+      <clr-alert-item
+        >各行列都必須要有內容 All rows must be filled with content</clr-alert-item
+      >
+    </clr-alert>
   </clr-control-container>
 </form>
 

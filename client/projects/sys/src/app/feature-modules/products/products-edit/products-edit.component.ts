@@ -1,6 +1,14 @@
 import { OnDestroy } from '@angular/core';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  AsyncValidatorFn,
+  FormArray,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
   BusyService,
@@ -11,16 +19,16 @@ import {
   GREATER_THAN_ZERO_REGEX,
   isEarlierThanTodayValidator,
   isEqualOrGreaterThanValidator,
-  NON_NEGATIVE_NUMBER_REGEX,
   Product,
   ProductPhoto,
   ProductsService,
+  ProductVariant,
   WysiwygRowType,
 } from '@audi/data';
 import { ClrForm } from '@clr/angular';
 import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
-import { switchMap, take, takeUntil, tap } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
+import { switchMap, take, takeUntil, tap, map } from 'rxjs/operators';
 import {
   addWysiwygRow,
   wysiwygGridValidatorBuilderFn,
@@ -46,6 +54,26 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
 
   destroy$ = new Subject<boolean>();
 
+  hasVariantValueError = false;
+
+  get hasVariantValueError$(): Observable<boolean> {
+    if (this.productId) {
+      const asyncValidator: Observable<boolean> = this.productService
+        .getProductVariants(this.productId)
+        .pipe(
+          take(1),
+          map((variants: ProductVariant[]) => {
+            const someVariantHasValue: boolean = variants.some(
+              (v) => v.variantValues.length > 0
+            );
+            return !someVariantHasValue;
+          })
+        );
+      return asyncValidator;
+    }
+    return of(false);
+  }
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -62,6 +90,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
     const priceControl = this.productForm.get('priceControl');
     const discountDeadlineControl = this.productForm.get('discountDeadline');
     const discountAmountControl = this.productForm.get('discountAmount');
+    const isVisibleControl = this.productForm.get('isVisible');
 
     if (
       isDiscountedControl &&
@@ -92,7 +121,12 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
           this.productId = productId;
           return this.productService.getProduct(productId).pipe(
             tap((product: Product) => {
+              if (isVisibleControl) {
+                isVisibleControl.enable();
+              }
+
               this.product = product;
+
               this.productForm.patchValue({
                 ...product,
                 discountDeadline: formatServerTimeToClrDate(
@@ -166,7 +200,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
           validators: [wysiwygGridValidatorBuilderFn([Validators.required])],
         }
       ),
-      isVisible: [false, Validators.required],
+      isVisible: [{ value: false, disabled: true }, Validators.required],
       isDiscounted: [false, Validators.required],
       discountAmount: [
         { value: null, disabled: true },
@@ -189,11 +223,12 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(): void {
+  onCreate(): void {
     if (this.productForm.invalid) {
       this.clrForm.markAsTouched();
       this.productForm.markAllAsTouched();
       console.log(getAllErrors(this.productForm));
+      this.toastr.error('儲存失敗 Saving failed');
       return;
     }
 
@@ -204,31 +239,59 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
       discountDeadline: formatClrDateToUTCString(discountDeadline),
     };
 
-    let upsertObservable$;
-
-    if (this.productId != null) {
-      formValue = {
-        ...formValue,
-        id: this.productId,
-      };
-
-      upsertObservable$ = this.productService.updateProduct(formValue);
-    } else {
-      upsertObservable$ = this.productService.addProduct(formValue);
-    }
-
-    if (upsertObservable$ != undefined) {
-      upsertObservable$.pipe(take(1)).subscribe((product: Product) => {
-        if (this.productId == null) {
-          this.router.navigate([`/manage/products/items/${product.id}`], {
-            queryParamsHandling: '',
-          });
-          this.toastr.success('成功建立產品 Product created successfully');
-        } else {
-          this.toastr.info('更新成功 Product updated');
-        }
+    this.productService
+      .addProduct(formValue)
+      .pipe(take(1))
+      .subscribe((product: Product) => {
+        this.router.navigate([`/manage/products/items/${product.id}`], {
+          queryParamsHandling: '',
+        });
+        this.toastr.success('成功建立產品 Product created successfully');
       });
-    }
+  }
+
+  onSave(): void {
+    this.hasVariantValueError$.subscribe((hasVariantValueError: boolean) => {
+      if (this.productForm.invalid || hasVariantValueError) {
+        if (hasVariantValueError) {
+          this.hasVariantValueError = true;
+        }
+
+        this.clrForm.markAsTouched();
+        this.productForm.markAllAsTouched();
+
+        let errors = getAllErrors(this.productForm);
+
+        if (hasVariantValueError) {
+          errors = {
+            ...errors,
+            productForm: { hasVariantValueError },
+          };
+        }
+
+        console.log(errors);
+
+        this.toastr.error('儲存失敗 Saving failed');
+      } else {
+        this.hasVariantValueError = false;
+
+        const { discountDeadline } = this.productForm.value;
+
+        let formValue = {
+          ...this.productForm.value,
+          id: this.productId,
+          discountDeadline: formatClrDateToUTCString(discountDeadline),
+        };
+
+        this.productService
+          .updateProduct(formValue)
+          .pipe(take(1))
+          .subscribe((product: Product) => {
+            this.product = product;
+            this.toastr.info('更新成功 Product updated');
+          });
+      }
+    });
   }
 
   ngOnDestroy(): void {

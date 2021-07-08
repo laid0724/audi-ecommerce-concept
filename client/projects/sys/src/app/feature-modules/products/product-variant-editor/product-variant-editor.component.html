@@ -1,0 +1,136 @@
+<clr-control-container class="clr-control-container--no-max-height">
+  <label>
+    {{ label }}
+  </label>
+  <div class="mt-1 mt-md-0">
+    <clr-accordion *ngIf="productVariants.length > 0" class="mb-2">
+      <clr-accordion-panel *ngFor="let variant of productVariants">
+        <clr-accordion-title
+          class="d-flex justify-content-between align-items-center w-100 py-1"
+        >
+          <span>{{ variant.name }}</span>
+          <clr-button-group (click)="$event.stopPropagation()">
+            <clr-button
+              type="button"
+              class="btn btn-sm btn-icon btn-primary m-0"
+              (click)="toggleEditVariantModal(variant.id)"
+            >
+              <clr-icon shape="edit"></clr-icon>
+            </clr-button>
+            <clr-button
+              type="button"
+              class="btn btn-sm btn-icon btn-danger m-0"
+              (click)="toggleDeleteVariantModal(variant)"
+            >
+              <clr-icon shape="trash"></clr-icon>
+            </clr-button>
+          </clr-button-group>
+        </clr-accordion-title>
+        <clr-accordion-content *clrIfExpanded>
+          <pre>{{ variant.variantValues | json }}</pre>
+        </clr-accordion-content>
+      </clr-accordion-panel>
+    </clr-accordion>
+    <button
+      type="button"
+      class="btn btn-icon btn-primary"
+      (click)="toggleEditVariantModal()"
+    >
+      <clr-icon shape="plus"> </clr-icon>
+      新增產品選項 Add Product Options
+    </button>
+  </div>
+  <clr-alert
+    *ngIf="hasError"
+    [clrAlertIcon]="'exclamation-circle'"
+    [clrAlertType]="'danger'"
+    [clrAlertClosable]="false"
+  >
+    <clr-alert-item
+      >請增加至少一個產品選項（內需包含至少一個選擇）Please add at least one
+      product option that has at least one selection available</clr-alert-item
+    >
+  </clr-alert>
+</clr-control-container>
+
+<clr-modal [(clrModalOpen)]="editVariantModalOpen" [clrModalClosable]="false">
+  <h3 class="modal-title">
+    {{
+      variantId
+        ? '編輯產品選項 Edit Product Option'
+        : '新增產品選項 Add Product Option'
+    }}
+  </h3>
+  <div class="modal-body">
+    <form
+      clrForm
+      [formGroup]="variantForm"
+      clrLayout="vertical"
+      #variantClrForm
+    >
+      <clr-input-container class="d-flex flex-column w-100 mt-0">
+        <label>選項名稱 Option Name</label>
+        <input
+          type="text"
+          clrInput
+          formControlName="name"
+          class="clr-input-width"
+        />
+        <clr-control-error *clrIfError="'required'">必填</clr-control-error>
+      </clr-input-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary-outline"
+      (click)="toggleEditVariantModal()"
+    >
+      取消 Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="variantId ? updateVariant(variantId) : addVariant()"
+    >
+      確認 Ok
+    </button>
+  </div>
+</clr-modal>
+
+<clr-modal
+  [(clrModalOpen)]="confirmDeleteVariantModalOpen"
+  [clrModalClosable]="false"
+>
+  <h3 class="modal-title">刪除產品選項 Delete Product Option</h3>
+  <div class="modal-body">
+    <ng-container *ngIf="variantToDelete !== null">
+      <p class="my-1">
+        確定要刪除
+        <strong>{{ variantToDelete?.name }}</strong
+        >?
+      </p>
+      <p class="mt-2 mb-1">
+        Are you sure you want to delete
+        <strong>{{ variantToDelete?.name }}</strong
+        >?
+      </p>
+    </ng-container>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary-outline"
+      (click)="toggleDeleteVariantModal()"
+    >
+      取消 Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="deleteVariant(variantToDelete!.id)"
+    >
+      確認 Ok
+    </button>
+  </div>
+</clr-modal>
