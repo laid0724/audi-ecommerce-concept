@@ -163,7 +163,9 @@ namespace Audi.Data
                 .Include(p => p.ProductPhotos)
                     .ThenInclude(p => p.Photo)
                 .Include(p => p.ProductSkus)
+                    .ThenInclude(ps => ps.ProductSkuValues)
                 .Include(p => p.ProductVariants)
+                    .ThenInclude(pv => pv.ProductVariantValues)
                 .Where(p => p.Id == productId)
                 .FirstOrDefaultAsync();
 
@@ -188,8 +190,10 @@ namespace Audi.Data
                 .Include(p => p.ProductCategory)
                 .Include(p => p.ProductPhotos)
                     .ThenInclude(p => p.Photo)
+                .Include(p => p.ProductSkus)
+                    .ThenInclude(ps => ps.ProductSkuValues)
                 .Include(p => p.ProductVariants)
-                    .ThenInclude(pv => pv.ProductSkuValues)
+                    .ThenInclude(pv => pv.ProductVariantValues)
                 .Where(p =>
                     p.Language.ToLower().Trim() == productParams.Language.ToLower().Trim()
                 )
