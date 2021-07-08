@@ -188,6 +188,8 @@ namespace Audi.Data
                 .Include(p => p.ProductCategory)
                 .Include(p => p.ProductPhotos)
                     .ThenInclude(p => p.Photo)
+                .Include(p => p.ProductVariants)
+                    .ThenInclude(pv => pv.ProductSkuValues)
                 .Where(p =>
                     p.Language.ToLower().Trim() == productParams.Language.ToLower().Trim()
                 )
@@ -221,6 +223,30 @@ namespace Audi.Data
             if (productParams.PriceMax.HasValue)
             {
                 query = query.Where(p => p.Price <= productParams.PriceMax.Value);
+            }
+
+            if (productParams.StockMin.HasValue)
+            {
+                query = query.Where(p =>
+                    p.ProductVariants
+                        .Select(pv =>
+                            pv.ProductSkuValues.Select(psv => psv.Stock)
+                        )
+                        .SelectMany(i => i)
+                        .Sum() >= productParams.StockMin.Value
+                );
+            }
+
+            if (productParams.StockMax.HasValue)
+            {
+                query = query.Where(p =>
+                    p.ProductVariants
+                        .Select(pv =>
+                            pv.ProductSkuValues.Select(psv => psv.Stock)
+                        )
+                        .SelectMany(i => i)
+                        .Sum() <= productParams.StockMax.Value
+                );
             }
 
             return await PagedList<ProductDto>.CreateAsync(
