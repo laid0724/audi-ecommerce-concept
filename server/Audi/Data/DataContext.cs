@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Audi.Data
 {
@@ -28,6 +29,8 @@ namespace Audi.Data
         public DbSet<ProductSku> ProductSkus { get; set; }
         public DbSet<ProductSkuValue> ProductSkuValues { get; set; }
         public DbSet<ProductPhoto> ProductPhotos { get; set; }
+        public DbSet<DynamicDocument> DynamicDocuments { get; set; }
+        public DbSet<DynamicDocumentPhoto> DynamicDocumentPhotos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -173,6 +176,51 @@ namespace Audi.Data
                 .Entity<ProductPhoto>()
                 .HasOne(e => e.Photo)
                 .WithMany(e => e.ProductPhotos)
+                .HasForeignKey(e => e.PhotoId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+            // relationship end
+
+            builder.Entity<DynamicDocument>()
+                .Property<WysiwygGrid>(e => e.Wysiwyg)
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    w => JsonConvert.SerializeObject(w),
+                    w => JsonConvert.DeserializeObject<WysiwygGrid>(w))
+                .HasDefaultValueSql("'{}'");
+
+            builder
+                .Entity<DynamicDocument>()
+                .Property(e => e.JsonData)
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    jObject => JsonConvert.SerializeObject(jObject),
+                    jObject => JsonConvert.DeserializeObject<JObject>(jObject)
+                );
+
+            // relationship for: DynamicDocument <-> DynamicDocumentPhoto <-> Photo
+            builder.Entity<DynamicDocument>()
+                .HasOne(e => e.FeaturedImage)
+                .WithOne(e => e.DynamicDocument)
+                .HasForeignKey<DynamicDocument>(e => e.FeaturedImageId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<DynamicDocumentPhoto>()
+                .HasKey(e => new { e.DynamicDocumentId, e.PhotoId });
+
+            builder
+                .Entity<DynamicDocumentPhoto>()
+                .HasOne(e => e.DynamicDocument)
+                .WithOne(e => e.FeaturedImage)
+                .HasForeignKey<DynamicDocumentPhoto>(e => e.DynamicDocumentId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .Entity<DynamicDocumentPhoto>()
+                .HasOne(e => e.Photo)
+                .WithMany(e => e.DynamicDocumentPhotos)
                 .HasForeignKey(e => e.PhotoId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
