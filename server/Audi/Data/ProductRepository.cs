@@ -110,18 +110,18 @@ namespace Audi.Data
                 .Where(pc =>
                     pc.ParentId.HasValue &&
                     (pc.ParentId.Value == productCategoryParams.ParentId.Value) &&
-                    pc.Language.ToLowerTrimmed() == productCategoryParams.Language.ToLowerTrimmed()
+                    pc.Language.ToLower().Trim() == productCategoryParams.Language.ToLower().Trim()
                 )
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(productCategoryParams.Name))
             {
-                query = query.Where(pc => pc.Name.ToLowerTrimmed().Contains(productCategoryParams.Name.ToLowerTrimmed()));
+                query = query.Where(pc => pc.Name.ToLower().Trim().Contains(productCategoryParams.Name.ToLower().Trim()));
             }
 
             if (!string.IsNullOrWhiteSpace(productCategoryParams.Description))
             {
-                query = query.Where(pc => pc.Description.ToLowerTrimmed().Contains(productCategoryParams.Description.ToLowerTrimmed()));
+                query = query.Where(pc => pc.Description.ToLower().Trim().Contains(productCategoryParams.Description.ToLower().Trim()));
             }
 
             return await PagedList<ProductCategoryDto>.CreateAsync(
@@ -136,18 +136,18 @@ namespace Audi.Data
             var query = _context.ProductCategories
                 .Where(pc =>
                     !pc.ParentId.HasValue &&
-                    pc.Language.ToLowerTrimmed() == productCategoryParams.Language.ToLowerTrimmed()
+                    pc.Language.ToLower().Trim() == productCategoryParams.Language.ToLower().Trim()
                 )
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(productCategoryParams.Name))
             {
-                query = query.Where(pc => pc.Name.ToLowerTrimmed().Contains(productCategoryParams.Name.ToLowerTrimmed()));
+                query = query.Where(pc => pc.Name.ToLower().Trim().Contains(productCategoryParams.Name.ToLower().Trim()));
             }
 
             if (!string.IsNullOrWhiteSpace(productCategoryParams.Description))
             {
-                query = query.Where(pc => pc.Description.ToLowerTrimmed().Contains(productCategoryParams.Description.ToLowerTrimmed()));
+                query = query.Where(pc => pc.Description.ToLower().Trim().Contains(productCategoryParams.Description.ToLower().Trim()));
             }
 
             return await PagedList<ProductCategoryDto>.CreateAsync(
@@ -196,7 +196,7 @@ namespace Audi.Data
                 .Include(p => p.ProductVariants)
                     .ThenInclude(pv => pv.ProductVariantValues)
                 .Where(p =>
-                    p.Language.ToLowerTrimmed() == productParams.Language.ToLowerTrimmed()
+                    p.Language.ToLower().Trim() == productParams.Language.ToLower().Trim()
                 )
                 .AsQueryable();
 
@@ -207,7 +207,7 @@ namespace Audi.Data
 
             if (!string.IsNullOrWhiteSpace(productParams.Name))
             {
-                query = query.Where(p => p.Name.ToLowerTrimmed().Contains(productParams.Name.ToLowerTrimmed()));
+                query = query.Where(p => p.Name.ToLower().Trim().Contains(productParams.Name.ToLower().Trim()));
             }
 
             if (productParams.IsVisible.HasValue)
@@ -393,7 +393,7 @@ namespace Audi.Data
 
         public void UpdateProductSku(ProductSku productSku)
         {
-            productSku.Sku = productSku.Sku.ToLowerTrimmed();
+            productSku.Sku = productSku.Sku.ToLower().Trim();
 
             _context.ProductSkus.Update(productSku);
         }

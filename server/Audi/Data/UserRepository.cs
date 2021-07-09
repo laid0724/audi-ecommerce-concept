@@ -28,7 +28,7 @@ namespace Audi.Data
                 .Include(u => u.UserRoles)
                     .ThenInclude(r => r.Role)
                 .Where(u => u.UserRoles.Any(r => r.Role.Name == "Member"))
-                .Where(e => e.UserName.ToLowerTrimmed() == username.ToLowerTrimmed())
+                .Where(e => e.UserName.ToLower().Trim() == username.ToLower().Trim())
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
 
@@ -57,7 +57,7 @@ namespace Audi.Data
 
         public async Task<AppUser> GetUserByUserNameAsync(string username)
         {
-            return await _context.Users.SingleOrDefaultAsync(e => e.UserName.ToLowerTrimmed() == username.ToLowerTrimmed());
+            return await _context.Users.SingleOrDefaultAsync(e => e.UserName.ToLower().Trim() == username.ToLower().Trim());
         }
 
         public async Task<string> GetUserGender(string username)

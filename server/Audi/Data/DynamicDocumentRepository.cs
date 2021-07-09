@@ -36,17 +36,17 @@ namespace Audi.Data
 
             if (!string.IsNullOrWhiteSpace(dynamicDocumentParams.Language))
             {
-                query = query.Where(e => e.Language.ToLowerTrimmed() == dynamicDocumentParams.Language.ToLowerTrimmed());
+                query = query.Where(e => e.Language.ToLower().Trim() == dynamicDocumentParams.Language.ToLower().Trim());
             }
 
             if (!string.IsNullOrWhiteSpace(dynamicDocumentParams.Type))
             {
-                query = query.Where(e => e.Type.ToLowerTrimmed() == dynamicDocumentParams.Type.ToLowerTrimmed());
+                query = query.Where(e => e.Type.ToLower().Trim() == dynamicDocumentParams.Type.ToLower().Trim());
             }
 
             if (!string.IsNullOrWhiteSpace(dynamicDocumentParams.Title))
             {
-                query = query.Where(e => e.Title.ToLowerTrimmed() == dynamicDocumentParams.Title.ToLowerTrimmed());
+                query = query.Where(e => e.Title.ToLower().Trim() == dynamicDocumentParams.Title.ToLower().Trim());
             }
 
             if (dynamicDocumentParams.IsVisible.HasValue)

@@ -44,8 +44,8 @@ namespace Audi.Controllers
 
             // reverse map request to AppUser shape
             var user = _mapper.Map<AppUser>(registerDto);
-            user.UserName = registerDto.UserName.ToLowerTrimmed(); // always use lowercase when storing emails & username!
-            user.Email = registerDto.Email.ToLowerTrimmed(); // always use lowercase when storing emails & username!
+            user.UserName = registerDto.UserName.ToLower().Trim(); // always use lowercase when storing emails & username!
+            user.Email = registerDto.Email.ToLower().Trim(); // always use lowercase when storing emails & username!
 
             /*
                 when using identity user manager:
@@ -76,8 +76,8 @@ namespace Audi.Controllers
         {
             var user = await _userManager.Users
                 .SingleOrDefaultAsync(user => 
-                    user.UserName.ToLowerTrimmed() == loginDto.UserName.ToLowerTrimmed() || 
-                    user.Email.ToLowerTrimmed() == loginDto.UserName.ToLowerTrimmed()
+                    user.UserName.ToLower().Trim() == loginDto.UserName.ToLower().Trim() || 
+                    user.Email.ToLower().Trim() == loginDto.UserName.ToLower().Trim()
                 );
 
             if (user == null)
@@ -106,12 +106,12 @@ namespace Audi.Controllers
 
         private async Task<bool> UserExists(string userName)
         {
-            return await _userManager.Users.AnyAsync(e => e.UserName == userName.ToLowerTrimmed());
+            return await _userManager.Users.AnyAsync(e => e.UserName == userName.ToLower().Trim());
         }
 
         private async Task<bool> EmailExists(string email)
         {
-            return await _userManager.Users.AnyAsync(e => e.Email == email.ToLowerTrimmed());
+            return await _userManager.Users.AnyAsync(e => e.Email == email.ToLower().Trim());
         }
     }
 }
