@@ -5,6 +5,12 @@ namespace Audi.Data.Extensions
 {
     public static class StringExtensions
     {
+        public static string ToLowerTrimmed(this string input)
+        {
+            if (string.IsNullOrEmpty(input)) { return input; }
+            return input.ToLower().Trim();
+        }
+
         public static string ToSnakeCase(this string input)
         {
             if (string.IsNullOrEmpty(input)) { return input; }
@@ -24,7 +30,7 @@ namespace Audi.Data.Extensions
 
         public static string ToKebabCase(this string phrase)
         {
-            string str = phrase.ToLower().Trim();
+            string str = phrase.ToLowerTrimmed();
 
             // str = Regex.Replace(str, @"[^a-z0-9\s-]", ""); // invalid chars
             str = Regex.Replace(str, @"[.,\/#!$%\^&\*;:{}=\-_`~()]", " "); // remove punctuations

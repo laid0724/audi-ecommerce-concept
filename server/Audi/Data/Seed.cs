@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
+using Audi.Data.Extensions;
 
 namespace Audi.Data
 {
@@ -35,7 +36,7 @@ namespace Audi.Data
             {
                 foreach (var user in users)
                 {
-                    user.UserName = user.UserName.ToLower();
+                    user.UserName = user.UserName.ToLowerTrimmed();
 
                     /* 
                         When using identity to manage user creation,

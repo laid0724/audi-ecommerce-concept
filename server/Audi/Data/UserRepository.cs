@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Audi.Data.Extensions;
 using Audi.DTOs;
 using Audi.Entities;
 using Audi.Helpers;
@@ -27,7 +28,7 @@ namespace Audi.Data
                 .Include(u => u.UserRoles)
                     .ThenInclude(r => r.Role)
                 .Where(u => u.UserRoles.Any(r => r.Role.Name == "Member"))
-                .Where(e => e.UserName.ToLower().Trim() == username.ToLower().Trim())
+                .Where(e => e.UserName.ToLowerTrimmed() == username.ToLowerTrimmed())
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
                 .FirstOrDefaultAsync();
 
@@ -56,7 +57,7 @@ namespace Audi.Data
 
         public async Task<AppUser> GetUserByUserNameAsync(string username)
         {
-            return await _context.Users.SingleOrDefaultAsync(e => e.UserName.ToLower().Trim() == username.ToLower().Trim());
+            return await _context.Users.SingleOrDefaultAsync(e => e.UserName.ToLowerTrimmed() == username.ToLowerTrimmed());
         }
 
         public async Task<string> GetUserGender(string username)
