@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Audi.Data;
 using Audi.Entities;
+using Audi.Interfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -25,6 +26,7 @@ namespace Audi
             */
             var host = CreateHostBuilder(args).Build();
 
+            // Create a scope to get scoped services.
             using var scope = host.Services.CreateScope();
             var services = scope.ServiceProvider;
 
@@ -44,11 +46,13 @@ namespace Audi
                 var context = services.GetRequiredService<DataContext>();
                 var userManager = services.GetRequiredService<UserManager<AppUser>>();
                 var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+                var unitOfWork = services.GetService<IUnitOfWork>();
 
                 // this will automatically run dotnet ef database update
                 await context.Database.MigrateAsync();
 
                 await Seed.SeedUsers(userManager, roleManager, configuration);
+                await Seed.SeedFaq(unitOfWork);
             }
             catch (Exception ex)
             {

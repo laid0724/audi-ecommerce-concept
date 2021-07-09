@@ -62,5 +62,42 @@ namespace Audi.Data
             await userManager.CreateAsync(admin, adminDefaultPassword);
             await userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" });
         }
+
+        public static async Task SeedFaq(IUnitOfWork unitOfWork)
+        {
+            var faqEntitiesExist = await unitOfWork.DynamicDocumentRepository
+                .GetQueryableDynamicDocuments(
+                    new DynamicDocumentParams
+                    {
+                        Type = "faq"
+                    }
+                ).CountAsync() == 2;
+
+            if (faqEntitiesExist) return;
+
+            var faqZh = new DynamicDocument
+            {
+                Language = "zh",
+                Title = "常見問題",
+                Type = "faq",
+                IsVisible = true
+            };
+
+            var faqEn = new DynamicDocument
+            {
+                Language = "en",
+                Title = "FAQ",
+                Type = "faq",
+                IsVisible = true
+            };
+
+            unitOfWork.DynamicDocumentRepository.AddDynamicDocument(faqZh);
+            unitOfWork.DynamicDocumentRepository.AddDynamicDocument(faqEn);
+
+            if (unitOfWork.HasChanges())
+            {
+                await unitOfWork.Complete();
+            }
+        }
     }
 }
