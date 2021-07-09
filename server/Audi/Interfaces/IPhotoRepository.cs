@@ -13,6 +13,8 @@ namespace Audi.Interfaces
         void DeletePhoto(Photo photo);
         void AddProductPhoto(ProductPhoto productPhoto);
         void DeleteProductPhoto(ProductPhoto productPhoto);
+        void AddDynamicDocumentPhoto(DynamicDocumentPhoto dynamicDocumentPhoto);
+        void DeleteDynamicDocumentPhoto(DynamicDocumentPhoto dynamicDocumentPhoto);
         Task SetMainProductPhoto(ProductPhoto productPhoto);
     }
 }
