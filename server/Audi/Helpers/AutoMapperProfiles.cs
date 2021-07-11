@@ -113,10 +113,9 @@ namespace Audi.Helpers
 
             CreateMap<DynamicDocument, FaqDto>()
                 .ForMember(
-                    dest => dest.Faqs,
-                    opt => opt.MapFrom(src => src.JsonData.ToObject<FaqItem[]>())
+                    dest => dest.FaqItems,
+                    opt => opt.MapFrom(src => src.JsonData.ToObject<Faqs>().FaqItems)
                 );
-
             CreateMap<DynamicDocument, EventDto>();
             CreateMap<DynamicDocument, NewsDto>();
 
@@ -134,13 +133,6 @@ namespace Audi.Helpers
                 .ForMember(
                     dest => dest.VariantValueId,
                     opt => opt.MapFrom(src => src.Id)
-                );
-            CreateMap<EventDto, DynamicDocument>();
-            CreateMap<NewsDto, DynamicDocument>();
-            CreateMap<FaqDto, DynamicDocument>()
-                .ForMember(
-                    dest => dest.JsonData,
-                    opt => opt.MapFrom(src => JObject.FromObject(src.Faqs))
                 );
 
             CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));

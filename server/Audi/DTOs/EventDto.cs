@@ -10,7 +10,6 @@ namespace Audi.DTOs
         public string Type { get; set; }
         public string Introduction { get; set; }
         public WysiwygGrid Wysiwyg { get; set; }
-        public int FeaturedImageId { get; set; }
         public DynamicDocumentPhotoDto FeaturedImage { get; set; }
         public DateTime? Date { get; set; }
         public DateTime CreatedAt { get; set; }

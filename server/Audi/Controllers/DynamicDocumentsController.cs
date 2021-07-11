@@ -9,6 +9,7 @@ using Audi.Entities;
 using Audi.Extensions;
 using Audi.Helpers;
 using Audi.Interfaces;
+using Audi.Models;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
@@ -16,6 +17,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using UGpa.Server.Services;
 
 namespace Audi.Controllers
@@ -51,22 +54,46 @@ namespace Audi.Controllers
             // this should never happen, unless DB was not seeded properly.
             if (faq == null) return NotFound("faq not found");
 
-            return Ok(_mapper.Map<FaqDto>(_mapper.ConfigurationProvider));
+            return Ok(_mapper.Map<FaqDto>(faq));
         }
 
         [Description("update faq")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPut("faq")]
-        public async Task<ActionResult<FaqDto>> UpdateFaq([FromBody] DynamicDocumentUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language, [FromServices] IHtmlProcessor htmlProcessor)
+        public async Task<ActionResult<FaqDto>> UpdateFaq([FromBody] FaqUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language, [FromServices] IHtmlProcessor htmlProcessor)
         {
             if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
 
-            if (!request.Id.HasValue) return BadRequest("dynamic document id not provided");
+            var dynamicDocumentUpsertRequest = new DynamicDocumentUpsertDto
+            {
+                Id = request.Id,
+                Language = language,
+                Type = "faq",
+                Title = request.Title,
+                Introduction = request.Introduction,
+                JsonData = JObject.FromObject(new Faqs
+                {
+                    FaqItems = request.FaqItems
+                })
+            };
 
-            request.Language = language;
-            request.Type = "faq";
+            return await UpsertDynamicDocument<FaqDto>(dynamicDocumentUpsertRequest, htmlProcessor);
+        }
 
-            return await UpsertDynamicDocument<FaqDto>(request, htmlProcessor);
+        [Description("add featured image to faqs")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPost("faq/featured-image")]
+        public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToFaq(int dynamicDocumentId, IFormFile file)
+        {
+            return await AddFeaturedImage(dynamicDocumentId, file);
+        }
+
+        [Description("delete featured image from faq")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpDelete("faq/featured-image")]
+        public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToFaq(int dynamicDocumentId)
+        {
+            return await DeleteFeaturedImage(dynamicDocumentId);
         }
 
         // events
@@ -248,11 +275,15 @@ namespace Audi.Controllers
 
                 dynamicDocument.Title = request.Title;
                 dynamicDocument.Introduction = request.Introduction;
-                dynamicDocument.Body = htmlProcessor.GetRawText(string.Join(" ", request.Wysiwyg.Rows.SelectMany(e => e.Columns.Select(col => col.Content))));
                 dynamicDocument.JsonData = request.JsonData;
-                dynamicDocument.Wysiwyg = request.Wysiwyg;
                 dynamicDocument.IsVisible = request.IsVisible;
                 dynamicDocument.LastUpdated = DateTime.UtcNow;
+
+                if (request.Wysiwyg != null)
+                {
+                    dynamicDocument.Wysiwyg = request.Wysiwyg;
+                    dynamicDocument.Body = htmlProcessor.GetRawText(string.Join(" ", request.Wysiwyg.Rows.SelectMany(e => e.Columns.Select(col => col.Content))));
+                }
 
                 if (request.Date.HasValue)
                 {
@@ -272,13 +303,17 @@ namespace Audi.Controllers
                 Type = request.Type,
                 Title = request.Title,
                 Introduction = request.Introduction,
-                Body = htmlProcessor.GetRawText(string.Join(" ", request.Wysiwyg.Rows.SelectMany(e => e.Columns.Select(col => col.Content)))),
                 JsonData = request.JsonData,
-                Wysiwyg = request.Wysiwyg,
                 IsVisible = request.IsVisible,
                 CreatedAt = DateTime.UtcNow,
                 LastUpdated = DateTime.UtcNow,
             };
+
+            if (request.Wysiwyg != null)
+            {
+                newDynamicDocument.Wysiwyg = request.Wysiwyg;
+                newDynamicDocument.Body = htmlProcessor.GetRawText(string.Join(" ", request.Wysiwyg.Rows.SelectMany(e => e.Columns.Select(col => col.Content))));
+            }
 
             if (request.Date.HasValue)
             {

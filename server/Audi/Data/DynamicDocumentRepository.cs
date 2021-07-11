@@ -24,6 +24,7 @@ namespace Audi.Data
             var dynamicDocument = await _context.DynamicDocuments
                 .Include(d => d.FeaturedImage)
                     .ThenInclude(fi => fi.Photo)
+                .Where(e => e.Id == dynamicDocumentId)
                 .SingleOrDefaultAsync();
 
             return dynamicDocument;
@@ -90,7 +91,7 @@ namespace Audi.Data
 
         public void UpdateDynamicDocument(DynamicDocument dynamicDocument)
         {
-            throw new System.NotImplementedException();
+            _context.DynamicDocuments.Update(dynamicDocument);
         }
     }
 }
