@@ -5,6 +5,7 @@ using Audi.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using UGpa.Server.Services;
 
 namespace Audi.Extensions
 {
@@ -21,6 +22,7 @@ namespace Audi.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<LogUserActivity>();
+            services.AddScoped<IHtmlProcessor, HtmlProcessor>();
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly); // add Automapper and tell it where to find mapping profiles
 
             services.AddDbContext<DataContext>(options =>
