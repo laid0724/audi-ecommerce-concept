@@ -23,6 +23,7 @@ namespace Audi.Data
         {
             var dynamicDocument = await _context.DynamicDocuments
                 .Include(d => d.FeaturedImage)
+                    .ThenInclude(fi => fi.Photo)
                 .SingleOrDefaultAsync();
 
             return dynamicDocument;
@@ -32,6 +33,7 @@ namespace Audi.Data
         {
             var query = _context.DynamicDocuments
                 .Include(d => d.FeaturedImage)
+                    .ThenInclude(fi => fi.Photo)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(dynamicDocumentParams.Language))
