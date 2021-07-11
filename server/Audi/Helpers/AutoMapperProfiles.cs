@@ -4,6 +4,8 @@ using Audi.DTOs;
 using Audi.Entities;
 using Audi.Extensions;
 using AutoMapper;
+using Audi.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Audi.Helpers
 {
@@ -22,6 +24,20 @@ namespace Audi.Helpers
             CreateMap<ProductCategory, ProductCategoryDto>();
 
             CreateMap<ProductPhoto, ProductPhotoDto>()
+                .ForMember(
+                    dest => dest.Url,
+                    opt => opt.MapFrom(src => src.Photo.Url)
+                )
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.PhotoId)
+                )
+                .ForMember(
+                    dest => dest.CreatedAt,
+                    opt => opt.MapFrom(src => src.Photo.CreatedAt)
+                );
+
+            CreateMap<DynamicDocumentPhoto, DynamicDocumentPhotoDto>()
                 .ForMember(
                     dest => dest.Url,
                     opt => opt.MapFrom(src => src.Photo.Url)
@@ -95,6 +111,15 @@ namespace Audi.Helpers
                     opt => opt.MapFrom(src => src.ProductVariantValues)
                 );
 
+            CreateMap<DynamicDocument, FaqDto>()
+                .ForMember(
+                    dest => dest.Faqs,
+                    opt => opt.MapFrom(src => src.JsonData.ToObject<FaqItem[]>())
+                );
+
+            CreateMap<DynamicDocument, EventDto>();
+            CreateMap<DynamicDocument, NewsDto>();
+
             // reverse map from dto to entity model:
             CreateMap<RegisterDto, AppUser>();
             CreateMap<ProductDto, Product>();
@@ -109,6 +134,13 @@ namespace Audi.Helpers
                 .ForMember(
                     dest => dest.VariantValueId,
                     opt => opt.MapFrom(src => src.Id)
+                );
+            CreateMap<EventDto, DynamicDocument>();
+            CreateMap<NewsDto, DynamicDocument>();
+            CreateMap<FaqDto, DynamicDocument>()
+                .ForMember(
+                    dest => dest.JsonData,
+                    opt => opt.MapFrom(src => JObject.FromObject(src.Faqs))
                 );
 
             CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
