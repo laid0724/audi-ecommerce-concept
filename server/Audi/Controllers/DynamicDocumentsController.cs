@@ -14,6 +14,7 @@ using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using UGpa.Server.Services;
 
@@ -34,15 +35,186 @@ namespace Audi.Controllers
             _logger = logger;
         }
 
-        // TODO: endpoints for:
-        // news
-        // events
         // faqs
+
+        [Description("get faq")]
+        [HttpGet("faq")]
+        public async Task<ActionResult<FaqDto>> GetFaq([FromQuery] DynamicDocumentParams dynamicDocumentParams, [FromHeader(Name = "X-LANGUAGE")] string language)
+        {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+
+            dynamicDocumentParams.Language = language;
+            dynamicDocumentParams.Type = "faq";
+
+            var faq = await _unitOfWork.DynamicDocumentRepository.GetQueryableDynamicDocuments(dynamicDocumentParams).SingleOrDefaultAsync();
+
+            // this should never happen, unless DB was not seeded properly.
+            if (faq == null) return NotFound("faq not found");
+
+            return Ok(_mapper.Map<FaqDto>(_mapper.ConfigurationProvider));
+        }
+
+        [Description("update faq")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPut("faq")]
+        public async Task<ActionResult<FaqDto>> UpdateFaq([FromBody] DynamicDocumentUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language, [FromServices] IHtmlProcessor htmlProcessor)
+        {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+
+            if (!request.Id.HasValue) return BadRequest("dynamic document id not provided");
+
+            request.Language = language;
+            request.Type = "faq";
+
+            return await UpsertDynamicDocument<FaqDto>(request, htmlProcessor);
+        }
+
+        // events
+
+        [Description("get one event")]
+        [HttpGet("events/{eventId}")]
+        public async Task<ActionResult<EventDto>> GetEvent(int eventId)
+        {
+            return await GetDynamicDocument<EventDto>(eventId);
+        }
+
+        [Description("get events")]
+        [HttpGet("events")]
+        public async Task<ActionResult<PagedList<EventDto>>> GetEvent([FromQuery] DynamicDocumentParams dynamicDocumentParams, [FromHeader(Name = "X-LANGUAGE")] string language)
+        {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+
+            dynamicDocumentParams.Language = language;
+
+            return await GetDynamicDocuments<EventDto>(dynamicDocumentParams);
+        }
+
+        [Description("add event")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPost("events")]
+        public async Task<ActionResult<EventDto>> AddEvent([FromBody] DynamicDocumentUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language, [FromServices] IHtmlProcessor htmlProcessor)
+        {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+
+            request.Language = language;
+            request.Type = "event";
+
+            return await UpsertDynamicDocument<EventDto>(request, htmlProcessor);
+        }
+
+        [Description("update event")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPut("events")]
+        public async Task<ActionResult<EventDto>> UpdateEvent([FromBody] DynamicDocumentUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language, [FromServices] IHtmlProcessor htmlProcessor)
+        {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+            if (!request.Id.HasValue) return BadRequest("dynamic document id not provided");
+
+            request.Language = language;
+            request.Type = "event";
+
+            return await UpsertDynamicDocument<EventDto>(request, htmlProcessor);
+        }
+
+        [Description("delete event")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpDelete("events/{eventId}")]
+        public async Task<ActionResult> DeleteEvent(int eventId)
+        {
+            return await DeleteDynamicDocument(eventId);
+        }
+
+        [Description("add featured image to event")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPost("events/{eventId}/featured-image")]
+        public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToEvent(int dynamicDocumentId, IFormFile file)
+        {
+            return await AddFeaturedImage(dynamicDocumentId, file);
+        }
+
+        [Description("delete featured image from event")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpDelete("events/{eventId}/featured-image")]
+        public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToEvent(int dynamicDocumentId)
+        {
+            return await DeleteFeaturedImage(dynamicDocumentId);
+        }
+
+        // news
+
+        [Description("get one news")]
+        [HttpGet("news/{newsId}")]
+        public async Task<ActionResult<NewsDto>> GetNews(int newsId)
+        {
+            return await GetDynamicDocument<NewsDto>(newsId);
+        }
+
+        [Description("get news")]
+        [HttpGet("news")]
+        public async Task<ActionResult<PagedList<NewsDto>>> GetNews([FromQuery] DynamicDocumentParams dynamicDocumentParams, [FromHeader(Name = "X-LANGUAGE")] string language)
+        {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+
+            dynamicDocumentParams.Language = language;
+
+            return await GetDynamicDocuments<NewsDto>(dynamicDocumentParams);
+        }
+
+        [Description("add news")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPost("news")]
+        public async Task<ActionResult<NewsDto>> AddNews([FromBody] DynamicDocumentUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language, [FromServices] IHtmlProcessor htmlProcessor)
+        {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+
+            request.Language = language;
+            request.Type = "news";
+
+            return await UpsertDynamicDocument<NewsDto>(request, htmlProcessor);
+        }
+
+        [Description("update news")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPut("news")]
+        public async Task<ActionResult<NewsDto>> UpdateNews([FromBody] DynamicDocumentUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language, [FromServices] IHtmlProcessor htmlProcessor)
+        {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+            if (!request.Id.HasValue) return BadRequest("dynamic document id not provided");
+
+            request.Language = language;
+            request.Type = "news";
+
+            return await UpsertDynamicDocument<NewsDto>(request, htmlProcessor);
+        }
+
+        [Description("delete news")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpDelete("news/{newsId}")]
+        public async Task<ActionResult> DeleteNews(int newsId)
+        {
+            return await DeleteDynamicDocument(newsId);
+        }
+
+        [Description("add featured image to news")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPost("news/{newsId}/featured-image")]
+        public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToNews(int dynamicDocumentId, IFormFile file)
+        {
+            return await AddFeaturedImage(dynamicDocumentId, file);
+        }
+
+        [Description("delete featured image from news")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpDelete("news/{newsId}/featured-image")]
+        public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToNews(int dynamicDocumentId)
+        {
+            return await DeleteFeaturedImage(dynamicDocumentId);
+        }
 
         /// --- shared dynamic document methods --- /// 
 
         // see: https://stackoverflow.com/questions/4737970/what-does-where-t-class-new-mean
-        private async Task<ActionResult<T>> ReadDynamicDocument<T>(int dynamicDocumentId) where T : class, new()
+        private async Task<ActionResult<T>> GetDynamicDocument<T>(int dynamicDocumentId) where T : class, new()
         {
             var dynamicDocument = await _unitOfWork.DynamicDocumentRepository.GetDynamicDocumentByIdAsync(dynamicDocumentId);
 
@@ -51,7 +223,7 @@ namespace Audi.Controllers
             return Ok(_mapper.Map<T>(dynamicDocument));
         }
 
-        private async Task<ActionResult<PagedList<T>>> ReadDynamicDocuments<T>(DynamicDocumentParams dynamicDocumentParams) where T : class, new()
+        private async Task<ActionResult<PagedList<T>>> GetDynamicDocuments<T>(DynamicDocumentParams dynamicDocumentParams) where T : class, new()
         {
             var query = _unitOfWork.DynamicDocumentRepository.GetQueryableDynamicDocuments(dynamicDocumentParams);
 
@@ -66,7 +238,7 @@ namespace Audi.Controllers
             return Ok(pagedDynamicDocuments);
         }
 
-        private async Task<ActionResult<T>> UpsertDynamicDocument<T>(DynamicDocumentUpsertDto request, [FromServices] IHtmlProcessor htmlProcessor) where T : class, new()
+        private async Task<ActionResult<T>> UpsertDynamicDocument<T>(DynamicDocumentUpsertDto request, IHtmlProcessor htmlProcessor) where T : class, new()
         {
             if (request.Id.HasValue)
             {
@@ -126,6 +298,8 @@ namespace Audi.Controllers
 
             if (dynamicDocument == null) return NotFound("dynamic document not found");
 
+            if (dynamicDocument.Type == "faq") return BadRequest("cannot delete faq");
+
             _unitOfWork.DynamicDocumentRepository.DeleteDynamicDocument(dynamicDocument);
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete()) return NoContent();
@@ -133,7 +307,7 @@ namespace Audi.Controllers
             return BadRequest("Failed to delete dynamic document");
         }
 
-        public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImage(int dynamicDocumentId, IFormFile file)
+        private async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImage(int dynamicDocumentId, IFormFile file)
         {
             var dynamicDocument = await _unitOfWork.DynamicDocumentRepository.GetDynamicDocumentByIdAsync(dynamicDocumentId);
 
@@ -172,7 +346,7 @@ namespace Audi.Controllers
             return BadRequest("Problem adding photo");
         }
 
-        public async Task<ActionResult> DeleteFeaturedImage(int dynamicDocumentId)
+        private async Task<ActionResult> DeleteFeaturedImage(int dynamicDocumentId)
         {
             var dynamicDocument = await _unitOfWork.DynamicDocumentRepository.GetDynamicDocumentByIdAsync(dynamicDocumentId);
 
