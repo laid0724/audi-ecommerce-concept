@@ -1,1 +1,148 @@
-<p>dynamic-documents-edit works!</p>
+<ng-container *ngIf="!dynamicDocumentId || isFaq">
+  <div class="row">
+    <div class="col-12 d-flex justify-content-end">
+      <audi-sys-language-selector></audi-sys-language-selector>
+    </div>
+  </div>
+</ng-container>
+
+<div class="row" [ngClass]="{ 'mt-3': !dynamicDocumentId }">
+  <div class="col-12">
+    <form clrForm [formGroup]="form" *ngIf="form != null">
+      <div class="card mt-0">
+        <div
+          class="card-header py-3 d-flex align-items-center"
+          [ngClass]="{ 'justify-content-between': dynamicDocumentId }"
+        >
+          {{
+            dynamicDocumentId || isFaq
+              ? ('編輯' + title?.zh + ' | EDIT ' + title?.en | uppercase)
+              : ('新增' + title?.zh + ' | ADD ' + title?.en | uppercase)
+          }}
+          <button
+            *ngIf="dynamicDocumentId && !isFaq"
+            class="btn btn-primary btn-sm m-0"
+            type="button"
+            [routerLink]="['/manage', dynamicDocumentType, 'new']"
+          >
+            新增{{ title?.zh }} Add {{ title?.en }}
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <clr-input-container *ngIf="isFormFieldAvailable('title')">
+                  <label>{{ getFormField('title')?.label }}</label>
+                  <input
+                    type="text"
+                    clrInput
+                    formControlName="title"
+                    class="w-100"
+                  />
+                  <clr-control-error *clrIfError="'required'"
+                    >必填 Required</clr-control-error
+                  >
+                </clr-input-container>
+
+                <clr-date-container *ngIf="isFormFieldAvailable('date')">
+                  <label>{{ getFormField('date')?.label }}</label>
+                  <input type="date" clrDate formControlName="date" />
+                  <clr-control-error *clrIfError="'required'"
+                    >必填 Required</clr-control-error
+                  >
+                </clr-date-container>
+
+                <clr-textarea-container
+                  class="w-100"
+                  *ngIf="isFormFieldAvailable('introduction')"
+                >
+                  <label>{{ getFormField('introduction')?.label }}</label>
+                  <textarea
+                    clrTextarea
+                    formControlName="introduction"
+                    rows="5"
+                    class="w-100"
+                  ></textarea>
+                  <clr-control-error *clrIfError="'required'"
+                    >必填 Required</clr-control-error
+                  >
+                </clr-textarea-container>
+
+                <!-- TODO: faq items -->
+
+                <audi-sys-wysiwyg-grid
+                  *ngIf="isFormFieldAvailable('wysiwyg')"
+                  [label]="getFormField('wysiwyg')!.label"
+                  [allowImage]="true"
+                  formGroupName="wysiwyg"
+                >
+                </audi-sys-wysiwyg-grid>
+
+                <clr-toggle-container *ngIf="isFormFieldAvailable('isVisible')">
+                  <label>{{ getFormField('isVisible')?.label }}</label>
+                  <clr-toggle-wrapper>
+                    <input
+                      type="checkbox"
+                      clrToggle
+                      formControlName="isVisible"
+                    />
+                    <label>{{
+                      form.get('isVisible')?.value | toZh: 'isVisible'
+                    }}</label>
+                  </clr-toggle-wrapper>
+                  <clr-control-error *clrIfError="'required'"
+                    >必填 Required</clr-control-error
+                  >
+                </clr-toggle-container>
+
+                <!-- TODO: -->
+                <audi-sys-image-uploader
+                  *ngIf="dynamicDocumentId || isFaq"
+                ></audi-sys-image-uploader>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card-footer d-flex align-items-center mt-1 {{
+            !dynamicDocumentId &&
+            dynamicDocumentSettings.hasFeaturedImage &&
+            !isFaq
+              ? 'justify-content-between'
+              : 'justify-content-end'
+          }}"
+        >
+          <ng-container
+            *ngIf="
+              !dynamicDocumentId &&
+              dynamicDocumentSettings.hasFeaturedImage &&
+              !isFaq
+            "
+          >
+            <p class="p3 ms-2 mt-0" style="color: #8c8c8c">
+              *精選圖片須在建檔成功後才能新增 Featured image may only be added
+              after you have created the entry
+            </p>
+          </ng-container>
+
+          <clr-button-group class="me-0">
+            <clr-button type="button" class="btn-primary-outline"
+              >取消 Cancel</clr-button
+            >
+            <clr-button
+              type="button"
+              class="btn-primary"
+              (click)="
+                !dynamicDocumentId && !dynamicDocumentSettings.saveOnly
+                  ? onCreate()
+                  : onSave()
+              "
+              >儲存 Save</clr-button
+            >
+          </clr-button-group>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -5,7 +5,7 @@ import { DynamicDocumentsListComponent } from './dynamic-documents-list/dynamic-
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'list',
     component: DynamicDocumentsListComponent,
   },
   {

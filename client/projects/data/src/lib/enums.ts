@@ -17,7 +17,7 @@ export enum WysiwygRowType {
 }
 
 export enum DynamicDocumentType {
-  Event = 'event',
+  Event = 'events',
   News = 'news',
   Faq = 'faq'
 }

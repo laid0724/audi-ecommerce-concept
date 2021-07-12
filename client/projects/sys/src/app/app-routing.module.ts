@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { Validators } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { AdminGuard, AuthGuard, LanguageSelectorResolver } from '@audi/data';
 import { LoginComponent } from './core/login/login.component';
@@ -60,6 +61,45 @@ const routes: Routes = [
             resolve: { data: LanguageSelectorResolver },
             data: {
               languageSettings: DEFAULT_ZH_EN_ONLY,
+              dynamicDocumentSettings: {
+                type: 'news',
+                typeName: {
+                  zh: '新聞',
+                  en: 'News',
+                },
+                form: {
+                  fields: [
+                    {
+                      key: 'title',
+                      label: '標題 Title',
+                      type: 'text',
+                      validators: [Validators.required],
+                    },
+                    {
+                      key: 'date',
+                      label: '日期 Date',
+                      type: 'date',
+                    },
+                    {
+                      key: 'introduction',
+                      label: '簡介 Introduction',
+                      type: 'textarea',
+                    },
+                    {
+                      key: 'wysiwyg',
+                      label: '內容 Content',
+                      type: 'wysiwyg',
+                    },
+                    {
+                      key: 'isVisible',
+                      label: '顯示狀態 Visibility',
+                      type: 'toggle',
+                    },
+                  ],
+                },
+                hasFeaturedImage: true,
+                saveOnly: false,
+              },
             },
             loadChildren: () =>
               import(
@@ -71,6 +111,45 @@ const routes: Routes = [
             resolve: { data: LanguageSelectorResolver },
             data: {
               languageSettings: DEFAULT_ZH_EN_ONLY,
+              dynamicDocumentSettings: {
+                type: 'events',
+                typeName: {
+                  zh: '活動',
+                  en: 'Event',
+                },
+                form: {
+                  fields: [
+                    {
+                      key: 'title',
+                      label: '標題 Title',
+                      type: 'text',
+                      validators: [Validators.required],
+                    },
+                    {
+                      key: 'date',
+                      label: '日期 Date',
+                      type: 'date',
+                    },
+                    {
+                      key: 'introduction',
+                      label: '簡介 Introduction',
+                      type: 'textarea',
+                    },
+                    {
+                      key: 'wysiwyg',
+                      label: '內容 Content',
+                      type: 'wysiwyg',
+                    },
+                    {
+                      key: 'isVisible',
+                      label: '顯示狀態 Visibility',
+                      type: 'toggle',
+                    },
+                  ],
+                },
+                hasFeaturedImage: true,
+                saveOnly: false,
+              },
             },
             loadChildren: () =>
               import(
@@ -78,10 +157,39 @@ const routes: Routes = [
               ).then((m) => m.DynamicDocumentsModule),
           },
           {
-            path: 'faqs',
+            path: 'faq',
             resolve: { data: LanguageSelectorResolver },
             data: {
               languageSettings: DEFAULT_ZH_EN_ONLY,
+              dynamicDocumentSettings: {
+                type: 'faq',
+                typeName: {
+                  zh: '常見問題',
+                  en: 'Faq',
+                },
+                form: {
+                  fields: [
+                    {
+                      key: 'title',
+                      label: '標題 Title',
+                      type: 'text',
+                      validators: [Validators.required],
+                    },
+                    {
+                      key: 'introduction',
+                      label: '簡介 Introduction',
+                      type: 'textarea',
+                    },
+                    {
+                      key: 'faqitems',
+                      label: '問答列表 Faq Items',
+                      type: 'faqitems',
+                    },
+                  ],
+                },
+                hasFeaturedImage: true,
+                saveOnly: true,
+              },
             },
             component: DynamicDocumentsEditComponent,
           },

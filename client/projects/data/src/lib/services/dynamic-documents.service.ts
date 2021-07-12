@@ -6,6 +6,7 @@ import { News, Event } from '../models/dynamic-document';
 import { Faq, FaqItem } from '../models/faq';
 import { PaginatedResult } from '../models/pagination';
 import { WysiwygGrid } from '../models/wysiwyg';
+import { getPaginatedResult, getPaginationHeaders } from '../helpers';
 
 export interface DynamicDocumentUpsertRequest {
   id?: number;
@@ -27,8 +28,8 @@ export interface FaqUpsertRequest {
 export interface DynamicDocumentCrudFunctions<TUpsertRequest, TResult> {
   getOne: (dynamicDocumentId: number) => Observable<TResult>;
   getAll: (
-    queryParams?: DynamicDocumentParams
-  ) => Observable<PaginatedResult<TResult>>;
+    queryParams: DynamicDocumentParams
+  ) => Observable<PaginatedResult<TResult[]>>;
   add: (upsertRequest: TUpsertRequest) => Observable<TResult>;
   update: (upsertRequest: TUpsertRequest) => Observable<TResult>;
   delete: (dynamicDocumentId: number) => Observable<null>;
@@ -48,8 +49,20 @@ const buildCrudFunctions = <TUpsertRequest, TResult>(
   return {
     getOne: (dynamicDocumentId: number) =>
       http.get<TResult>(`${endpoint}/${dynamicDocumentId}`),
-    getAll: (queryParams?: DynamicDocumentParams) =>
-      http.get<PaginatedResult<TResult>>(endpoint),
+    getAll: (queryParams: DynamicDocumentParams) => {
+      const { pageNumber, pageSize, ...qp } = queryParams;
+      let params = getPaginationHeaders(pageNumber, pageSize);
+
+      Object.keys(qp).forEach((key) => {
+        // @ts-ignore
+        const property = qp[key];
+        if (property != null) {
+          params = params.append(key, property.toString());
+        }
+      });
+
+      return getPaginatedResult<TResult[]>(http, endpoint, params);
+    },
     add: (upsertRequest: TUpsertRequest) =>
       http.post<TResult>(endpoint, upsertRequest),
     update: (upsertRequest: TUpsertRequest) =>
@@ -78,7 +91,7 @@ export class DynamicDocumentsService {
     DynamicDocumentUpsertRequest,
     Event
   >;
-  readonly faqs: FaqCrudFunctions;
+  readonly faq: FaqCrudFunctions;
 
   constructor(private http: HttpClient) {
     this.news = buildCrudFunctions<DynamicDocumentUpsertRequest, News>(
@@ -95,7 +108,7 @@ export class DynamicDocumentsService {
       this.faqEndpoint
     );
 
-    this.faqs = {
+    this.faq = {
       getOne: () => http.get<Faq>(this.faqEndpoint),
       update: faqCrud.update,
       deleteFeaturedImage: faqCrud.deleteFeaturedImage,

@@ -9,6 +9,8 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { FormsComponentModule } from '../../component-modules/forms-component/forms-component.module';
 import { DynamicDocumentsListComponent } from './dynamic-documents-list/dynamic-documents-list.component';
 import { DynamicDocumentsEditComponent } from './dynamic-documents-edit/dynamic-documents-edit.component';
+import { ImageUploaderModule } from '../../component-modules/image-uploader/image-uploader.module';
+import { PipesModule } from '@audi/data';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { DynamicDocumentsEditComponent } from './dynamic-documents-edit/dynamic-
     LanguageSelectorModule,
     ClrDatagridUtilitiesModule,
     FileUploadModule,
-    FormsComponentModule
+    FormsComponentModule,
+    ImageUploaderModule,
+    PipesModule
   ]
 })
 export class DynamicDocumentsModule { }
