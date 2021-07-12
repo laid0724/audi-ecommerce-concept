@@ -64,9 +64,19 @@ namespace Audi.Controllers
         {
             if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
 
+            var faq = await _unitOfWork.DynamicDocumentRepository
+                .GetQueryableDynamicDocuments(new DynamicDocumentParams
+                {
+                    Language = language,
+                    Type = "faq"
+                })
+                .SingleOrDefaultAsync();
+
+            if (faq == null) return NotFound();
+
             var dynamicDocumentUpsertRequest = new DynamicDocumentUpsertDto
             {
-                Id = request.Id,
+                Id = faq.Id,
                 Language = language,
                 Type = "faq",
                 Title = request.Title,
@@ -124,7 +134,7 @@ namespace Audi.Controllers
             if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
 
             request.Language = language;
-            request.Type = "event";
+            request.Type = "events";
 
             return await UpsertDynamicDocument<EventDto>(request, htmlProcessor);
         }
@@ -138,7 +148,7 @@ namespace Audi.Controllers
             if (!request.Id.HasValue) return BadRequest("dynamic document id not provided");
 
             request.Language = language;
-            request.Type = "event";
+            request.Type = "events";
 
             return await UpsertDynamicDocument<EventDto>(request, htmlProcessor);
         }
@@ -275,9 +285,13 @@ namespace Audi.Controllers
 
                 dynamicDocument.Title = request.Title;
                 dynamicDocument.Introduction = request.Introduction;
-                dynamicDocument.JsonData = request.JsonData;
                 dynamicDocument.IsVisible = request.IsVisible;
                 dynamicDocument.LastUpdated = DateTime.UtcNow;
+
+                if (request.JsonData != null)
+                {
+                    dynamicDocument.JsonData = request.JsonData;
+                }
 
                 if (request.Wysiwyg != null)
                 {
@@ -303,11 +317,15 @@ namespace Audi.Controllers
                 Type = request.Type,
                 Title = request.Title,
                 Introduction = request.Introduction,
-                JsonData = request.JsonData,
                 IsVisible = request.IsVisible,
                 CreatedAt = DateTime.UtcNow,
                 LastUpdated = DateTime.UtcNow,
             };
+
+            if (request.JsonData != null)
+            {
+                newDynamicDocument.JsonData = request.JsonData;
+            }
 
             if (request.Wysiwyg != null)
             {
