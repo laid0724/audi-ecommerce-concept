@@ -162,7 +162,7 @@ namespace Audi.Controllers
         [Description("delete featured image from event")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("events/{eventId}/featured-image")]
-        public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToEvent(int dynamicDocumentId)
+        public async Task<ActionResult> AddFeaturedImageToEvent(int dynamicDocumentId)
         {
             return await DeleteFeaturedImage(dynamicDocumentId);
         }
@@ -233,7 +233,7 @@ namespace Audi.Controllers
         [Description("delete featured image from news")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("news/{newsId}/featured-image")]
-        public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToNews(int dynamicDocumentId)
+        public async Task<ActionResult> AddFeaturedImageToNews(int dynamicDocumentId)
         {
             return await DeleteFeaturedImage(dynamicDocumentId);
         }
