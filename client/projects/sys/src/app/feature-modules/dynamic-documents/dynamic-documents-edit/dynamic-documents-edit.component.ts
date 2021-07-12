@@ -18,7 +18,7 @@ import {
 } from '@audi/data';
 import { ClrForm } from '@clr/angular';
 import { ToastrService } from 'ngx-toastr';
-import { of, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import {
   distinctUntilChanged,
   filter,
@@ -168,6 +168,9 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
             }),
             tap((res: Event | News | Faq | null) => {
               if (res !== null) {
+                if (res.type === 'faq') {
+                  this.dynamicDocumentId = res.id as number;
+                }
                 this.dynamicDocument = res;
 
                 if (
@@ -234,7 +237,7 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
     );
   }
 
-  // todo: featured image add + del, faqItem
+  // TODO: faqItem
 
   onSave(): void {
     if (this.form.invalid) {
@@ -298,6 +301,19 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
         this.router.navigate([`/manage/${this.dynamicDocumentType}/${res.id}`]);
         this.toastr.success('建立成功 Created successfully');
       });
+  }
+
+  onImageChange(image: any): void {
+    this.dynamicDocument.featuredImage = image;
+  }
+
+  deleteFeaturedImageFn(dynamicDocumentId: number): () => Observable<null> {
+    const fn = () =>
+      this.dynamicDocumentsService[
+        this.dynamicDocumentType
+      ].deleteFeaturedImage(dynamicDocumentId);
+
+    return fn;
   }
 
   ngOnDestroy(): void {

@@ -9,14 +9,15 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { FormsComponentModule } from '../../component-modules/forms-component/forms-component.module';
 import { DynamicDocumentsListComponent } from './dynamic-documents-list/dynamic-documents-list.component';
 import { DynamicDocumentsEditComponent } from './dynamic-documents-edit/dynamic-documents-edit.component';
-import { ImageUploaderModule } from '../../component-modules/image-uploader/image-uploader.module';
 import { PipesModule } from '@audi/data';
-
+import { FaqItemsComponent } from './faq-items/faq-items.component';
+import { FeaturedImageUploaderModule } from '../../component-modules/featured-image-uploader/featured-image-uploader.module';
 
 @NgModule({
   declarations: [
     DynamicDocumentsListComponent,
-    DynamicDocumentsEditComponent
+    DynamicDocumentsEditComponent,
+    FaqItemsComponent,
   ],
   imports: [
     CommonModule,
@@ -26,8 +27,8 @@ import { PipesModule } from '@audi/data';
     ClrDatagridUtilitiesModule,
     FileUploadModule,
     FormsComponentModule,
-    ImageUploaderModule,
-    PipesModule
-  ]
+    FeaturedImageUploaderModule,
+    PipesModule,
+  ],
 })
-export class DynamicDocumentsModule { }
+export class DynamicDocumentsModule {}

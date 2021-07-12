@@ -1,4 +1,4 @@
-<ng-container *ngIf="!dynamicDocumentId || isFaq">
+<ng-container *ngIf="!dynamicDocumentId">
   <div class="row">
     <div class="col-12 d-flex justify-content-end">
       <audi-sys-language-selector></audi-sys-language-selector>
@@ -15,12 +15,12 @@
           [ngClass]="{ 'justify-content-between': dynamicDocumentId }"
         >
           {{
-            dynamicDocumentId || isFaq
+            dynamicDocumentId
               ? ('編輯' + title?.zh + ' | EDIT ' + title?.en | uppercase)
               : ('新增' + title?.zh + ' | ADD ' + title?.en | uppercase)
           }}
           <button
-            *ngIf="dynamicDocumentId && !isFaq"
+            *ngIf="dynamicDocumentId"
             class="btn btn-primary btn-sm m-0"
             type="button"
             [routerLink]="['/manage', dynamicDocumentType, 'new']"
@@ -44,6 +44,28 @@
                     >必填 Required</clr-control-error
                   >
                 </clr-input-container>
+
+                <audi-sys-featured-image-uploader
+                  *ngIf="
+                    dynamicDocumentType != null &&
+                    dynamicDocumentId != null &&
+                    dynamicDocumentSettings.hasFeaturedImage
+                  "
+                  [modelIdKey]="'dynamicDocumentId'"
+                  [modelIdValue]="dynamicDocumentId"
+                  [featuredImage]="dynamicDocument?.featuredImage"
+                  [deleteFeaturedImageHttpMethod]="
+                    deleteFeaturedImageFn(dynamicDocumentId)
+                  "
+                  [addFeaturedImageEndpoint]="
+                    'dynamicdocuments/' +
+                    dynamicDocumentType +
+                    '/' +
+                    dynamicDocumentId +
+                    '/featured-image'
+                  "
+                  (imageChanges)="onImageChange($event)"
+                ></audi-sys-featured-image-uploader>
 
                 <clr-date-container *ngIf="isFormFieldAvailable('date')">
                   <label>{{ getFormField('date')?.label }}</label>
@@ -69,7 +91,10 @@
                   >
                 </clr-textarea-container>
 
-                <!-- TODO: faq items -->
+                <!-- TODO -->
+                <audi-sys-faq-items
+                  *ngIf="isFormFieldAvailable('faqitems')"
+                ></audi-sys-faq-items>
 
                 <audi-sys-wysiwyg-grid
                   *ngIf="isFormFieldAvailable('wysiwyg')"
@@ -95,11 +120,6 @@
                     >必填 Required</clr-control-error
                   >
                 </clr-toggle-container>
-
-                <!-- TODO: -->
-                <audi-sys-image-uploader
-                  *ngIf="dynamicDocumentId || isFaq"
-                ></audi-sys-image-uploader>
               </div>
             </div>
           </div>

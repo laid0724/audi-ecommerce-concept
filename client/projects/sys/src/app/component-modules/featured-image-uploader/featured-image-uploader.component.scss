@@ -1,0 +1,17 @@
+.nv-file-over {
+  // styling for the file drop zone when a file is dragged onto it
+  border: dotted 3px var(--audi-black);
+}
+
+input[type='file'] {
+  // hides the no file chosen text
+  color: transparent;
+}
+
+.img-wrapper {
+  width: 100%;
+  img {
+    width: 100%;
+    height: 100%;
+  }
+}

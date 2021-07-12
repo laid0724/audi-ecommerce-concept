@@ -92,7 +92,7 @@ namespace Audi.Controllers
 
         [Description("add featured image to faqs")]
         [Authorize(Policy = "RequireModerateRole")]
-        [HttpPost("faq/featured-image")]
+        [HttpPost("faq/{dynamicDocumentId}/featured-image")]
         public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToFaq(int dynamicDocumentId, IFormFile file)
         {
             return await AddFeaturedImage(dynamicDocumentId, file);
@@ -100,7 +100,7 @@ namespace Audi.Controllers
 
         [Description("delete featured image from faq")]
         [Authorize(Policy = "RequireModerateRole")]
-        [HttpDelete("faq/featured-image")]
+        [HttpDelete("faq/{dynamicDocumentId}/featured-image")]
         public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToFaq(int dynamicDocumentId)
         {
             return await DeleteFeaturedImage(dynamicDocumentId);
@@ -164,17 +164,17 @@ namespace Audi.Controllers
         [Description("add featured image to event")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("events/{eventId}/featured-image")]
-        public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToEvent(int dynamicDocumentId, IFormFile file)
+        public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToEvent(int eventId, IFormFile file)
         {
-            return await AddFeaturedImage(dynamicDocumentId, file);
+            return await AddFeaturedImage(eventId, file);
         }
 
         [Description("delete featured image from event")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("events/{eventId}/featured-image")]
-        public async Task<ActionResult> AddFeaturedImageToEvent(int dynamicDocumentId)
+        public async Task<ActionResult> AddFeaturedImageToEvent(int eventId)
         {
-            return await DeleteFeaturedImage(dynamicDocumentId);
+            return await DeleteFeaturedImage(eventId);
         }
 
         // news
@@ -235,17 +235,17 @@ namespace Audi.Controllers
         [Description("add featured image to news")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("news/{newsId}/featured-image")]
-        public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToNews(int dynamicDocumentId, IFormFile file)
+        public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToNews(int newsId, IFormFile file)
         {
-            return await AddFeaturedImage(dynamicDocumentId, file);
+            return await AddFeaturedImage(newsId, file);
         }
 
         [Description("delete featured image from news")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("news/{newsId}/featured-image")]
-        public async Task<ActionResult> AddFeaturedImageToNews(int dynamicDocumentId)
+        public async Task<ActionResult> AddFeaturedImageToNews(int newsId)
         {
-            return await DeleteFeaturedImage(dynamicDocumentId);
+            return await DeleteFeaturedImage(newsId);
         }
 
         /// --- shared dynamic document methods --- /// 
@@ -365,6 +365,11 @@ namespace Audi.Controllers
             var dynamicDocument = await _unitOfWork.DynamicDocumentRepository.GetDynamicDocumentByIdAsync(dynamicDocumentId);
 
             if (dynamicDocument == null) return NotFound("dynamic document not found");
+
+            if (dynamicDocument.FeaturedImage != null)
+            {
+                await this.DeleteFeaturedImage(dynamicDocumentId);
+            }
 
             var result = await _photoService.AddPhotoAsync(file);
 
