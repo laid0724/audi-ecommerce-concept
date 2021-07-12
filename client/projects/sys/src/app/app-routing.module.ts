@@ -5,6 +5,7 @@ import { LoginComponent } from './core/login/login.component';
 import { NavComponent } from './core/nav/nav.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 import { ServerErrorComponent } from './core/server-error/server-error.component';
+import { DynamicDocumentsEditComponent } from './feature-modules/dynamic-documents/dynamic-documents-edit/dynamic-documents-edit.component';
 
 const DEFAULT_ZH_EN_ONLY = {
   defaultLanguage: 'zh',
@@ -53,6 +54,36 @@ const routes: Routes = [
               import('./feature-modules/products/products.module').then(
                 (m) => m.ProductsModule
               ),
+          },
+          {
+            path: 'news',
+            resolve: { data: LanguageSelectorResolver },
+            data: {
+              languageSettings: DEFAULT_ZH_EN_ONLY,
+            },
+            loadChildren: () =>
+              import(
+                './feature-modules/dynamic-documents/dynamic-documents.module'
+              ).then((m) => m.DynamicDocumentsModule),
+          },
+          {
+            path: 'events',
+            resolve: { data: LanguageSelectorResolver },
+            data: {
+              languageSettings: DEFAULT_ZH_EN_ONLY,
+            },
+            loadChildren: () =>
+              import(
+                './feature-modules/dynamic-documents/dynamic-documents.module'
+              ).then((m) => m.DynamicDocumentsModule),
+          },
+          {
+            path: 'faqs',
+            resolve: { data: LanguageSelectorResolver },
+            data: {
+              languageSettings: DEFAULT_ZH_EN_ONLY,
+            },
+            component: DynamicDocumentsEditComponent,
           },
           {
             path: 'not-found',
