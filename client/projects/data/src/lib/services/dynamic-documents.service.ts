@@ -8,7 +8,7 @@ import { PaginatedResult } from '../models/pagination';
 import { WysiwygGrid } from '../models/wysiwyg';
 import { getPaginatedResult, getPaginationHeaders } from '../helpers';
 
-export interface DynamicDocumentUpsertRequest {
+interface DynamicDocumentUpsertRequest {
   id?: number;
   title: string;
   type: string;
@@ -18,14 +18,14 @@ export interface DynamicDocumentUpsertRequest {
   isVisible: boolean;
 }
 
-export interface FaqUpsertRequest {
+interface FaqUpsertRequest {
   id: number;
   title: string;
   introduction: string;
   faqItems: FaqItem[];
 }
 
-export interface DynamicDocumentCrudFunctions<TUpsertRequest, TResult> {
+interface DynamicDocumentCrudFunctions<TUpsertRequest, TResult> {
   getOne: (dynamicDocumentId: number) => Observable<TResult>;
   getAll: (
     queryParams: DynamicDocumentParams
@@ -36,7 +36,7 @@ export interface DynamicDocumentCrudFunctions<TUpsertRequest, TResult> {
   deleteFeaturedImage: (dynamicDocumentId: number) => Observable<null>;
 }
 
-export interface FaqCrudFunctions {
+interface FaqCrudFunctions {
   getOne: () => Observable<Faq>;
   update: (upsertRequest: FaqUpsertRequest) => Observable<Faq>;
   deleteFeaturedImage: (dynamicDocumentId: number) => Observable<null>;
@@ -79,9 +79,6 @@ const buildCrudFunctions = <TUpsertRequest, TResult>(
 })
 export class DynamicDocumentsService {
   private endpoint = '/api/dynamicdocuments';
-  private faqEndpoint = `${this.endpoint}/faq`;
-  private eventEndpoint = `${this.endpoint}/events`;
-  private newsEndpoint = `${this.endpoint}/news`;
 
   readonly news: DynamicDocumentCrudFunctions<
     DynamicDocumentUpsertRequest,
@@ -96,20 +93,20 @@ export class DynamicDocumentsService {
   constructor(private http: HttpClient) {
     this.news = buildCrudFunctions<DynamicDocumentUpsertRequest, News>(
       http,
-      this.newsEndpoint
+      this.endpoint + '/news'
     );
     this.events = buildCrudFunctions<DynamicDocumentUpsertRequest, Event>(
       http,
-      this.eventEndpoint
+      this.endpoint + '/events'
     );
 
     const faqCrud = buildCrudFunctions<FaqUpsertRequest, Faq>(
       http,
-      this.faqEndpoint
+      this.endpoint + '/faq'
     );
 
     this.faq = {
-      getOne: () => http.get<Faq>(this.faqEndpoint),
+      getOne: () => http.get<Faq>(this.endpoint + '/faq'),
       update: faqCrud.update,
       deleteFeaturedImage: faqCrud.deleteFeaturedImage,
     };
