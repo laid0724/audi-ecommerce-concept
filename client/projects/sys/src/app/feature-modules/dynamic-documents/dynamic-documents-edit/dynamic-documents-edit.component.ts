@@ -39,7 +39,7 @@ import {
   DynamicDocumentSettings,
 } from '../interfaces';
 
-const dynamicDocumentFormBuilderFn = (
+export const dynamicDocumentFormBuilderFn = (
   fb: FormBuilder,
   settings: DynamicDocumentFormSettings
 ): FormGroup =>
@@ -83,6 +83,13 @@ const dynamicDocumentFormBuilderFn = (
 
     return fg;
   }, fb.group({}));
+
+export function isDynamicDocumentFaq(
+  dynamicDocument: News | Event | Faq
+): dynamicDocument is Faq {
+  const { type } = dynamicDocument;
+  return type === DynamicDocumentType.Faq && 'faqItems' in dynamicDocument;
+}
 
 @Component({
   selector: 'audi-sys-dynamic-documents-edit',
@@ -180,6 +187,7 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
                 this.dynamicDocument = res;
 
                 if (
+                  !isDynamicDocumentFaq(res) &&
                   this.isFormFieldAvailable('wysiwyg') &&
                   res.wysiwyg != null
                 ) {
@@ -209,8 +217,12 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
                   }
                 }
 
-                if (this.isFaq && this.isFormFieldAvailable('faqItems')) {
-                  const { faqItems } = res as Faq;
+                if (
+                  isDynamicDocumentFaq(res) &&
+                  this.isFaq &&
+                  this.isFormFieldAvailable('faqItems')
+                ) {
+                  const { faqItems } = res;
                   const faqItemsControl = this.form.get(
                     'faqItems'
                   ) as FormArray;
@@ -229,14 +241,15 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
                   }
                 }
 
-                const { date, ...values } = res;
+                this.form.patchValue(res);
 
-                this.form.patchValue(values);
-
-                if (this.isFormFieldAvailable('date')) {
+                if (
+                  !isDynamicDocumentFaq(res) &&
+                  this.isFormFieldAvailable('date')
+                ) {
                   this.form
                     .get('date')
-                    ?.patchValue(formatServerTimeToClrDate(date as Date));
+                    ?.patchValue(formatServerTimeToClrDate(res.date as Date));
                 }
               }
             })

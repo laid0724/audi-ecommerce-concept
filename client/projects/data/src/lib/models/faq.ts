@@ -1,6 +1,12 @@
-import { DynamicDocument } from "./dynamic-document";
+import { DynamicDocumentType } from '@audi/data';
+import { DynamicDocumentPhoto } from './dynamic-document-photo';
 
-export interface Faq extends Partial<DynamicDocument> {
+export interface Faq {
+  id: number;
+  title: string;
+  type: DynamicDocumentType;
+  introduction: string;
+  featuredImage: DynamicDocumentPhoto;
   faqItems: FaqItem[];
 }
 
