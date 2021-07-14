@@ -1,3 +1,4 @@
+import { OnChanges, SimpleChange, SimpleChanges } from '@angular/core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { User, AccountService } from '@audi/data';
 import { FileUploader } from 'ng2-file-upload';
@@ -11,7 +12,7 @@ import { take } from 'rxjs/operators';
   templateUrl: './featured-image-uploader.component.html',
   styleUrls: ['./featured-image-uploader.component.scss'],
 })
-export class FeaturedImageUploaderComponent implements OnInit {
+export class FeaturedImageUploaderComponent implements OnInit, OnChanges {
   @Input() modelIdKey: string;
   @Input() modelIdValue: number;
   @Input() featuredImage: any;
@@ -39,6 +40,32 @@ export class FeaturedImageUploaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeUploader();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const {
+      featuredImage,
+      modelIdValue,
+      addFeaturedImageEndpoint,
+      deleteFeaturedImageHttpMethod,
+    } = changes;
+
+    const changesToTrack: SimpleChange[] = [
+      featuredImage,
+      modelIdValue,
+      addFeaturedImageEndpoint,
+      deleteFeaturedImageHttpMethod,
+    ];
+
+    if (changesToTrack.every((c: SimpleChange) => c !== undefined)) {
+      const shouldRefreshUploader: boolean = changesToTrack
+        .map((c: SimpleChange) => c.currentValue !== c.previousValue)
+        .every((isChanged: boolean) => isChanged);
+
+      if (shouldRefreshUploader) {
+        this.initializeUploader();
+      }
+    }
   }
 
   fileOverBase(e: any): void {
