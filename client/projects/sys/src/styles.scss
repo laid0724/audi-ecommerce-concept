@@ -8,6 +8,15 @@
   }
 }
 
+.text-error {
+  color: var(--clr-forms-invalid-color) !important;
+}
+
+.border-error {
+  border: 1px solid var(--clr-forms-invalid-color) !important;
+  border-radius: 5px;
+}
+
 .pointer {
   cursor: pointer !important;
 }

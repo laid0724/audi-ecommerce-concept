@@ -1,4 +1,4 @@
-<ng-container *ngIf="!dynamicDocumentId">
+<ng-container *ngIf="!dynamicDocumentId || isFaq">
   <div class="row">
     <div class="col-12 d-flex justify-content-end">
       <audi-sys-language-selector></audi-sys-language-selector>
@@ -6,7 +6,7 @@
   </div>
 </ng-container>
 
-<div class="row" [ngClass]="{ 'mt-3': !dynamicDocumentId }">
+<div class="row" [ngClass]="{ 'mt-3': !dynamicDocumentId || isFaq }">
   <div class="col-12">
     <form clrForm [formGroup]="form" *ngIf="form != null">
       <div class="card mt-0">
@@ -20,7 +20,7 @@
               : ('新增' + title?.zh + ' | ADD ' + title?.en | uppercase)
           }}
           <button
-            *ngIf="dynamicDocumentId"
+            *ngIf="dynamicDocumentId && !isFaq"
             class="btn btn-primary btn-sm m-0"
             type="button"
             [routerLink]="['/manage', dynamicDocumentType, 'new']"
@@ -38,7 +38,7 @@
                     type="text"
                     clrInput
                     formControlName="title"
-                    class="w-100"
+                    class="clr-input-width"
                   />
                   <clr-control-error *clrIfError="'required'"
                     >必填 Required</clr-control-error
@@ -91,9 +91,9 @@
                   >
                 </clr-textarea-container>
 
-                <!-- TODO -->
                 <audi-sys-faq-items
-                  *ngIf="isFormFieldAvailable('faqitems')"
+                  *ngIf="isFormFieldAvailable('faqItems') && isFaq"
+                  formArrayName="faqItems"
                 ></audi-sys-faq-items>
 
                 <audi-sys-wysiwyg-grid

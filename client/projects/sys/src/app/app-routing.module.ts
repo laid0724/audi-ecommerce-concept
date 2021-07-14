@@ -181,7 +181,7 @@ const routes: Routes = [
                       type: 'textarea',
                     },
                     {
-                      key: 'faqitems',
+                      key: 'faqItems',
                       label: '問答列表 Faq Items',
                       type: 'faqitems',
                     },

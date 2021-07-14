@@ -1,6 +1,6 @@
 import { OnDestroy } from '@angular/core';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import {
   DynamicDocumentsService,
@@ -61,6 +61,11 @@ const dynamicDocumentFormBuilderFn = (
             wysiwygGridValidatorBuilderFn([...field.validators])
           );
         }
+        return fg;
+      }
+
+      if (field.type === 'faqitems') {
+        fg.addControl(field.key, fb.array([]));
         return fg;
       }
 
@@ -171,6 +176,7 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
                 if (res.type === 'faq') {
                   this.dynamicDocumentId = res.id as number;
                 }
+
                 this.dynamicDocument = res;
 
                 if (
@@ -200,6 +206,26 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
                       });
                       wysiwygControl.patchValue(wysiwyg);
                     }
+                  }
+                }
+
+                if (this.isFaq && this.isFormFieldAvailable('faqItems')) {
+                  const { faqItems } = res as Faq;
+                  const faqItemsControl = this.form.get(
+                    'faqItems'
+                  ) as FormArray;
+
+                  faqItemsControl.clear();
+
+                  if (Array.isArray(faqItems) && faqItems.length > 0) {
+                    faqItems.forEach((faq) =>
+                      faqItemsControl.push(
+                        this.fb.group({
+                          question: [null, Validators.required],
+                          answer: [null, Validators.required],
+                        })
+                      )
+                    );
                   }
                 }
 
@@ -236,8 +262,6 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
       (f) => f.key === formFieldName
     );
   }
-
-  // TODO: faqItem
 
   onSave(): void {
     if (this.form.invalid) {

@@ -1,1 +1,74 @@
-<p>faq-items works!</p>
+<clr-control-container class="clr-control-container--no-max-height">
+  <label> 問與答 Q&A </label>
+  <div class="w-100">
+    <clr-stack-view
+      class="mb-2"
+      *ngIf="faqItems.length > 0"
+      [ngClass]="{ 'border-error': array.touched && array.invalid }"
+    >
+      <clr-stack-block
+        *ngFor="let faqItem of faqItems; let faqIndex = index"
+        [clrStackViewLevel]="1"
+        [clrStackViewSetsize]="faqItems.length"
+        [clrStackViewPosinset]="faqIndex + 1"
+        [formGroup]="faqItem"
+      >
+        <clr-stack-label
+          class="d-flex align-items-center"
+          [ngClass]="{ 'text-error': faqItem.touched && faqItem.invalid }"
+          >問答 Q&A {{ faqIndex + 1 }}
+        </clr-stack-label>
+        <clr-stack-content
+          class="d-flex justify-content-end align-items-center"
+        >
+          <button
+            type="button"
+            class="btn btn-icon btn-sm btn-danger me-0"
+            (click)="$event.stopPropagation()"
+            (click)="removeQA(faqIndex)"
+          >
+            <clr-icon shape="trash"></clr-icon>
+          </button>
+        </clr-stack-content>
+        <clr-stack-block class="py-2">
+          <clr-stack-label> 問題 Questions </clr-stack-label>
+          <clr-input-container class="clr-control-container--no-labels w-100">
+            <input
+              type="text"
+              clrInput
+              formControlName="question"
+              class="clr-input-width"
+            />
+            <clr-control-error *clrIfError="'required'"
+              >必填 Required</clr-control-error
+            >
+          </clr-input-container>
+        </clr-stack-block>
+        <clr-stack-block class="py-2">
+          <clr-stack-label>答案 Answer</clr-stack-label>
+          <clr-textarea-container
+            class="clr-control-container--no-labels w-100"
+          >
+            <textarea
+              clrTextarea
+              formControlName="answer"
+              class="w-100"
+            ></textarea>
+            <clr-control-error *clrIfError="'required'"
+              >必填 Required</clr-control-error
+            >
+          </clr-textarea-container>
+        </clr-stack-block>
+      </clr-stack-block>
+    </clr-stack-view>
+
+    <button
+      type="button"
+      class="btn btn-primary btn-sm btn-icon mt-0"
+      (click)="addQA()"
+    >
+      <clr-icon shape="plus"></clr-icon>
+      增加問答項目 Add Q&A
+    </button>
+  </div>
+</clr-control-container>
