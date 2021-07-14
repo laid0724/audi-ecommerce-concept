@@ -7,14 +7,13 @@ import {
   DynamicDocumentType,
   LanguageCode,
   LanguageStateService,
-  Event,
-  News,
   Faq,
   WysiwygRowType,
   BusyService,
   getAllErrors,
   formatClrDateToUTCString,
   formatServerTimeToClrDate,
+  DynamicDocument,
 } from '@audi/data';
 import { ClrForm } from '@clr/angular';
 import { ToastrService } from 'ngx-toastr';
@@ -85,7 +84,7 @@ export const dynamicDocumentFormBuilderFn = (
   }, fb.group({}));
 
 export function isDynamicDocumentFaq(
-  dynamicDocument: News | Event | Faq
+  dynamicDocument: DynamicDocument
 ): dynamicDocument is Faq {
   const { type } = dynamicDocument;
   return type === DynamicDocumentType.Faq && 'faqItems' in dynamicDocument;
@@ -100,7 +99,7 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
   @ViewChild(ClrForm, { static: false }) clrForm: ClrForm;
 
   dynamicDocumentId: number;
-  dynamicDocument: News | Event | Faq;
+  dynamicDocument: DynamicDocument;
   dynamicDocumentType: DynamicDocumentType;
   dynamicDocumentSettings: DynamicDocumentSettings;
 
@@ -178,7 +177,7 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
 
               return of(null);
             }),
-            tap((res: Event | News | Faq | null) => {
+            tap((res: DynamicDocument | null) => {
               if (res !== null) {
                 if (res.type === 'faq') {
                   this.dynamicDocumentId = res.id as number;
@@ -302,7 +301,7 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
     (this.dynamicDocumentsService[this.dynamicDocumentType] as any)
       .update(formValue)
       .pipe(take(1))
-      .subscribe((res: News | Event | Faq) => {
+      .subscribe((res: DynamicDocument) => {
         this.dynamicDocument = res;
         this.toastr.success('更新成功 Updated successfully');
       });
@@ -334,7 +333,7 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
     (this.dynamicDocumentsService[this.dynamicDocumentType] as any)
       .add(formValue)
       .pipe(take(1))
-      .subscribe((res: News | Event | Faq) => {
+      .subscribe((res: DynamicDocument) => {
         this.router.navigate([`/manage/${this.dynamicDocumentType}/${res.id}`]);
         this.toastr.success('建立成功 Created successfully');
       });

@@ -1,8 +1,9 @@
-import { DynamicDocumentType } from "../enums";
-import { DynamicDocumentPhoto } from "./dynamic-document-photo";
-import { WysiwygGrid } from "./wysiwyg";
+import { DynamicDocumentType } from '../enums';
+import { DynamicDocumentPhoto } from './dynamic-document-photo';
+import { Faq } from './faq';
+import { WysiwygGrid } from './wysiwyg';
 
-export interface DynamicDocument {
+export interface DynamicDocumentBase {
   id: number;
   title: string;
   type: DynamicDocumentType;
@@ -15,6 +16,8 @@ export interface DynamicDocument {
   isVisible: boolean;
 }
 
-export interface News extends DynamicDocument {}
+export interface News extends DynamicDocumentBase {}
 
-export interface Event extends DynamicDocument {}
+export interface Event extends DynamicDocumentBase {}
+
+export type DynamicDocument = News | Event | Faq;
