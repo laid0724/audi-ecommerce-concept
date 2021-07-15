@@ -6,12 +6,14 @@ import { ClrDgCustomBtnFilterComponent } from './clr-dg-custom-btn-filter/clr-dg
 import { ClrDgServersideRangeFilterComponent } from './clr-dg-serverside-range-filter/clr-dg-serverside-range-filter.component';
 import { ClrDgProductCategoryFilterComponent } from './clr-dg-product-category-filter/clr-dg-product-category-filter.component';
 import { FormsComponentModule } from '../forms-component/forms-component.module';
+import { ClrDgDateRangeFilterComponent } from './clr-dg-date-range-filter/clr-dg-date-range-filter.component';
 
 const COMPONENTS = [
   ClrDgServersideStringFilterComponent,
   ClrDgCustomBtnFilterComponent,
   ClrDgServersideRangeFilterComponent,
   ClrDgProductCategoryFilterComponent,
+  ClrDgDateRangeFilterComponent,
 ];
 
 @NgModule({

@@ -5,7 +5,9 @@ using Audi.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
+using Audi.Data.Extensions;
+using Audi.Interfaces;
+using Audi.Helpers;
 
 namespace Audi.Data
 {
@@ -35,7 +37,7 @@ namespace Audi.Data
             {
                 foreach (var user in users)
                 {
-                    user.UserName = user.UserName.ToLower();
+                    user.UserName = user.UserName.ToLower().Trim();
 
                     /* 
                         When using identity to manage user creation,
@@ -59,6 +61,43 @@ namespace Audi.Data
 
             await userManager.CreateAsync(admin, adminDefaultPassword);
             await userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" });
+        }
+
+        public static async Task SeedFaq(IUnitOfWork unitOfWork)
+        {
+            var faqEntitiesExist = await unitOfWork.DynamicDocumentRepository
+                .GetQueryableDynamicDocuments(
+                    new DynamicDocumentParams
+                    {
+                        Type = "faq"
+                    }
+                ).CountAsync() == 2;
+
+            if (faqEntitiesExist) return;
+
+            var faqZh = new DynamicDocument
+            {
+                Language = "zh",
+                Title = "常見問題",
+                Type = "faq",
+                IsVisible = true
+            };
+
+            var faqEn = new DynamicDocument
+            {
+                Language = "en",
+                Title = "FAQ",
+                Type = "faq",
+                IsVisible = true
+            };
+
+            unitOfWork.DynamicDocumentRepository.AddDynamicDocument(faqZh);
+            unitOfWork.DynamicDocumentRepository.AddDynamicDocument(faqEn);
+
+            if (unitOfWork.HasChanges())
+            {
+                await unitOfWork.Complete();
+            }
         }
     }
 }

@@ -13,6 +13,10 @@ export * from './lib/models/product-variant';
 export * from './lib/models/product-variant-value';
 export * from './lib/models/product';
 export * from './lib/models/wysiwyg';
+export * from './lib/models/dynamic-document';
+export * from './lib/models/dynamic-document-params';
+export * from './lib/models/dynamic-document-photo';
+export * from './lib/models/faq';
 
 // Enums
 export * from './lib/enums'
@@ -23,6 +27,7 @@ export * from './lib/services/busy.service'
 export * from './lib/services/language-state.service'
 export * from './lib/services/products.service'
 export * from './lib/services/photo.service'
+export * from './lib/services/dynamic-documents.service'
 
 // Interceptors
 export * from './lib/interceptors/error.interceptor'

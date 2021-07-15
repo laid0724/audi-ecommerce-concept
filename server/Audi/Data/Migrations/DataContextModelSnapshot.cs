@@ -177,6 +177,93 @@ namespace server.Data.Migrations
                     b.ToTable("idt_user_roles");
                 });
 
+            modelBuilder.Entity("Audi.Entities.DynamicDocument", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Body")
+                        .HasColumnType("text")
+                        .HasColumnName("body");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("Date")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("date");
+
+                    b.Property<int>("FeaturedImageId")
+                        .HasColumnType("integer")
+                        .HasColumnName("featured_image_id");
+
+                    b.Property<string>("Introduction")
+                        .HasColumnType("text")
+                        .HasColumnName("introduction");
+
+                    b.Property<bool>("IsVisible")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_visible");
+
+                    b.Property<string>("JsonData")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("json_data");
+
+                    b.Property<string>("Language")
+                        .HasColumnType("text")
+                        .HasColumnName("language");
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("last_updated");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text")
+                        .HasColumnName("title");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text")
+                        .HasColumnName("type");
+
+                    b.Property<string>("Wysiwyg")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("wysiwyg")
+                        .HasDefaultValueSql("'{}'");
+
+                    b.HasKey("Id")
+                        .HasName("pk_dynamic_documents");
+
+                    b.ToTable("dynamic_documents");
+                });
+
+            modelBuilder.Entity("Audi.Entities.DynamicDocumentPhoto", b =>
+                {
+                    b.Property<int>("DynamicDocumentId")
+                        .HasColumnType("integer")
+                        .HasColumnName("dynamic_document_id");
+
+                    b.Property<int>("PhotoId")
+                        .HasColumnType("integer")
+                        .HasColumnName("photo_id");
+
+                    b.HasKey("DynamicDocumentId", "PhotoId")
+                        .HasName("pk_dynamic_document_photos");
+
+                    b.HasIndex("DynamicDocumentId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_dynamic_document_photos_dynamic_document_id");
+
+                    b.HasIndex("PhotoId")
+                        .HasDatabaseName("ix_dynamic_document_photos_photo_id");
+
+                    b.ToTable("dynamic_document_photos");
+                });
+
             modelBuilder.Entity("Audi.Entities.Photo", b =>
                 {
                     b.Property<int>("Id")
@@ -583,6 +670,25 @@ namespace server.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Audi.Entities.DynamicDocumentPhoto", b =>
+                {
+                    b.HasOne("Audi.Entities.DynamicDocument", "DynamicDocument")
+                        .WithOne("FeaturedImage")
+                        .HasForeignKey("Audi.Entities.DynamicDocumentPhoto", "DynamicDocumentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Audi.Entities.Photo", "Photo")
+                        .WithMany("DynamicDocumentPhotos")
+                        .HasForeignKey("PhotoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DynamicDocument");
+
+                    b.Navigation("Photo");
+                });
+
             modelBuilder.Entity("Audi.Entities.Product", b =>
                 {
                     b.HasOne("Audi.Entities.ProductCategory", "ProductCategory")
@@ -745,8 +851,16 @@ namespace server.Data.Migrations
                     b.Navigation("UserRoles");
                 });
 
+            modelBuilder.Entity("Audi.Entities.DynamicDocument", b =>
+                {
+                    b.Navigation("FeaturedImage")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Audi.Entities.Photo", b =>
                 {
+                    b.Navigation("DynamicDocumentPhotos");
+
                     b.Navigation("ProductPhotos");
                 });
 

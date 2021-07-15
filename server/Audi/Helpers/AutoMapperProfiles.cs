@@ -4,6 +4,8 @@ using Audi.DTOs;
 using Audi.Entities;
 using Audi.Extensions;
 using AutoMapper;
+using Audi.Models;
+using Newtonsoft.Json.Linq;
 
 namespace Audi.Helpers
 {
@@ -22,6 +24,20 @@ namespace Audi.Helpers
             CreateMap<ProductCategory, ProductCategoryDto>();
 
             CreateMap<ProductPhoto, ProductPhotoDto>()
+                .ForMember(
+                    dest => dest.Url,
+                    opt => opt.MapFrom(src => src.Photo.Url)
+                )
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.PhotoId)
+                )
+                .ForMember(
+                    dest => dest.CreatedAt,
+                    opt => opt.MapFrom(src => src.Photo.CreatedAt)
+                );
+
+            CreateMap<DynamicDocumentPhoto, DynamicDocumentPhotoDto>()
                 .ForMember(
                     dest => dest.Url,
                     opt => opt.MapFrom(src => src.Photo.Url)
@@ -94,6 +110,14 @@ namespace Audi.Helpers
                     dest => dest.VariantValues,
                     opt => opt.MapFrom(src => src.ProductVariantValues)
                 );
+
+            CreateMap<DynamicDocument, FaqDto>()
+                .ForMember(
+                    dest => dest.FaqItems,
+                    opt => opt.MapFrom(src => src.JsonData.ToObject<Faqs>().FaqItems)
+                );
+            CreateMap<DynamicDocument, EventDto>();
+            CreateMap<DynamicDocument, NewsDto>();
 
             // reverse map from dto to entity model:
             CreateMap<RegisterDto, AppUser>();

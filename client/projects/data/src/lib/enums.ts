@@ -15,3 +15,9 @@ export enum WysiwygRowType {
   FourEight = '4-8',
   EightFour = '8-4',
 }
+
+export enum DynamicDocumentType {
+  Event = 'events',
+  News = 'news',
+  Faq = 'faq'
+}

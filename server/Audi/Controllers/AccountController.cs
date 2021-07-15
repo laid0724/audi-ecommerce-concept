@@ -8,6 +8,7 @@ using Audi.DTOs;
 using Audi.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Audi.Data.Extensions;
 
 namespace Audi.Controllers
 {

@@ -86,8 +86,19 @@
         <clr-icon clrVerticalNavIcon shape="new"></clr-icon>
         新聞 News
         <clr-vertical-nav-group-children *clrIfExpanded="false">
-          <a clrVerticalNavLink routerLink="/manage" routerLinkActive="active">
-            TBD
+          <a
+            clrVerticalNavLink
+            routerLink="/manage/news/list"
+            routerLinkActive="active"
+          >
+            列表 List
+          </a>
+          <a
+            clrVerticalNavLink
+            routerLink="/manage/news/new"
+            routerLinkActive="active"
+          >
+            新增 Add
           </a>
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>
@@ -95,8 +106,19 @@
         <clr-icon clrVerticalNavIcon shape="event"></clr-icon>
         活動 Events
         <clr-vertical-nav-group-children *clrIfExpanded="false">
-          <a clrVerticalNavLink routerLink="/manage" routerLinkActive="active">
-            TBD
+          <a
+            clrVerticalNavLink
+            routerLink="/manage/events/list"
+            routerLinkActive="active"
+          >
+            列表 List
+          </a>
+          <a
+            clrVerticalNavLink
+            routerLink="/manage/events/new"
+            routerLinkActive="active"
+          >
+            新增 Add
           </a>
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>
@@ -104,8 +126,8 @@
         <clr-icon clrVerticalNavIcon shape="help-info"></clr-icon>
         疑難雜症 FAQs
         <clr-vertical-nav-group-children *clrIfExpanded="false">
-          <a clrVerticalNavLink routerLink="/manage" routerLinkActive="active">
-            TBD
+          <a clrVerticalNavLink routerLink="/manage/faq" routerLinkActive="active">
+            編輯 Edit
           </a>
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>

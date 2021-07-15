@@ -1,0 +1,50 @@
+<clr-dg-filter [clrDgFilter]="filter" (clrDgFilterOpen)="(filterActive)">
+  <form clrForm [formGroup]="form" clrLayout="vertical">
+    <div class="row">
+      <div class="col-6">
+        <clr-input-container class="mt-0">
+          <label>{{ dateStartLabel }}</label>
+          <input
+            type="text"
+            clrInput
+            formControlName="dateStart"
+            placeholder="MM/DD/YYYY"
+          />
+          <clr-control-error *clrIfError="'required'"
+            >必填 Required</clr-control-error
+          >
+          <clr-control-error *clrIfError="'pattern'"
+            >請填寫正確日期格式<br />Incorrect date format</clr-control-error
+          >
+        </clr-input-container>
+      </div>
+      <div class="col-6">
+        <clr-input-container class="mt-0">
+          <label>{{ dateEndLabel }}</label>
+          <input
+            type="text"
+            clrInput
+            formControlName="dateEnd"
+            placeholder="MM/DD/YYYY"
+          />
+          <clr-control-error *clrIfError="'required'"
+            >必填 Required</clr-control-error
+          >
+          <clr-control-error *clrIfError="'pattern'"
+            >請填寫正確日期格式<br />Incorrect date format</clr-control-error
+          >
+        </clr-input-container>
+      </div>
+    </div>
+
+    <clr-alert
+      class="mt-2 d-flex w-100"
+      style="flex-wrap: wrap"
+      clrAlertType="danger"
+      [clrAlertClosable]="false"
+      *ngIf="form.getError('hasRangeError')"
+    >
+      起始日期需早於結束日期 Start date must be earlier than end date
+    </clr-alert>
+  </form>
+</clr-dg-filter>

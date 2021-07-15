@@ -150,7 +150,7 @@ export function formatServerTimeToClrDate(date: string | Date): string | null {
 }
 
 export function formatClrDateToUTCString(date: string): string | null {
-  if (date == null) {
+  if (isNullOrEmptyString(date)) {
     return null;
   }
   return new Date(date).toISOString();

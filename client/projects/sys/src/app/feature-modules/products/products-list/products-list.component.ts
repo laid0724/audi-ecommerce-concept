@@ -239,7 +239,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
       for (const filter of state.filters) {
         const { property, value } = <{ property: string; value: string }>filter;
         if (
-          ['name', 'productCategoryId', 'isVisible', 'isDiscounted'].includes(
+          ['name', 'productCategoryId'].includes(
             property
           )
         ) {
