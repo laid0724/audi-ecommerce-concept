@@ -22,6 +22,8 @@ export class ClrDgDateRangeFilterComponent implements OnInit, OnDestroy {
   @Input()
   filter: ClrDateRangeFilter;
 
+  filterActive = false;
+
   form: FormGroup;
 
   destroy$ = new Subject<boolean>();
@@ -47,18 +49,17 @@ export class ClrDgDateRangeFilterComponent implements OnInit, OnDestroy {
       ])
         .pipe(
           tap(([dateStart, dateEnd]: [string, string]) => {
-            this.form.updateValueAndValidity({
-              onlySelf: true,
-              emitEvent: false,
-            });
-
             if (this.form.valid) {
               this.filter.value[0] = dateStart;
               this.filter.value[1] = dateEnd;
-            } else {
-              this.filter.value = [null, null];
+
+              this.filter.changes.next();
+
+              this.form.updateValueAndValidity({
+                onlySelf: true,
+                emitEvent: false,
+              });
             }
-            this.filter.changes.next();
           }),
           takeUntil(this.destroy$)
         )

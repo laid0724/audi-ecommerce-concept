@@ -114,14 +114,14 @@
                         {{
                           getValue(dynamicDocument, column.key)
                             | toLocalTime
-                            | date: 'yyyy/MM/dd'
+                            | date: 'MM/dd/yyyy'
                         }}
                       </ng-container>
                       <ng-container *ngSwitchCase="'datetime'">
                         {{
                           getValue(dynamicDocument, column.key)
                             | toLocalTime
-                            | date: 'yyyy/MM/dd hh:mm:ss'
+                            | date: 'MM/dd/yyyy hh:mm:ss'
                         }}
                       </ng-container>
                       <ng-container *ngSwitchCase="'boolean'">

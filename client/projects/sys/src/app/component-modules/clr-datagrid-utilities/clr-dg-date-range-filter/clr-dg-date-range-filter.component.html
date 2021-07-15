@@ -1,31 +1,39 @@
-<!-- FIXME: clr filter window will close on clicking date picker, wtf... -->
-
-<clr-dg-filter [clrDgFilter]="filter">
+<clr-dg-filter [clrDgFilter]="filter" (clrDgFilterOpen)="(filterActive)">
   <form clrForm [formGroup]="form" clrLayout="vertical">
     <div class="row">
       <div class="col-6">
-        <clr-date-container class="mt-0">
+        <clr-input-container class="mt-0">
           <label>{{ dateStartLabel }}</label>
-          <input type="date" clrDate formControlName="dateStart" />
+          <input
+            type="text"
+            clrInput
+            formControlName="dateStart"
+            placeholder="MM/DD/YYYY"
+          />
           <clr-control-error *clrIfError="'required'"
             >必填 Required</clr-control-error
           >
           <clr-control-error *clrIfError="'pattern'"
             >請填寫正確日期格式<br />Incorrect date format</clr-control-error
           >
-        </clr-date-container>
+        </clr-input-container>
       </div>
       <div class="col-6">
-        <clr-date-container class="mt-0">
+        <clr-input-container class="mt-0">
           <label>{{ dateEndLabel }}</label>
-          <input type="date" clrDate formControlName="dateEnd" />
+          <input
+            type="text"
+            clrInput
+            formControlName="dateEnd"
+            placeholder="MM/DD/YYYY"
+          />
           <clr-control-error *clrIfError="'required'"
             >必填 Required</clr-control-error
           >
           <clr-control-error *clrIfError="'pattern'"
             >請填寫正確日期格式<br />Incorrect date format</clr-control-error
           >
-        </clr-date-container>
+        </clr-input-container>
       </div>
     </div>
 
