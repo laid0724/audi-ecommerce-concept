@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminGuard, AuthGuard, LanguageSelectorResolver } from '@audi/data';
+import { AdminGuard, AuthGuard, DATE_REGEX, LanguageSelectorResolver } from '@audi/data';
 import { LoginComponent } from './core/login/login.component';
 import { NavComponent } from './core/nav/nav.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
@@ -111,6 +111,7 @@ const routes: Routes = [
                       key: 'date',
                       label: '日期 Date',
                       type: 'date',
+                      validators: [Validators.pattern(DATE_REGEX)],
                     },
                     {
                       key: 'introduction',
@@ -193,6 +194,7 @@ const routes: Routes = [
                       key: 'date',
                       label: '日期 Date',
                       type: 'date',
+                      validators: [Validators.pattern(DATE_REGEX)],
                     },
                     {
                       key: 'introduction',

@@ -70,8 +70,17 @@
                 <clr-date-container *ngIf="isFormFieldAvailable('date')">
                   <label>{{ getFormField('date')?.label }}</label>
                   <input type="date" clrDate formControlName="date" />
+                  <clr-control-helper>
+                    <span class="d-block">請填寫該日期格式：MM/DD/YYYY</span>
+                    <span class="d-block mt-1">
+                      Please enter the date in the following format: MM/DD/YYYY
+                    </span>
+                  </clr-control-helper>
                   <clr-control-error *clrIfError="'required'"
                     >必填 Required</clr-control-error
+                  >
+                  <clr-control-error *clrIfError="'pattern'"
+                    >請填寫正確日期格式 Incorrect date format</clr-control-error
                   >
                 </clr-date-container>
 
