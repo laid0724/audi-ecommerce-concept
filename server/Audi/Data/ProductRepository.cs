@@ -254,6 +254,8 @@ namespace Audi.Data
                 );
             }
 
+            query = query.OrderByDescending(e => e.CreatedAt);
+
             return await PagedList<ProductDto>.CreateAsync(
                 query.ProjectTo<ProductDto>(_mapper.ConfigurationProvider),
                 productParams.PageNumber,

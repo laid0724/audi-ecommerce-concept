@@ -67,7 +67,7 @@ namespace Audi.Data
                 query = query.Where(e => e.Date.HasValue && e.Date.Value <= dynamicDocumentParams.DateEnd.Value);
             }
 
-            return query;
+            return query.OrderByDescending(e => e.CreatedAt);
 
             /*
                 Create separate methods to query this and convert to pagedDto:
