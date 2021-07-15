@@ -49,7 +49,19 @@
                   [trueDisplayValue]="true | toZh: 'isVisible'"
                   [falseDisplayValue]="false | toZh: 'isVisible'"
                 ></audi-sys-clr-dg-custom-btn-filter>
-                <!-- TODO: daterange filters for date, created at, and last updated -->
+                <!-- FIXME: CODE SMELL HERE -->
+                <audi-sys-clr-dg-date-range-filter
+                  *ngSwitchCase="'date'"
+                  [filter]="dateFilter"
+                ></audi-sys-clr-dg-date-range-filter>
+                <audi-sys-clr-dg-date-range-filter
+                  *ngSwitchCase="'createdAt'"
+                  [filter]="createdAtFilter"
+                ></audi-sys-clr-dg-date-range-filter>
+                <audi-sys-clr-dg-date-range-filter
+                  *ngSwitchCase="'lastUpdated'"
+                  [filter]="lastUpdatedFilter"
+                ></audi-sys-clr-dg-date-range-filter>
                 <ng-container *ngSwitchDefault></ng-container>
               </ng-container>
             </clr-dg-column>
@@ -101,13 +113,15 @@
                       <ng-container *ngSwitchCase="'date'">
                         {{
                           getValue(dynamicDocument, column.key)
-                            | toLocalTime | date: 'yyyy/MM/dd'
+                            | toLocalTime
+                            | date: 'yyyy/MM/dd'
                         }}
                       </ng-container>
                       <ng-container *ngSwitchCase="'datetime'">
                         {{
                           getValue(dynamicDocument, column.key)
-                            | toLocalTime | date: 'yyyy/MM/dd hh:mm:ss'
+                            | toLocalTime
+                            | date: 'yyyy/MM/dd hh:mm:ss'
                         }}
                       </ng-container>
                       <ng-container *ngSwitchCase="'boolean'">

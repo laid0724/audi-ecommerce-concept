@@ -67,6 +67,26 @@ namespace Audi.Data
                 query = query.Where(e => e.Date.HasValue && e.Date.Value <= dynamicDocumentParams.DateEnd.Value);
             }
 
+            if (dynamicDocumentParams.CreatedAtStart.HasValue)
+            {
+                query = query.Where(e => e.CreatedAt >= dynamicDocumentParams.CreatedAtStart.Value);
+            }
+
+            if (dynamicDocumentParams.CreatedAtEnd.HasValue)
+            {
+                query = query.Where(e => e.CreatedAt <= dynamicDocumentParams.CreatedAtEnd.Value);
+            }
+
+            if (dynamicDocumentParams.LastUpdatedStart.HasValue)
+            {
+                query = query.Where(e => e.LastUpdated >= dynamicDocumentParams.LastUpdatedStart.Value);
+            }
+
+            if (dynamicDocumentParams.LastUpdatedEnd.HasValue)
+            {
+                query = query.Where(e => e.LastUpdated <= dynamicDocumentParams.LastUpdatedEnd.Value);
+            }
+
             return query.OrderByDescending(e => e.CreatedAt);
 
             /*

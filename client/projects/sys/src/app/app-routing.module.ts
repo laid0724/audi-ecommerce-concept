@@ -1,7 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
-import { AdminGuard, AuthGuard, DATE_REGEX, LanguageSelectorResolver } from '@audi/data';
+import {
+  AdminGuard,
+  AuthGuard,
+  DATE_REGEX,
+  LanguageSelectorResolver,
+} from '@audi/data';
 import { LoginComponent } from './core/login/login.component';
 import { NavComponent } from './core/nav/nav.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
@@ -84,19 +89,19 @@ const routes: Routes = [
                     label: '日期 Date',
                     key: 'date',
                     type: 'date',
-                    filter: 'dateRange',
+                    filter: 'date',
                   },
                   {
                     label: '建立日期 Created At',
                     key: 'createdAt',
                     type: 'date',
-                    filter: 'dateRange',
+                    filter: 'createdAt',
                   },
                   {
                     label: '更新時間 Last Updated',
                     key: 'lastUpdated',
                     type: 'datetime',
-                    filter: 'dateRange',
+                    filter: 'lastUpdated',
                   },
                 ],
                 form: {
@@ -167,19 +172,19 @@ const routes: Routes = [
                     label: '日期 Date',
                     key: 'date',
                     type: 'date',
-                    filter: 'dateRange',
+                    filter: 'date',
                   },
                   {
                     label: '建立日期 Created At',
                     key: 'createdAt',
                     type: 'date',
-                    filter: 'dateRange',
+                    filter: 'createdAt',
                   },
                   {
                     label: '更新時間 Last Updated',
                     key: 'lastUpdated',
                     type: 'datetime',
-                    filter: 'dateRange',
+                    filter: 'lastUpdated',
                   },
                 ],
                 form: {

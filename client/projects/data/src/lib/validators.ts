@@ -6,6 +6,8 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import { endOfDay, isBefore, parseJSON } from 'date-fns';
+import { isNullOrEmptyString } from './helpers';
+import { DATE_REGEX } from './regex';
 
 export function hasSameValueValidator(
   matchingControlName: string
@@ -79,6 +81,32 @@ export function clrDatagridRangeFilterValidator(
       minValue != null && maxValue != null && minValue > maxValue;
 
     return hasRangeError ? { hasRangeError } : null;
+  }
+  return null;
+}
+
+export function clrDatagridDateRangeFilterValidator(
+  control: AbstractControl
+): ValidationErrors | null {
+  const dateStartControl = control.get('dateStart');
+  const dateEndControl = control.get('dateEnd');
+
+  if (dateStartControl != null && dateEndControl != null) {
+    const { value: dateStartValue } = dateStartControl;
+    const { value: dateEndValue } = dateEndControl;
+
+    const validDateFormatRegex = new RegExp(DATE_REGEX);
+
+    if (
+      validDateFormatRegex.test(dateStartValue) &&
+      validDateFormatRegex.test(dateEndValue)
+    ) {
+      const hasRangeError =
+        !isNullOrEmptyString(dateStartValue) &&
+        !isNullOrEmptyString(dateEndValue) &&
+        new Date(dateStartValue) > new Date(dateEndValue);
+      return hasRangeError ? { hasRangeError } : null;
+    }
   }
   return null;
 }

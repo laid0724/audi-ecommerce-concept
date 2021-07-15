@@ -32,7 +32,7 @@ export interface DynamicDocumentDatagridColumn {
 
 export type DynamicDocumentDatagridColumnType = 'string' | 'boolean' | 'date' | 'datetime' | 'isVisible'
 
-export type DynamicDocumentDatagridFilter = 'title' | 'isVisible' | 'dateRange';
+export type DynamicDocumentDatagridFilter = 'title' | 'isVisible' | 'date' | 'createdAt' | 'lastUpdated';
 
 export interface DynamicDocumentFormSettings {
   fields: DynamicDocumentFormField[];

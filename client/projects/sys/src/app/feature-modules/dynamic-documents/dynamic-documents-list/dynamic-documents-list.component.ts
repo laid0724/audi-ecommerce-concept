@@ -34,6 +34,7 @@ import {
 } from 'rxjs/operators';
 import {
   ClrCustomBtnFilter,
+  ClrDateRangeFilter,
   ClrServerSideStringFilter,
 } from '../../../component-modules/clr-datagrid-utilities/datagrid-filters';
 import {
@@ -76,7 +77,10 @@ export class DynamicDocumentsListComponent implements OnInit, OnDestroy {
     isVisible: undefined,
     dateStart: undefined,
     dateEnd: undefined,
-    // TODO createdAt start and end
+    createdAtStart: undefined,
+    createdAtEnd: undefined,
+    lastUpdatedStart: undefined,
+    lastUpdatedEnd: undefined,
   };
 
   dynamicDocumentParams: DynamicDocumentParams = this.initialQueryParams;
@@ -85,7 +89,9 @@ export class DynamicDocumentsListComponent implements OnInit, OnDestroy {
     'title'
   );
   isVisibleFilter: ClrCustomBtnFilter = new ClrCustomBtnFilter('isVisible');
-  // TODO: dateStart & dateEnd range filters
+  dateFilter: ClrDateRangeFilter = new ClrDateRangeFilter('date');
+  createdAtFilter: ClrDateRangeFilter = new ClrDateRangeFilter('createdAt');
+  lastUpdatedFilter: ClrDateRangeFilter = new ClrDateRangeFilter('lastUpdated');
 
   datagridLoading = true;
   confirmDeleteModalOpen = false;
@@ -218,6 +224,10 @@ export class DynamicDocumentsListComponent implements OnInit, OnDestroy {
       isVisible: undefined,
       dateStart: undefined,
       dateEnd: undefined,
+      createdAtStart: undefined,
+      createdAtEnd: undefined,
+      lastUpdatedStart: undefined,
+      lastUpdatedEnd: undefined,
     };
 
     if (state.filters) {
@@ -235,10 +245,11 @@ export class DynamicDocumentsListComponent implements OnInit, OnDestroy {
             [property]: stringToBoolean(value),
           };
         }
-        if (['dateStart', 'dateEnd'].includes(property)) {
+        if (['date', 'createdAt', 'lastUpdated'].includes(property)) {
           this.dynamicDocumentParams = {
             ...this.dynamicDocumentParams,
-            [property]: formatClrDateToUTCString(value),
+            [`${property}Start`]: formatClrDateToUTCString(value[0]),
+            [`${property}End`]: formatClrDateToUTCString(value[1]),
           };
         }
       }

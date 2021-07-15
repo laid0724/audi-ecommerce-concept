@@ -118,3 +118,7 @@
 .stack-view-key {
   display: flex;
 }
+
+clr-datepicker-view-manager {
+  z-index: 5000 !important;
+}

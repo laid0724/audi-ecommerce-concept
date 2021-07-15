@@ -9,5 +9,9 @@ namespace Audi.Helpers
         public bool? IsVisible { get; set; }
         public DateTime? DateStart { get; set; }
         public DateTime? DateEnd { get; set; }
+        public DateTime? CreatedAtStart { get; set; }
+        public DateTime? CreatedAtEnd { get; set; }
+        public DateTime? LastUpdatedStart { get; set; }
+        public DateTime? LastUpdatedEnd { get; set; }
     }
 }

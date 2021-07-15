@@ -1,4 +1,4 @@
-import { PagedRequest } from "./pagination";
+import { PagedRequest } from './pagination';
 
 export interface DynamicDocumentParams extends PagedRequest {
   title?: string;
@@ -6,4 +6,8 @@ export interface DynamicDocumentParams extends PagedRequest {
   isVisible?: boolean;
   dateStart?: Date;
   dateEnd?: Date;
+  createdAtStart?: Date;
+  createdAtEnd?: Date;
+  lastUpdatedStart?: Date;
+  lastUpdatedEnd?: Date;
 }
