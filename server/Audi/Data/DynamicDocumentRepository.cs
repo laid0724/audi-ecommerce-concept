@@ -49,7 +49,7 @@ namespace Audi.Data
 
             if (!string.IsNullOrWhiteSpace(dynamicDocumentParams.Title))
             {
-                query = query.Where(e => e.Title.ToLower().Trim() == dynamicDocumentParams.Title.ToLower().Trim());
+                query = query.Where(e => e.Title.ToLower().Trim().Contains(dynamicDocumentParams.Title.ToLower().Trim()));
             }
 
             if (dynamicDocumentParams.IsVisible.HasValue)
