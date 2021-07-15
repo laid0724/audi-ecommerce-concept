@@ -1,1 +1,189 @@
-<p>dynamic-documents-list works!</p>
+<div class="row">
+  <div class="col-12 d-flex justify-content-end">
+    <audi-sys-language-selector></audi-sys-language-selector>
+  </div>
+</div>
+
+<ng-container *ngIf="dynamicDocumentSettings">
+  <div class="row">
+    <div class="col-12">
+      <div class="card mt-3">
+        <div
+          class="
+            card-header
+            py-3
+            d-flex
+            align-items-center
+            justify-content-between
+          "
+        >
+          <span class="d-flex align-items-center">
+            {{ title.zh }}管理 | {{ title.en | uppercase }}
+          </span>
+
+          <button
+            class="btn btn-primary m-0"
+            [routerLink]="['/manage', dynamicDocumentType, 'new']"
+          >
+            新增{{ title.zh }} New {{ title.en | titlecase }}
+          </button>
+        </div>
+        <div class="card-body">
+          <clr-datagrid
+            *ngIf="dynamicDocumentDatagridColumns && dynamicDocumentSettings"
+            (clrDgRefresh)="refreshDatagrid($event)"
+            [clrLoading]="datagridLoading"
+          >
+            <clr-dg-column
+              *ngFor="let column of dynamicDocumentDatagridColumns"
+            >
+              {{ column.label }}
+              <ng-container [ngSwitch]="column.filter">
+                <audi-sys-clr-dg-serverside-string-filter
+                  *ngSwitchCase="'title'"
+                  [filter]="titleFilter"
+                ></audi-sys-clr-dg-serverside-string-filter>
+                <audi-sys-clr-dg-custom-btn-filter
+                  *ngSwitchCase="'isVisible'"
+                  [filter]="isVisibleFilter"
+                  [trueDisplayValue]="true | toZh: 'isVisible'"
+                  [falseDisplayValue]="false | toZh: 'isVisible'"
+                ></audi-sys-clr-dg-custom-btn-filter>
+                <!-- TODO: daterange filters for date, created at, and last updated -->
+                <ng-container *ngSwitchDefault></ng-container>
+              </ng-container>
+            </clr-dg-column>
+
+            <clr-dg-row
+              *ngFor="let dynamicDocument of dynamicDocuments"
+              [clrDgItem]="dynamicDocument"
+            >
+              <clr-dg-action-overflow>
+                <button
+                  class="action-item"
+                  [routerLink]="[
+                    '/manage',
+                    dynamicDocumentType,
+                    dynamicDocument.id
+                  ]"
+                >
+                  編輯 Edit
+                </button>
+                <button
+                  class="action-item"
+                  (click)="promptDelete(dynamicDocument)"
+                >
+                  刪除 Delete
+                </button>
+              </clr-dg-action-overflow>
+
+              <clr-dg-cell
+                *ngFor="let column of dynamicDocumentDatagridColumns"
+              >
+                <ng-container *ngIf="column.key">
+                  <ng-container
+                    *ngIf="getValue(dynamicDocument, column.key) !== undefined"
+                  >
+                    <ng-container
+                      *ngIf="getValue(dynamicDocument, column.key) === null"
+                      >&nbsp;</ng-container
+                    >
+                    <ng-container [ngSwitch]="column.type">
+                      <ng-container *ngSwitchCase="'string'">
+                        {{ getValue(dynamicDocument, column.key) }}
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'isVisible'">
+                        {{
+                          getValue(dynamicDocument, column.key)
+                            | toZh: 'isVisible'
+                        }}
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'date'">
+                        {{
+                          getValue(dynamicDocument, column.key)
+                            | toLocalTime | date: 'yyyy/MM/dd'
+                        }}
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'datetime'">
+                        {{
+                          getValue(dynamicDocument, column.key)
+                            | toLocalTime | date: 'yyyy/MM/dd hh:mm:ss'
+                        }}
+                      </ng-container>
+                      <ng-container *ngSwitchCase="'boolean'">
+                        {{
+                          getValue(dynamicDocument, column.key)
+                            | toZh: 'withEnglishBoolean'
+                        }}
+                      </ng-container>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              </clr-dg-cell>
+            </clr-dg-row>
+
+            <clr-dg-placeholder>
+              <p class="text-center mt-0">查無資料</p>
+              <p class="text-center mt-0 mb-1">No Data Available</p>
+            </clr-dg-placeholder>
+
+            <clr-dg-footer>
+              <clr-dg-pagination
+                *ngIf="paging != null"
+                #pagination
+                [clrDgPage]="paging.currentPage"
+                [clrDgPageSize]="dynamicDocumentParams.pageSize"
+                [clrDgTotalItems]="paging.totalItems"
+              >
+                <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50]">
+                  每頁顯示筆數
+                </clr-dg-page-size>
+                {{ pagination.firstItem + 1 }} -
+                {{ pagination.lastItem + 1 }} 之 {{ pagination.totalItems }} 筆
+              </clr-dg-pagination>
+            </clr-dg-footer>
+          </clr-datagrid>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <clr-modal
+    [(clrModalOpen)]="confirmDeleteModalOpen"
+    [clrModalClosable]="false"
+  >
+    <h3 class="modal-title">
+      刪除{{ title.zh }} Delete {{ title.en | titlecase }}
+    </h3>
+    <div class="modal-body">
+      <ng-container *ngIf="dynamicDocumentToDelete !== null">
+        <p class="my-1">
+          確定要刪除
+          <strong>{{ dynamicDocumentToDelete.title }}</strong
+          >?
+        </p>
+        <p class="mt-2 mb-1">
+          Are you sure you want to delete
+          <strong>{{ dynamicDocumentToDelete.title }}</strong
+          >?
+        </p>
+      </ng-container>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-primary-outline"
+        (click)="cancelDelete()"
+      >
+        取消 Cancel
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="onDelete(dynamicDocumentToDelete!.id)"
+      >
+        確認 Ok
+      </button>
+    </div>
+  </clr-modal>
+</ng-container>

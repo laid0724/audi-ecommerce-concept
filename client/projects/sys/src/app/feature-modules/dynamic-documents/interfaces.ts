@@ -17,10 +17,22 @@ export interface DynamicDocumentSettings {
     zh: string;
     en: string;
   };
+  datagridColumns: DynamicDocumentDatagridColumn[];
   form: DynamicDocumentFormSettings;
   hasFeaturedImage: boolean;
   saveOnly: boolean;
 }
+
+export interface DynamicDocumentDatagridColumn {
+  label: string;
+  key: string;
+  type: DynamicDocumentDatagridColumnType;
+  filter?: DynamicDocumentDatagridFilter;
+}
+
+export type DynamicDocumentDatagridColumnType = 'string' | 'boolean' | 'date' | 'datetime' | 'isVisible'
+
+export type DynamicDocumentDatagridFilter = 'title' | 'isVisible' | 'dateRange';
 
 export interface DynamicDocumentFormSettings {
   fields: DynamicDocumentFormField[];

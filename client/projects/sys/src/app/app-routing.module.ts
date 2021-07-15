@@ -67,6 +67,38 @@ const routes: Routes = [
                   zh: '新聞',
                   en: 'News',
                 },
+                datagridColumns: [
+                  {
+                    label: '標題 Title',
+                    key: 'title',
+                    type: 'string',
+                    filter: 'title',
+                  },
+                  {
+                    label: '顯示狀態 Visibility',
+                    key: 'isVisible',
+                    type: 'isVisible',
+                    filter: 'isVisible',
+                  },
+                  {
+                    label: '日期 Date',
+                    key: 'date',
+                    type: 'date',
+                    filter: 'dateRange',
+                  },
+                  {
+                    label: '建立日期 Created At',
+                    key: 'createdAt',
+                    type: 'date',
+                    filter: 'dateRange',
+                  },
+                  {
+                    label: '更新時間 Last Updated',
+                    key: 'lastUpdated',
+                    type: 'datetime',
+                    filter: 'dateRange',
+                  },
+                ],
                 form: {
                   fields: [
                     {
@@ -117,6 +149,38 @@ const routes: Routes = [
                   zh: '活動',
                   en: 'Event',
                 },
+                datagridColumns: [
+                  {
+                    label: '標題 Title',
+                    key: 'title',
+                    type: 'string',
+                    filter: 'title',
+                  },
+                  {
+                    label: '顯示狀態 Visibility',
+                    key: 'isVisible',
+                    type: 'isVisible',
+                    filter: 'isVisible',
+                  },
+                  {
+                    label: '日期 Date',
+                    key: 'date',
+                    type: 'date',
+                    filter: 'dateRange',
+                  },
+                  {
+                    label: '建立日期 Created At',
+                    key: 'createdAt',
+                    type: 'date',
+                    filter: 'dateRange',
+                  },
+                  {
+                    label: '更新時間 Last Updated',
+                    key: 'lastUpdated',
+                    type: 'datetime',
+                    filter: 'dateRange',
+                  },
+                ],
                 form: {
                   fields: [
                     {
