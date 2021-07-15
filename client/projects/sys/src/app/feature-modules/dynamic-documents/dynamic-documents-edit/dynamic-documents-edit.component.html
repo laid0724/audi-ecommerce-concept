@@ -147,7 +147,11 @@
           </ng-container>
 
           <clr-button-group class="me-0">
-            <clr-button type="button" class="btn-primary-outline"
+            <clr-button
+              *ngIf="!isFaq"
+              type="button"
+              class="btn-primary-outline"
+              [routerLink]="['/manage', dynamicDocumentType, 'list']"
               >取消 Cancel</clr-button
             >
             <clr-button

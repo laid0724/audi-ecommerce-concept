@@ -47,6 +47,10 @@ export const dynamicDocumentFormBuilderFn = (
       key
     ] as DynamicDocumentFormField;
 
+    if (fg.get('id') == null) {
+      fg.addControl('id', fb.control(null));
+    }
+
     if (field) {
       if (field.type === 'wysiwyg') {
         fg.addControl(
@@ -240,7 +244,10 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
                   }
                 }
 
-                this.form.patchValue(res);
+                this.form.patchValue({
+                  ...res,
+                  id: this.dynamicDocumentId,
+                });
 
                 if (
                   !isDynamicDocumentFaq(res) &&
