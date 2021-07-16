@@ -31,6 +31,8 @@ namespace Audi.Data
         public DbSet<ProductPhoto> ProductPhotos { get; set; }
         public DbSet<DynamicDocument> DynamicDocuments { get; set; }
         public DbSet<DynamicDocumentPhoto> DynamicDocumentPhotos { get; set; }
+        public DbSet<AppUserPhoto> AppUserPhotos { get; set; }
+        public DbSet<Order> Orders { get; set; } // TODO: relationships between products, open another branch for this when implementing order feature
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -48,6 +50,68 @@ namespace Audi.Data
                 .HasForeignKey(ur => ur.RoleId)
                 .IsRequired();
 
+            builder.Entity<AppUser>()
+                .Property<Address>(e => e.BillingAddress)
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    a => JsonConvert.SerializeObject(a),
+                    a => JsonConvert.DeserializeObject<Address>(a))
+                .HasDefaultValueSql("'{}'");
+
+            builder.Entity<AppUser>()
+                .Property<Address>(e => e.ShippingAddress)
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    a => JsonConvert.SerializeObject(a),
+                    a => JsonConvert.DeserializeObject<Address>(a))
+                .HasDefaultValueSql("'{}'");
+
+            builder.Entity<AppUser>()
+                .Property<CreditCard>(e => e.SavedCreditCard)
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    a => JsonConvert.SerializeObject(a),
+                    a => JsonConvert.DeserializeObject<CreditCard>(a))
+                .HasDefaultValueSql("'{}'");
+
+            // relationship for: AppUser <-> AppUserPhoto <-> Photo
+            builder.Entity<AppUser>()
+                .HasOne(e => e.UserImage)
+                .WithOne(e => e.User)
+                .HasForeignKey<AppUser>(e => e.UserImageId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<AppUserPhoto>()
+                .HasKey(e => new { e.UserId, e.PhotoId });
+
+            builder
+                .Entity<AppUserPhoto>()
+                .HasOne(e => e.User)
+                .WithOne(e => e.UserImage)
+                .HasForeignKey<AppUserPhoto>(e => e.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .Entity<AppUserPhoto>()
+                .HasOne(e => e.Photo)
+                .WithMany(e => e.AppUserPhotos)
+                .HasForeignKey(e => e.PhotoId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+            // relationship end
+
+            // relationship for 1 to many: AppUser to many Orders
+            builder.Entity<AppUser>()
+                .HasMany(u => u.Orders)
+                .WithOne(u => u.User)
+                .HasForeignKey(u => u.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+            // relationship end
+
+            // relationship for ProductCategory <-> ProductCategory <-> Product
             builder.Entity<ProductCategory>()
                 .HasMany(pc => pc.Children)
                 .WithOne(pc => pc.Parent)
@@ -61,6 +125,7 @@ namespace Audi.Data
                 .HasForeignKey(pc => pc.ProductCategoryId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+            // relationship end
 
             builder.Entity<Product>()
                 .HasMany(p => p.ProductPhotos)

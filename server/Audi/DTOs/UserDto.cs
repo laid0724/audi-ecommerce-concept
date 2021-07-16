@@ -1,6 +1,6 @@
 namespace Audi.DTOs
 {
-    // this is what is returned when a user has successfully registered
+    // this is what is returned when a user has successfully registered / logged in
     public class UserDto
     {
         public string UserName { get; set; }
