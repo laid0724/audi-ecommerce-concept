@@ -98,12 +98,8 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 
 - Statistics table and repo / controller
 - Order table and repo / controller
-** these need language property zh/en **
 - add photo property to product category
-- Photo table and repo / controller
-- Article table and repo / controller
 - Carousel table and repo / controller
-**
 - SignalR for live chat
 - users management
   - change pw, confirm email, disable acct, lockout, reset password, forget username etc.
@@ -112,12 +108,10 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 
 #### Sys
 - homepage banner module
-- news / event / announcement module
 - ngx charts for statistics
 - user management module
 - ng select control value accessor
 - live chat module with signalr
-- q & a management module
 - user complaints / forms module, bind this to email
 - user like product 1-to-M
 - add photo to product category
