@@ -10,6 +10,7 @@ using Audi.Extensions;
 using Audi.Helpers;
 using Audi.Interfaces;
 using Audi.Models;
+using Audi.Services;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Authorization;
@@ -19,7 +20,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using UGpa.Server.Services;
 
 namespace Audi.Controllers
 {
