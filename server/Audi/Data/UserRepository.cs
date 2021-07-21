@@ -34,36 +34,77 @@ namespace Audi.Data
             _context.Entry<AppUser>(user).State = EntityState.Modified;
         }
 
-        public async Task<MemberDto> GetMemberAsync(string username, bool? isCurrentUser)
-        {
-            var user = await _context.Users
-                .Include(u => u.UserRoles)
-                    .ThenInclude(r => r.Role)
-                .Include(u => u.UserImage)
-                    .ThenInclude(ui => ui.Photo)
-                .Include(u => u.Orders)
-                .Where(u => u.UserRoles.Any(r => r.Role.Name == "Member"))
-                .Where(e => e.UserName.ToLower().Trim() == username.ToLower().Trim())
-                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-                .FirstOrDefaultAsync();
-
-            return user;
-        }
-
-        public async Task<PagedList<MemberDto>> GetMembersAsync(PaginationParams paginationParams)
+        public async Task<MemberDto> GetUserBasedOnRoleAsync(int userId, string role)
         {
             var query = _context.Users
                 .Include(u => u.UserRoles)
                     .ThenInclude(r => r.Role)
                 .Include(u => u.UserImage)
                     .ThenInclude(ui => ui.Photo)
-                .Where(u => u.UserRoles.Any(r => r.Role.Name == "Member"))
+                .Include(u => u.Orders)
+                .Where(e => e.Id == userId)
                 .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(role))
+            {
+                query = query.Where(u => u.UserRoles.Any(r => r.Role.Name == role));
+            }
+
+            var user = await query
+                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+                .FirstOrDefaultAsync();
+
+            return user;
+        }
+
+        public async Task<PagedList<MemberDto>> GetUsersBasedOnRoleAsync(MemberParams memberParams, string role)
+        {
+            var query = _context.Users
+                .Include(u => u.UserRoles)
+                    .ThenInclude(r => r.Role)
+                .Include(u => u.UserImage)
+                    .ThenInclude(ui => ui.Photo)
+                .AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(role))
+            {
+                query = query.Where(u => u.UserRoles.Any(r => r.Role.Name == role));
+            }
+
+            if (!string.IsNullOrWhiteSpace(memberParams.FirstName))
+            {
+                query = query.Where(u => u.FirstName.ToLower().Trim().Contains(memberParams.FirstName.ToLower().Trim()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(memberParams.LastName))
+            {
+                query = query.Where(u => u.LastName.ToLower().Trim().Contains(memberParams.LastName.ToLower().Trim()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(memberParams.Email))
+            {
+                query = query.Where(u => u.Email.ToLower().Trim().Contains(memberParams.Email.ToLower().Trim()));
+            }
+
+            if (!string.IsNullOrWhiteSpace(memberParams.Gender))
+            {
+                query = query.Where(u => u.Gender.ToLower().Trim().Contains(memberParams.Gender.ToLower().Trim()));
+            }
+
+            if (memberParams.IsDisabled.HasValue)
+            {
+                query = query.Where(u => u.IsDisabled == memberParams.IsDisabled.Value);
+            }
+
+            if (memberParams.EmailConfirmed.HasValue)
+            {
+                query = query.Where(u => u.IsDisabled == memberParams.EmailConfirmed.Value);
+            }
 
             return await PagedList<MemberDto>.CreateAsync(
                 query.ProjectTo<MemberDto>(_mapper.ConfigurationProvider),
-                paginationParams.PageNumber,
-                paginationParams.PageSize
+                memberParams.PageNumber,
+                memberParams.PageSize
             );
         }
 

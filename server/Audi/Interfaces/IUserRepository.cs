@@ -16,7 +16,7 @@ namespace Audi.Interfaces
         Task<AppUser> GetUserByUserNameAsync(string username);
         Task<AppUser> GetUserByEmailAsync(string email);
         Task<string> GetUserGender(string username);
-        Task<PagedList<MemberDto>> GetMembersAsync(PaginationParams paginationParams);
-        Task<MemberDto> GetMemberAsync(string username, bool? isCurrentUser);
+        Task<PagedList<MemberDto>> GetUsersBasedOnRoleAsync(MemberParams memberParams, string role);
+        Task<MemberDto> GetUserBasedOnRoleAsync(int userId, string role);
     }
 }
