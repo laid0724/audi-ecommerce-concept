@@ -1,14 +1,60 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Roles } from '@audi/data';
-import { Observable, ReplaySubject } from 'rxjs';
 import { take, tap } from 'rxjs/operators';
-import { User } from '../models/users';
+import { Observable, ReplaySubject } from 'rxjs';
+import { Roles } from '../enums';
+import { User } from '../models/user';
+import { CreditCard } from '../models/credit-card';
+import { Address } from '../models/address';
+import { SensitiveUserData } from '../models/sensitive-user-data';
 
 interface UserCredential {
   userName: string;
   password: string;
+}
+
+interface RegisterRequest extends UserCredential, UserEmailBase {
+  firstName: string;
+  lastName: string;
+}
+
+interface UserEmailBase {
+  email: string;
+}
+
+interface UserIdBase {
+  userId: number;
+}
+
+interface UserTokenBase extends UserIdBase {
+  token: string;
+}
+
+interface RolesUpsert extends UserIdBase {
+  roles: Roles[];
+}
+
+interface CreditCardUpsert extends UserIdBase {
+  creditCard: CreditCard;
+}
+
+interface PersonalInfoUpsert extends UserIdBase {
+  firstName: string;
+  lastName: string;
+  gender: string;
+  phoneNumber: string;
+  address: Address;
+  dateOfBirth: string;
+}
+
+interface ResetPasswordRequest extends UserTokenBase {
+  newPassword: string;
+}
+
+interface ChangePasswordRequest extends UserIdBase {
+  currentPassword: string;
+  newPassword: string;
 }
 
 interface JwtToken {
@@ -45,16 +91,18 @@ export class AccountService {
     this.currentUserSource.next(user);
   }
 
-  register(userCredential: UserCredential): Observable<User> {
-    return this.http
-      .post<User>(`${this.endpoint}/register`, userCredential)
-      .pipe(
-        tap((user: User) => {
-          if (user) {
-            this.setCurrentUser(user);
-          }
-        })
-      );
+  register(request: RegisterRequest): Observable<User> {
+    return this.http.post<User>(`${this.endpoint}/register`, request).pipe(
+      tap((user: User) => {
+        if (user) {
+          this.setCurrentUser(user);
+        }
+      })
+    );
+  }
+
+  createModeratorAccount(request: RegisterRequest): Observable<User> {
+    return this.http.post<User>(`${this.endpoint}/create-moderator`, request);
   }
 
   login(userCredential: UserCredential): Observable<User> {
@@ -72,6 +120,75 @@ export class AccountService {
     localStorage.removeItem('user');
     this.currentUserSource.next(undefined);
     this.router.navigateByUrl('/');
+  }
+
+  changeUserRole(request: RolesUpsert): Observable<User> {
+    return this.http.patch<User>(`${this.endpoint}/assign-role`, request);
+  }
+
+  lockoutUser(userId: number): Observable<null> {
+    return this.http.patch<null>(`${this.endpoint}/lockout/${userId}`, null);
+  }
+
+  unlockUser(userId: number): Observable<null> {
+    return this.http.patch<null>(`${this.endpoint}/unlock/${userId}`, null);
+  }
+
+  disableUser(userId: number): Observable<null> {
+    return this.http.patch<null>(`${this.endpoint}/disable/${userId}`, null);
+  }
+
+  enableUser(userId: number): Observable<null> {
+    return this.http.patch<null>(`${this.endpoint}/enable/${userId}`, null);
+  }
+
+  updateUserPersonalInfo(
+    request: PersonalInfoUpsert
+  ): Observable<SensitiveUserData> {
+    return this.http.put<SensitiveUserData>(
+      `${this.endpoint}/update-personal-info`,
+      request
+    );
+  }
+
+  updateCreditCard(request: CreditCardUpsert): Observable<SensitiveUserData> {
+    return this.http.patch<SensitiveUserData>(
+      `${this.endpoint}/credit-card`,
+      request
+    );
+  }
+
+  deleteCreditCard(userId: number): Observable<SensitiveUserData> {
+    return this.http.delete<SensitiveUserData>(
+      `${this.endpoint}/credit-card/${userId}`
+    );
+  }
+
+  deleteUserImage(userId: number): Observable<null> {
+    return this.http.delete<null>(`${this.endpoint}/image/${userId}`);
+  }
+
+  confirmUserEmail(request: UserTokenBase): Observable<User> {
+    return this.http.post<User>(`${this.endpoint}/confirm-email`, request);
+  }
+
+  resendEmailConfirmationEmail(request: UserEmailBase): Observable<null> {
+    return this.http.post<null>(
+      `${this.endpoint}/resend-verification`,
+      request
+    );
+  }
+
+  resetUserPassword(request: ResetPasswordRequest): Observable<User> {
+    return this.http.post<User>(`${this.endpoint}/reset-password`, request);
+  }
+
+  changeUserPassword(request: ChangePasswordRequest): Observable<User> {
+    return this.http.post<User>(`${this.endpoint}/change-password`, request);
+  }
+
+  forgotPassword(request: UserEmailBase): Observable<null> {
+    return this.http.post<null>(`${this.endpoint}/forgot-password`, request);
   }
 
   getDecodedToken(token: string): JwtToken {

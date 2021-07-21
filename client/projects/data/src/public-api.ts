@@ -22,6 +22,7 @@ export * from './lib/models/dynamic-document';
 export * from './lib/models/dynamic-document-params';
 export * from './lib/models/dynamic-document-photo';
 export * from './lib/models/faq';
+export * from './lib/models/credit-card';
 
 // Enums
 export * from './lib/enums'

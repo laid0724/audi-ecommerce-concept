@@ -8,12 +8,10 @@ using Audi.DTOs;
 using Audi.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Audi.Data.Extensions;
 using Audi.Services.Mailer;
 using System.Text;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.AspNetCore.Http;
-using System.ComponentModel;
 using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.AspNetCore.Authorization;
 using Audi.Models;
@@ -65,12 +63,12 @@ namespace Audi.Controllers
                 public int UserId { get; set; }
             }
 
-            public class UserEmail
+            public class UserEmailBase
             {
                 public string Email { get; set; }
             }
 
-            public class UserToken : UserIdBase
+            public class UserTokenBase : UserIdBase
             {
                 public string Token { get; set; }
                 internal string DecodedTokenString
@@ -83,19 +81,19 @@ namespace Audi.Controllers
                 }
             }
 
-            public class ResetPassword : UserToken
+            public class ResetPasswordRequest : UserTokenBase
             {
                 public string NewPassword { get; set; }
             }
 
-            public class ChangePassword : UserIdBase
+            public class ChangePasswordRequest : UserIdBase
             {
 
                 public string CurrentPassword { get; set; }
                 public string NewPassword { get; set; }
             }
 
-            public class ChangeRoles : UserIdBase
+            public class RolesUpsert : UserIdBase
             {
                 // Admin, Moderator, Member
                 public string[] Roles { get; set; }
@@ -119,8 +117,8 @@ namespace Audi.Controllers
 
         [SwaggerOperation(Summary = "change user role")]
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpPut("assign-role")]
-        public async Task<ActionResult<UserDto>> AssignUserRole([FromBody] Requests.ChangeRoles request)
+        [HttpPatch("assign-role")]
+        public async Task<ActionResult<UserDto>> AssignUserRole([FromBody] Requests.RolesUpsert request)
         {
             if (
                 request.Roles.Count() < 1 ||
@@ -307,7 +305,7 @@ namespace Audi.Controllers
 
         [SwaggerOperation(Summary = "disable user")]
         [Authorize(Policy = "RequireAdminRole")]
-        [HttpDelete("disable/{userId}")]
+        [HttpPatch("disable/{userId}")]
         public async Task<ActionResult> DisableUser(int userId)
         {
             var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == userId);
@@ -340,7 +338,7 @@ namespace Audi.Controllers
         }
 
         [SwaggerOperation(Summary = "update user personal info")]
-        [HttpPost("update-personal-info")]
+        [HttpPut("update-personal-info")]
         public async Task<ActionResult<SensitiveUserDataDto>> UpdatePersonalInfo([FromBody] Requests.PersonalInfoUpsert request)
         {
             var user = await _userManager.Users
@@ -417,7 +415,7 @@ namespace Audi.Controllers
 
         [SwaggerOperation(Summary = "confirm user email")]
         [HttpPost("confirm-email")]
-        public async Task<ActionResult<UserDto>> ConfirmEmail([FromBody] Requests.UserToken request)
+        public async Task<ActionResult<UserDto>> ConfirmEmail([FromBody] Requests.UserTokenBase request)
         {
             var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == request.UserId);
 
@@ -442,7 +440,7 @@ namespace Audi.Controllers
 
         [SwaggerOperation(Summary = "reset user password")]
         [HttpPost("reset-password")]
-        public async Task<ActionResult<UserDto>> ResetPassword([FromBody] Requests.ResetPassword request)
+        public async Task<ActionResult<UserDto>> ResetPassword([FromBody] Requests.ResetPasswordRequest request)
         {
             var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == request.UserId);
 
@@ -467,7 +465,7 @@ namespace Audi.Controllers
 
         [SwaggerOperation(Summary = "change user password")]
         [HttpPost("change-password")]
-        public async Task<ActionResult<UserDto>> ChangePassword([FromBody] Requests.ChangePassword request)
+        public async Task<ActionResult<UserDto>> ChangePassword([FromBody] Requests.ChangePasswordRequest request)
         {
             var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == request.UserId);
 
@@ -492,7 +490,7 @@ namespace Audi.Controllers
 
         [SwaggerOperation(Summary = "send password reset email to user")]
         [HttpPost("forgot-password")]
-        public async Task<ActionResult> ForgotPassword([FromBody] Requests.UserEmail request)
+        public async Task<ActionResult> ForgotPassword([FromBody] Requests.UserEmailBase request)
         {
             if (string.IsNullOrWhiteSpace(request.Email)) return BadRequest("email_invalid");
 
@@ -501,7 +499,7 @@ namespace Audi.Controllers
 
         [SwaggerOperation(Summary = "resent email confirmation email to user")]
         [HttpPost("resend-verification")]
-        public async Task<ActionResult> ResendVerificationEmail([FromBody] Requests.UserEmail request)
+        public async Task<ActionResult> ResendVerificationEmail([FromBody] Requests.UserEmailBase request)
         {
             if (string.IsNullOrWhiteSpace(request.Email)) return BadRequest("email_invalid");
 
@@ -555,6 +553,8 @@ namespace Audi.Controllers
             var user = await _userManager.FindByEmailAsync(normalizedEmail);
 
             if (user == null) return NotFound("email not found");
+
+            if (await _userManager.IsEmailConfirmedAsync(user)) return BadRequest("email_verified");
 
             var isAdmin = await _userManager.IsInRoleAsync(user, "Admin");
             var isModerator = await _userManager.IsInRoleAsync(user, "Moderator");

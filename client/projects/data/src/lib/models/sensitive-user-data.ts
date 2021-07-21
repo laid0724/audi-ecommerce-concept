@@ -1,7 +1,7 @@
 import { Address } from './address';
 import { UserPhoto } from './user-photo';
 
-export interface SensitiveUserDataDto {
+export interface SensitiveUserData {
   userName: string;
   email: string;
   firstName: string;
