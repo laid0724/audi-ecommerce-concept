@@ -22,11 +22,26 @@ namespace Audi.Data
             _context = context;
         }
 
+        public void Disable(AppUser user)
+        {
+            user.IsDisabled = true;
+            _context.Entry<AppUser>(user).State = EntityState.Modified;
+        }
+
+        public void Enable(AppUser user)
+        {
+            user.IsDisabled = false;
+            _context.Entry<AppUser>(user).State = EntityState.Modified;
+        }
+
         public async Task<MemberDto> GetMemberAsync(string username, bool? isCurrentUser)
         {
             var user = await _context.Users
                 .Include(u => u.UserRoles)
                     .ThenInclude(r => r.Role)
+                .Include(u => u.UserImage)
+                    .ThenInclude(ui => ui.Photo)
+                .Include(u => u.Orders)
                 .Where(u => u.UserRoles.Any(r => r.Role.Name == "Member"))
                 .Where(e => e.UserName.ToLower().Trim() == username.ToLower().Trim())
                 .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
@@ -40,6 +55,8 @@ namespace Audi.Data
             var query = _context.Users
                 .Include(u => u.UserRoles)
                     .ThenInclude(r => r.Role)
+                .Include(u => u.UserImage)
+                    .ThenInclude(ui => ui.Photo)
                 .Where(u => u.UserRoles.Any(r => r.Role.Name == "Member"))
                 .AsQueryable();
 
@@ -48,6 +65,11 @@ namespace Audi.Data
                 paginationParams.PageNumber,
                 paginationParams.PageSize
             );
+        }
+
+        public async Task<AppUser> GetUserByEmailAsync(string email)
+        {
+            return await _context.Users.SingleOrDefaultAsync(e => e.Email.ToLower().Trim() == email.ToLower().Trim());
         }
 
         public async Task<AppUser> GetUserByIdAsync(int id)

@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Audi.Data.Extensions;
 using Audi.Interfaces;
 using Audi.Helpers;
+using System;
 
 namespace Audi.Data
 {
@@ -29,6 +30,20 @@ namespace Audi.Data
                 await roleManager.CreateAsync(role);
             }
 
+            var adminDefaultPassword = config.GetValue<string>("SeederConfig:AdminPassword");
+
+            var admin = new AppUser
+            {
+                UserName = "admin",
+                FirstName = "Admin",
+                Email = "admin@audi.com.tw",
+                LockoutEnabled = true,
+                EmailConfirmed = true,
+            };
+
+            await userManager.CreateAsync(admin, adminDefaultPassword);
+            await userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" });
+
             var userDefaultPassword = config.GetValue<string>("SeederConfig:UserPassword");
             var userData = await System.IO.File.ReadAllTextAsync("Data/UserSeedData.json"); // read seed data
             var users = JsonSerializer.Deserialize<List<AppUser>>(userData); // converts the json to c# objects
@@ -49,18 +64,6 @@ namespace Audi.Data
                     await userManager.AddToRoleAsync(user, "Member");
                 }
             }
-
-            var adminDefaultPassword = config.GetValue<string>("SeederConfig:AdminPassword");
-
-            var admin = new AppUser
-            {
-                UserName = "admin",
-                FirstName = "Admin",
-                Email = "admin@audi.com.tw"
-            };
-
-            await userManager.CreateAsync(admin, adminDefaultPassword);
-            await userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" });
         }
 
         public static async Task SeedFaq(IUnitOfWork unitOfWork)

@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Audi.Services.Mailer;
+using Microsoft.AspNetCore.Http;
 
 namespace Audi.Extensions
 {
@@ -23,6 +24,8 @@ namespace Audi.Extensions
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<LogUserActivity>();
             services.AddScoped<IHtmlProcessor, HtmlProcessor>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
             services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly); // add Automapper and tell it where to find mapping profiles
 
             services.AddSingleton<IEmailConfiguration>(

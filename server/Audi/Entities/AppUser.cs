@@ -19,11 +19,11 @@ namespace Audi.Entities
         [PersonalData]
         public string Gender { get; set; }
         [ProtectedPersonalData]
-        public Address BillingAddress { get; set; }
+        public Address Address { get; set; }
         [ProtectedPersonalData]
-        public Address ShippingAddress { get; set; }
+        public string SavedCreditCardLast4Digit { get; set; }
         [ProtectedPersonalData]
-        public CreditCard SavedCreditCard { get; set; }
+        public string SavedCreditCardType { get; set; } // Visa, MasterCard, AmericanExpress, etc
         [PersonalData]
         public DateTime DateOfBirth { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

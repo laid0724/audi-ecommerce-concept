@@ -30,13 +30,6 @@ namespace Audi
             services.AddIdentityServices(_config);
             services.AddControllers();
 
-            services.AddAntiforgery(options =>
-            {
-                options.Cookie.Name = "AntiforgeryCookie";
-                options.Cookie.Path = "/";
-                options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
-            });
-
             // Enable Swagger with Bearer Authentication
             // see: https://www.c-sharpcorner.com/article/authentication-authorization-using-net-core-web-api-using-jwt-token-and/
             services.AddSwaggerGen(swagger =>

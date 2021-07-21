@@ -7,5 +7,7 @@ namespace Audi.DTOs
         public string Email { get; set; }
         public string Token { get; set; }
         public string[] Roles { get; set; }
+        public bool IsDisabled { get; set; }
+        public bool EmailConfirmed { get; set; }
     }
 }

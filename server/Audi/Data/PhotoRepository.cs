@@ -35,6 +35,11 @@ namespace Audi.Data
             _context.ProductPhotos.Add(productPhoto);
         }
 
+        public void AddUserPhoto(AppUserPhoto appUserPhoto)
+        {
+            _context.AppUserPhotos.Add(appUserPhoto);
+        }
+
         public void DeleteDynamicDocumentPhoto(DynamicDocumentPhoto dynamicDocumentPhoto)
         {
             _context.DynamicDocumentPhotos.Remove(dynamicDocumentPhoto);
@@ -48,6 +53,11 @@ namespace Audi.Data
         public void DeleteProductPhoto(ProductPhoto productPhoto)
         {
             _context.ProductPhotos.Remove(productPhoto);
+        }
+
+        public void DeleteUserPhoto(AppUserPhoto appUserPhoto)
+        {
+            _context.AppUserPhotos.Remove(appUserPhoto);
         }
 
         public async Task<ProductPhotoDto> GetProductPhotoByIdAsync(int productPhotoId)
