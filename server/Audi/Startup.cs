@@ -3,6 +3,7 @@ using Audi.Extensions;
 using Audi.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,10 +30,18 @@ namespace Audi
             services.AddIdentityServices(_config);
             services.AddControllers();
 
+            services.AddAntiforgery(options =>
+            {
+                options.Cookie.Name = "AntiforgeryCookie";
+                options.Cookie.Path = "/";
+                options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+            });
+
             // Enable Swagger with Bearer Authentication
             // see: https://www.c-sharpcorner.com/article/authentication-authorization-using-net-core-web-api-using-jwt-token-and/
             services.AddSwaggerGen(swagger =>
             {
+                swagger.EnableAnnotations();
                 //This is to generate the Default UI of Swagger Documentation  
                 swagger.SwaggerDoc("v1", new OpenApiInfo
                 {
@@ -91,7 +100,7 @@ namespace Audi
                     .WithOrigins("http://localhost:4200")
                     .WithOrigins("http://localhost:4201")
             );
-            
+
             app.UseAuthentication();
             app.UseAuthorization();
 

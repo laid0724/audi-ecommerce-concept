@@ -20,6 +20,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Audi.Controllers
 {
@@ -40,7 +41,7 @@ namespace Audi.Controllers
 
         // faqs
 
-        [Description("get faq")]
+        [SwaggerOperation(Summary = "get faq")]
         [HttpGet("faq")]
         public async Task<ActionResult<FaqDto>> GetFaq([FromQuery] DynamicDocumentParams dynamicDocumentParams, [FromHeader(Name = "X-LANGUAGE")] string language)
         {
@@ -57,7 +58,7 @@ namespace Audi.Controllers
             return Ok(_mapper.Map<FaqDto>(faq));
         }
 
-        [Description("update faq")]
+        [SwaggerOperation(Summary = "update faq")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPut("faq")]
         public async Task<ActionResult<FaqDto>> UpdateFaq([FromBody] FaqUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language, [FromServices] IHtmlProcessor htmlProcessor)
@@ -90,7 +91,7 @@ namespace Audi.Controllers
             return await UpsertDynamicDocument<FaqDto>(dynamicDocumentUpsertRequest, htmlProcessor);
         }
 
-        [Description("add featured image to faqs")]
+        [SwaggerOperation(Summary = "add featured image to faqs")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("faq/{dynamicDocumentId}/featured-image")]
         public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToFaq(int dynamicDocumentId, IFormFile file)
@@ -98,7 +99,7 @@ namespace Audi.Controllers
             return await AddFeaturedImage(dynamicDocumentId, file);
         }
 
-        [Description("delete featured image from faq")]
+        [SwaggerOperation(Summary = "delete featured image from faq")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("faq/{dynamicDocumentId}/featured-image")]
         public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToFaq(int dynamicDocumentId)
@@ -108,14 +109,14 @@ namespace Audi.Controllers
 
         // events
 
-        [Description("get one event")]
+        [SwaggerOperation(Summary = "get one event")]
         [HttpGet("events/{eventId}")]
         public async Task<ActionResult<EventDto>> GetEvent(int eventId)
         {
             return await GetDynamicDocument<EventDto>(eventId);
         }
 
-        [Description("get events")]
+        [SwaggerOperation(Summary = "get events")]
         [HttpGet("events")]
         public async Task<ActionResult<PagedList<EventDto>>> GetEvent([FromQuery] DynamicDocumentParams dynamicDocumentParams, [FromHeader(Name = "X-LANGUAGE")] string language)
         {
@@ -126,7 +127,7 @@ namespace Audi.Controllers
             return await GetDynamicDocuments<EventDto>(dynamicDocumentParams);
         }
 
-        [Description("add event")]
+        [SwaggerOperation(Summary = "add event")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("events")]
         public async Task<ActionResult<EventDto>> AddEvent([FromBody] DynamicDocumentUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language, [FromServices] IHtmlProcessor htmlProcessor)
@@ -139,7 +140,7 @@ namespace Audi.Controllers
             return await UpsertDynamicDocument<EventDto>(request, htmlProcessor);
         }
 
-        [Description("update event")]
+        [SwaggerOperation(Summary = "update event")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPut("events")]
         public async Task<ActionResult<EventDto>> UpdateEvent([FromBody] DynamicDocumentUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language, [FromServices] IHtmlProcessor htmlProcessor)
@@ -153,7 +154,7 @@ namespace Audi.Controllers
             return await UpsertDynamicDocument<EventDto>(request, htmlProcessor);
         }
 
-        [Description("delete event")]
+        [SwaggerOperation(Summary = "delete event")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("events/{eventId}")]
         public async Task<ActionResult> DeleteEvent(int eventId)
@@ -161,7 +162,7 @@ namespace Audi.Controllers
             return await DeleteDynamicDocument(eventId);
         }
 
-        [Description("add featured image to event")]
+        [SwaggerOperation(Summary = "add featured image to event")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("events/{eventId}/featured-image")]
         public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToEvent(int eventId, IFormFile file)
@@ -169,7 +170,7 @@ namespace Audi.Controllers
             return await AddFeaturedImage(eventId, file);
         }
 
-        [Description("delete featured image from event")]
+        [SwaggerOperation(Summary = "delete featured image from event")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("events/{eventId}/featured-image")]
         public async Task<ActionResult> AddFeaturedImageToEvent(int eventId)
@@ -179,14 +180,14 @@ namespace Audi.Controllers
 
         // news
 
-        [Description("get one news")]
+        [SwaggerOperation(Summary = "get one news")]
         [HttpGet("news/{newsId}")]
         public async Task<ActionResult<NewsDto>> GetNews(int newsId)
         {
             return await GetDynamicDocument<NewsDto>(newsId);
         }
 
-        [Description("get news")]
+        [SwaggerOperation(Summary = "get news")]
         [HttpGet("news")]
         public async Task<ActionResult<PagedList<NewsDto>>> GetNews([FromQuery] DynamicDocumentParams dynamicDocumentParams, [FromHeader(Name = "X-LANGUAGE")] string language)
         {
@@ -197,7 +198,7 @@ namespace Audi.Controllers
             return await GetDynamicDocuments<NewsDto>(dynamicDocumentParams);
         }
 
-        [Description("add news")]
+        [SwaggerOperation(Summary = "add news")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("news")]
         public async Task<ActionResult<NewsDto>> AddNews([FromBody] DynamicDocumentUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language, [FromServices] IHtmlProcessor htmlProcessor)
@@ -210,7 +211,7 @@ namespace Audi.Controllers
             return await UpsertDynamicDocument<NewsDto>(request, htmlProcessor);
         }
 
-        [Description("update news")]
+        [SwaggerOperation(Summary = "update news")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPut("news")]
         public async Task<ActionResult<NewsDto>> UpdateNews([FromBody] DynamicDocumentUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language, [FromServices] IHtmlProcessor htmlProcessor)
@@ -224,7 +225,7 @@ namespace Audi.Controllers
             return await UpsertDynamicDocument<NewsDto>(request, htmlProcessor);
         }
 
-        [Description("delete news")]
+        [SwaggerOperation(Summary = "delete news")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("news/{newsId}")]
         public async Task<ActionResult> DeleteNews(int newsId)
@@ -232,7 +233,7 @@ namespace Audi.Controllers
             return await DeleteDynamicDocument(newsId);
         }
 
-        [Description("add featured image to news")]
+        [SwaggerOperation(Summary = "add featured image to news")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("news/{newsId}/featured-image")]
         public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToNews(int newsId, IFormFile file)
@@ -240,7 +241,7 @@ namespace Audi.Controllers
             return await AddFeaturedImage(newsId, file);
         }
 
-        [Description("delete featured image from news")]
+        [SwaggerOperation(Summary = "delete featured image from news")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("news/{newsId}/featured-image")]
         public async Task<ActionResult> AddFeaturedImageToNews(int newsId)
