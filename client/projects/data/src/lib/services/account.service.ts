@@ -172,6 +172,13 @@ export class AccountService {
     return this.http.post<User>(`${this.endpoint}/confirm-email`, request);
   }
 
+  forceConfirmUserEmail(request: UserIdBase): Observable<User> {
+    return this.http.post<User>(
+      `${this.endpoint}/force-confirm-email`,
+      request
+    );
+  }
+
   resendEmailConfirmationEmail(request: UserEmailBase): Observable<null> {
     return this.http.post<null>(
       `${this.endpoint}/resend-verification`,

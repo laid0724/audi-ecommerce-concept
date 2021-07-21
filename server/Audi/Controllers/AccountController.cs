@@ -421,7 +421,38 @@ namespace Audi.Controllers
 
             if (user == null) return NotFound("user_not_found");
 
+            if (await _userManager.IsEmailConfirmedAsync(user)) return BadRequest("email_verified");
+
             var result = await _userManager.ConfirmEmailAsync(user, request.DecodedTokenString);
+
+            if (!result.Succeeded) return Unauthorized();
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+
+            return Ok(new UserDto
+            {
+                UserName = user.UserName,
+                Email = user.Email,
+                Roles = userRoles.Select(r => r.ToString()).ToArray(),
+                Token = await _tokenService.CreateToken(user),
+                IsDisabled = user.IsDisabled,
+                EmailConfirmed = user.EmailConfirmed,
+            });
+        }
+
+        [SwaggerOperation(Summary = "force confirm user email")]
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpPost("force-confirm-email")]
+        public async Task<ActionResult<UserDto>> ForceConfirmEmail([FromBody] Requests.UserIdBase request)
+        {
+            var user = await _userManager.Users.SingleOrDefaultAsync(u => u.Id == request.UserId);
+
+            if (user == null) return NotFound("user_not_found");
+
+            if (await _userManager.IsEmailConfirmedAsync(user)) return BadRequest("email_verified");
+
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            var result = await _userManager.ConfirmEmailAsync(user, token);
 
             if (!result.Succeeded) return Unauthorized();
 
