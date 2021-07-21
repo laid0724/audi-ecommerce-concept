@@ -8,7 +8,7 @@ namespace server.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "billing_address",
+                name: "address",
                 table: "idt_users",
                 type: "jsonb",
                 nullable: true,
@@ -22,18 +22,16 @@ namespace server.Data.Migrations
                 defaultValue: false);
 
             migrationBuilder.AddColumn<string>(
-                name: "saved_credit_card",
+                name: "saved_credit_card_last4_digit",
                 table: "idt_users",
-                type: "jsonb",
-                nullable: true,
-                defaultValueSql: "'{}'");
+                type: "text",
+                nullable: true);
 
             migrationBuilder.AddColumn<string>(
-                name: "shipping_address",
+                name: "saved_credit_card_type",
                 table: "idt_users",
-                type: "jsonb",
-                nullable: true,
-                defaultValueSql: "'{}'");
+                type: "text",
+                nullable: true);
 
             migrationBuilder.AddColumn<int>(
                 name: "user_image_id",
@@ -71,7 +69,11 @@ namespace server.Data.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    user_id = table.Column<int>(type: "integer", nullable: false)
+                    user_id = table.Column<int>(type: "integer", nullable: false),
+                    billing_address = table.Column<string>(type: "jsonb", nullable: true, defaultValueSql: "'{}'"),
+                    shipping_address = table.Column<string>(type: "jsonb", nullable: true, defaultValueSql: "'{}'"),
+                    credit_card_last4_digit = table.Column<string>(type: "text", nullable: true),
+                    credit_card_type = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -110,7 +112,7 @@ namespace server.Data.Migrations
                 name: "orders");
 
             migrationBuilder.DropColumn(
-                name: "billing_address",
+                name: "address",
                 table: "idt_users");
 
             migrationBuilder.DropColumn(
@@ -118,11 +120,11 @@ namespace server.Data.Migrations
                 table: "idt_users");
 
             migrationBuilder.DropColumn(
-                name: "saved_credit_card",
+                name: "saved_credit_card_last4_digit",
                 table: "idt_users");
 
             migrationBuilder.DropColumn(
-                name: "shipping_address",
+                name: "saved_credit_card_type",
                 table: "idt_users");
 
             migrationBuilder.DropColumn(

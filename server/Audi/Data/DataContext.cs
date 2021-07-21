@@ -51,27 +51,11 @@ namespace Audi.Data
                 .IsRequired();
 
             builder.Entity<AppUser>()
-                .Property<Address>(e => e.BillingAddress)
+                .Property<Address>(e => e.Address)
                 .HasColumnType("jsonb")
                 .HasConversion(
                     a => JsonConvert.SerializeObject(a),
                     a => JsonConvert.DeserializeObject<Address>(a))
-                .HasDefaultValueSql("'{}'");
-
-            builder.Entity<AppUser>()
-                .Property<Address>(e => e.ShippingAddress)
-                .HasColumnType("jsonb")
-                .HasConversion(
-                    a => JsonConvert.SerializeObject(a),
-                    a => JsonConvert.DeserializeObject<Address>(a))
-                .HasDefaultValueSql("'{}'");
-
-            builder.Entity<AppUser>()
-                .Property<CreditCard>(e => e.SavedCreditCard)
-                .HasColumnType("jsonb")
-                .HasConversion(
-                    a => JsonConvert.SerializeObject(a),
-                    a => JsonConvert.DeserializeObject<CreditCard>(a))
                 .HasDefaultValueSql("'{}'");
 
             // relationship for: AppUser <-> AppUserPhoto <-> Photo
@@ -224,6 +208,22 @@ namespace Audi.Data
                 .HasForeignKey(pvv => new { pvv.ProductId, pvv.VariantId });
 
             // relationship end
+
+            builder.Entity<Order>()
+                .Property<Address>(e => e.BillingAddress)
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    a => JsonConvert.SerializeObject(a),
+                    a => JsonConvert.DeserializeObject<Address>(a))
+                .HasDefaultValueSql("'{}'");
+
+            builder.Entity<Order>()
+                .Property<Address>(e => e.ShippingAddress)
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    a => JsonConvert.SerializeObject(a),
+                    a => JsonConvert.DeserializeObject<Address>(a))
+                .HasDefaultValueSql("'{}'");
 
             // relationship for: Product <-> ProductPhoto <-> Photo
             builder.Entity<ProductPhoto>()

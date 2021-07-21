@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace server.Data.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210716045518_UpdateAppUserForOrder")]
+    [Migration("20210721100330_UpdateAppUserForOrder")]
     partial class UpdateAppUserForOrder
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,10 +66,10 @@ namespace server.Data.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("access_failed_count");
 
-                    b.Property<string>("BillingAddress")
+                    b.Property<string>("Address")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("jsonb")
-                        .HasColumnName("billing_address")
+                        .HasColumnName("address")
                         .HasDefaultValueSql("'{}'");
 
                     b.Property<string>("ConcurrencyStamp")
@@ -144,21 +144,17 @@ namespace server.Data.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("phone_number_confirmed");
 
-                    b.Property<string>("SavedCreditCard")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("jsonb")
-                        .HasColumnName("saved_credit_card")
-                        .HasDefaultValueSql("'{}'");
+                    b.Property<string>("SavedCreditCardLast4Digit")
+                        .HasColumnType("text")
+                        .HasColumnName("saved_credit_card_last4_digit");
+
+                    b.Property<string>("SavedCreditCardType")
+                        .HasColumnType("text")
+                        .HasColumnName("saved_credit_card_type");
 
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text")
                         .HasColumnName("security_stamp");
-
-                    b.Property<string>("ShippingAddress")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("jsonb")
-                        .HasColumnName("shipping_address")
-                        .HasDefaultValueSql("'{}'");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean")
@@ -321,6 +317,26 @@ namespace server.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid")
                         .HasColumnName("id");
+
+                    b.Property<string>("BillingAddress")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("billing_address")
+                        .HasDefaultValueSql("'{}'");
+
+                    b.Property<string>("CreditCardLast4Digit")
+                        .HasColumnType("text")
+                        .HasColumnName("credit_card_last4_digit");
+
+                    b.Property<string>("CreditCardType")
+                        .HasColumnType("text")
+                        .HasColumnName("credit_card_type");
+
+                    b.Property<string>("ShippingAddress")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("shipping_address")
+                        .HasDefaultValueSql("'{}'");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer")
