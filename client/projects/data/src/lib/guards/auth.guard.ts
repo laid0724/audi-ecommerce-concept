@@ -3,7 +3,7 @@ import { CanActivate, Router, UrlTree } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
-import { User } from '../models/users';
+import { User } from '../models/user';
 import { AccountService } from '../services/account.service';
 
 @Injectable({

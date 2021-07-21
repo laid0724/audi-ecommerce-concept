@@ -14,7 +14,7 @@ namespace Audi.DTOs
         public string LastName { get; set; }
         public bool IsDisabled { get; set; }
         public bool EmailConfirmed { get; set; }
-        public DateTime Created { get; set; }
+        public DateTime CreatedAt { get; set; }
         public DateTime LastActive { get; set; }
         public UserPhotoDto UserImage { get; set; }
         // TODO: change this to order dto

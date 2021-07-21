@@ -4,4 +4,6 @@ export interface User {
   token: string;
   email: string;
   roles: Roles[];
+  isDisabled: boolean;
+  emailConfirmed: boolean;
 }

@@ -4,7 +4,11 @@
 
 // Models
 export * from './lib/models/pagination';
-export * from './lib/models/users';
+export * from './lib/models/user';
+export * from './lib/models/user-photo';
+export * from './lib/models/sensitive-user-data';
+export * from './lib/models/member';
+export * from './lib/models/member-params';
 export * from './lib/models/product-category-params';
 export * from './lib/models/product-category';
 export * from './lib/models/product-photo';
@@ -12,6 +16,7 @@ export * from './lib/models/product-params';
 export * from './lib/models/product-variant';
 export * from './lib/models/product-variant-value';
 export * from './lib/models/product';
+export * from './lib/models/order';
 export * from './lib/models/wysiwyg';
 export * from './lib/models/dynamic-document';
 export * from './lib/models/dynamic-document-params';
@@ -23,6 +28,7 @@ export * from './lib/enums'
 
 // Services
 export * from './lib/services/account.service'
+export * from './lib/services/members.service'
 export * from './lib/services/busy.service'
 export * from './lib/services/language-state.service'
 export * from './lib/services/products.service'

@@ -4,7 +4,7 @@ import { Roles } from '@audi/data';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { User } from '../models/users';
+import { User } from '../models/user';
 import { AccountService } from '../services/account.service';
 
 @Injectable({
