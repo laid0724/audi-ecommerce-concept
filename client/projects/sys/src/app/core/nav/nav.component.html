@@ -8,7 +8,7 @@
     <div class="header-actions">
       <clr-dropdown>
         <button class="nav-text" clrDropdownTrigger>
-          <ng-container *ngIf="user$ | async; let user">
+          <ng-container *ngIf="user">
             {{ user.email }}
           </ng-container>
           <clr-icon
@@ -19,8 +19,8 @@
           ></clr-icon>
         </button>
         <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-          <a clrDropdownItem>
-            更改密碼 Change Password <span style="color: red">(TODO)</span></a
+          <a clrDropdownItem (click)="changePwModalOpen = true">
+            更改密碼 Change Password</a
           >
           <a clrDropdownItem (click)="logout()">登出 Logout</a>
         </clr-dropdown-menu>
@@ -126,7 +126,11 @@
         <clr-icon clrVerticalNavIcon shape="help-info"></clr-icon>
         疑難雜症 FAQs
         <clr-vertical-nav-group-children *clrIfExpanded="false">
-          <a clrVerticalNavLink routerLink="/manage/faq" routerLinkActive="active">
+          <a
+            clrVerticalNavLink
+            routerLink="/manage/faq"
+            routerLinkActive="active"
+          >
             編輯 Edit
           </a>
         </clr-vertical-nav-group-children>
@@ -152,3 +156,68 @@
     </clr-vertical-nav>
   </div>
 </div>
+
+<clr-modal [(clrModalOpen)]="changePwModalOpen" [clrModalClosable]="false">
+  <h3 class="modal-title">更改密碼 Change Password</h3>
+  <div class="modal-body" *ngIf="changePwForm">
+    <form clrForm [formGroup]="changePwForm" clrLayout="vertical">
+      <clr-password-container class="mt-0">
+        <label>目前密碼 Current Password</label>
+        <input type="password" clrPassword formControlName="currentPassword" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+        <clr-control-error *clrIfError="'minlength'"
+          >密碼需至少8位數 Password must be at least 8
+          characters</clr-control-error
+        >
+      </clr-password-container>
+      <clr-password-container>
+        <label>新密碼 New Password</label>
+        <input type="password" clrPassword formControlName="newPassword" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+        <clr-control-error *clrIfError="'minlength'"
+          >密碼需至少8位數 Password must be at least 8
+          characters</clr-control-error
+        >
+      </clr-password-container>
+      <clr-password-container>
+        <label>確認新密碼 Confirm New Password</label>
+        <input
+          type="password"
+          clrPassword
+          formControlName="confirmNewPassword"
+        />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+        <clr-control-error *clrIfError="'minlength'"
+          >密碼需至少8位數 Password must be at least 8
+          characters</clr-control-error
+        >
+        <clr-control-error *clrIfError="'isNotSameValue'"
+          >與新密碼不符 Passwords do not match</clr-control-error
+        >
+      </clr-password-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary-outline"
+      (click)="changePwModalOpen = false"
+    >
+      取消 Cancel
+    </button>
+    <button
+      [clrLoading]="changePwBtnState"
+      type="button"
+      class="btn btn-primary"
+      (click)="submitChangePw()"
+    >
+      確認 Ok
+    </button>
+  </div>
+</clr-modal>

@@ -140,6 +140,7 @@ namespace Audi.Controllers
 
             return Ok(new UserDto
             {
+                Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
@@ -187,6 +188,7 @@ namespace Audi.Controllers
 
             return Ok(new UserDto
             {
+                Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
@@ -230,6 +232,7 @@ namespace Audi.Controllers
 
             return Ok(new UserDto
             {
+                Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
@@ -265,6 +268,7 @@ namespace Audi.Controllers
 
             return Ok(new UserDto
             {
+                Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
@@ -431,6 +435,7 @@ namespace Audi.Controllers
 
             return Ok(new UserDto
             {
+                Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
@@ -460,6 +465,7 @@ namespace Audi.Controllers
 
             return Ok(new UserDto
             {
+                Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
@@ -485,6 +491,7 @@ namespace Audi.Controllers
 
             return Ok(new UserDto
             {
+                Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
@@ -510,6 +517,7 @@ namespace Audi.Controllers
 
             return Ok(new UserDto
             {
+                Id = user.Id,
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
