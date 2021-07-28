@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { LanguageCode } from '@audi/data';
+import { Gender, LanguageCode } from '../enums';
 
 @Pipe({
   name: 'toZh',
@@ -39,6 +39,17 @@ export class ToZhPipe implements PipeTransform {
       }
     }
 
+    if (type === 'genderWithEn') {
+      switch (value) {
+        case Gender.Male:
+          return '男 Male';
+        case Gender.Female:
+          return '女 Female';
+        case Gender.Other:
+          return '其他 Other';
+      }
+    }
+
     switch (value) {
       case null || undefined || '':
         return '';
@@ -47,10 +58,12 @@ export class ToZhPipe implements PipeTransform {
       case LanguageCode.En:
         return '英文';
 
-      // case Gender.Male:
-      //   return '男';
-      // case Gender.Female:
-      //   return '女';
+      case Gender.Male:
+        return '男';
+      case Gender.Female:
+        return '女';
+      case Gender.Other:
+        return '其他';
 
       case true:
         return '是';

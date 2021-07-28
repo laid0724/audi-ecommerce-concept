@@ -142,11 +142,15 @@ export class AccountService {
     return this.http.patch<null>(`${this.endpoint}/enable/${userId}`, null);
   }
 
+  getUserPersonalInfo(): Observable<SensitiveUserData> {
+    return this.http.get<SensitiveUserData>(`${this.endpoint}/personal-info`);
+  }
+
   updateUserPersonalInfo(
     request: PersonalInfoUpsert
   ): Observable<SensitiveUserData> {
     return this.http.put<SensitiveUserData>(
-      `${this.endpoint}/update-personal-info`,
+      `${this.endpoint}/personal-info`,
       request
     );
   }

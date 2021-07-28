@@ -62,6 +62,7 @@ namespace Audi.Extensions
             {
                 opt.AddPolicy("RequireAdminRole", policy => policy.RequireRole("Admin"));
                 opt.AddPolicy("RequireModerateRole", policy => policy.RequireRole("Admin", "Moderator"));
+                opt.AddPolicy("RequireMemberRole", policy => policy.RequireRole("Admin", "Moderator", "Member"));
             });
 
             return services;

@@ -3,6 +3,12 @@ export enum LanguageCode {
   En = 'en',
 }
 
+export enum Gender {
+  Male = 'male',
+  Female = 'female',
+  Other = 'other',
+}
+
 export enum Roles {
   Admin = 'Admin',
   Moderator = 'Moderator',

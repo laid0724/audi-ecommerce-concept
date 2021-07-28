@@ -14,6 +14,7 @@ namespace Audi.DTOs
         public DateTime DateOfBirth { get; set; }
         public UserPhotoDto UserImage { get; set; }
         public Address Address { get; set; }
+        public string PhoneNumber { get; set; }
         public string SavedCreditCardLast4Digit { get; set; }
         public string SavedCreditCardType { get; set; }
     }

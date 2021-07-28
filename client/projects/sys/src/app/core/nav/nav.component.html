@@ -22,6 +22,9 @@
           <a clrDropdownItem (click)="changePwModalOpen = true">
             更改密碼 Change Password</a
           >
+          <a clrDropdownItem (click)="changePersonalInfoModalOpen = true">
+            更改個人資訊 Change Personal Info</a
+          >
           <a clrDropdownItem (click)="logout()">登出 Logout</a>
         </clr-dropdown-menu>
       </clr-dropdown>
@@ -160,8 +163,13 @@
 <clr-modal [(clrModalOpen)]="changePwModalOpen" [clrModalClosable]="false">
   <h3 class="modal-title">更改密碼 Change Password</h3>
   <div class="modal-body" *ngIf="changePwForm">
-    <form clrForm [formGroup]="changePwForm" clrLayout="vertical">
-      <clr-password-container class="mt-0">
+    <form
+      clrForm
+      [formGroup]="changePwForm"
+      clrLayout="vertical"
+      #changePwClrForm
+    >
+      <clr-password-container>
         <label>目前密碼 Current Password</label>
         <input type="password" clrPassword formControlName="currentPassword" />
         <clr-control-error *clrIfError="'required'"
@@ -216,6 +224,79 @@
       type="button"
       class="btn btn-primary"
       (click)="submitChangePw()"
+    >
+      確認 Ok
+    </button>
+  </div>
+</clr-modal>
+
+<clr-modal
+  [(clrModalOpen)]="changePersonalInfoModalOpen"
+  [clrModalClosable]="false"
+>
+  <h3 class="modal-title">更改個人資訊 Change Personal Info</h3>
+  <div class="modal-body" *ngIf="changePersonalInfoForm">
+    <form
+      clrForm
+      [formGroup]="changePersonalInfoForm"
+      clrLayout="vertical"
+      #changePersonalInfoClrForm
+    >
+      <clr-input-container class="mt-0">
+        <label>姓氏 Last Name</label>
+        <input type="text" clrInput formControlName="lastName" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-input-container>
+      <clr-input-container>
+        <label>名字 First Name</label>
+        <input type="text" clrInput formControlName="firstName" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-input-container>
+      <clr-radio-container>
+        <label>性別 Gender</label>
+        <clr-radio-wrapper *ngFor="let gender of ['male', 'female', 'other']">
+          <input
+            type="radio"
+            clrRadio
+            formControlName="gender"
+            [value]="gender"
+          />
+          <label>{{ gender | toZh: 'genderWithEn' }}</label>
+        </clr-radio-wrapper>
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-radio-container>
+      <clr-input-container>
+        <label>電話 Phone Number</label>
+        <input type="text" clrInput formControlName="phoneNumber" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+        <clr-control-error *clrIfError="'pattern'"
+          >請填寫正確的電話號碼 Please enter a valid phone
+          number</clr-control-error
+        >
+      </clr-input-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary-outline"
+      (click)="changePersonalInfoModalOpen = false"
+    >
+      取消 Cancel
+    </button>
+    <button
+      [clrLoading]="changePersonalInfoBtnState"
+      type="button"
+      class="btn btn-primary"
+      (click)="submitChangePersonalInfo()"
     >
       確認 Ok
     </button>

@@ -16,6 +16,7 @@ using Swashbuckle.AspNetCore.Annotations;
 using Microsoft.AspNetCore.Authorization;
 using Audi.Models;
 using System;
+using Audi.Extensions;
 
 namespace Audi.Controllers
 {
@@ -341,8 +342,27 @@ namespace Audi.Controllers
             return BadRequest("failed to enable user");
         }
 
+        [SwaggerOperation(Summary = "get user personal info")]
+        [Authorize(Policy = "RequireMemberRole")]
+        [HttpGet("personal-info")]
+        public async Task<ActionResult<SensitiveUserDataDto>> GetPersonalInfo()
+        {
+            var apiUserId = User.GetUserId();
+            
+            if (apiUserId == 0) return Unauthorized();
+
+            var user = await _userManager.Users
+                .Include(u => u.UserImage)
+                    .ThenInclude(ui => ui.Photo)
+                .SingleOrDefaultAsync(u => u.Id == apiUserId);
+
+            if (user == null) return NotFound("user_not_found");
+
+            return Ok(_mapper.Map<SensitiveUserDataDto>(user));
+        }
+
         [SwaggerOperation(Summary = "update user personal info")]
-        [HttpPut("update-personal-info")]
+        [HttpPut("personal-info")]
         public async Task<ActionResult<SensitiveUserDataDto>> UpdatePersonalInfo([FromBody] Requests.PersonalInfoUpsert request)
         {
             var user = await _userManager.Users

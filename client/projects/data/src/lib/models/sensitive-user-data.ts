@@ -10,6 +10,7 @@ export interface SensitiveUserData {
   dateOfBirth: Date;
   userImage: UserPhoto;
   address: Address;
+  phoneNumber: string;
   savedCreditCardLast4Digit: string;
   savedCreditCardType: string;
 }

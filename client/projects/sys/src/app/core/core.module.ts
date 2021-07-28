@@ -8,6 +8,7 @@ import { ClarityModule } from '@clr/angular';
 import { ServerErrorComponent } from './server-error/server-error.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { PipesModule } from '@audi/data';
 @NgModule({
   declarations: [
     LoginComponent,
@@ -21,6 +22,7 @@ import { RouterModule } from '@angular/router';
     BrowserAnimationsModule,
     ReactiveFormsModule,
     RouterModule,
+    PipesModule
   ],
 })
 export class CoreModule {}
