@@ -25,36 +25,37 @@ export * from './lib/models/faq';
 export * from './lib/models/credit-card';
 
 // Enums
-export * from './lib/enums'
+export * from './lib/enums';
 
 // Services
-export * from './lib/services/account.service'
-export * from './lib/services/members.service'
-export * from './lib/services/busy.service'
-export * from './lib/services/language-state.service'
-export * from './lib/services/products.service'
-export * from './lib/services/photo.service'
-export * from './lib/services/dynamic-documents.service'
+export * from './lib/services/account.service';
+export * from './lib/services/members.service';
+export * from './lib/services/busy.service';
+export * from './lib/services/language-state.service';
+export * from './lib/services/products.service';
+export * from './lib/services/photo.service';
+export * from './lib/services/dynamic-documents.service';
 
 // Interceptors
-export * from './lib/interceptors/error.interceptor'
-export * from './lib/interceptors/jwt.interceptor'
-export * from './lib/interceptors/loading.interceptor'
-export * from './lib/interceptors/language-header.interceptor'
+export * from './lib/interceptors/error.interceptor';
+export * from './lib/interceptors/jwt.interceptor';
+export * from './lib/interceptors/loading.interceptor';
+export * from './lib/interceptors/language-header.interceptor';
 
 // Resolvers
-export * from './lib/resolvers/language-selector.resolver'
+export * from './lib/resolvers/language-selector.resolver';
 
 // Guards
-export * from './lib/guards/auth.guard'
-export * from './lib/guards/admin.guard'
-export * from './lib/guards/member.guard'
+export * from './lib/guards/auth.guard';
+export * from './lib/guards/admin.guard';
+export * from './lib/guards/member.guard';
 
 // Misc
 export * from './lib/pipes/pipes.module';
 export * from './lib/regex';
 export * from './lib/validators';
 export * from './lib/helpers';
+export * from './lib/taiwan-city-districts.constant';
 
 // Audi UI Library
 export * from './lib/audi-ui';
