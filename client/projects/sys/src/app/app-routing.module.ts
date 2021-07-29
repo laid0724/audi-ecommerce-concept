@@ -29,6 +29,20 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
+    path: 'confirm-email',
+    data: {
+      confirmEmail: true
+    },
+    component: LoginComponent,
+  },
+  {
+    path: 'reset-password',
+    data: {
+      resetPassword: true
+    },
+    component: LoginComponent,
+  },
+  {
     path: 'manage',
     component: NavComponent,
     runGuardsAndResolvers: 'always',
