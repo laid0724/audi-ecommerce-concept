@@ -1,0 +1,260 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card mt-3">
+      <div
+        class="
+          card-header
+          py-3
+          d-flex
+          align-items-center
+          justify-content-between
+        "
+      >
+        <span class="d-flex align-items-center">
+          <ng-container *ngIf="userType === 'member'">
+            會員列表 | MEMBERS
+          </ng-container>
+          <ng-container *ngIf="userType === 'moderator'">
+            管理員列表 | MODERATORS
+          </ng-container>
+        </span>
+
+        <button
+          class="btn btn-primary m-0"
+          type="button"
+          *ngIf="
+            userType === 'moderator' && isAdmin((currentUser$ | async)!.roles)
+          "
+          (click)="createModeratorFormOpen = true"
+        >
+          新增管理員 Create New Moderator
+        </button>
+      </div>
+      <div class="card-body">
+        <clr-datagrid
+          (clrDgRefresh)="refreshDatagrid($event)"
+          [clrLoading]="datagridLoading"
+        >
+          <clr-dg-column
+            >姓氏 Last Name
+            <audi-sys-clr-dg-serverside-string-filter
+              [filter]="lastNameFilter"
+            ></audi-sys-clr-dg-serverside-string-filter>
+          </clr-dg-column>
+
+          <clr-dg-column
+            >名字 First Name
+            <audi-sys-clr-dg-serverside-string-filter
+              [filter]="firstNameFilter"
+            ></audi-sys-clr-dg-serverside-string-filter>
+          </clr-dg-column>
+
+          <clr-dg-column
+            >信箱 Email
+            <audi-sys-clr-dg-serverside-string-filter
+              [filter]="emailFilter"
+            ></audi-sys-clr-dg-serverside-string-filter>
+          </clr-dg-column>
+
+          <clr-dg-column
+            >電話號碼 Phone Number
+            <audi-sys-clr-dg-serverside-string-filter
+              [filter]="phoneNumberFilter"
+            ></audi-sys-clr-dg-serverside-string-filter>
+          </clr-dg-column>
+
+          <clr-dg-column
+            >性別 Gender
+            <audi-sys-clr-dg-custom-btn-filter
+              [filter]="genderFilter"
+              [options]="genderOptions"
+            ></audi-sys-clr-dg-custom-btn-filter>
+          </clr-dg-column>
+
+          <clr-dg-column>
+            信箱認證狀態 Email Confirmed
+            <audi-sys-clr-dg-boolean-btn-filter
+              [filter]="emailConfirmedFilter"
+              [trueDisplayValue]="true | toZh: 'emailConfirmed'"
+              [falseDisplayValue]="false | toZh: 'emailConfirmed'"
+            ></audi-sys-clr-dg-boolean-btn-filter>
+          </clr-dg-column>
+
+          <clr-dg-column>
+            帳戶狀態 Account Status
+            <audi-sys-clr-dg-boolean-btn-filter
+              [filter]="isDisabledFilter"
+              [trueDisplayValue]="true | toZh: 'isDisabled'"
+              [falseDisplayValue]="false | toZh: 'isDisabled'"
+            ></audi-sys-clr-dg-boolean-btn-filter>
+          </clr-dg-column>
+
+          <clr-dg-row
+            *ngFor="let member of members"
+            [clrDgItem]="member"
+            [ngClass]="{ 'is-disabled': member.isDisabled }"
+          >
+            <clr-dg-action-overflow>
+              <button
+                class="action-item"
+                type="button"
+                [routerLink]="['/manage/users', userType + 's', member.id]"
+              >
+                查看 View
+              </button>
+              <button
+                class="action-item"
+                type="button"
+                *ngIf="!isAdmin(member.roles)"
+                (click)="
+                  member.isDisabled ? onEnable(member.id) : onDisable(member.id)
+                "
+              >
+                {{ member.isDisabled ? '啟用 Enable' : '停權 Disable' }}
+              </button>
+              <button
+                class="action-item"
+                type="button"
+                *ngIf="!isAdmin(member.roles) && !member.emailConfirmed"
+                (click)="onForceConfirmEmail(member.id)"
+              >
+                認證信箱 Confirm Email
+              </button>
+              <button
+                class="action-item"
+                type="button"
+                *ngIf="!isAdmin(member.roles) && !member.emailConfirmed"
+                (click)="onResendConfirmEmail(member.email)"
+              >
+                重發信箱認證信 Resend Email Confirmation
+              </button>
+              <button
+                class="action-item"
+                type="button"
+                *ngIf="member.emailConfirmed"
+                (click)="onSendForgotPasswordEmail(member.email)"
+              >
+                發送重置密碼信 Send Reset Password Email
+              </button>
+            </clr-dg-action-overflow>
+
+            <clr-dg-cell>{{ member.lastName }}</clr-dg-cell>
+            <clr-dg-cell>{{ member.firstName }}</clr-dg-cell>
+            <clr-dg-cell>{{ member.email }}</clr-dg-cell>
+            <clr-dg-cell>{{ member.phoneNumber }}</clr-dg-cell>
+            <clr-dg-cell>{{
+              member.gender | toZh: 'genderWithEn'
+            }}</clr-dg-cell>
+            <clr-dg-cell>{{
+              member.emailConfirmed | toZh: 'emailConfirmed'
+            }}</clr-dg-cell>
+            <clr-dg-cell>{{
+              member.isDisabled | toZh: 'isDisabled'
+            }}</clr-dg-cell>
+          </clr-dg-row>
+
+          <clr-dg-placeholder>
+            <p class="text-center mt-0">查無資料</p>
+            <p class="text-center mt-0 mb-1">No Data Available</p>
+          </clr-dg-placeholder>
+
+          <clr-dg-footer>
+            <clr-dg-pagination
+              *ngIf="paging != null"
+              #pagination
+              [clrDgPage]="paging.currentPage"
+              [clrDgPageSize]="memberParams.pageSize"
+              [clrDgTotalItems]="paging.totalItems"
+            >
+              <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50]">
+                每頁顯示筆數
+              </clr-dg-page-size>
+              {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} 之
+              {{ pagination.totalItems }} 筆
+            </clr-dg-pagination>
+          </clr-dg-footer>
+        </clr-datagrid>
+      </div>
+    </div>
+  </div>
+</div>
+
+<clr-modal
+  [(clrModalOpen)]="createModeratorFormOpen"
+  [clrModalClosable]="false"
+>
+  <h3 class="modal-title">建立管理員帳戶 Create Moderator Account</h3>
+  <div class="modal-body">
+    <form clrForm [formGroup]="createModeratorForm" clrLayout="vertical">
+      <clr-input-container class="mt-0">
+        <label>姓氏 Last Name</label>
+        <input type="text" clrInput formControlName="lastName" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-input-container>
+      <clr-input-container>
+        <label>名字 First Name</label>
+        <input type="text" clrInput formControlName="firstName" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-input-container>
+      <clr-input-container>
+        <label>帳戶名 Username</label>
+        <input type="text" clrInput formControlName="userName" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-input-container>
+      <clr-input-container>
+        <label>電子信箱 Email</label>
+        <input type="text" clrInput formControlName="email" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+        <clr-control-error *clrIfError="'email'"
+          >請填寫正確的電子郵件信箱 Please enter a valid email
+          address</clr-control-error
+        >
+      </clr-input-container>
+      <clr-password-container>
+        <label>密碼 Password</label>
+        <input type="password" clrPassword formControlName="password" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+        <clr-control-error *clrIfError="'minlength'"
+          >密碼需至少8位數 Password must be at least 8
+          characters</clr-control-error
+        >
+      </clr-password-container>
+      <clr-password-container>
+        <label>確認密碼 Confirm Password</label>
+        <input type="password" clrPassword formControlName="confirmPassword" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+        <clr-control-error *clrIfError="'minlength'"
+          >密碼需至少8位數 Password must be at least 8
+          characters</clr-control-error
+        >
+        <clr-control-error *clrIfError="'isNotSameValue'"
+          >與新密碼不符 Passwords do not match</clr-control-error
+        >
+      </clr-password-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary-outline"
+      (click)="closeCreateModeratorModal()"
+    >
+      取消 Cancel
+    </button>
+    <button type="button" class="btn btn-primary" (click)="onCreateModerator()">
+      確認 Ok
+    </button>
+  </div>
+</clr-modal>

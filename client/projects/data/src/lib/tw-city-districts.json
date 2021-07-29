@@ -1,0 +1,2210 @@
+[
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Banqiao District",
+    "districtZh": "板橋區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Sanchong District",
+    "districtZh": "三重區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Zhonghe District",
+    "districtZh": "中和區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Yonghe District",
+    "districtZh": "永和區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Xinzhuang District",
+    "districtZh": "新莊區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Xindian District",
+    "districtZh": "新店區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Shulin District",
+    "districtZh": "樹林區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Yingge District",
+    "districtZh": "鶯歌區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Sanxia District",
+    "districtZh": "三峽區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Tamsui District",
+    "districtZh": "淡水區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Xizhi District",
+    "districtZh": "汐止區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Ruifang District",
+    "districtZh": "瑞芳區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Tucheng District",
+    "districtZh": "土城區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Luzhou District",
+    "districtZh": "蘆洲區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Wugu District",
+    "districtZh": "五股區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Taishan District",
+    "districtZh": "泰山區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Linkou District",
+    "districtZh": "林口區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Shenkeng District",
+    "districtZh": "深坑區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Shiding District",
+    "districtZh": "石碇區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Pinglin District",
+    "districtZh": "坪林區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Sanzhi District",
+    "districtZh": "三芝區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Shimen District",
+    "districtZh": "石門區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Bali District",
+    "districtZh": "八里區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Pingxi District",
+    "districtZh": "平溪區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Shuangxi District",
+    "districtZh": "雙溪區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Gongliao District",
+    "districtZh": "貢寮區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Jinshan District",
+    "districtZh": "金山區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Wanli District",
+    "districtZh": "萬里區"
+  },
+  {
+    "cityEn": "New Taipei City",
+    "cityZh": "新北市",
+    "districtEn": "Wulai District",
+    "districtZh": "烏來區"
+  },
+  {
+    "cityEn": "Taipei City",
+    "cityZh": "臺北市",
+    "districtEn": "Songshan District",
+    "districtZh": "松山區"
+  },
+  {
+    "cityEn": "Taipei City",
+    "cityZh": "臺北市",
+    "districtEn": "Xinyi District",
+    "districtZh": "信義區"
+  },
+  {
+    "cityEn": "Taipei City",
+    "cityZh": "臺北市",
+    "districtEn": "Daan District",
+    "districtZh": "大安區"
+  },
+  {
+    "cityEn": "Taipei City",
+    "cityZh": "臺北市",
+    "districtEn": "Zhongshan District",
+    "districtZh": "中山區"
+  },
+  {
+    "cityEn": "Taipei City",
+    "cityZh": "臺北市",
+    "districtEn": "Zhongzheng District",
+    "districtZh": "中正區"
+  },
+  {
+    "cityEn": "Taipei City",
+    "cityZh": "臺北市",
+    "districtEn": "Datong District",
+    "districtZh": "大同區"
+  },
+  {
+    "cityEn": "Taipei City",
+    "cityZh": "臺北市",
+    "districtEn": "Wanhua District",
+    "districtZh": "萬華區"
+  },
+  {
+    "cityEn": "Taipei City",
+    "cityZh": "臺北市",
+    "districtEn": "Wenshan District",
+    "districtZh": "文山區"
+  },
+  {
+    "cityEn": "Taipei City",
+    "cityZh": "臺北市",
+    "districtEn": "Nangang District",
+    "districtZh": "南港區"
+  },
+  {
+    "cityEn": "Taipei City",
+    "cityZh": "臺北市",
+    "districtEn": "Neihu District",
+    "districtZh": "內湖區"
+  },
+  {
+    "cityEn": "Taipei City",
+    "cityZh": "臺北市",
+    "districtEn": "Shilin District",
+    "districtZh": "士林區"
+  },
+  {
+    "cityEn": "Taipei City",
+    "cityZh": "臺北市",
+    "districtEn": "Beitou District",
+    "districtZh": "北投區"
+  },
+  {
+    "cityEn": "Taoyuan City",
+    "cityZh": "桃園市",
+    "districtEn": "Taoyuan District",
+    "districtZh": "桃園區"
+  },
+  {
+    "cityEn": "Taoyuan City",
+    "cityZh": "桃園市",
+    "districtEn": "Zhongli District",
+    "districtZh": "中壢區"
+  },
+  {
+    "cityEn": "Taoyuan City",
+    "cityZh": "桃園市",
+    "districtEn": "Daxi District",
+    "districtZh": "大溪區"
+  },
+  {
+    "cityEn": "Taoyuan City",
+    "cityZh": "桃園市",
+    "districtEn": "Yangmei District",
+    "districtZh": "楊梅區"
+  },
+  {
+    "cityEn": "Taoyuan City",
+    "cityZh": "桃園市",
+    "districtEn": "Luzhu District",
+    "districtZh": "蘆竹區"
+  },
+  {
+    "cityEn": "Taoyuan City",
+    "cityZh": "桃園市",
+    "districtEn": "Dayuan District",
+    "districtZh": "大園區"
+  },
+  {
+    "cityEn": "Taoyuan City",
+    "cityZh": "桃園市",
+    "districtEn": "Guishan District",
+    "districtZh": "龜山區"
+  },
+  {
+    "cityEn": "Taoyuan City",
+    "cityZh": "桃園市",
+    "districtEn": "Bade District",
+    "districtZh": "八德區"
+  },
+  {
+    "cityEn": "Taoyuan City",
+    "cityZh": "桃園市",
+    "districtEn": "Longtan District",
+    "districtZh": "龍潭區"
+  },
+  {
+    "cityEn": "Taoyuan City",
+    "cityZh": "桃園市",
+    "districtEn": "Pingzhen District",
+    "districtZh": "平鎮區"
+  },
+  {
+    "cityEn": "Taoyuan City",
+    "cityZh": "桃園市",
+    "districtEn": "Xinwu District",
+    "districtZh": "新屋區"
+  },
+  {
+    "cityEn": "Taoyuan City",
+    "cityZh": "桃園市",
+    "districtEn": "Guanyin District",
+    "districtZh": "觀音區"
+  },
+  {
+    "cityEn": "Taoyuan City",
+    "cityZh": "桃園市",
+    "districtEn": "Fuxing District",
+    "districtZh": "復興區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Central District",
+    "districtZh": "中區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "East District",
+    "districtZh": "東區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "South District",
+    "districtZh": "南區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "West District",
+    "districtZh": "西區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "North District",
+    "districtZh": "北區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Xitun District",
+    "districtZh": "西屯區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Nantun District",
+    "districtZh": "南屯區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Beitun District",
+    "districtZh": "北屯區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Fengyuan District",
+    "districtZh": "豐原區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Dongshi District",
+    "districtZh": "東勢區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Dajia District",
+    "districtZh": "大甲區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Qingshui District",
+    "districtZh": "清水區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Shalu District",
+    "districtZh": "沙鹿區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Wuqi District",
+    "districtZh": "梧棲區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Houli District",
+    "districtZh": "后里區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Shengang District",
+    "districtZh": "神岡區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Tanzi District",
+    "districtZh": "潭子區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Daya District",
+    "districtZh": "大雅區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Xinshe District",
+    "districtZh": "新社區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Shigang District",
+    "districtZh": "石岡區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Waipu District",
+    "districtZh": "外埔區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Daan District",
+    "districtZh": "大安區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Wuri District",
+    "districtZh": "烏日區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Dadu District",
+    "districtZh": "大肚區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Longjing District",
+    "districtZh": "龍井區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Wufeng District",
+    "districtZh": "霧峰區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Taiping District",
+    "districtZh": "太平區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Dali District",
+    "districtZh": "大里區"
+  },
+  {
+    "cityEn": "Taichung City",
+    "cityZh": "臺中市",
+    "districtEn": "Heping District",
+    "districtZh": "和平區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Xinying District",
+    "districtZh": "新營區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Yanshuei District",
+    "districtZh": "鹽水區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Baihe District",
+    "districtZh": "白河區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Liuying District",
+    "districtZh": "柳營區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Houbi District",
+    "districtZh": "後壁區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Dongshan District",
+    "districtZh": "東山區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Madou District",
+    "districtZh": "麻豆區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Xiaying District",
+    "districtZh": "下營區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Lioujia District",
+    "districtZh": "六甲區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Guantian District",
+    "districtZh": "官田區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Danei District",
+    "districtZh": "大內區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Jiali District",
+    "districtZh": "佳里區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Syuejia District",
+    "districtZh": "學甲區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Sigang District",
+    "districtZh": "西港區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Cigu District",
+    "districtZh": "七股區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Jiangjun District",
+    "districtZh": "將軍區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Beimen District",
+    "districtZh": "北門區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Xinhua District",
+    "districtZh": "新化區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Shanhua District",
+    "districtZh": "善化區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Sinshih District",
+    "districtZh": "新市區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Anding District",
+    "districtZh": "安定區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Shanshang District",
+    "districtZh": "山上區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Yujing District",
+    "districtZh": "玉井區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Nansi District",
+    "districtZh": "楠西區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Nanhua District",
+    "districtZh": "南化區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Zuojhen District",
+    "districtZh": "左鎮區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Rende District",
+    "districtZh": "仁德區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Gueiren District",
+    "districtZh": "歸仁區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Guanmiao District",
+    "districtZh": "關廟區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Longci District",
+    "districtZh": "龍崎區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Yongkang District",
+    "districtZh": "永康區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "East District",
+    "districtZh": "東區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "South District",
+    "districtZh": "南區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "North District",
+    "districtZh": "北區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Annan District",
+    "districtZh": "安南區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "Anping District",
+    "districtZh": "安平區"
+  },
+  {
+    "cityEn": "Tainan City",
+    "cityZh": "臺南市",
+    "districtEn": "West Central District",
+    "districtZh": "中西區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Yancheng District",
+    "districtZh": "鹽埕區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Gushan District",
+    "districtZh": "鼓山區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Zuoying District",
+    "districtZh": "左營區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Nanzih District",
+    "districtZh": "楠梓區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Sanmin District",
+    "districtZh": "三民區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Sinsing District",
+    "districtZh": "新興區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Qianjin District",
+    "districtZh": "前金區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Lingya District",
+    "districtZh": "苓雅區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Cianjhen District",
+    "districtZh": "前鎮區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Cijin District",
+    "districtZh": "旗津區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Siaogang District",
+    "districtZh": "小港區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Fongshan District",
+    "districtZh": "鳳山區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Linyuan District",
+    "districtZh": "林園區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Daliao District",
+    "districtZh": "大寮區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Dashu District",
+    "districtZh": "大樹區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Dashe District",
+    "districtZh": "大社區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Renwu District",
+    "districtZh": "仁武區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Niaosong District",
+    "districtZh": "鳥松區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Gangshan District",
+    "districtZh": "岡山區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Ciaotou District",
+    "districtZh": "橋頭區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Yanchao District",
+    "districtZh": "燕巢區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Tianliao District",
+    "districtZh": "田寮區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Alian District",
+    "districtZh": "阿蓮區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Lujhu District",
+    "districtZh": "路竹區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Hunei District",
+    "districtZh": "湖內區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Qieding District",
+    "districtZh": "茄萣區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Yong'an District",
+    "districtZh": "永安區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Mituo District",
+    "districtZh": "彌陀區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Ziguan District",
+    "districtZh": "梓官區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Cishan District",
+    "districtZh": "旗山區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Meinong District",
+    "districtZh": "美濃區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Liouguei District",
+    "districtZh": "六龜區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Jiasian District",
+    "districtZh": "甲仙區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Shanlin District",
+    "districtZh": "杉林區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Neimen District",
+    "districtZh": "內門區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Maolin District",
+    "districtZh": "茂林區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Taoyuan District",
+    "districtZh": "桃源區"
+  },
+  {
+    "cityEn": "Kaohsiung City",
+    "cityZh": "高雄市",
+    "districtEn": "Namasia District",
+    "districtZh": "那瑪夏區"
+  },
+  {
+    "cityEn": "Yilan County",
+    "cityZh": "宜蘭縣",
+    "districtEn": "Yilan City",
+    "districtZh": "宜蘭市"
+  },
+  {
+    "cityEn": "Yilan County",
+    "cityZh": "宜蘭縣",
+    "districtEn": "Luodong Township",
+    "districtZh": "羅東鎮"
+  },
+  {
+    "cityEn": "Yilan County",
+    "cityZh": "宜蘭縣",
+    "districtEn": "Su'ao Township",
+    "districtZh": "蘇澳鎮"
+  },
+  {
+    "cityEn": "Yilan County",
+    "cityZh": "宜蘭縣",
+    "districtEn": "Toucheng Township",
+    "districtZh": "頭城鎮"
+  },
+  {
+    "cityEn": "Yilan County",
+    "cityZh": "宜蘭縣",
+    "districtEn": "Jiaoxi Township",
+    "districtZh": "礁溪鄉"
+  },
+  {
+    "cityEn": "Yilan County",
+    "cityZh": "宜蘭縣",
+    "districtEn": "Zhuangwei Township",
+    "districtZh": "壯圍鄉"
+  },
+  {
+    "cityEn": "Yilan County",
+    "cityZh": "宜蘭縣",
+    "districtEn": "Yuanshan Township",
+    "districtZh": "員山鄉"
+  },
+  {
+    "cityEn": "Yilan County",
+    "cityZh": "宜蘭縣",
+    "districtEn": "Dongshan Township",
+    "districtZh": "冬山鄉"
+  },
+  {
+    "cityEn": "Yilan County",
+    "cityZh": "宜蘭縣",
+    "districtEn": "Wujie Township",
+    "districtZh": "五結鄉"
+  },
+  {
+    "cityEn": "Yilan County",
+    "cityZh": "宜蘭縣",
+    "districtEn": "Sanxing Township",
+    "districtZh": "三星鄉"
+  },
+  {
+    "cityEn": "Yilan County",
+    "cityZh": "宜蘭縣",
+    "districtEn": "Datong Township",
+    "districtZh": "大同鄉"
+  },
+  {
+    "cityEn": "Yilan County",
+    "cityZh": "宜蘭縣",
+    "districtEn": "Nan'ao Township",
+    "districtZh": "南澳鄉"
+  },
+  {
+    "cityEn": "Hsinchu County",
+    "cityZh": "新竹縣",
+    "districtEn": "Zhubei City",
+    "districtZh": "竹北市"
+  },
+  {
+    "cityEn": "Hsinchu County",
+    "cityZh": "新竹縣",
+    "districtEn": "Guanxi Township",
+    "districtZh": "關西鎮"
+  },
+  {
+    "cityEn": "Hsinchu County",
+    "cityZh": "新竹縣",
+    "districtEn": "Xinpu Township",
+    "districtZh": "新埔鎮"
+  },
+  {
+    "cityEn": "Hsinchu County",
+    "cityZh": "新竹縣",
+    "districtEn": "Zhudong Township",
+    "districtZh": "竹東鎮"
+  },
+  {
+    "cityEn": "Hsinchu County",
+    "cityZh": "新竹縣",
+    "districtEn": "Hukou Township",
+    "districtZh": "湖口鄉"
+  },
+  {
+    "cityEn": "Hsinchu County",
+    "cityZh": "新竹縣",
+    "districtEn": "Hengshan Township",
+    "districtZh": "橫山鄉"
+  },
+  {
+    "cityEn": "Hsinchu County",
+    "cityZh": "新竹縣",
+    "districtEn": "Xinfeng Township",
+    "districtZh": "新豐鄉"
+  },
+  {
+    "cityEn": "Hsinchu County",
+    "cityZh": "新竹縣",
+    "districtEn": "Xionglin Township",
+    "districtZh": "芎林鄉"
+  },
+  {
+    "cityEn": "Hsinchu County",
+    "cityZh": "新竹縣",
+    "districtEn": "Baoshan Township",
+    "districtZh": "寶山鄉"
+  },
+  {
+    "cityEn": "Hsinchu County",
+    "cityZh": "新竹縣",
+    "districtEn": "Beipu Township",
+    "districtZh": "北埔鄉"
+  },
+  {
+    "cityEn": "Hsinchu County",
+    "cityZh": "新竹縣",
+    "districtEn": "Emei Township",
+    "districtZh": "峨眉鄉"
+  },
+  {
+    "cityEn": "Hsinchu County",
+    "cityZh": "新竹縣",
+    "districtEn": "Jianshi Township",
+    "districtZh": "尖石鄉"
+  },
+  {
+    "cityEn": "Hsinchu County",
+    "cityZh": "新竹縣",
+    "districtEn": "Wufeng Township",
+    "districtZh": "五峰鄉"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Miaoli City",
+    "districtZh": "苗栗市"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Toufen City",
+    "districtZh": "頭份市"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Yuanli Township",
+    "districtZh": "苑裡鎮"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Tongxiao Township",
+    "districtZh": "通霄鎮"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Zhunan Township",
+    "districtZh": "竹南鎮"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Houlong Township",
+    "districtZh": "後龍鎮"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Zhuolan Township",
+    "districtZh": "卓蘭鎮"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Dahu Township",
+    "districtZh": "大湖鄉"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Gongguan Township",
+    "districtZh": "公館鄉"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Tongluo Township",
+    "districtZh": "銅鑼鄉"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Nanzhuang Township",
+    "districtZh": "南庄鄉"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Touwu Township",
+    "districtZh": "頭屋鄉"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Sanyi Township",
+    "districtZh": "三義鄉"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Xihu Township",
+    "districtZh": "西湖鄉"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Zaoqiao Township",
+    "districtZh": "造橋鄉"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Sanwan Township",
+    "districtZh": "三灣鄉"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Shitan Township",
+    "districtZh": "獅潭鄉"
+  },
+  {
+    "cityEn": "Miaoli County",
+    "cityZh": "苗栗縣",
+    "districtEn": "Tai'an Township",
+    "districtZh": "泰安鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Changhua City",
+    "districtZh": "彰化市"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Yuanlin City",
+    "districtZh": "員林市"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Lukang Township",
+    "districtZh": "鹿港鎮"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Hemei Township",
+    "districtZh": "和美鎮"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Beidou Township",
+    "districtZh": "北斗鎮"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Xihu Township",
+    "districtZh": "溪湖鎮"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Tianzhong Township",
+    "districtZh": "田中鎮"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Erlin Township",
+    "districtZh": "二林鎮"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Xianxi Township",
+    "districtZh": "線西鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Shengang Township",
+    "districtZh": "伸港鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Fuxing Township",
+    "districtZh": "福興鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Xiushui Township",
+    "districtZh": "秀水鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Huatan Township",
+    "districtZh": "花壇鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Fenyuan Township",
+    "districtZh": "芬園鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Dacun Township",
+    "districtZh": "大村鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Puyan Township",
+    "districtZh": "埔鹽鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Puxin Township",
+    "districtZh": "埔心鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Yongjing Township",
+    "districtZh": "永靖鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Shetou Township",
+    "districtZh": "社頭鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Ershui Township",
+    "districtZh": "二水鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Tianwei Township",
+    "districtZh": "田尾鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Pitou Township",
+    "districtZh": "埤頭鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Fangyuan Township",
+    "districtZh": "芳苑鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Dacheng Township",
+    "districtZh": "大城鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Zhutang Township",
+    "districtZh": "竹塘鄉"
+  },
+  {
+    "cityEn": "Changhua County",
+    "cityZh": "彰化縣",
+    "districtEn": "Xizhou Township",
+    "districtZh": "溪州鄉"
+  },
+  {
+    "cityEn": "Nantou County",
+    "cityZh": "南投縣",
+    "districtEn": "Nantou City",
+    "districtZh": "南投市"
+  },
+  {
+    "cityEn": "Nantou County",
+    "cityZh": "南投縣",
+    "districtEn": "Puli Township",
+    "districtZh": "埔里鎮"
+  },
+  {
+    "cityEn": "Nantou County",
+    "cityZh": "南投縣",
+    "districtEn": "Caotun Township",
+    "districtZh": "草屯鎮"
+  },
+  {
+    "cityEn": "Nantou County",
+    "cityZh": "南投縣",
+    "districtEn": "Zhushan Township",
+    "districtZh": "竹山鎮"
+  },
+  {
+    "cityEn": "Nantou County",
+    "cityZh": "南投縣",
+    "districtEn": "Jiji Township",
+    "districtZh": "集集鎮"
+  },
+  {
+    "cityEn": "Nantou County",
+    "cityZh": "南投縣",
+    "districtEn": "Mingjian Township",
+    "districtZh": "名間鄉"
+  },
+  {
+    "cityEn": "Nantou County",
+    "cityZh": "南投縣",
+    "districtEn": "Lugu Township",
+    "districtZh": "鹿谷鄉"
+  },
+  {
+    "cityEn": "Nantou County",
+    "cityZh": "南投縣",
+    "districtEn": "Zhongliao Township",
+    "districtZh": "中寮鄉"
+  },
+  {
+    "cityEn": "Nantou County",
+    "cityZh": "南投縣",
+    "districtEn": "Yuchi Township",
+    "districtZh": "魚池鄉"
+  },
+  {
+    "cityEn": "Nantou County",
+    "cityZh": "南投縣",
+    "districtEn": "Guoxing Township",
+    "districtZh": "國姓鄉"
+  },
+  {
+    "cityEn": "Nantou County",
+    "cityZh": "南投縣",
+    "districtEn": "Shuili Township",
+    "districtZh": "水里鄉"
+  },
+  {
+    "cityEn": "Nantou County",
+    "cityZh": "南投縣",
+    "districtEn": "Xinyi Township",
+    "districtZh": "信義鄉"
+  },
+  {
+    "cityEn": "Nantou County",
+    "cityZh": "南投縣",
+    "districtEn": "Ren'ai Township",
+    "districtZh": "仁愛鄉"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Douliu City",
+    "districtZh": "斗六市"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Dounan Township",
+    "districtZh": "斗南鎮"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Huwei Township",
+    "districtZh": "虎尾鎮"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Xiluo Township",
+    "districtZh": "西螺鎮"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Tuku Township",
+    "districtZh": "土庫鎮"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Beigang Township",
+    "districtZh": "北港鎮"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Gukeng Township",
+    "districtZh": "古坑鄉"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Dapi Township",
+    "districtZh": "大埤鄉"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Cihtong Township",
+    "districtZh": "莿桐鄉"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Linnei Township",
+    "districtZh": "林內鄉"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Erlun Township",
+    "districtZh": "二崙鄉"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Lunbei Township",
+    "districtZh": "崙背鄉"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Mailiao Township",
+    "districtZh": "麥寮鄉"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Dongshi Township",
+    "districtZh": "東勢鄉"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Baozhong Township",
+    "districtZh": "褒忠鄉"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Taixi Township",
+    "districtZh": "臺西鄉"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Yuanchang Township",
+    "districtZh": "元長鄉"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Sihu Township",
+    "districtZh": "四湖鄉"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Kouhu Township",
+    "districtZh": "口湖鄉"
+  },
+  {
+    "cityEn": "Yunlin County",
+    "cityZh": "雲林縣",
+    "districtEn": "Shuilin Township",
+    "districtZh": "水林鄉"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Taibao City",
+    "districtZh": "太保市"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Puzi City",
+    "districtZh": "朴子市"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Budai Township",
+    "districtZh": "布袋鎮"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Dalin Township",
+    "districtZh": "大林鎮"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Minxiong Township",
+    "districtZh": "民雄鄉"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Xikou Township",
+    "districtZh": "溪口鄉"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Xingang Township",
+    "districtZh": "新港鄉"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Lioujiao Township",
+    "districtZh": "六腳鄉"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Dongshi Township",
+    "districtZh": "東石鄉"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Yizhu Township",
+    "districtZh": "義竹鄉"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Lucao Township",
+    "districtZh": "鹿草鄉"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Shuishang Township",
+    "districtZh": "水上鄉"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Zhongpu Township",
+    "districtZh": "中埔鄉"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Zhuqi Township",
+    "districtZh": "竹崎鄉"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Meishan Township",
+    "districtZh": "梅山鄉"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Fanlu Township",
+    "districtZh": "番路鄉"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Dapu Township",
+    "districtZh": "大埔鄉"
+  },
+  {
+    "cityEn": "Chiayi County",
+    "cityZh": "嘉義縣",
+    "districtEn": "Alishan Township",
+    "districtZh": "阿里山鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Pingtung City",
+    "districtZh": "屏東市"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Chaozhou Township",
+    "districtZh": "潮州鎮"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Donggang Township",
+    "districtZh": "東港鎮"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Hengchun Township",
+    "districtZh": "恆春鎮"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Wandan Township",
+    "districtZh": "萬丹鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Changzhi Township",
+    "districtZh": "長治鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Linluo Township",
+    "districtZh": "麟洛鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Jiuru Township",
+    "districtZh": "九如鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Ligang Township",
+    "districtZh": "里港鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Yanpu Township",
+    "districtZh": "鹽埔鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Gaoshu Township",
+    "districtZh": "高樹鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Wanluan Township",
+    "districtZh": "萬巒鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Neipu Township",
+    "districtZh": "內埔鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Zhutian Township",
+    "districtZh": "竹田鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Xinpi Township",
+    "districtZh": "新埤鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Fangliao Township",
+    "districtZh": "枋寮鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Xinyuan Township",
+    "districtZh": "新園鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Kanding Township",
+    "districtZh": "崁頂鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Linbian Township",
+    "districtZh": "林邊鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Nanzhou Township",
+    "districtZh": "南州鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Jiadong Township",
+    "districtZh": "佳冬鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Liuqiu Township",
+    "districtZh": "琉球鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Checheng Township",
+    "districtZh": "車城鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Manzhou Township",
+    "districtZh": "滿州鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Fangshan Township",
+    "districtZh": "枋山鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Sandimen Township",
+    "districtZh": "三地門鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Wutai Township",
+    "districtZh": "霧臺鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Majia Township",
+    "districtZh": "瑪家鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Taiwu Township",
+    "districtZh": "泰武鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Laiyi Township",
+    "districtZh": "來義鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Chunri Township",
+    "districtZh": "春日鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Shizi Township",
+    "districtZh": "獅子鄉"
+  },
+  {
+    "cityEn": "Pingtung County",
+    "cityZh": "屏東縣",
+    "districtEn": "Mudan Township",
+    "districtZh": "牡丹鄉"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Taitung City",
+    "districtZh": "臺東市"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Chenggong Township",
+    "districtZh": "成功鎮"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Guanshan Township",
+    "districtZh": "關山鎮"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Beinan Township",
+    "districtZh": "卑南鄉"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Dawu Township",
+    "districtZh": "大武鄉"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Taimali Township",
+    "districtZh": "太麻里鄉"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Donghe Township",
+    "districtZh": "東河鄉"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Changbin Township",
+    "districtZh": "長濱鄉"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Luye Township",
+    "districtZh": "鹿野鄉"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Chishang Township",
+    "districtZh": "池上鄉"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Lüdao Township",
+    "districtZh": "綠島鄉"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Yanping Township",
+    "districtZh": "延平鄉"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Haiduan Township",
+    "districtZh": "海端鄉"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Daren Township",
+    "districtZh": "達仁鄉"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Jinfeng Township",
+    "districtZh": "金峰鄉"
+  },
+  {
+    "cityEn": "Taitung County",
+    "cityZh": "台東縣",
+    "districtEn": "Lanyu Township",
+    "districtZh": "蘭嶼鄉"
+  },
+  {
+    "cityEn": "Hualien County",
+    "cityZh": "花蓮縣",
+    "districtEn": "Hualien City",
+    "districtZh": "花蓮市"
+  },
+  {
+    "cityEn": "Hualien County",
+    "cityZh": "花蓮縣",
+    "districtEn": "Fenglin Township",
+    "districtZh": "鳳林鎮"
+  },
+  {
+    "cityEn": "Hualien County",
+    "cityZh": "花蓮縣",
+    "districtEn": "Yuli Township",
+    "districtZh": "玉里鎮"
+  },
+  {
+    "cityEn": "Hualien County",
+    "cityZh": "花蓮縣",
+    "districtEn": "Xincheng Township",
+    "districtZh": "新城鄉"
+  },
+  {
+    "cityEn": "Hualien County",
+    "cityZh": "花蓮縣",
+    "districtEn": "Ji'an Township",
+    "districtZh": "吉安鄉"
+  },
+  {
+    "cityEn": "Hualien County",
+    "cityZh": "花蓮縣",
+    "districtEn": "Shoufeng Township",
+    "districtZh": "壽豐鄉"
+  },
+  {
+    "cityEn": "Hualien County",
+    "cityZh": "花蓮縣",
+    "districtEn": "Guangfu Township",
+    "districtZh": "光復鄉"
+  },
+  {
+    "cityEn": "Hualien County",
+    "cityZh": "花蓮縣",
+    "districtEn": "Fengbin Township",
+    "districtZh": "豐濱鄉"
+  },
+  {
+    "cityEn": "Hualien County",
+    "cityZh": "花蓮縣",
+    "districtEn": "Ruisui Township",
+    "districtZh": "瑞穗鄉"
+  },
+  {
+    "cityEn": "Hualien County",
+    "cityZh": "花蓮縣",
+    "districtEn": "Fuli Township",
+    "districtZh": "富里鄉"
+  },
+  {
+    "cityEn": "Hualien County",
+    "cityZh": "花蓮縣",
+    "districtEn": "Xiulin Township",
+    "districtZh": "秀林鄉"
+  },
+  {
+    "cityEn": "Hualien County",
+    "cityZh": "花蓮縣",
+    "districtEn": "Wanrong Township",
+    "districtZh": "萬榮鄉"
+  },
+  {
+    "cityEn": "Hualien County",
+    "cityZh": "花蓮縣",
+    "districtEn": "Zhuoxi Township",
+    "districtZh": "卓溪鄉"
+  },
+  {
+    "cityEn": "Penghu County",
+    "cityZh": "澎湖縣",
+    "districtEn": "Magong City",
+    "districtZh": "馬公市"
+  },
+  {
+    "cityEn": "Penghu County",
+    "cityZh": "澎湖縣",
+    "districtEn": "Huxi Township",
+    "districtZh": "湖西鄉"
+  },
+  {
+    "cityEn": "Penghu County",
+    "cityZh": "澎湖縣",
+    "districtEn": "Baisha Township",
+    "districtZh": "白沙鄉"
+  },
+  {
+    "cityEn": "Penghu County",
+    "cityZh": "澎湖縣",
+    "districtEn": "Xiyu Township",
+    "districtZh": "西嶼鄉"
+  },
+  {
+    "cityEn": "Penghu County",
+    "cityZh": "澎湖縣",
+    "districtEn": "Wangan Township",
+    "districtZh": "望安鄉"
+  },
+  {
+    "cityEn": "Penghu County",
+    "cityZh": "澎湖縣",
+    "districtEn": "Cimei Township",
+    "districtZh": "七美鄉"
+  },
+  {
+    "cityEn": "Keelung City",
+    "cityZh": "基隆市",
+    "districtEn": "Zhongzheng District",
+    "districtZh": "中正區"
+  },
+  {
+    "cityEn": "Keelung City",
+    "cityZh": "基隆市",
+    "districtEn": "Qidu District",
+    "districtZh": "七堵區"
+  },
+  {
+    "cityEn": "Keelung City",
+    "cityZh": "基隆市",
+    "districtEn": "Nuannuan District",
+    "districtZh": "暖暖區"
+  },
+  {
+    "cityEn": "Keelung City",
+    "cityZh": "基隆市",
+    "districtEn": "Ren'ai District",
+    "districtZh": "仁愛區"
+  },
+  {
+    "cityEn": "Keelung City",
+    "cityZh": "基隆市",
+    "districtEn": "Zhongshan District",
+    "districtZh": "中山區"
+  },
+  {
+    "cityEn": "Keelung City",
+    "cityZh": "基隆市",
+    "districtEn": "Anle District",
+    "districtZh": "安樂區"
+  },
+  {
+    "cityEn": "Keelung City",
+    "cityZh": "基隆市",
+    "districtEn": "Xinyi District",
+    "districtZh": "信義區"
+  },
+  {
+    "cityEn": "Hsinchu City",
+    "cityZh": "新竹市",
+    "districtEn": "East District",
+    "districtZh": "東區"
+  },
+  {
+    "cityEn": "Hsinchu City",
+    "cityZh": "新竹市",
+    "districtEn": "North District",
+    "districtZh": "北區"
+  },
+  {
+    "cityEn": "Hsinchu City",
+    "cityZh": "新竹市",
+    "districtEn": "Xiangshan District",
+    "districtZh": "香山區"
+  },
+  {
+    "cityEn": "Chiayi City",
+    "cityZh": "嘉義市",
+    "districtEn": "East District",
+    "districtZh": "東區"
+  },
+  {
+    "cityEn": "Chiayi City",
+    "cityZh": "嘉義市",
+    "districtEn": "West District",
+    "districtZh": "西區"
+  },
+  {
+    "cityEn": "Kinmen County",
+    "cityZh": "金門縣",
+    "districtEn": "Jincheng Township",
+    "districtZh": "金城鎮"
+  },
+  {
+    "cityEn": "Kinmen County",
+    "cityZh": "金門縣",
+    "districtEn": "Jinhu Township",
+    "districtZh": "金湖鎮"
+  },
+  {
+    "cityEn": "Kinmen County",
+    "cityZh": "金門縣",
+    "districtEn": "Jinsha Township",
+    "districtZh": "金沙鎮"
+  },
+  {
+    "cityEn": "Kinmen County",
+    "cityZh": "金門縣",
+    "districtEn": "Jinning Township",
+    "districtZh": "金寧鄉"
+  },
+  {
+    "cityEn": "Kinmen County",
+    "cityZh": "金門縣",
+    "districtEn": "Lieyu Township",
+    "districtZh": "烈嶼鄉"
+  },
+  {
+    "cityEn": "Kinmen County",
+    "cityZh": "金門縣",
+    "districtEn": "Wuqiu Township",
+    "districtZh": "烏坵鄉"
+  },
+  {
+    "cityEn": "Lienchiang County",
+    "cityZh": "連江縣",
+    "districtEn": "Nangan Township",
+    "districtZh": "南竿鄉"
+  },
+  {
+    "cityEn": "Lienchiang County",
+    "cityZh": "連江縣",
+    "districtEn": "Beigan Township",
+    "districtZh": "北竿鄉"
+  },
+  {
+    "cityEn": "Lienchiang County",
+    "cityZh": "連江縣",
+    "districtEn": "Juguang Township",
+    "districtZh": "莒光鄉"
+  },
+  {
+    "cityEn": "Lienchiang County",
+    "cityZh": "連江縣",
+    "districtEn": "Dongyin Township",
+    "districtZh": "東引鄉"
+  }
+]

@@ -1,0 +1,101 @@
+<ng-container *ngIf="member">
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="card mt-0">
+        <div class="card-header">
+          <ng-container *ngIf="userType === 'member'"
+            >會員資訊 | MEMBER INFO</ng-container
+          >
+          <ng-container *ngIf="userType === 'moderator'"
+            >管理員資訊 | MODERATOR INFO</ng-container
+          >
+        </div>
+        <div class="card-body pb-3">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <h2 class="h2">個人資訊 Personal Information</h2>
+                <table class="table table-vertical mt-3">
+                  <tbody>
+                    <tr>
+                      <th>姓氏 Last Name</th>
+                      <td>
+                        {{ member.lastName }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>名字 First Name</th>
+                      <td>
+                        {{ member.firstName }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>性別 Gender</th>
+                      <td>
+                        {{ member.gender | toZh: 'genderWithEn' }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>電話號碼 Phone Number</th>
+                      <td>
+                        <a href="tel:{{ member.phoneNumber }}">{{
+                          member.phoneNumber
+                        }}</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>電子信箱 Email</th>
+                      <td>
+                        <a href="mailto:{{ member.email }}">{{
+                          member.email
+                        }}</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>信箱認證狀態 Email Confirmed</th>
+                      <td>
+                        {{ member.emailConfirmed | toZh: 'emailConfirmed' }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>帳戶狀態 Account Status</th>
+                      <td>
+                        {{ member.isDisabled | toZh: 'isDisabled' }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>建立時間 Created At</th>
+                      <td>
+                        {{
+                          member.createdAt | toLocalTime | date: 'MM/dd/yyyy'
+                        }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>最近活動時間 Last Active</th>
+                      <td>
+                        {{
+                          member.lastActive
+                            | toLocalTime
+                            | date: 'MM/dd/yyyy hh:mm:ss'
+                        }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <!-- <pre>{{ member | json }}</pre> -->
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <h2 class="h2">訂單歷史 Order History</h2>
+                <!-- TODO -->
+                <pre>{{ member?.orders | json }}</pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

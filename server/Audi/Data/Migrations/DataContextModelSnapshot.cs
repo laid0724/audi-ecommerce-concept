@@ -64,6 +64,12 @@ namespace server.Data.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("access_failed_count");
 
+                    b.Property<string>("Address")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("address")
+                        .HasDefaultValueSql("'{}'");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text")
@@ -93,6 +99,10 @@ namespace server.Data.Migrations
                     b.Property<string>("Gender")
                         .HasColumnType("text")
                         .HasColumnName("gender");
+
+                    b.Property<bool>("IsDisabled")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_disabled");
 
                     b.Property<DateTime>("LastActive")
                         .HasColumnType("timestamp without time zone")
@@ -132,6 +142,14 @@ namespace server.Data.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("phone_number_confirmed");
 
+                    b.Property<string>("SavedCreditCardLast4Digit")
+                        .HasColumnType("text")
+                        .HasColumnName("saved_credit_card_last4_digit");
+
+                    b.Property<string>("SavedCreditCardType")
+                        .HasColumnType("text")
+                        .HasColumnName("saved_credit_card_type");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text")
                         .HasColumnName("security_stamp");
@@ -139,6 +157,10 @@ namespace server.Data.Migrations
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("boolean")
                         .HasColumnName("two_factor_enabled");
+
+                    b.Property<int>("UserImageId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_image_id");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
@@ -156,6 +178,29 @@ namespace server.Data.Migrations
                         .HasDatabaseName("user_name_index");
 
                     b.ToTable("idt_users");
+                });
+
+            modelBuilder.Entity("Audi.Entities.AppUserPhoto", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
+
+                    b.Property<int>("PhotoId")
+                        .HasColumnType("integer")
+                        .HasColumnName("photo_id");
+
+                    b.HasKey("UserId", "PhotoId")
+                        .HasName("pk_app_user_photos");
+
+                    b.HasIndex("PhotoId")
+                        .HasDatabaseName("ix_app_user_photos_photo_id");
+
+                    b.HasIndex("UserId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_app_user_photos_user_id");
+
+                    b.ToTable("app_user_photos");
                 });
 
             modelBuilder.Entity("Audi.Entities.AppUserRole", b =>
@@ -262,6 +307,46 @@ namespace server.Data.Migrations
                         .HasDatabaseName("ix_dynamic_document_photos_photo_id");
 
                     b.ToTable("dynamic_document_photos");
+                });
+
+            modelBuilder.Entity("Audi.Entities.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("BillingAddress")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("billing_address")
+                        .HasDefaultValueSql("'{}'");
+
+                    b.Property<string>("CreditCardLast4Digit")
+                        .HasColumnType("text")
+                        .HasColumnName("credit_card_last4_digit");
+
+                    b.Property<string>("CreditCardType")
+                        .HasColumnType("text")
+                        .HasColumnName("credit_card_type");
+
+                    b.Property<string>("ShippingAddress")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("shipping_address")
+                        .HasDefaultValueSql("'{}'");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_orders");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_orders_user_id");
+
+                    b.ToTable("orders");
                 });
 
             modelBuilder.Entity("Audi.Entities.Photo", b =>
@@ -651,6 +736,25 @@ namespace server.Data.Migrations
                     b.ToTable("idt_user_tokens");
                 });
 
+            modelBuilder.Entity("Audi.Entities.AppUserPhoto", b =>
+                {
+                    b.HasOne("Audi.Entities.Photo", "Photo")
+                        .WithMany("AppUserPhotos")
+                        .HasForeignKey("PhotoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Audi.Entities.AppUser", "User")
+                        .WithOne("UserImage")
+                        .HasForeignKey("Audi.Entities.AppUserPhoto", "UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Photo");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Audi.Entities.AppUserRole", b =>
                 {
                     b.HasOne("Audi.Entities.AppRole", "Role")
@@ -687,6 +791,17 @@ namespace server.Data.Migrations
                     b.Navigation("DynamicDocument");
 
                     b.Navigation("Photo");
+                });
+
+            modelBuilder.Entity("Audi.Entities.Order", b =>
+                {
+                    b.HasOne("Audi.Entities.AppUser", "User")
+                        .WithMany("Orders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Audi.Entities.Product", b =>
@@ -848,6 +963,11 @@ namespace server.Data.Migrations
 
             modelBuilder.Entity("Audi.Entities.AppUser", b =>
                 {
+                    b.Navigation("Orders");
+
+                    b.Navigation("UserImage")
+                        .IsRequired();
+
                     b.Navigation("UserRoles");
                 });
 
@@ -859,6 +979,8 @@ namespace server.Data.Migrations
 
             modelBuilder.Entity("Audi.Entities.Photo", b =>
                 {
+                    b.Navigation("AppUserPhotos");
+
                     b.Navigation("DynamicDocumentPhotos");
 
                     b.Navigation("ProductPhotos");

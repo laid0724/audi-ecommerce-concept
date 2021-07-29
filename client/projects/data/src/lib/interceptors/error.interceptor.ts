@@ -46,6 +46,13 @@ export class ErrorInterceptor implements HttpInterceptor {
             // this.toastr.error(error.statusText, error.status.toString());
             this.toastr.error('Wrong username or password', '錯誤的帳戶或密碼');
             break;
+          case 403: // Forbidden
+            // TODO: aggregate all cases and show display messages accordingly, e.g., email_not_confirmed, locked_out, etc
+            this.toastr.error(
+              error.error,
+              `${error.status} ${error.statusText}`
+            );
+            break;
           case 404: // Not Found
             // NOTE: be careful with this - your APIs cannot throw 404 unless it really is a case of 404.
             this.router.navigateByUrl('/not-found');

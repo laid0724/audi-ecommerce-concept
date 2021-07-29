@@ -10,6 +10,7 @@
       [formGroup]="loginForm"
       (ngSubmit)="login()"
       class="login-group"
+      #loginClrForm
     >
       <clr-input-container>
         <label>帳號或信箱 Username or Email</label>
@@ -26,7 +27,11 @@
         >
       </clr-password-container>
       <button
-        class="aui-button aui-button--primary aui-button--stretched aui-js-response mt-4"
+        class="
+          aui-button aui-button--primary aui-button--stretched
+          aui-js-response
+          mt-4
+        "
         type="submit"
         [clrLoading]="loginBtnState"
       >
@@ -35,3 +40,62 @@
     </form>
   </form>
 </div>
+
+<clr-modal [(clrModalOpen)]="resetPwModalOpen" [clrModalClosable]="false">
+  <h3 class="modal-title">更改密碼 Change Password</h3>
+  <div class="modal-body" *ngIf="resetPwForm">
+    <form
+      clrForm
+      [formGroup]="resetPwForm"
+      clrLayout="vertical"
+      #resetPwClrForm
+    >
+      <clr-password-container>
+        <label>新密碼 New Password</label>
+        <input type="password" clrPassword formControlName="newPassword" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+        <clr-control-error *clrIfError="'minlength'"
+          >密碼需至少8位數 Password must be at least 8
+          characters</clr-control-error
+        >
+      </clr-password-container>
+      <clr-password-container>
+        <label>確認新密碼 Confirm New Password</label>
+        <input
+          type="password"
+          clrPassword
+          formControlName="confirmNewPassword"
+        />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+        <clr-control-error *clrIfError="'minlength'"
+          >密碼需至少8位數 Password must be at least 8
+          characters</clr-control-error
+        >
+        <clr-control-error *clrIfError="'isNotSameValue'"
+          >與新密碼不符 Passwords do not match</clr-control-error
+        >
+      </clr-password-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary-outline"
+      (click)="resetPwModalOpen = false"
+    >
+      取消 Cancel
+    </button>
+    <button
+      [clrLoading]="resetPwBtnState"
+      type="button"
+      class="btn btn-primary"
+      (click)="submitResetPw()"
+    >
+      確認 Ok
+    </button>
+  </div>
+</clr-modal>

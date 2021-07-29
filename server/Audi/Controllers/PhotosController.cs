@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Audi.Controllers
 {
@@ -23,7 +24,7 @@ namespace Audi.Controllers
             _logger = logger;
         }
 
-        [Description("upload photo and return its url")]
+        [SwaggerOperation(Summary = "upload photo and return its url")]
         [HttpPost]
         public async Task<ActionResult<string>> UploadPhoto(IFormFile file)
         {

@@ -15,11 +15,18 @@ namespace Audi.Helpers
         public AutoMapperProfiles()
         {
             // Add all mappings here!
+
             CreateMap<AppUser, MemberDto>()
                 .ForMember(
                     dest => dest.FullName,
                     opt => opt.MapFrom(src => src.GetFullName())
+                )
+                .ForMember(
+                    dest => dest.Roles,
+                    opt => opt.MapFrom(src => src.UserRoles.Select(r => r.Role.ToString()))
                 );
+
+            CreateMap<AppUser, SensitiveUserDataDto>();
 
             CreateMap<ProductCategory, ProductCategoryDto>();
 
@@ -38,6 +45,20 @@ namespace Audi.Helpers
                 );
 
             CreateMap<DynamicDocumentPhoto, DynamicDocumentPhotoDto>()
+                .ForMember(
+                    dest => dest.Url,
+                    opt => opt.MapFrom(src => src.Photo.Url)
+                )
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.PhotoId)
+                )
+                .ForMember(
+                    dest => dest.CreatedAt,
+                    opt => opt.MapFrom(src => src.Photo.CreatedAt)
+                );
+
+            CreateMap<AppUserPhoto, UserPhotoDto>()
                 .ForMember(
                     dest => dest.Url,
                     opt => opt.MapFrom(src => src.Photo.Url)

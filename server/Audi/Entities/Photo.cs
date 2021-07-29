@@ -11,5 +11,6 @@ namespace Audi.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public ICollection<ProductPhoto> ProductPhotos { get; set; }
         public ICollection<DynamicDocumentPhoto> DynamicDocumentPhotos { get; set; }
+        public ICollection<AppUserPhoto> AppUserPhotos { get; set; }
     }
 }

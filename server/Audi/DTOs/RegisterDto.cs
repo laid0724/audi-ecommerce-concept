@@ -9,7 +9,7 @@ namespace Audi.DTOs
         [Required] // validation
         public string UserName { get; set; }
         [Required]
-        [StringLength(8, MinimumLength = 4)]
+        [StringLength(100, MinimumLength = 8)]
         public string Password { get; set; }
         [Required]
         public string Email { get; set; }

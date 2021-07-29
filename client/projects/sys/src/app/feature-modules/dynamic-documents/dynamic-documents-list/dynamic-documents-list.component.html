@@ -43,12 +43,12 @@
                   *ngSwitchCase="'title'"
                   [filter]="titleFilter"
                 ></audi-sys-clr-dg-serverside-string-filter>
-                <audi-sys-clr-dg-custom-btn-filter
+                <audi-sys-clr-dg-boolean-btn-filter
                   *ngSwitchCase="'isVisible'"
                   [filter]="isVisibleFilter"
                   [trueDisplayValue]="true | toZh: 'isVisible'"
                   [falseDisplayValue]="false | toZh: 'isVisible'"
-                ></audi-sys-clr-dg-custom-btn-filter>
+                ></audi-sys-clr-dg-boolean-btn-filter>
                 <!-- FIXME: CODE SMELL HERE -->
                 <audi-sys-clr-dg-date-range-filter
                   *ngSwitchCase="'date'"

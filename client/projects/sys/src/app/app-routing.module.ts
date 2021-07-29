@@ -29,6 +29,20 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
+    path: 'confirm-email',
+    data: {
+      confirmEmail: true
+    },
+    component: LoginComponent,
+  },
+  {
+    path: 'reset-password',
+    data: {
+      resetPassword: true
+    },
+    component: LoginComponent,
+  },
+  {
     path: 'manage',
     component: NavComponent,
     runGuardsAndResolvers: 'always',
@@ -59,6 +73,13 @@ const routes: Routes = [
             loadChildren: () =>
               import('./feature-modules/products/products.module').then(
                 (m) => m.ProductsModule
+              ),
+          },
+          {
+            path: 'users',
+            loadChildren: () =>
+              import('./feature-modules/members/members.module').then(
+                (m) => m.MembersModule
               ),
           },
           {

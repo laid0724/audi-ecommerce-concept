@@ -16,8 +16,7 @@ export function hasSameValueValidator(
     const controlValue = control.value;
     const valueToCompare =
       // @ts-ignore
-      control.parent.controls[benchmarkingControlName].value;
-
+      control?.parent?.controls[matchingControlName].value;
     return controlValue === valueToCompare ? null : { isNotSameValue: true };
   };
 }

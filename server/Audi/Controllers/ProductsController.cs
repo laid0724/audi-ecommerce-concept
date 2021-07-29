@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Audi.Controllers
 {
@@ -32,7 +33,7 @@ namespace Audi.Controllers
             _logger = logger;
         }
 
-        [Description("add a product category")]
+        [SwaggerOperation(Summary = "add a product category")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("categories")]
         public async Task<ActionResult<ProductCategoryDto>> AddProductCategory([FromBody] ProductCategoryUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language)
@@ -50,7 +51,7 @@ namespace Audi.Controllers
             return BadRequest("Failed to add product category.");
         }
 
-        [Description("update a product category")]
+        [SwaggerOperation(Summary = "update a product category")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPut("categories")]
         public async Task<ActionResult<ProductCategoryDto>> UpdateProductCategory([FromBody] ProductCategoryUpsertDto request)
@@ -77,7 +78,7 @@ namespace Audi.Controllers
             return BadRequest("Failed to add product category.");
         }
 
-        [Description("get a product category")]
+        [SwaggerOperation(Summary = "get a product category")]
         [HttpGet("categories/{categoryId}")]
         public async Task<ActionResult> GetProductCategory(int categoryId)
         {
@@ -88,7 +89,7 @@ namespace Audi.Controllers
             return Ok(_mapper.Map<ProductCategoryDto>(productCategoy));
         }
 
-        [Description("delete a product category")]
+        [SwaggerOperation(Summary = "delete a product category")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("categories/{categoryId}")]
         public async Task<ActionResult> DeleteProductCategory(int categoryId)
@@ -104,7 +105,7 @@ namespace Audi.Controllers
             return BadRequest("Failed to delete product category");
         }
 
-        [Description("get parent product categories")]
+        [SwaggerOperation(Summary = "get parent product categories")]
         [HttpGet("categories/parents")]
         public async Task<ActionResult<PagedList<ProductCategoryDto>>> GetParentProductCategories([FromQuery] ProductCategoryParams productCategoryParams, [FromHeader(Name = "X-LANGUAGE")] string language)
         {
@@ -119,7 +120,7 @@ namespace Audi.Controllers
             return Ok(parentProductCategories);
         }
 
-        [Description("get children product categories")]
+        [SwaggerOperation(Summary = "get children product categories")]
         [HttpGet("categories/children")]
         public async Task<ActionResult<PagedList<ProductCategoryDto>>> GetChildrenProductCategories([FromQuery] ProductCategoryParams productCategoryParams, [FromHeader(Name = "X-LANGUAGE")] string language)
         {
@@ -135,7 +136,7 @@ namespace Audi.Controllers
             return Ok(childrenProductCategories);
         }
 
-        [Description("get all products")]
+        [SwaggerOperation(Summary = "get all products")]
         [HttpGet]
         public async Task<ActionResult<PagedList<ProductDto>>> GetProducts([FromQuery] ProductParams productParams, [FromHeader(Name = "X-LANGUAGE")] string language)
         {
@@ -150,7 +151,7 @@ namespace Audi.Controllers
             return Ok(products);
         }
 
-        [Description("get a product")]
+        [SwaggerOperation(Summary = "get a product")]
         [HttpGet("{productId}")]
         public async Task<ActionResult<ProductDto>> GetProduct(int productId)
         {
@@ -161,7 +162,7 @@ namespace Audi.Controllers
             return Ok(_mapper.Map<ProductDto>(product));
         }
 
-        [Description("add a product")]
+        [SwaggerOperation(Summary = "add a product")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPost]
         public async Task<ActionResult<ProductDto>> AddProduct([FromBody] ProductUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language)
@@ -185,7 +186,7 @@ namespace Audi.Controllers
             return BadRequest("Failed to add product");
         }
 
-        [Description("update a product")]
+        [SwaggerOperation(Summary = "update a product")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPut]
         public async Task<ActionResult<ProductDto>> UpdateProduct([FromBody] ProductUpsertDto request)
@@ -233,7 +234,7 @@ namespace Audi.Controllers
             return BadRequest("Failed to update product");
         }
 
-        [Description("delete a product")]
+        [SwaggerOperation(Summary = "delete a product")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("{productId}")]
         public async Task<ActionResult> DeleteProduct(int productId)
@@ -249,7 +250,7 @@ namespace Audi.Controllers
             return BadRequest("Failed to delete product");
         }
 
-        [Description("Get product variant by id")]
+        [SwaggerOperation(Summary = "Get product variant by id")]
         [HttpGet("variants/{variantId}")]
         public async Task<ActionResult<ProductVariantDto>> GetProductVariant(int variantId)
         {
@@ -260,7 +261,7 @@ namespace Audi.Controllers
             return Ok(_mapper.Map<ProductVariantDto>(productVariant));
         }
 
-        [Description("Get product variants by product id")]
+        [SwaggerOperation(Summary = "Get product variants by product id")]
         [HttpGet("variants/all/{productId}")]
         public async Task<ActionResult<List<ProductVariantDto>>> GetProductVariants(int productId)
         {
@@ -269,7 +270,7 @@ namespace Audi.Controllers
             return Ok(_mapper.Map<List<ProductVariantDto>>(productVariants));
         }
 
-        [Description("Add product variant")]
+        [SwaggerOperation(Summary = "Add product variant")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("variants")]
         public async Task<ActionResult<ProductVariantDto>> AddProductVariant([FromBody] ProductVariantUpsertDto request)
@@ -286,7 +287,7 @@ namespace Audi.Controllers
             return BadRequest("Failed to add product variant");
         }
 
-        [Description("Update product variant")]
+        [SwaggerOperation(Summary = "Update product variant")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPut("variants")]
         public async Task<ActionResult<ProductVariantDto>> UpdateProductVariant([FromBody] ProductVariantUpsertDto request)
@@ -326,7 +327,7 @@ namespace Audi.Controllers
             return BadRequest("Failed to update product variant");
         }
 
-        [Description("Delete a product variant")]
+        [SwaggerOperation(Summary = "Delete a product variant")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("variants/{variantId}")]
         public async Task<ActionResult> DeleteProductVariant(int variantId)
@@ -342,7 +343,7 @@ namespace Audi.Controllers
             return BadRequest("Failed to delete product variant");
         }
 
-        [Description("Get a product variant value by id")]
+        [SwaggerOperation(Summary = "Get a product variant value by id")]
         [HttpGet("variants/values/{variantValueId}")]
         public async Task<ActionResult<ProductVariantValueDto>> GetProductVariantValue(int variantValueId)
         {
@@ -353,7 +354,7 @@ namespace Audi.Controllers
             return Ok(_mapper.Map<ProductVariantValueDto>(variantValue));
         }
 
-        [Description("Get product variant values by variantid")]
+        [SwaggerOperation(Summary = "Get product variant values by variantid")]
         [HttpGet("variants/values/all/{variantId}")]
         public async Task<ActionResult<List<ProductVariantValueDto>>> GetProductVariantValues(int variantId)
         {
@@ -362,7 +363,7 @@ namespace Audi.Controllers
             return Ok(_mapper.Map<List<ProductVariantValueDto>>(variantValues));
         }
 
-        [Description("Add product variant value")]
+        [SwaggerOperation(Summary = "Add product variant value")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("variants/values")]
         public async Task<ActionResult<ProductVariantDto>> AddProductVariantValue([FromBody] ProductVariantValueUpsertDto request)
@@ -408,7 +409,7 @@ namespace Audi.Controllers
             return BadRequest("Failed to add product variant value");
         }
 
-        [Description("Update product variant value")]
+        [SwaggerOperation(Summary = "Update product variant value")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPut("variants/values")]
         public async Task<ActionResult<ProductVariantDto>> UpdateProductVariantValue([FromBody] ProductVariantValueUpsertDto request)
@@ -449,7 +450,7 @@ namespace Audi.Controllers
             return BadRequest("Failed to update product variant value");
         }
 
-        [Description("Delete a product variant value")]
+        [SwaggerOperation(Summary = "Delete a product variant value")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("variants/values/{variantValueId}")]
         public async Task<ActionResult> DeleteProductVariantValue(int variantValueId)
@@ -465,7 +466,7 @@ namespace Audi.Controllers
             return BadRequest("Failed to delete product variant value");
         }
 
-        [Description("Upload photo")]
+        [SwaggerOperation(Summary = "Upload photo")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("photos/{productId}")]
         public async Task<ActionResult<ProductPhotoDto>> AddProductPhoto(int productId, IFormFile file)
@@ -512,7 +513,7 @@ namespace Audi.Controllers
             return BadRequest("Problem adding photo");
         }
 
-        [Description("Set product's main photo")]
+        [SwaggerOperation(Summary = "Set product's main photo")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPut("photos/{photoId}/set-main-photo")]
         public async Task<ActionResult> SetProductMainPhoto(int photoId)
@@ -541,7 +542,7 @@ namespace Audi.Controllers
             return BadRequest("Failed to set main photo");
         }
 
-        [Description("Delete a product photo")]
+        [SwaggerOperation(Summary = "Delete a product photo")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("photos/{photoId}")]
         public async Task<ActionResult> DeleteProductPhoto(int photoId)
