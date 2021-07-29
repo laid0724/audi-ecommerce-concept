@@ -591,12 +591,12 @@ namespace Audi.Controllers
 
             if (isAdmin || isModerator)
             {
-                resetPwUrl = $"{_domain}/sys/reset-email?userId={user.Id}&token={tokenEncoded}";
+                resetPwUrl = $"{_domain}/sys/reset-password?userId={user.Id}&token={tokenEncoded}";
             }
             else
             {
                 // TODO: detect language (add language header to argument) and send versions accordingly
-                resetPwUrl = $"{_domain}/reset-email?userId={user.Id}&token={tokenEncoded}";
+                resetPwUrl = $"{_domain}/reset-password?userId={user.Id}&token={tokenEncoded}";
             }
 
             string emailContent = $"請點擊<a href='{resetPwUrl}'>此連結</a>重新設定您的密碼。";
