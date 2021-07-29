@@ -2,11 +2,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ClrCustomBtnFilter } from '../datagrid-filters';
 
 @Component({
-  selector: 'audi-sys-clr-dg-custom-btn-filter',
-  templateUrl: './clr-dg-custom-btn-filter.component.html',
-  styleUrls: ['./clr-dg-custom-btn-filter.component.scss'],
+  selector: 'audi-sys-clr-dg-boolean-btn-filter',
+  templateUrl: './clr-dg-boolean-btn-filter.component.html',
+  styleUrls: ['./clr-dg-boolean-btn-filter.component.scss'],
 })
-export class ClrDgCustomBtnFilterComponent implements OnInit {
+export class ClrDgBooleanBtnFilterComponent implements OnInit {
   @Input()
   filter: ClrCustomBtnFilter;
   @Input()

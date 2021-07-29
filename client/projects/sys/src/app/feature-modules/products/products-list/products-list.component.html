@@ -59,20 +59,20 @@
 
           <clr-dg-column>
             顯示狀態 Visibility
-            <audi-sys-clr-dg-custom-btn-filter
+            <audi-sys-clr-dg-boolean-btn-filter
               [filter]="isVisibleFilter"
               [trueDisplayValue]="true | toZh: 'isVisible'"
               [falseDisplayValue]="false | toZh: 'isVisible'"
-            ></audi-sys-clr-dg-custom-btn-filter>
+            ></audi-sys-clr-dg-boolean-btn-filter>
           </clr-dg-column>
 
           <clr-dg-column
             >折扣狀態 Discount Status
-            <audi-sys-clr-dg-custom-btn-filter
+            <audi-sys-clr-dg-boolean-btn-filter
               [filter]="isDiscountedFilter"
               [trueDisplayValue]="true | toZh: 'isDiscounted'"
               [falseDisplayValue]="false | toZh: 'isDiscounted'"
-            ></audi-sys-clr-dg-custom-btn-filter>
+            ></audi-sys-clr-dg-boolean-btn-filter>
           </clr-dg-column>
 
           <clr-dg-row *ngFor="let product of products" [clrDgItem]="product">
