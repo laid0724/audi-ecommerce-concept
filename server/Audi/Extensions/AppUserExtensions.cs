@@ -6,7 +6,7 @@ namespace Audi.Extensions
     {
         public static string GetFullName(this AppUser user)
         {
-            return (user.FirstName + user.LastName).Trim();
+            return (user.FirstName + " " + user.LastName).Trim();
         }
     }
 }

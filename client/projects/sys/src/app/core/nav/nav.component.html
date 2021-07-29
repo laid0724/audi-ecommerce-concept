@@ -71,8 +71,11 @@
         <clr-icon clrVerticalNavIcon shape="users"></clr-icon>
         會員 Members
         <clr-vertical-nav-group-children *clrIfExpanded="false">
-          <a clrVerticalNavLink routerLink="/manage" routerLinkActive="active">
-            TBD
+          <a clrVerticalNavLink routerLink="/manage/users/members" routerLinkActive="active">
+            會員列表 Members List
+          </a>
+          <a clrVerticalNavLink routerLink="/manage/users/moderators" routerLinkActive="active">
+            管理員列表 Moderators List
           </a>
         </clr-vertical-nav-group-children>
       </clr-vertical-nav-group>

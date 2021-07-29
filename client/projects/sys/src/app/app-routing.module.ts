@@ -62,6 +62,13 @@ const routes: Routes = [
               ),
           },
           {
+            path: 'users',
+            loadChildren: () =>
+              import('./feature-modules/members/members.module').then(
+                (m) => m.MembersModule
+              ),
+          },
+          {
             path: 'news',
             resolve: { data: LanguageSelectorResolver },
             data: {

@@ -1,0 +1,20 @@
+<clr-dg-filter [clrDgFilter]="filter">
+  <div class="custom-filter">
+    <span
+      class="label clickable"
+      *ngFor="let option of options"
+      [ngClass]="{
+        'label-active': filter.value == option.value
+      }"
+      (click)="filter.value = option.value; filter.changes.next()"
+    >
+      <ng-container
+        *ngIf="option != null && option.value != null && option.label != null"
+        >{{ option.label }}</ng-container
+      >
+      <ng-container *ngIf="option.value === null || option.value === undefined">
+        清除篩選 Clear
+      </ng-container>
+    </span>
+  </div>
+</clr-dg-filter>

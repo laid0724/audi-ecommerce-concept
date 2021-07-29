@@ -28,6 +28,28 @@ export class ToZhPipe implements PipeTransform {
       }
     }
 
+    if (type === 'isDisabled') {
+      switch (value) {
+        case true:
+          return '停權中 Disabled';
+        case false:
+          return '開啟中 Enabled';
+        default:
+          return '';
+      }
+    }
+
+    if (type === 'emailConfirmed') {
+      switch (value) {
+        case true:
+          return '已認證 Confirmed';
+        case false:
+          return '未認證 Not Confirmed';
+        default:
+          return '';
+      }
+    }
+
     if (type === 'isDiscounted') {
       switch (value) {
         case true:

@@ -86,6 +86,11 @@ namespace Audi.Data
                 query = query.Where(u => u.Email.ToLower().Trim().Contains(memberParams.Email.ToLower().Trim()));
             }
 
+            if (!string.IsNullOrWhiteSpace(memberParams.PhoneNumber))
+            {
+                query = query.Where(u => u.PhoneNumber.ToLower().Trim().Contains(memberParams.PhoneNumber.ToLower().Trim()));
+            }
+
             if (!string.IsNullOrWhiteSpace(memberParams.Gender))
             {
                 query = query.Where(u => u.Gender.ToLower().Trim().Contains(memberParams.Gender.ToLower().Trim()));
@@ -98,7 +103,7 @@ namespace Audi.Data
 
             if (memberParams.EmailConfirmed.HasValue)
             {
-                query = query.Where(u => u.IsDisabled == memberParams.EmailConfirmed.Value);
+                query = query.Where(u => u.EmailConfirmed == memberParams.EmailConfirmed.Value);
             }
 
             return await PagedList<MemberDto>.CreateAsync(
