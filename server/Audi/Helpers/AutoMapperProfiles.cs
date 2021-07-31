@@ -120,6 +120,12 @@ namespace Audi.Helpers
                     // EF Core cannot query with aggregate, use Sum instead
                     // .Aggregate(0, (sum, val) => sum + val)
                     )
+                )
+                .ForMember(
+                    dest => dest.Sku,
+                    opt => opt.MapFrom(src => src.ProductSkuValues
+                        .FirstOrDefault().ProductSku.Sku
+                    )
                 );
 
             CreateMap<ProductVariant, ProductVariantDto>()

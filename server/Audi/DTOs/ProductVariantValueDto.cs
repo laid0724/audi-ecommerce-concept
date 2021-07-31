@@ -7,5 +7,6 @@ namespace Audi.DTOs
         public int VariantId { get; set; }
         public string Name { get; set; }
         public int Stock { get; set; }
+        public string Sku { get; set; }
     }
 }

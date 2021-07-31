@@ -6,7 +6,11 @@
     {{ label }}
   </label>
   <div class="mt-1 mt-md-0">
-    <clr-accordion *ngIf="productVariants.length > 0" class="mb-2">
+    <clr-accordion
+      [clrAccordionMultiPanel]="true"
+      *ngIf="productVariants.length > 0"
+      class="mb-2"
+    >
       <clr-accordion-panel *ngFor="let variant of productVariants">
         <clr-accordion-title
           class="d-flex justify-content-between align-items-center w-100 py-1"
@@ -31,7 +35,8 @@
         </clr-accordion-title>
         <clr-accordion-content *clrIfExpanded>
           <div class="row">
-            <div class="col-12 d-flex justify-content-end">
+            <div class="col-12 d-flex justify-content-between align-items-center">
+              <h6 class="h6 mt-0">{{ variant.variantValueLabel }}</h6>
               <button
                 type="button"
                 class="btn btn-icon btn-sm btn-primary me-0"
@@ -42,7 +47,10 @@
               </button>
             </div>
           </div>
-          <div class="row" *ngIf="variant.variantValues.length > 0; else noValuesTemplate">
+          <div
+            class="row"
+            *ngIf="variant.variantValues.length > 0; else noValuesTemplate"
+          >
             <div class="col-12">
               <table class="table table-compact mt-2 mb-3">
                 <thead>
@@ -85,12 +93,16 @@
           <ng-template #noValuesTemplate>
             <div class="row">
               <div class="col-12">
-                <p class="p5 mt-0">注意：該產品選項需要至少有一筆選擇才會在前台顯示。</p>
-                <p class="p5 mt-1 mb-3">Note: This product option will only show in the public site when it has at least one selection created.</p>
+                <p class="p5 mt-0">
+                  注意：該產品選項需要至少有一筆選擇才會在前台顯示。
+                </p>
+                <p class="p5 mt-1 mb-3">
+                  Note: This product option will only show in the public site
+                  when it has at least one selection created.
+                </p>
               </div>
             </div>
           </ng-template>
-
         </clr-accordion-content>
       </clr-accordion-panel>
     </clr-accordion>
@@ -141,6 +153,23 @@
         />
         <clr-control-error *clrIfError="'required'"
           >必填 Required</clr-control-error
+        >
+      </clr-input-container>
+      <clr-input-container class="d-flex flex-column w-100">
+        <label class="w-100">子選項歸類名稱 Child Categories Label Name</label>
+        <input
+          type="text"
+          clrInput
+          formControlName="variantValueLabel"
+          class="clr-input-width"
+        />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+        <clr-control-helper
+          >請填寫該選項下的子類別名稱，例如大小，型號，等等 Please provide the
+          name for the categories under this option, e.g., size, category,
+          etc.</clr-control-helper
         >
       </clr-input-container>
     </form>

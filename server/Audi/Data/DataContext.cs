@@ -32,8 +32,7 @@ namespace Audi.Data
         public DbSet<DynamicDocument> DynamicDocuments { get; set; }
         public DbSet<DynamicDocumentPhoto> DynamicDocumentPhotos { get; set; }
         public DbSet<AppUserPhoto> AppUserPhotos { get; set; }
-        public DbSet<Order> Orders { get; set; } // TODO: relationships between products, open another branch for this when implementing order feature
-
+        public DbSet<Order> Orders { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
