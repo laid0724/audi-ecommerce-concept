@@ -1,0 +1,10 @@
+.original-price {
+  color: var(--audi-grey-8);
+  text-decoration: line-through;
+  font-style: italic;
+}
+
+.discounted {
+  color: var(--audi-red);
+  font-weight: bold;
+}

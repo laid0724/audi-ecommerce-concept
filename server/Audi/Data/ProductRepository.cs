@@ -222,12 +222,12 @@ namespace Audi.Data
 
             if (productParams.PriceMin.HasValue)
             {
-                query = query.Where(p => p.Price >= productParams.PriceMin.Value);
+                query = query.Where(p => (p.IsDiscounted ? (p.Price - p.DiscountAmount) : p.Price) >= productParams.PriceMin.Value);
             }
 
             if (productParams.PriceMax.HasValue)
             {
-                query = query.Where(p => p.Price <= productParams.PriceMax.Value);
+                query = query.Where(p => (p.IsDiscounted ? (p.Price - p.DiscountAmount) : p.Price) <= productParams.PriceMax.Value);
             }
 
             if (productParams.StockMin.HasValue)

@@ -98,7 +98,15 @@
               }}
             </clr-dg-cell>
 
-            <clr-dg-cell>{{ product.price }}</clr-dg-cell>
+            <clr-dg-cell>
+              <ng-container *ngIf="product.isDiscounted">
+                <span class="discounted">{{
+                  product.price - product.discountAmount
+                }}</span>
+                &nbsp;
+                <span class="original-price">{{ product.price }}</span>
+              </ng-container>
+            </clr-dg-cell>
 
             <clr-dg-cell>{{ product.stock }}</clr-dg-cell>
 
