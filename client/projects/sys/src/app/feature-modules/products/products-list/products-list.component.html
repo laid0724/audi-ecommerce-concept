@@ -99,13 +99,14 @@
             </clr-dg-cell>
 
             <clr-dg-cell>
-              <ng-container *ngIf="product.isDiscounted">
+              <ng-container *ngIf="product.isDiscounted; else normalPrice">
                 <span class="discounted">{{
                   product.price - product.discountAmount
                 }}</span>
                 &nbsp;
                 <span class="original-price">{{ product.price }}</span>
               </ng-container>
+              <ng-template #normalPrice>{{ product.price }}</ng-template>
             </clr-dg-cell>
 
             <clr-dg-cell>{{ product.stock }}</clr-dg-cell>
