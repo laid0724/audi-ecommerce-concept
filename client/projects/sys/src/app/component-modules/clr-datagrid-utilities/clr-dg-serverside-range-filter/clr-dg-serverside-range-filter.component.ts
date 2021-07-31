@@ -6,8 +6,8 @@ import {
   NON_NEGATIVE_NUMBER_REGEX,
 } from '@audi/data';
 import { ClrForm } from '@clr/angular';
-import { combineLatest, Subject } from 'rxjs';
-import { startWith, takeUntil, tap } from 'rxjs/operators';
+import { combineLatest, interval, Subject } from 'rxjs';
+import { debounce, startWith, takeUntil, tap } from 'rxjs/operators';
 import { ClrMinMaxRangeFilter } from '../datagrid-filters';
 
 @Component({
@@ -40,8 +40,14 @@ export class ClrDgServersideRangeFilterComponent implements OnInit, OnDestroy {
 
     if (minControl != null && maxControl != null) {
       combineLatest([
-        minControl.valueChanges.pipe(startWith(null)),
-        maxControl.valueChanges.pipe(startWith(null)),
+        minControl.valueChanges.pipe(
+          startWith(null),
+          debounce(() => interval(300))
+        ),
+        maxControl.valueChanges.pipe(
+          startWith(null),
+          debounce(() => interval(300))
+        ),
       ])
         .pipe(
           tap(([min, max]: [number, number]) => {
