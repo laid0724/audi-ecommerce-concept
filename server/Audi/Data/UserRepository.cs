@@ -42,6 +42,13 @@ namespace Audi.Data
                 .Include(u => u.UserImage)
                     .ThenInclude(ui => ui.Photo)
                 .Include(u => u.Orders)
+                    .ThenInclude(o => o.OrderItems)
+                        .ThenInclude(oi => oi.Product)
+                            .IgnoreQueryFilters()
+                .Include(u => u.Orders)
+                    .ThenInclude(o => o.OrderItems)
+                        .ThenInclude(oi => oi.ProductVariantValue)
+                            .IgnoreQueryFilters()
                 .Where(e => e.Id == userId)
                 .AsQueryable();
 
@@ -64,6 +71,14 @@ namespace Audi.Data
                     .ThenInclude(r => r.Role)
                 .Include(u => u.UserImage)
                     .ThenInclude(ui => ui.Photo)
+                // .Include(u => u.Orders)
+                //     .ThenInclude(o => o.OrderItems)
+                //         .ThenInclude(oi => oi.Product)
+                //             .IgnoreQueryFilters()
+                // .Include(u => u.Orders)
+                //     .ThenInclude(o => o.OrderItems)
+                //         .ThenInclude(oi => oi.ProductVariantValue)
+                //             .IgnoreQueryFilters()
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(role))
