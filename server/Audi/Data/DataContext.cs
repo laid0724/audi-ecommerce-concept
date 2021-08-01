@@ -33,6 +33,7 @@ namespace Audi.Data
         public DbSet<DynamicDocumentPhoto> DynamicDocumentPhotos { get; set; }
         public DbSet<AppUserPhoto> AppUserPhotos { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -208,6 +209,7 @@ namespace Audi.Data
 
             // relationship end
 
+            // Order & OrderItem
             builder.Entity<Order>()
                 .Property<Address>(e => e.BillingAddress)
                 .HasColumnType("jsonb")
@@ -223,6 +225,42 @@ namespace Audi.Data
                     a => JsonConvert.SerializeObject(a),
                     a => JsonConvert.DeserializeObject<Address>(a))
                 .HasDefaultValueSql("'{}'");
+
+            builder.Entity<Order>()
+                .Property<OrderStatus[]>(e => e.PreviousStatuses)
+                .HasColumnType("jsonb")
+                .HasConversion(
+                    a => JsonConvert.SerializeObject(a),
+                    a => JsonConvert.DeserializeObject<OrderStatus[]>(a))
+                .HasDefaultValueSql("'{}'");
+
+            builder.Entity<Order>()
+                .HasMany(e => e.OrderItems)
+                .WithOne(e => e.Order)
+                .HasForeignKey(e => e.OrderId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<OrderItem>()
+                .HasOne(e => e.Order)
+                .WithMany(e => e.OrderItems)
+                .HasForeignKey(e => e.OrderId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<OrderItem>()
+                .HasOne(e => e.ProductVariantValue)
+                .WithMany(e => e.OrderItems)
+                .HasForeignKey(e => new { e.ProductId, e.VariantId, e.VariantValueId })
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<ProductVariantValue>()
+                .HasMany(e => e.OrderItems)
+                .WithOne(e => e.ProductVariantValue)
+                .HasForeignKey(e => new { e.ProductId, e.VariantId, e.VariantValueId })
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
 
             // relationship for: Product <-> ProductPhoto <-> Photo
             builder.Entity<ProductPhoto>()
