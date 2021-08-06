@@ -31,14 +31,14 @@ const routes: Routes = [
   {
     path: 'confirm-email',
     data: {
-      confirmEmail: true
+      confirmEmail: true,
     },
     component: LoginComponent,
   },
   {
     path: 'reset-password',
     data: {
-      resetPassword: true
+      resetPassword: true,
     },
     component: LoginComponent,
   },
@@ -73,6 +73,13 @@ const routes: Routes = [
             loadChildren: () =>
               import('./feature-modules/products/products.module').then(
                 (m) => m.ProductsModule
+              ),
+          },
+          {
+            path: 'orders',
+            loadChildren: () =>
+              import('./feature-modules/orders/orders.module').then(
+                (m) => m.OrdersModule
               ),
           },
           {
