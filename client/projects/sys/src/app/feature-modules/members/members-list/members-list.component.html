@@ -75,8 +75,8 @@
             信箱認證狀態 Email Confirmed
             <audi-sys-clr-dg-boolean-btn-filter
               [filter]="emailConfirmedFilter"
-              [trueDisplayValue]="true | toZh: 'emailConfirmed'"
-              [falseDisplayValue]="false | toZh: 'emailConfirmed'"
+              [trueDisplayValue]="true | toZh: 'emailConfirmedWithEn'"
+              [falseDisplayValue]="false | toZh: 'emailConfirmedWithEn'"
             ></audi-sys-clr-dg-boolean-btn-filter>
           </clr-dg-column>
 
@@ -84,8 +84,8 @@
             帳戶狀態 Account Status
             <audi-sys-clr-dg-boolean-btn-filter
               [filter]="isDisabledFilter"
-              [trueDisplayValue]="true | toZh: 'isDisabled'"
-              [falseDisplayValue]="false | toZh: 'isDisabled'"
+              [trueDisplayValue]="true | toZh: 'isDisabledWithEn'"
+              [falseDisplayValue]="false | toZh: 'isDisabledWithEn'"
             ></audi-sys-clr-dg-boolean-btn-filter>
           </clr-dg-column>
 
@@ -146,10 +146,10 @@
               member.gender | toZh: 'genderWithEn'
             }}</clr-dg-cell>
             <clr-dg-cell>{{
-              member.emailConfirmed | toZh: 'emailConfirmed'
+              member.emailConfirmed | toZh: 'emailConfirmedWithEn'
             }}</clr-dg-cell>
             <clr-dg-cell>{{
-              member.isDisabled | toZh: 'isDisabled'
+              member.isDisabled | toZh: 'isDisabledWithEn'
             }}</clr-dg-cell>
           </clr-dg-row>
 

@@ -61,8 +61,8 @@
             顯示狀態 Visibility
             <audi-sys-clr-dg-boolean-btn-filter
               [filter]="isVisibleFilter"
-              [trueDisplayValue]="true | toZh: 'isVisible'"
-              [falseDisplayValue]="false | toZh: 'isVisible'"
+              [trueDisplayValue]="true | toZh: 'isVisibleWithEn'"
+              [falseDisplayValue]="false | toZh: 'isVisibleWithEn'"
             ></audi-sys-clr-dg-boolean-btn-filter>
           </clr-dg-column>
 
@@ -70,8 +70,8 @@
             >折扣狀態 Discount Status
             <audi-sys-clr-dg-boolean-btn-filter
               [filter]="isDiscountedFilter"
-              [trueDisplayValue]="true | toZh: 'isDiscounted'"
-              [falseDisplayValue]="false | toZh: 'isDiscounted'"
+              [trueDisplayValue]="true | toZh: 'isDiscountedWithEn'"
+              [falseDisplayValue]="false | toZh: 'isDiscountedWithEn'"
             ></audi-sys-clr-dg-boolean-btn-filter>
           </clr-dg-column>
 
@@ -112,11 +112,11 @@
             <clr-dg-cell>{{ product.stock }}</clr-dg-cell>
 
             <clr-dg-cell>{{
-              product.isVisible | toZh: 'isVisible'
+              product.isVisible | toZh: 'isVisibleWithEn'
             }}</clr-dg-cell>
 
             <clr-dg-cell>{{
-              product.isDiscounted | toZh: 'isDiscounted'
+              product.isDiscounted | toZh: 'isDiscountedWithEn'
             }}</clr-dg-cell>
           </clr-dg-row>
 

@@ -17,7 +17,7 @@ export class ToZhPipe implements PipeTransform {
       }
     }
 
-    if (type === 'isVisible') {
+    if (type === 'isVisibleWithEn') {
       switch (value) {
         case true:
           return '顯示 Visible';
@@ -28,7 +28,7 @@ export class ToZhPipe implements PipeTransform {
       }
     }
 
-    if (type === 'isDisabled') {
+    if (type === 'isDisabledWithEn') {
       switch (value) {
         case true:
           return '停權中 Disabled';
@@ -39,7 +39,7 @@ export class ToZhPipe implements PipeTransform {
       }
     }
 
-    if (type === 'emailConfirmed') {
+    if (type === 'emailConfirmedWithEn') {
       switch (value) {
         case true:
           return '已認證 Confirmed';
@@ -50,7 +50,7 @@ export class ToZhPipe implements PipeTransform {
       }
     }
 
-    if (type === 'isDiscounted') {
+    if (type === 'isDiscountedWithEn') {
       switch (value) {
         case true:
           return '折扣中 Discounted';

@@ -46,8 +46,8 @@
                 <audi-sys-clr-dg-boolean-btn-filter
                   *ngSwitchCase="'isVisible'"
                   [filter]="isVisibleFilter"
-                  [trueDisplayValue]="true | toZh: 'isVisible'"
-                  [falseDisplayValue]="false | toZh: 'isVisible'"
+                  [trueDisplayValue]="true | toZh: 'isVisibleWithEn'"
+                  [falseDisplayValue]="false | toZh: 'isVisibleWithEn'"
                 ></audi-sys-clr-dg-boolean-btn-filter>
                 <!-- FIXME: CODE SMELL HERE -->
                 <audi-sys-clr-dg-date-range-filter
@@ -107,7 +107,7 @@
                       <ng-container *ngSwitchCase="'isVisible'">
                         {{
                           getValue(dynamicDocument, column.key)
-                            | toZh: 'isVisible'
+                            | toZh: 'isVisibleWithEn'
                         }}
                       </ng-container>
                       <ng-container *ngSwitchCase="'date'">
