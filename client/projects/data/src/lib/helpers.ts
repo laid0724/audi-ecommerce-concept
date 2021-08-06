@@ -7,10 +7,11 @@ import {
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { PaginatedResult } from './models/pagination';
 import { ActivatedRoute, QueryParamsHandling, Router } from '@angular/router';
 import { utcToZonedTime } from 'date-fns-tz';
 import { format } from 'date-fns';
+import { PaginatedResult } from './models/pagination';
+import { Gender, LanguageCode, OrderStatus } from './enums';
 
 export function getPaginationHeaders(
   pageNumber: number,
@@ -158,4 +159,112 @@ export function formatClrDateToUTCString(date: string): string | null {
 
 export function clrDateFormat(date: Date): string {
   return format(date, 'yyyy-MM-dd');
+}
+
+export function toZhMapper(
+  value: string | null | undefined | boolean,
+  type?: string
+): string {
+  if (type === 'withEnglishBoolean') {
+    switch (value) {
+      case true:
+        return '是 Yes';
+      case false:
+        return '否 No';
+      default:
+        return '';
+    }
+  }
+
+  if (type === 'isVisibleWithEn') {
+    switch (value) {
+      case true:
+        return '顯示 Visible';
+      case false:
+        return '隱藏 Hidden';
+      default:
+        return '';
+    }
+  }
+
+  if (type === 'isDisabledWithEn') {
+    switch (value) {
+      case true:
+        return '停權中 Disabled';
+      case false:
+        return '開啟中 Enabled';
+      default:
+        return '';
+    }
+  }
+
+  if (type === 'emailConfirmedWithEn') {
+    switch (value) {
+      case true:
+        return '已認證 Confirmed';
+      case false:
+        return '未認證 Not Confirmed';
+      default:
+        return '';
+    }
+  }
+
+  if (type === 'isDiscountedWithEn') {
+    switch (value) {
+      case true:
+        return '折扣中 Discounted';
+      case false:
+        return '原價 No Discount';
+      default:
+        return '';
+    }
+  }
+
+  if (type === 'genderWithEn') {
+    switch (value) {
+      case Gender.Male:
+        return '男 Male';
+      case Gender.Female:
+        return '女 Female';
+      case Gender.Other:
+        return '其他 Other';
+    }
+  }
+
+  if (type === 'orderStatusWithEn') {
+    switch (value) {
+      case OrderStatus.Placed:
+        return '已成立 Confirmed';
+      case OrderStatus.Shipped:
+        return '運送中 Shipped';
+      case OrderStatus.Delivered:
+        return '已送達 Delivered';
+      case OrderStatus.Canceled:
+        return '已取消 Canceled';
+    }
+  }
+
+  switch (value) {
+    case null || undefined || '':
+      return '';
+    case LanguageCode.Zh:
+      return '中文';
+    case LanguageCode.En:
+      return '英文';
+
+    case Gender.Male:
+      return '男';
+    case Gender.Female:
+      return '女';
+    case Gender.Other:
+      return '其他';
+
+    case true:
+      return '是';
+    case false:
+      return '否';
+
+    default:
+      return '';
+  }
 }
