@@ -191,17 +191,21 @@ namespace Audi.Controllers
                 order.InternalNotes = request.InternalNotes;
             }
 
-            order.CurrentStatus = status;
+            if (order.CurrentStatus != status)
+            {
+                order.CurrentStatus = status;
 
-            var previousOrderStatus = order.PreviousStatuses
-                .Append(new OrderStatus
-                {
-                    Status = status,
-                    UpdatedAt = DateTime.UtcNow
-                })
-                .ToArray();
+                var previousOrderStatus = order.PreviousStatuses
+                    .Append(new OrderStatus
+                    {
+                        Status = status,
+                        UpdatedAt = DateTime.UtcNow
+                    })
+                    .ToArray();
 
-            order.PreviousStatuses = previousOrderStatus;
+                order.PreviousStatuses = previousOrderStatus;
+            }
+
             order.LastUpdated = DateTime.UtcNow;
 
             _unitOfWork.OrderRepository.UpdateOrder(order);
