@@ -50,7 +50,11 @@ namespace Audi.Data
                         .ThenInclude(p => p.ProductPhotos)
                             .ThenInclude(pp => pp.Photo)
                 .Include(o => o.OrderItems)
-                    .ThenInclude(oi => oi.ProductVariantValue)
+                    .ThenInclude(oi => oi.Product)
+                        .ThenInclude(p => p.ProductVariants)
+                            .ThenInclude(pv => pv.ProductVariantValues)
+                                .ThenInclude(pvv => pvv.ProductSkuValues)
+                                    .ThenInclude(psv => psv.ProductSku)
                 .Include(o => o.User)
                 .Where(o => o.Id == orderId)
                 .SingleOrDefaultAsync();
@@ -67,7 +71,11 @@ namespace Audi.Data
                         .ThenInclude(p => p.ProductPhotos)
                             .ThenInclude(pp => pp.Photo)
                 .Include(o => o.OrderItems)
-                    .ThenInclude(oi => oi.ProductVariantValue)
+                    .ThenInclude(oi => oi.Product)
+                        .ThenInclude(p => p.ProductVariants)
+                            .ThenInclude(pv => pv.ProductVariantValues)
+                                .ThenInclude(pvv => pvv.ProductSkuValues)
+                                    .ThenInclude(psv => psv.ProductSku)
                 .Include(o => o.User)
                 .Where(o => o.UserId == userId)
                 .ToListAsync();
@@ -84,7 +92,11 @@ namespace Audi.Data
                         .ThenInclude(p => p.ProductPhotos)
                             .ThenInclude(pp => pp.Photo)
                 .Include(o => o.OrderItems)
-                    .ThenInclude(oi => oi.ProductVariantValue)
+                    .ThenInclude(oi => oi.Product)
+                        .ThenInclude(p => p.ProductVariants)
+                            .ThenInclude(pv => pv.ProductVariantValues)
+                                .ThenInclude(pvv => pvv.ProductSkuValues)
+                                    .ThenInclude(psv => psv.ProductSku)
                 .Include(o => o.User)
                 .AsQueryable();
 
