@@ -208,6 +208,7 @@ namespace Audi.Controllers
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
             {
+                // TODO: send update order status email
                 return Ok(_mapper.Map<OrderDto>(order));
             }
 

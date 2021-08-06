@@ -37,6 +37,7 @@ namespace Audi.Data
         public async Task<MemberDto> GetUserBasedOnRoleAsync(int userId, string role)
         {
             var query = _context.Users
+                .IgnoreQueryFilters()
                 .Include(u => u.UserRoles)
                     .ThenInclude(r => r.Role)
                 .Include(u => u.UserImage)
@@ -44,11 +45,11 @@ namespace Audi.Data
                 .Include(u => u.Orders)
                     .ThenInclude(o => o.OrderItems)
                         .ThenInclude(oi => oi.Product)
-                            .IgnoreQueryFilters()
+                            .ThenInclude(p => p.ProductPhotos)
+                                .ThenInclude(pp => pp.Photo)
                 .Include(u => u.Orders)
                     .ThenInclude(o => o.OrderItems)
                         .ThenInclude(oi => oi.ProductVariantValue)
-                            .IgnoreQueryFilters()
                 .Where(e => e.Id == userId)
                 .AsQueryable();
 
@@ -74,11 +75,9 @@ namespace Audi.Data
                 // .Include(u => u.Orders)
                 //     .ThenInclude(o => o.OrderItems)
                 //         .ThenInclude(oi => oi.Product)
-                //             .IgnoreQueryFilters()
                 // .Include(u => u.Orders)
                 //     .ThenInclude(o => o.OrderItems)
                 //         .ThenInclude(oi => oi.ProductVariantValue)
-                //             .IgnoreQueryFilters()
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(role))

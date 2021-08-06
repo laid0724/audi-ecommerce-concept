@@ -44,12 +44,13 @@ namespace Audi.Data
         public async Task<Order> GetOrderByIdAsync(int orderId)
         {
             var order = await _context.Orders
+                .IgnoreQueryFilters()
                 .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Product)
-                        .IgnoreQueryFilters()
+                        .ThenInclude(p => p.ProductPhotos)
+                            .ThenInclude(pp => pp.Photo)
                 .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.ProductVariantValue)
-                        .IgnoreQueryFilters()
                 .Include(o => o.User)
                 .Where(o => o.Id == orderId)
                 .SingleOrDefaultAsync();
@@ -60,12 +61,13 @@ namespace Audi.Data
         public async Task<ICollection<Order>> GetOrdersByUserIdAsync(int userId)
         {
             var orders = await _context.Orders
+                .IgnoreQueryFilters()
                 .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Product)
-                        .IgnoreQueryFilters()
+                        .ThenInclude(p => p.ProductPhotos)
+                            .ThenInclude(pp => pp.Photo)
                 .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.ProductVariantValue)
-                        .IgnoreQueryFilters()
                 .Include(o => o.User)
                 .Where(o => o.UserId == userId)
                 .ToListAsync();
@@ -76,12 +78,13 @@ namespace Audi.Data
         public async Task<PagedList<OrderDto>> GetOrdersPagedAsync(OrderParams orderParams)
         {
             var query = _context.Orders
+                .IgnoreQueryFilters()
                 .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.Product)
-                        .IgnoreQueryFilters()
+                        .ThenInclude(p => p.ProductPhotos)
+                            .ThenInclude(pp => pp.Photo)
                 .Include(o => o.OrderItems)
                     .ThenInclude(oi => oi.ProductVariantValue)
-                        .IgnoreQueryFilters()
                 .Include(o => o.User)
                 .AsQueryable();
 
