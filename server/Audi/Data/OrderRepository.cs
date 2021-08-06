@@ -102,7 +102,7 @@ namespace Audi.Data
 
             if (!string.IsNullOrWhiteSpace(orderParams.OrderNumber))
             {
-                query = query.Where(o => o.OrderNumber.ToLower().Trim().Contains(orderParams.CurrentStatus.ToLower().Trim()));
+                query = query.Where(o => o.OrderNumber.ToLower().Trim().Contains(orderParams.OrderNumber.ToLower().Trim()));
             }
 
             if (!string.IsNullOrWhiteSpace(orderParams.CurrentStatus))
@@ -117,18 +117,22 @@ namespace Audi.Data
 
             if (!string.IsNullOrWhiteSpace(orderParams.FirstName))
             {
-                query = query.Where(o => o.User.FirstName.ToLower().Trim().Contains(orderParams.LastName.ToLower().Trim()));
+                query = query.Where(o => o.User.FirstName.ToLower().Trim().Contains(orderParams.FirstName.ToLower().Trim()));
             }
 
             if (!string.IsNullOrWhiteSpace(orderParams.Email))
             {
-                query = query.Where(o => o.User.Email.ToLower().Trim().Contains(orderParams.LastName.ToLower().Trim()));
+                query = query.Where(o => o.User.Email.ToLower().Trim().Contains(orderParams.Email.ToLower().Trim()));
             }
 
             if (!string.IsNullOrWhiteSpace(orderParams.PhoneNumber))
             {
-                query = query.Where(o => o.User.PhoneNumber.ToLower().Trim().Contains(orderParams.LastName.ToLower().Trim()));
+                query = query.Where(o => o.User.PhoneNumber.ToLower().Trim().Contains(orderParams.PhoneNumber.ToLower().Trim()));
             }
+
+            query = query
+                .OrderByDescending(o => o.CreatedAt)
+                .ThenByDescending(o => o.LastUpdated);
 
             return await PagedList<OrderDto>.CreateAsync(
                 query.ProjectTo<OrderDto>(_mapper.ConfigurationProvider),
