@@ -33,6 +33,18 @@ namespace Audi.Controllers
             _logger = logger;
         }
 
+        public class Requests
+        {
+            public class OrderStatusUpdate
+            {
+                public int Id { get; set; }
+                public string Status { get; set; }
+                public string TrackingNumber { get; set; }
+                public Address ShippingAddress { get; set; }
+                public string InternalNotes { get; set; }
+            }
+        }
+
         [SwaggerOperation(Summary = "place order")]
         [HttpPost]
         public async Task<ActionResult<OrderDto>> CreateOrder([FromBody] OrderUpsertDto request)
@@ -75,7 +87,7 @@ namespace Audi.Controllers
                 var productSkuValue = await _unitOfWork.ProductRepository.GetProductSkuValueByVariantValueId(orderItem.VariantValueId);
 
                 if (productSkuValue == null) return StatusCode(500, "product_sku_value_is_null");
-                
+
                 if (productSkuValue.Stock - orderItem.Quantity < 0) return BadRequest($"stock insufficient: {productSkuValue.ProductSku.Sku}");
             }
 
@@ -130,10 +142,77 @@ namespace Audi.Controllers
 
             var createdOrder = _mapper.Map<OrderDto>(await _unitOfWork.OrderRepository.GetOrderById(order.Id));
 
+            // TODO: send order detail email
+
             return Ok(createdOrder);
         }
 
-        // update order status / tracking number
+        [SwaggerOperation(Summary = "update order status")]
+        [HttpPut]
+        public async Task<ActionResult<OrderDto>> UpdateOrderStatus([FromBody] Requests.OrderStatusUpdate request)
+        {
+            if (string.IsNullOrWhiteSpace(request.Status)) return BadRequest("invalid_order_status");
+
+            var status = request.Status.ToLower().Trim();
+
+            if (
+                !status.Contains("shipped") &&
+                !status.Contains("delivered") &&
+                !status.Contains("canceled")
+            )
+            {
+                return BadRequest("invalid_order_status");
+            }
+
+            var order = await _unitOfWork.OrderRepository.GetOrderById(request.Id);
+
+            if (order == null) return NotFound();
+
+            if (order.CurrentStatus == "delivered") return StatusCode(403, "order_delivered");
+
+            if (order.CurrentStatus == "canceled") return StatusCode(403, "order_canceled");
+
+            if (order.CurrentStatus == "shipped" && status == "canceled") return StatusCode(403, "order cannot be canceled once shipped");
+
+            if (request.ShippingAddress != null)
+            {
+                order.ShippingAddress = request.ShippingAddress;
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.TrackingNumber))
+            {
+                order.TrackingNumber = request.TrackingNumber.ToUpper();
+            }
+
+            if (!string.IsNullOrWhiteSpace(request.InternalNotes))
+            {
+                order.InternalNotes = request.InternalNotes;
+            }
+
+            order.CurrentStatus = status;
+
+            var previousOrderStatus = order.PreviousStatuses
+                .Append(new OrderStatus
+                {
+                    Status = status,
+                    UpdatedAt = DateTime.UtcNow
+                })
+                .ToArray();
+
+            order.PreviousStatuses = previousOrderStatus;
+            order.LastUpdated = DateTime.UtcNow;
+
+            _unitOfWork.OrderRepository.UpdateOrder(order);
+
+            if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
+            {
+                return Ok(_mapper.Map<OrderDto>(order));
+            }
+
+            return BadRequest("update order failed");
+        }
+
+        // TODO:
         // get order
         // get orders
     }
