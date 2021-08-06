@@ -3,6 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Audi.DTOs;
 using Audi.Entities;
+using Audi.Extensions;
+using Audi.Helpers;
 using Audi.Interfaces;
 using Audi.Models;
 using AutoMapper;
@@ -84,7 +86,7 @@ namespace Audi.Controllers
 
             foreach (var orderItem in request.OrderItems)
             {
-                var productSkuValue = await _unitOfWork.ProductRepository.GetProductSkuValueByVariantValueId(orderItem.VariantValueId);
+                var productSkuValue = await _unitOfWork.ProductRepository.GetProductSkuValueByVariantValueIdAsync(orderItem.VariantValueId);
 
                 if (productSkuValue == null) return StatusCode(500, "product_sku_value_is_null");
 
@@ -114,7 +116,7 @@ namespace Audi.Controllers
             foreach (var orderItem in request.OrderItems)
             {
                 var product = await _unitOfWork.ProductRepository.GetProductByIdAsync(orderItem.ProductId);
-                var productSkuValue = await _unitOfWork.ProductRepository.GetProductSkuValueByVariantValueId(orderItem.VariantValueId);
+                var productSkuValue = await _unitOfWork.ProductRepository.GetProductSkuValueByVariantValueIdAsync(orderItem.VariantValueId);
 
                 var isDiscounted = product.IsDiscounted && product.DiscountDeadline.HasValue
                     ? product.IsDiscounted && product.DiscountDeadline.Value >= DateTime.UtcNow
@@ -140,7 +142,7 @@ namespace Audi.Controllers
 
             if (_unitOfWork.HasChanges()) await _unitOfWork.Complete();
 
-            var createdOrder = _mapper.Map<OrderDto>(await _unitOfWork.OrderRepository.GetOrderById(order.Id));
+            var createdOrder = _mapper.Map<OrderDto>(await _unitOfWork.OrderRepository.GetOrderByIdAsync(order.Id));
 
             // TODO: send order detail email
 
@@ -164,7 +166,7 @@ namespace Audi.Controllers
                 return BadRequest("invalid_order_status");
             }
 
-            var order = await _unitOfWork.OrderRepository.GetOrderById(request.Id);
+            var order = await _unitOfWork.OrderRepository.GetOrderByIdAsync(request.Id);
 
             if (order == null) return NotFound();
 
@@ -212,8 +214,26 @@ namespace Audi.Controllers
             return BadRequest("update order failed");
         }
 
-        // TODO:
-        // get order
-        // get orders
+        [SwaggerOperation(Summary = "get an order")]
+        [HttpGet("{orderId}")]
+        public async Task<ActionResult<OrderDto>> GetOrder(int orderId)
+        {
+            var order = await _unitOfWork.OrderRepository.GetOrderByIdAsync(orderId);
+
+            if (order == null) return NotFound();
+
+            return Ok(_mapper.Map<OrderDto>(order));
+        }
+
+        [SwaggerOperation(Summary = "get all orders")]
+        [HttpGet]
+        public async Task<ActionResult<PagedList<OrderDto>>> GetProducts([FromQuery] OrderParams orderParams)
+        {
+            var orders = await _unitOfWork.OrderRepository.GetOrdersPagedAsync(orderParams);
+
+            Response.AddPaginationHeader(orders.CurrentPage, orders.PageSize, orders.TotalCount, orders.TotalPages);
+
+            return Ok(orders);
+        }
     }
 }
