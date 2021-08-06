@@ -80,7 +80,7 @@ namespace Audi.Data
             return photos;
         }
 
-        public async Task SetMainProductPhoto(ProductPhoto productPhoto)
+        public async Task SetMainProductPhotoAsync(ProductPhoto productPhoto)
         {
             var productId = productPhoto.ProductId;
 

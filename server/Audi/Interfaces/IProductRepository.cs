@@ -25,29 +25,29 @@ namespace Audi.Interfaces
         Task DeleteProductAsync(Product product);
 
         // product variant
-        Task<ProductVariant> GetProductVariantById(int variantId);
-        Task<ICollection<ProductVariant>> GetProductVariantsByProductId(int productId);
+        Task<ProductVariant> GetProductVariantByIdAsync(int variantId);
+        Task<ICollection<ProductVariant>> GetProductVariantsByProductIdAsync(int productId);
         void AddProductVariant(ProductVariant productVariant);
         void UpdateProductVariant(ProductVariant productVariant);
         Task DeleteProductVariantAsync(ProductVariant productVariant);
 
         // product variant value
-        Task<ProductVariantValue> GetProductVariantValueById(int variantValueId);
-        Task<ICollection<ProductVariantValue>> GetProductVariantValuesByVariantId(int variantId);
+        Task<ProductVariantValue> GetProductVariantValueByIdAsync(int variantValueId);
+        Task<ICollection<ProductVariantValue>> GetProductVariantValuesByVariantIdAsync(int variantId);
         void AddProductVariantValue(ProductVariantValue productVariantValue);
         void UpdateProductVariantValue(ProductVariantValue productVariantValue);
         void DeleteProductVariantValue(ProductVariantValue productVariantValue);
 
         // product sku
-        Task<ProductSku> GetProductSkuById(int skuId);
-        Task<ICollection<ProductSku>> GetProductSkusByProductId(int productId);
+        Task<ProductSku> GetProductSkuByIdAsync(int skuId);
+        Task<ICollection<ProductSku>> GetProductSkusByProductIdAsync(int productId);
         void AddProductSku(ProductSku productSku);
         void UpdateProductSku(ProductSku productSku);
         Task DeleteProductSkuAsync(ProductSku productSku);
 
         // product sku value
-        Task<ProductSkuValue> GetProductSkuValueByVariantValueId(int variantValueId);
-        Task<ICollection<ProductSkuValue>> GetProductSkuValuesByProductId(int productId);
+        Task<ProductSkuValue> GetProductSkuValueByVariantValueIdAsync(int variantValueId);
+        Task<ICollection<ProductSkuValue>> GetProductSkuValuesByProductIdAsync(int productId);
         void AddProductSkuValue(ProductSkuValue productSkuValue);
         void UpdateProductSkuValue(ProductSkuValue productSkuValue);
         void DeleteProductSkuValue(ProductSkuValue productSkuValue);

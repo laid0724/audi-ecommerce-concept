@@ -254,7 +254,7 @@ namespace Audi.Controllers
         [HttpGet("variants/{variantId}")]
         public async Task<ActionResult<ProductVariantDto>> GetProductVariant(int variantId)
         {
-            var productVariant = await _unitOfWork.ProductRepository.GetProductVariantById(variantId);
+            var productVariant = await _unitOfWork.ProductRepository.GetProductVariantByIdAsync(variantId);
 
             if (productVariant == null) return NotFound();
 
@@ -265,7 +265,7 @@ namespace Audi.Controllers
         [HttpGet("variants/all/{productId}")]
         public async Task<ActionResult<List<ProductVariantDto>>> GetProductVariants(int productId)
         {
-            var productVariants = await _unitOfWork.ProductRepository.GetProductVariantsByProductId(productId);
+            var productVariants = await _unitOfWork.ProductRepository.GetProductVariantsByProductIdAsync(productId);
 
             return Ok(_mapper.Map<List<ProductVariantDto>>(productVariants));
         }
@@ -294,7 +294,7 @@ namespace Audi.Controllers
         {
             if (!request.Id.HasValue) return BadRequest("no variant id provided");
 
-            var productVariant = await _unitOfWork.ProductRepository.GetProductVariantById(request.Id.Value);
+            var productVariant = await _unitOfWork.ProductRepository.GetProductVariantByIdAsync(request.Id.Value);
 
             if (productVariant == null) return NotFound();
 
@@ -306,7 +306,7 @@ namespace Audi.Controllers
             {
                 foreach (var skuValue in productVariant.ProductSkuValues)
                 {
-                    var productSku = await _unitOfWork.ProductRepository.GetProductSkuById(skuValue.SkuId);
+                    var productSku = await _unitOfWork.ProductRepository.GetProductSkuByIdAsync(skuValue.SkuId);
 
                     if (productSku != null)
                     {
@@ -332,7 +332,7 @@ namespace Audi.Controllers
         [HttpDelete("variants/{variantId}")]
         public async Task<ActionResult> DeleteProductVariant(int variantId)
         {
-            var productVariant = await _unitOfWork.ProductRepository.GetProductVariantById(variantId);
+            var productVariant = await _unitOfWork.ProductRepository.GetProductVariantByIdAsync(variantId);
 
             if (productVariant == null) return NotFound();
 
@@ -347,7 +347,7 @@ namespace Audi.Controllers
         [HttpGet("variants/values/{variantValueId}")]
         public async Task<ActionResult<ProductVariantValueDto>> GetProductVariantValue(int variantValueId)
         {
-            var variantValue = await _unitOfWork.ProductRepository.GetProductVariantValueById(variantValueId);
+            var variantValue = await _unitOfWork.ProductRepository.GetProductVariantValueByIdAsync(variantValueId);
 
             if (variantValue == null) return NotFound();
 
@@ -358,7 +358,7 @@ namespace Audi.Controllers
         [HttpGet("variants/values/all/{variantId}")]
         public async Task<ActionResult<List<ProductVariantValueDto>>> GetProductVariantValues(int variantId)
         {
-            var variantValues = await _unitOfWork.ProductRepository.GetProductVariantValuesByVariantId(variantId);
+            var variantValues = await _unitOfWork.ProductRepository.GetProductVariantValuesByVariantIdAsync(variantId);
 
             return Ok(_mapper.Map<List<ProductVariantValueDto>>(variantValues));
         }
@@ -368,7 +368,7 @@ namespace Audi.Controllers
         [HttpPost("variants/values")]
         public async Task<ActionResult<ProductVariantDto>> AddProductVariantValue([FromBody] ProductVariantValueUpsertDto request)
         {
-            var productVariant = await _unitOfWork.ProductRepository.GetProductVariantById(request.VariantId);
+            var productVariant = await _unitOfWork.ProductRepository.GetProductVariantByIdAsync(request.VariantId);
 
             if (productVariant == null) return NotFound("product variant not found");
 
@@ -416,7 +416,7 @@ namespace Audi.Controllers
         {
             if (!request.Id.HasValue) return BadRequest("variant value id not provided");
 
-            var productVariantValue = await _unitOfWork.ProductRepository.GetProductVariantValueById(request.Id.Value);
+            var productVariantValue = await _unitOfWork.ProductRepository.GetProductVariantValueByIdAsync(request.Id.Value);
 
             if (productVariantValue == null) return NotFound("product variant value not found");
 
@@ -425,7 +425,7 @@ namespace Audi.Controllers
             // this is NOT supposed to happen, if it happens then something went wrong in creation.
             if (productSkuValue == null) return StatusCode(500, "product_sku_value missing!");
 
-            var productSku = await _unitOfWork.ProductRepository.GetProductSkuById(productSkuValue.SkuId);
+            var productSku = await _unitOfWork.ProductRepository.GetProductSkuByIdAsync(productSkuValue.SkuId);
 
             // this is NOT supposed to happen, if it happens then something went wrong in creation.
             if (productSku == null) return StatusCode(500, "product_sku missing!");
@@ -455,7 +455,7 @@ namespace Audi.Controllers
         [HttpDelete("variants/values/{variantValueId}")]
         public async Task<ActionResult> DeleteProductVariantValue(int variantValueId)
         {
-            var productVariantValue = await _unitOfWork.ProductRepository.GetProductVariantValueById(variantValueId);
+            var productVariantValue = await _unitOfWork.ProductRepository.GetProductVariantValueByIdAsync(variantValueId);
 
             if (productVariantValue == null) return NotFound();
 
@@ -532,7 +532,7 @@ namespace Audi.Controllers
                 return BadRequest("This is already a main photo.");
             }
 
-            await _unitOfWork.PhotoRepository.SetMainProductPhoto(productPhoto);
+            await _unitOfWork.PhotoRepository.SetMainProductPhotoAsync(productPhoto);
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
             {

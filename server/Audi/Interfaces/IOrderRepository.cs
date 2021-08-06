@@ -12,8 +12,8 @@ namespace Audi.Interfaces
         void UpdateOrder(Order order);
         void CreateOrderItem(OrderItem orderItem);
         void UpdateOrderItem(OrderItem orderItem);
-        Task<Order> GetOrderById(int orderId);
-        Task<ICollection<Order>> GetOrdersByUserId(int userId);
-        Task<PagedList<OrderDto>> GetOrdersPaged(OrderParams orderParams);
+        Task<Order> GetOrderByIdAsync(int orderId);
+        Task<ICollection<Order>> GetOrdersByUserIdAsync(int userId);
+        Task<PagedList<OrderDto>> GetOrdersPagedAsync(OrderParams orderParams);
     }
 }

@@ -145,7 +145,7 @@ namespace Audi.Controllers
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
-                Token = await _tokenService.CreateToken(user),
+                Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
             });
@@ -193,7 +193,7 @@ namespace Audi.Controllers
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
-                Token = await _tokenService.CreateToken(user),
+                Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
             });
@@ -237,7 +237,7 @@ namespace Audi.Controllers
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
-                Token = await _tokenService.CreateToken(user),
+                Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
             });
@@ -273,7 +273,7 @@ namespace Audi.Controllers
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
-                Token = await _tokenService.CreateToken(user),
+                Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
             });
@@ -459,7 +459,7 @@ namespace Audi.Controllers
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
-                Token = await _tokenService.CreateToken(user),
+                Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
             });
@@ -489,7 +489,7 @@ namespace Audi.Controllers
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
-                Token = await _tokenService.CreateToken(user),
+                Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
             });
@@ -515,7 +515,7 @@ namespace Audi.Controllers
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
-                Token = await _tokenService.CreateToken(user),
+                Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
             });
@@ -541,7 +541,7 @@ namespace Audi.Controllers
                 UserName = user.UserName,
                 Email = user.Email,
                 Roles = userRoles.Select(r => r.ToString()).ToArray(),
-                Token = await _tokenService.CreateToken(user),
+                Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
             });

@@ -143,7 +143,7 @@ namespace Audi.Data
             return await _context.Users.SingleOrDefaultAsync(e => e.UserName.ToLower().Trim() == username.ToLower().Trim());
         }
 
-        public async Task<string> GetUserGender(string username)
+        public async Task<string> GetUserGenderAsync(string username)
         {
             return await _context.Users
                 .Where(u => u.UserName == username)

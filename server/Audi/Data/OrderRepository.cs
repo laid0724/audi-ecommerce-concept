@@ -41,7 +41,7 @@ namespace Audi.Data
             _context.OrderItems.Update(orderItem);
         }
 
-        public async Task<Order> GetOrderById(int orderId)
+        public async Task<Order> GetOrderByIdAsync(int orderId)
         {
             var order = await _context.Orders
                 .Include(o => o.OrderItems)
@@ -57,7 +57,7 @@ namespace Audi.Data
             return order;
         }
 
-        public async Task<ICollection<Order>> GetOrdersByUserId(int userId)
+        public async Task<ICollection<Order>> GetOrdersByUserIdAsync(int userId)
         {
             var orders = await _context.Orders
                 .Include(o => o.OrderItems)
@@ -73,7 +73,7 @@ namespace Audi.Data
             return orders;
         }
 
-        public async Task<PagedList<OrderDto>> GetOrdersPaged(OrderParams orderParams)
+        public async Task<PagedList<OrderDto>> GetOrdersPagedAsync(OrderParams orderParams)
         {
             var query = _context.Orders
                 .Include(o => o.OrderItems)
