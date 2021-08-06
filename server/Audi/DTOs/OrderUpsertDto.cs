@@ -14,5 +14,7 @@ namespace Audi.DTOs
         public List<OrderItemUpsertDto> OrderItems { get; set; }
         public string TrackingNumber { get; set; }
         public string CurrentStatus { get; set; }
+        public string CustomerNotes { get; set; }
+        public string InternalNotes { get; set; }
     }
 }

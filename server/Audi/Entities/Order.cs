@@ -21,5 +21,7 @@ namespace Audi.Entities
         public string TrackingNumber { get; set; }
         public OrderStatus[] PreviousStatuses { get; set; }
         public string CurrentStatus { get; set; }
+        public string CustomerNotes { get; set; }
+        public string InternalNotes { get; set; }
     }
 }
