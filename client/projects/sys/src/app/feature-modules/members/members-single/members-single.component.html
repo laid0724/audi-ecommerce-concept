@@ -11,7 +11,7 @@
           >
         </div>
         <div class="card-body pb-3">
-          <div class="container">
+          <div class="container pb-3">
             <div class="row">
               <div class="col-12">
                 <h2 class="h2">個人資訊 Personal Information</h2>
@@ -54,7 +54,9 @@
                     <tr>
                       <th>信箱認證狀態 Email Confirmed</th>
                       <td>
-                        {{ member.emailConfirmed | toZh: 'emailConfirmedWithEn' }}
+                        {{
+                          member.emailConfirmed | toZh: 'emailConfirmedWithEn'
+                        }}
                       </td>
                     </tr>
                     <tr>
@@ -83,14 +85,52 @@
                     </tr>
                   </tbody>
                 </table>
-                <!-- <pre>{{ member | json }}</pre> -->
               </div>
             </div>
-            <div class="row">
+            <div class="row" *ngIf="userType === 'member'">
               <div class="col-12">
                 <h2 class="h2">訂單歷史 Order History</h2>
-                <!-- TODO -->
-                <pre>{{ member?.orders | json }}</pre>
+                <ng-container *ngIf="member.orders.length > 0; else noOrders">
+                  <table class="table">
+                    <tbody>
+                      <tr>
+                        <th>訂單編號 Order Number</th>
+                        <th>訂單目前狀態 Current Order Status</th>
+                        <th>訂單金額 Total Amount</th>
+                        <th>訂單下單日期 Order Created At</th>
+                        <th>訂單最近更新時間 Order Last Updated At</th>
+                      </tr>
+                      <tr *ngFor="let order of member.orders">
+                        <td>
+                          <a [routerLink]="['/manage/orders', order.id]">{{
+                            order.orderNumber
+                          }}</a>
+                        </td>
+                        <td>
+                          {{ order.currentStatus | toZh: 'orderStatusWithEn' }}
+                        </td>
+                        <td>
+                          {{ order.totalPrice }}
+                        </td>
+                        <td>
+                          {{
+                            order.createdAt | toLocalTime | date: 'MM/dd/yyyy'
+                          }}
+                        </td>
+                        <td>
+                          {{
+                            order.lastUpdated
+                              | toLocalTime
+                              | date: 'MM/dd/yyyy hh:mm:ss'
+                          }}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </ng-container>
+                <ng-template #noOrders>
+                  <p class="p2 mt-2">尚無訂單 No Previous Orders</p>
+                </ng-template>
               </div>
             </div>
           </div>
