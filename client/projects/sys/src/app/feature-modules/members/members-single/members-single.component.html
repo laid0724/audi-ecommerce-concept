@@ -14,7 +14,7 @@
           <div class="container pb-3">
             <div class="row">
               <div class="col-12">
-                <h2 class="h2">個人資訊 Personal Information</h2>
+                <h6 class="h6">個人資訊 Personal Information</h6>
                 <table class="table table-vertical mt-3">
                   <tbody>
                     <tr>
@@ -89,7 +89,7 @@
             </div>
             <div class="row" *ngIf="userType === 'member'">
               <div class="col-12">
-                <h2 class="h2">訂單歷史 Order History</h2>
+                <h6 class="h6">訂單歷史 Order History</h6>
                 <ng-container *ngIf="member.orders.length > 0; else noOrders">
                   <table class="table">
                     <tbody>
