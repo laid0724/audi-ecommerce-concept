@@ -311,16 +311,21 @@ namespace server.Data.Migrations
 
             modelBuilder.Entity("Audi.Entities.Order", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("BillingAddress")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("jsonb")
                         .HasColumnName("billing_address")
                         .HasDefaultValueSql("'{}'");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
 
                     b.Property<string>("CreditCardLast4Digit")
                         .HasColumnType("text")
@@ -330,11 +335,45 @@ namespace server.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("credit_card_type");
 
+                    b.Property<string>("CurrentStatus")
+                        .HasColumnType("text")
+                        .HasColumnName("current_status");
+
+                    b.Property<string>("CustomerNotes")
+                        .HasColumnType("text")
+                        .HasColumnName("customer_notes");
+
+                    b.Property<string>("InternalNotes")
+                        .HasColumnType("text")
+                        .HasColumnName("internal_notes");
+
+                    b.Property<DateTime>("LastUpdated")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("last_updated");
+
+                    b.Property<string>("OrderNumber")
+                        .HasColumnType("text")
+                        .HasColumnName("order_number");
+
+                    b.Property<string>("PreviousStatuses")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("jsonb")
+                        .HasColumnName("previous_statuses")
+                        .HasDefaultValueSql("'{}'");
+
                     b.Property<string>("ShippingAddress")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("jsonb")
                         .HasColumnName("shipping_address")
                         .HasDefaultValueSql("'{}'");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("numeric")
+                        .HasColumnName("total_price");
+
+                    b.Property<string>("TrackingNumber")
+                        .HasColumnType("text")
+                        .HasColumnName("tracking_number");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer")
@@ -347,6 +386,68 @@ namespace server.Data.Migrations
                         .HasDatabaseName("ix_orders_user_id");
 
                     b.ToTable("orders");
+                });
+
+            modelBuilder.Entity("Audi.Entities.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("integer")
+                        .HasColumnName("order_id");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric")
+                        .HasColumnName("price");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("integer")
+                        .HasColumnName("product_id");
+
+                    b.Property<int?>("ProductVariantProductId")
+                        .HasColumnType("integer")
+                        .HasColumnName("product_variant_product_id");
+
+                    b.Property<int?>("ProductVariantVariantId")
+                        .HasColumnType("integer")
+                        .HasColumnName("product_variant_variant_id");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer")
+                        .HasColumnName("quantity");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
+
+                    b.Property<int>("VariantId")
+                        .HasColumnType("integer")
+                        .HasColumnName("variant_id");
+
+                    b.Property<int>("VariantValueId")
+                        .HasColumnType("integer")
+                        .HasColumnName("variant_value_id");
+
+                    b.HasKey("Id")
+                        .HasName("pk_order_items");
+
+                    b.HasIndex("OrderId")
+                        .HasDatabaseName("ix_order_items_order_id");
+
+                    b.HasIndex("UserId")
+                        .HasDatabaseName("ix_order_items_user_id");
+
+                    b.HasIndex("ProductVariantProductId", "ProductVariantVariantId")
+                        .HasDatabaseName("ix_order_items_product_variant_product_id_product_variant_variant_id");
+
+                    b.HasIndex("ProductId", "VariantId", "VariantValueId")
+                        .HasDatabaseName("ix_order_items_product_id_variant_id_variant_value_id");
+
+                    b.ToTable("order_items");
                 });
 
             modelBuilder.Entity("Audi.Entities.Photo", b =>
@@ -591,6 +692,10 @@ namespace server.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("name");
 
+                    b.Property<string>("VariantValueLabel")
+                        .HasColumnType("text")
+                        .HasColumnName("variant_value_label");
+
                     b.HasKey("ProductId", "VariantId")
                         .HasName("pk_product_variants");
 
@@ -804,6 +909,47 @@ namespace server.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Audi.Entities.OrderItem", b =>
+                {
+                    b.HasOne("Audi.Entities.Order", "Order")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Audi.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Audi.Entities.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Audi.Entities.ProductVariant", "ProductVariant")
+                        .WithMany()
+                        .HasForeignKey("ProductVariantProductId", "ProductVariantVariantId");
+
+                    b.HasOne("Audi.Entities.ProductVariantValue", "ProductVariantValue")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("ProductId", "VariantId", "VariantValueId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("ProductVariant");
+
+                    b.Navigation("ProductVariantValue");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Audi.Entities.Product", b =>
                 {
                     b.HasOne("Audi.Entities.ProductCategory", "ProductCategory")
@@ -977,6 +1123,11 @@ namespace server.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Audi.Entities.Order", b =>
+                {
+                    b.Navigation("OrderItems");
+                });
+
             modelBuilder.Entity("Audi.Entities.Photo", b =>
                 {
                     b.Navigation("AppUserPhotos");
@@ -1016,6 +1167,8 @@ namespace server.Data.Migrations
 
             modelBuilder.Entity("Audi.Entities.ProductVariantValue", b =>
                 {
+                    b.Navigation("OrderItems");
+
                     b.Navigation("ProductSkuValues");
                 });
 #pragma warning restore 612, 618

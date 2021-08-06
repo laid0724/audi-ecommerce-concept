@@ -124,6 +124,7 @@ export class ProductVariantEditorComponent implements OnInit {
       id: [null],
       productId: [this.productId, Validators.required],
       name: [null, Validators.required],
+      variantValueLabel: [null, Validators.required],
     });
 
     this.variantValueForm = this.fb.group({

@@ -1,0 +1,118 @@
+<div class="row">
+  <div class="col-12">
+    <div class="card mt-3">
+      <div class="card-header py-3 d-flex align-items-center">
+        <span class="d-flex align-items-center">訂單管理 | ORDERS</span>
+      </div>
+      <div class="card-body">
+        <clr-datagrid
+          (clrDgRefresh)="refreshDatagrid($event)"
+          [clrLoading]="datagridLoading"
+        >
+          <clr-dg-column
+            >訂單號碼 Order Number
+            <audi-sys-clr-dg-serverside-string-filter
+              [filter]="orderNumberFilter"
+            ></audi-sys-clr-dg-serverside-string-filter>
+          </clr-dg-column>
+
+          <clr-dg-column
+            >訂單狀態 Order Status
+            <audi-sys-clr-dg-custom-btn-filter
+              [filter]="currentStatusFilter"
+              [options]="currentStatusOptions"
+            ></audi-sys-clr-dg-custom-btn-filter>
+          </clr-dg-column>
+
+          <clr-dg-column
+            >姓氏 Last Name
+            <audi-sys-clr-dg-serverside-string-filter
+              [filter]="lastNameFilter"
+            ></audi-sys-clr-dg-serverside-string-filter>
+          </clr-dg-column>
+
+          <clr-dg-column
+            >名字 First Name
+            <audi-sys-clr-dg-serverside-string-filter
+              [filter]="firstNameFilter"
+            ></audi-sys-clr-dg-serverside-string-filter>
+          </clr-dg-column>
+
+          <clr-dg-column
+            >信箱 Email
+            <audi-sys-clr-dg-serverside-string-filter
+              [filter]="emailFilter"
+            ></audi-sys-clr-dg-serverside-string-filter>
+          </clr-dg-column>
+
+          <clr-dg-column
+            >電話號碼 Phone Number
+            <audi-sys-clr-dg-serverside-string-filter
+              [filter]="phoneNumberFilter"
+            ></audi-sys-clr-dg-serverside-string-filter>
+          </clr-dg-column>
+
+          <clr-dg-column>
+            價格 Price
+            <audi-sys-clr-dg-serverside-range-filter
+              [filter]="priceFilter"
+            ></audi-sys-clr-dg-serverside-range-filter>
+          </clr-dg-column>
+
+          <clr-dg-column> 訂單成立時間 Order Created At </clr-dg-column>
+
+          <clr-dg-column> 訂單更新時間 Order Updated At </clr-dg-column>
+
+          <clr-dg-row *ngFor="let order of orders" [clrDgItem]="order">
+            <clr-dg-action-overflow>
+              <button
+                class="action-item"
+                type="button"
+                [routerLink]="['/manage/orders', order.id]"
+              >
+                查看 View
+              </button>
+            </clr-dg-action-overflow>
+
+            <clr-dg-cell>{{ order.orderNumber }}</clr-dg-cell>
+            <clr-dg-cell>{{
+              order.currentStatus | toZh: 'orderStatusWithEn'
+            }}</clr-dg-cell>
+            <clr-dg-cell>{{ order.lastName }}</clr-dg-cell>
+            <clr-dg-cell>{{ order.firstName }}</clr-dg-cell>
+            <clr-dg-cell>{{ order.email }}</clr-dg-cell>
+            <clr-dg-cell>{{ order.phoneNumber }}</clr-dg-cell>
+            <clr-dg-cell>{{ order.totalPrice }}</clr-dg-cell>
+            <clr-dg-cell>{{
+              order.createdAt | toLocalTime | date: 'MM/dd/yyyy'
+            }}</clr-dg-cell>
+            <clr-dg-cell>{{
+              order.lastUpdated | toLocalTime | date: 'MM/dd/yyyy hh:mm:ss'
+            }}</clr-dg-cell>
+          </clr-dg-row>
+
+          <clr-dg-placeholder>
+            <p class="text-center mt-0">查無資料</p>
+            <p class="text-center mt-0 mb-1">No Data Available</p>
+          </clr-dg-placeholder>
+
+          <clr-dg-footer>
+            <clr-dg-pagination
+              *ngIf="paging != null"
+              #pagination
+              [clrDgPage]="paging.currentPage"
+              [clrDgPageSize]="orderParams.pageSize"
+              [clrDgTotalItems]="paging.totalItems"
+            >
+              <clr-dg-page-size [clrPageSizeOptions]="[10, 20, 50]">
+                每頁顯示筆數
+              </clr-dg-page-size>
+              {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }} 之
+              {{ pagination.totalItems }} 筆
+            </clr-dg-pagination>
+          </clr-dg-footer>
+        </clr-datagrid>
+      </div>
+    </div>
+  </div>
+</div>

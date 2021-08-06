@@ -222,12 +222,12 @@ namespace Audi.Data
 
             if (productParams.PriceMin.HasValue)
             {
-                query = query.Where(p => p.Price >= productParams.PriceMin.Value);
+                query = query.Where(p => (p.IsDiscounted ? (p.Price - p.DiscountAmount) : p.Price) >= productParams.PriceMin.Value);
             }
 
             if (productParams.PriceMax.HasValue)
             {
-                query = query.Where(p => p.Price <= productParams.PriceMax.Value);
+                query = query.Where(p => (p.IsDiscounted ? (p.Price - p.DiscountAmount) : p.Price) <= productParams.PriceMax.Value);
             }
 
             if (productParams.StockMin.HasValue)
@@ -286,7 +286,7 @@ namespace Audi.Data
             return product;
         }
 
-        public async Task<ProductVariant> GetProductVariantById(int variantId)
+        public async Task<ProductVariant> GetProductVariantByIdAsync(int variantId)
         {
             var productVariant = await _context.ProductVariants
                 .Include(e => e.Product)
@@ -297,7 +297,7 @@ namespace Audi.Data
             return productVariant;
         }
 
-        public async Task<ICollection<ProductVariant>> GetProductVariantsByProductId(int productId)
+        public async Task<ICollection<ProductVariant>> GetProductVariantsByProductIdAsync(int productId)
         {
             var productVariants = await _context.ProductVariants
                 .Include(e => e.ProductSkuValues)
@@ -334,7 +334,7 @@ namespace Audi.Data
             _context.ProductVariants.Update(productVariant);
         }
 
-        public async Task<ProductVariantValue> GetProductVariantValueById(int variantValueId)
+        public async Task<ProductVariantValue> GetProductVariantValueByIdAsync(int variantValueId)
         {
             var productVariantValue = await _context.ProductVariantValues
                 .Include(e => e.ProductSkuValues)
@@ -343,7 +343,7 @@ namespace Audi.Data
             return productVariantValue;
         }
 
-        public async Task<ICollection<ProductVariantValue>> GetProductVariantValuesByVariantId(int variantId)
+        public async Task<ICollection<ProductVariantValue>> GetProductVariantValuesByVariantIdAsync(int variantId)
         {
             var productVariantValues = await _context.ProductVariantValues
                 .Include(e => e.ProductSkuValues)
@@ -369,7 +369,7 @@ namespace Audi.Data
             _context.Entry<ProductVariantValue>(productVariantValue).State = EntityState.Modified;
         }
 
-        public async Task<ProductSku> GetProductSkuById(int skuId)
+        public async Task<ProductSku> GetProductSkuByIdAsync(int skuId)
         {
             var productSKU = await _context.ProductSkus
                 .Include(e => e.ProductSkuValues)
@@ -378,7 +378,7 @@ namespace Audi.Data
             return productSKU;
         }
 
-        public async Task<ICollection<ProductSku>> GetProductSkusByProductId(int productId)
+        public async Task<ICollection<ProductSku>> GetProductSkusByProductIdAsync(int productId)
         {
             var productSKUs = await _context.ProductSkus
                 .Include(e => e.ProductSkuValues)
@@ -416,7 +416,7 @@ namespace Audi.Data
             _context.ProductSkus.Update(productSku);
         }
 
-        public async Task<ProductSkuValue> GetProductSkuValueByVariantValueId(int variantValueId)
+        public async Task<ProductSkuValue> GetProductSkuValueByVariantValueIdAsync(int variantValueId)
         {
             var productSkuValue = await _context.ProductSkuValues
                 .Include(e => e.ProductSku)
@@ -426,7 +426,7 @@ namespace Audi.Data
             return productSkuValue;
         }
 
-        public async Task<ICollection<ProductSkuValue>> GetProductSkuValuesByProductId(int productId)
+        public async Task<ICollection<ProductSkuValue>> GetProductSkuValuesByProductIdAsync(int productId)
         {
             var productSkuValues = await _context.ProductSkuValues
                 .Include(e => e.ProductSku)

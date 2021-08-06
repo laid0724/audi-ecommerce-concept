@@ -96,9 +96,8 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 
 #### API
 
-- Order table and repo / controller
+- Order creation email and status update email
 - Homepage table and repo / controller
-- sitemap table and repo / controller
 - user like product
 ** these need language property zh/en **
 - add photo property to product category
@@ -111,11 +110,10 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 #### Sys
 - homepage module
   - with following sections: hero carousel, latest news/events/promotions, featured product, latest product, misc
-- sitemap module
 - ngx charts for statistics
 - ng select control value accessor
 - live chat module with signalr
-- user complaints / forms module, bind this to email
+- sys inbox
 - user like product 1-to-M
 - add photo to product category
 

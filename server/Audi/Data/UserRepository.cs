@@ -37,11 +37,23 @@ namespace Audi.Data
         public async Task<MemberDto> GetUserBasedOnRoleAsync(int userId, string role)
         {
             var query = _context.Users
+                .IgnoreQueryFilters()
                 .Include(u => u.UserRoles)
                     .ThenInclude(r => r.Role)
                 .Include(u => u.UserImage)
                     .ThenInclude(ui => ui.Photo)
                 .Include(u => u.Orders)
+                    .ThenInclude(o => o.OrderItems)
+                        .ThenInclude(oi => oi.Product)
+                            .ThenInclude(p => p.ProductPhotos)
+                                .ThenInclude(pp => pp.Photo)
+                .Include(u => u.Orders)
+                    .ThenInclude(o => o.OrderItems)
+                        .ThenInclude(oi => oi.Product)
+                            .ThenInclude(p => p.ProductVariants)
+                                .ThenInclude(pv => pv.ProductVariantValues)
+                                    .ThenInclude(pvv => pvv.ProductSkuValues)
+                                        .ThenInclude(psv => psv.ProductSku)
                 .Where(e => e.Id == userId)
                 .AsQueryable();
 
@@ -128,7 +140,7 @@ namespace Audi.Data
             return await _context.Users.SingleOrDefaultAsync(e => e.UserName.ToLower().Trim() == username.ToLower().Trim());
         }
 
-        public async Task<string> GetUserGender(string username)
+        public async Task<string> GetUserGenderAsync(string username)
         {
             return await _context.Users
                 .Where(u => u.UserName == username)

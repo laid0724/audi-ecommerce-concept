@@ -18,8 +18,7 @@ namespace Audi.DTOs
         public DateTime CreatedAt { get; set; }
         public DateTime LastActive { get; set; }
         public UserPhotoDto UserImage { get; set; }
-        // TODO: change this to order dto
-        public ICollection<Order> Orders { get; set; }
+        public ICollection<OrderDto> Orders { get; set; }
         public string[] Roles { get; set; }
     }
 }

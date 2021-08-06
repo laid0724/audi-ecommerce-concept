@@ -120,6 +120,12 @@ namespace Audi.Helpers
                     // EF Core cannot query with aggregate, use Sum instead
                     // .Aggregate(0, (sum, val) => sum + val)
                     )
+                )
+                .ForMember(
+                    dest => dest.Sku,
+                    opt => opt.MapFrom(src => src.ProductSkuValues
+                        .FirstOrDefault().ProductSku.Sku
+                    )
                 );
 
             CreateMap<ProductVariant, ProductVariantDto>()
@@ -132,6 +138,26 @@ namespace Audi.Helpers
                     opt => opt.MapFrom(src => src.ProductVariantValues)
                 );
 
+            CreateMap<OrderItem, OrderItemDto>();
+
+            CreateMap<Order, OrderDto>()
+                .ForMember(
+                    dest => dest.FirstName,
+                    opt => opt.MapFrom(src => src.User.FirstName)
+                )
+                .ForMember(
+                    dest => dest.LastName,
+                    opt => opt.MapFrom(src => src.User.LastName)
+                )
+                .ForMember(
+                    dest => dest.Email,
+                    opt => opt.MapFrom(src => src.User.Email)
+                )
+                .ForMember(
+                    dest => dest.PhoneNumber,
+                    opt => opt.MapFrom(src => src.User.PhoneNumber)
+                );
+
             CreateMap<DynamicDocument, FaqDto>()
                 .ForMember(
                     dest => dest.FaqItems,
@@ -141,6 +167,7 @@ namespace Audi.Helpers
             CreateMap<DynamicDocument, NewsDto>();
 
             // reverse map from dto to entity model:
+
             CreateMap<RegisterDto, AppUser>();
             CreateMap<ProductDto, Product>();
             CreateMap<ProductUpsertDto, Product>();
@@ -155,6 +182,7 @@ namespace Audi.Helpers
                     dest => dest.VariantValueId,
                     opt => opt.MapFrom(src => src.Id)
                 );
+            CreateMap<OrderItemUpsertDto, OrderItem>();
 
             CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
         }

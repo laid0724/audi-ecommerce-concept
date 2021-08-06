@@ -77,7 +77,7 @@
                 <audi-sys-product-variant-editor
                   *ngIf="product != null"
                   [product]="product"
-                  [hasError]="hasVariantValueError"
+                  [hasError]="noValidVariantsError"
                 ></audi-sys-product-variant-editor>
 
                 <audi-sys-wysiwyg-grid
@@ -96,9 +96,17 @@
                       formControlName="isVisible"
                     />
                     <label>{{
-                      productForm.get('isVisible')?.value | toZh: 'isVisible'
+                      productForm.get('isVisible')?.value | toZh: 'isVisibleWithEn'
                     }}</label>
                   </clr-toggle-wrapper>
+                  <clr-control-helper
+                    >產品需要建立選項之後才可公佈 Product options are required
+                    before product can be visible to public</clr-control-helper
+                  >
+                  <clr-control-error *clrIfError="'noValidVariantsError'"
+                    >產品需要建立選項之後才可公佈 Product options are required
+                    before product can be visible to public</clr-control-error
+                  >
                   <clr-control-error *clrIfError="'required'"
                     >必填 Required</clr-control-error
                   >
@@ -114,7 +122,7 @@
                     />
                     <label>{{
                       productForm.get('isDiscounted')?.value
-                        | toZh: 'isDiscounted'
+                        | toZh: 'isDiscountedWithEn'
                     }}</label>
                   </clr-toggle-wrapper>
                   <clr-control-error *clrIfError="'required'"

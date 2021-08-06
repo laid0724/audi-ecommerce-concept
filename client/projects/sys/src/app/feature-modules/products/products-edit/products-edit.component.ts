@@ -54,11 +54,11 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
 
   destroy$ = new Subject<boolean>();
 
-  hasVariantValueError = false;
+  noValidVariantsError = false;
 
-  get hasVariantValueError$(): Observable<boolean> {
+  get noValidVariantsAvailable$(): Observable<boolean> {
     if (this.productId) {
-      const asyncValidator: Observable<boolean> = this.productService
+      const noValidVariantsAvailable: Observable<boolean> = this.productService
         .getProductVariants(this.productId)
         .pipe(
           take(1),
@@ -69,7 +69,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
             return !someVariantHasValue;
           })
         );
-      return asyncValidator;
+      return noValidVariantsAvailable;
     }
     return of(false);
   }
@@ -200,7 +200,11 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
           validators: [wysiwygGridValidatorBuilderFn([Validators.required])],
         }
       ),
-      isVisible: [{ value: false, disabled: true }, Validators.required],
+      isVisible: [
+        { value: false, disabled: true },
+        Validators.required,
+        this.noValidVariantsAvailableAsyncValidator(),
+      ],
       isDiscounted: [false, Validators.required],
       discountAmount: [
         { value: null, disabled: true },
@@ -217,6 +221,20 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
     });
   }
 
+  noValidVariantsAvailableAsyncValidator(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<ValidationErrors | null> => {
+      return this.noValidVariantsAvailable$.pipe(
+        map((isInvalid) => {
+          if (control.value === true) {
+            return isInvalid ? { noValidVariantsError: true } : null;
+          } else {
+            return null;
+          }
+        })
+      );
+    };
+  }
+
   onPhotoChanges(photos: ProductPhoto[]): void {
     if (this.product != null) {
       this.product.photos = photos;
@@ -228,7 +246,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
       this.clrForm.markAsTouched();
       this.productForm.markAllAsTouched();
       console.log(getAllErrors(this.productForm));
-      this.toastr.error('儲存失敗 Saving failed');
+      this.toastr.error('Saving failed', '儲存失敗');
       return;
     }
 
@@ -246,52 +264,54 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
         this.router.navigate([`/manage/products/items/${product.id}`], {
           queryParamsHandling: '',
         });
-        this.toastr.success('成功建立產品 Product created successfully');
+        this.toastr.success('Product created successfully', '成功建立產品');
       });
   }
 
   onSave(): void {
-    this.hasVariantValueError$.subscribe((hasVariantValueError: boolean) => {
-      if (this.productForm.invalid || hasVariantValueError) {
-        if (hasVariantValueError) {
-          this.hasVariantValueError = true;
-        }
+    this.noValidVariantsAvailable$.subscribe(
+      (noValidVariantsError: boolean) => {
+        if (this.productForm.invalid || noValidVariantsError) {
+          if (noValidVariantsError) {
+            this.noValidVariantsError = true;
+          }
 
-        this.clrForm.markAsTouched();
-        this.productForm.markAllAsTouched();
+          this.clrForm.markAsTouched();
+          this.productForm.markAllAsTouched();
 
-        let errors = getAllErrors(this.productForm);
+          let errors = getAllErrors(this.productForm);
 
-        if (hasVariantValueError) {
-          errors = {
-            ...errors,
-            productForm: { hasVariantValueError },
+          if (noValidVariantsError) {
+            errors = {
+              ...errors,
+              productForm: { noValidVariantsError },
+            };
+          }
+
+          console.log(errors);
+
+          this.toastr.error('Saving failed', '儲存失敗');
+        } else {
+          this.noValidVariantsError = false;
+
+          const { discountDeadline } = this.productForm.value;
+
+          let formValue = {
+            ...this.productForm.value,
+            id: this.productId,
+            discountDeadline: formatClrDateToUTCString(discountDeadline),
           };
+
+          this.productService
+            .updateProduct(formValue)
+            .pipe(take(1))
+            .subscribe((product: Product) => {
+              this.product = product;
+              this.toastr.info('Product updated', '更新成功');
+            });
         }
-
-        console.log(errors);
-
-        this.toastr.error('儲存失敗 Saving failed');
-      } else {
-        this.hasVariantValueError = false;
-
-        const { discountDeadline } = this.productForm.value;
-
-        let formValue = {
-          ...this.productForm.value,
-          id: this.productId,
-          discountDeadline: formatClrDateToUTCString(discountDeadline),
-        };
-
-        this.productService
-          .updateProduct(formValue)
-          .pipe(take(1))
-          .subscribe((product: Product) => {
-            this.product = product;
-            this.toastr.info('更新成功 Product updated');
-          });
       }
-    });
+    );
   }
 
   ngOnDestroy(): void {

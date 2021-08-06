@@ -31,7 +31,7 @@ namespace Audi.Services
         }
 
         // this method generates and return a JWT:
-        public async Task<string> CreateToken(AppUser user)
+        public async Task<string> CreateTokenAsync(AppUser user)
         {
             // here, we're binding both the user's id and username to the token:
             var claims = new List<Claim>

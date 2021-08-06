@@ -1,0 +1,297 @@
+<ng-container *ngIf="order">
+  <div class="row mt-3">
+    <div class="col-12">
+      <div class="card mt-0">
+        <div class="card-header">訂單資訊 | ORDER DETAIL</div>
+        <div class="card-body pb-3">
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <h2 class="h2">購買人資訊 Customer Info</h2>
+                <table class="table table-vertical mt-3">
+                  <tbody>
+                    <tr>
+                      <th>姓氏 Last Name</th>
+                      <td>{{ order.lastName }}</td>
+                    </tr>
+                    <tr>
+                      <th>名稱 First Name</th>
+                      <td>{{ order.firstName }}</td>
+                    </tr>
+                    <tr>
+                      <th>電子信箱 Email</th>
+                      <td>
+                        <a
+                          [routerLink]="['/manage/users/members', order.userId]"
+                          >{{ order.email }}</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>電話 Phone Number</th>
+                      <td>{{ order.phoneNumber }}</td>
+                    </tr>
+                    <tr>
+                      <th>信用卡號碼 Credit Card Number</th>
+                      <td class="fst-italic">
+                        **** **** **** {{ order.creditCardLast4Digit }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>信用卡類別 Credit Card Type</th>
+                      <td>{{ order.creditCardType }}</td>
+                    </tr>
+                    <tr>
+                      <th>帳單地址 Billing Address</th>
+                      <td class="p-0">
+                        <table
+                          class="table table-vertical mt-0"
+                          style="border: unset"
+                        >
+                          <tbody>
+                            <tr>
+                              <th>市/縣 City</th>
+                              <td>{{ order.billingAddress.city }}</td>
+                            </tr>
+                            <tr>
+                              <th>區 District</th>
+                              <td>{{ order.billingAddress.district }}</td>
+                            </tr>
+                            <tr>
+                              <th>地址 Address</th>
+                              <td>{{ order.billingAddress.addressLine }}</td>
+                            </tr>
+                            <tr>
+                              <th>郵遞區號 Postal Code</th>
+                              <td>{{ order.billingAddress.postalCode }}</td>
+                            </tr>
+                            <tr>
+                              <th>電話 Phone Number</th>
+                              <td>{{ order.billingAddress.phoneNumber }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>送件地址 Shipping Address</th>
+                      <td class="p-0">
+                        <table
+                          class="table table-vertical mt-0"
+                          style="border: unset"
+                        >
+                          <tbody>
+                            <tr>
+                              <th>市/縣 City</th>
+                              <td>{{ order.shippingAddress.city }}</td>
+                            </tr>
+                            <tr>
+                              <th>區 District</th>
+                              <td>{{ order.shippingAddress.district }}</td>
+                            </tr>
+                            <tr>
+                              <th>地址 Address</th>
+                              <td>{{ order.shippingAddress.addressLine }}</td>
+                            </tr>
+                            <tr>
+                              <th>郵遞區號 Postal Code</th>
+                              <td>{{ order.shippingAddress.postalCode }}</td>
+                            </tr>
+                            <tr>
+                              <th>電話 Phone Number</th>
+                              <td>{{ order.shippingAddress.phoneNumber }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>購買人備註留言 Customer Notes</th>
+                      <td>{{ order.customerNotes }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <h2 class="h2">購買品項 Order Items</h2>
+                <table class="table mt-3">
+                  <tbody>
+                    <tr>
+                      <th>商品圖 Product Photo</th>
+                      <th>商品名稱 Product Name</th>
+                      <th>商品型號 Product SKU</th>
+                      <th>數量 Quantity</th>
+                      <th>價格 Price</th>
+                    </tr>
+                    <tr *ngFor="let item of order.orderItems">
+                      <td class="align-middle">
+                        <img
+                          [src]="
+                            (
+                              item.product.photos
+                              | map: productMainPhotoMapperFn
+                            )?.url
+                          "
+                          style="--aspect-ratio: 16/9; max-width: 150px"
+                        />
+                      </td>
+                      <td class="align-middle">{{ item.product.name }}</td>
+                      <td class="align-middle">
+                        {{
+                          item.variantValueId
+                            | map: productSkuMapperFn(item.product.variants)
+                        }}
+                      </td>
+                      <td class="align-middle">{{ item.quantity }}</td>
+                      <td class="align-middle">${{ item.price }}</td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td class="fw-bold">${{ order.totalPrice }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12">
+                <h2 class="h2">訂單狀態 Order Status</h2>
+                <table class="table table-vertical mt-3">
+                  <tbody>
+                    <tr>
+                      <th>訂單編號 Order Number</th>
+                      <td>
+                        {{ order.orderNumber }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>寄件包裹編號 Tracking Number</th>
+                      <td>
+                        {{ order.trackingNumber }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>訂單下單日期 Order Created At</th>
+                      <td>
+                        {{ order.createdAt | toLocalTime | date: 'MM/dd/yyyy' }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>訂單最近更新時間 Order Last Updated At</th>
+                      <td>
+                        {{
+                          order.lastUpdated
+                            | toLocalTime
+                            | date: 'MM/dd/yyyy hh:mm:ss'
+                        }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>訂單目前狀態 Current Order Status</th>
+                      <td class="fw-bold">
+                        {{ order.currentStatus | toZh: 'orderStatusWithEn' }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>訂單狀態歷史 Previous Order Status</th>
+                      <td>
+                        <ul class="my-1">
+                          <li
+                            *ngFor="
+                              let status of order.previousStatuses;
+                              let last = last
+                            "
+                            class="fst-italic"
+                            [ngClass]="{
+                              'mb-2': order.previousStatuses.length > 1 && !last
+                            }"
+                          >
+                            {{ status.status | toZh: 'orderStatusWithEn' }}
+                            -
+                            {{
+                              status.updatedAt
+                                | toLocalTime
+                                | date: 'MM/dd/yyyy hh:mm:ss'
+                            }}
+                          </li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>內部備註留言 Internal Notes</th>
+                      <td class="fst-italic">
+                        {{ order.internalNotes }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="row mb-3">
+              <div class="col-12">
+                <h2 class="h2">訂單狀態管理 Order Status Management</h2>
+                <form clrForm [formGroup]="orderStatusUpdateForm">
+                  <clr-radio-container class="vertical-radio">
+                    <label>訂單狀態 Order Status</label>
+                    <clr-radio-wrapper
+                      *ngFor="let option of currentStatusOptions"
+                    >
+                      <input
+                        type="radio"
+                        clrRadio
+                        formControlName="status"
+                        [value]="option.value"
+                        [attr.disabled]="option.isDisabled"
+                      />
+                      <label>{{ option.label }}</label>
+                    </clr-radio-wrapper>
+                  </clr-radio-container>
+                  <clr-input-container>
+                    <label>寄件包裹編號 Tracking Number</label>
+                    <input
+                      type="text"
+                      clrInput
+                      formControlName="trackingNumber"
+                    />
+                    <clr-control-error *clrIfError="'required'"
+                      >必填 Required</clr-control-error
+                    >
+                    <clr-control-error *clrIfError="'minlength'"
+                      >需至少8碼 Minimum length of 8
+                      characters</clr-control-error
+                    >
+                  </clr-input-container>
+                  <clr-textarea-container class="w-100">
+                    <label>內部留言 Internal Notes</label>
+                    <textarea
+                      clrTextarea
+                      formControlName="internalNotes"
+                      rows="5"
+                      class="w-100"
+                    ></textarea>
+                    <clr-control-helper
+                      >僅供內部參考 For internal use only</clr-control-helper
+                    >
+                  </clr-textarea-container>
+                  <button
+                    type="button"
+                    class="mt-4 btn btn-primary"
+                    (click)="updateOrderStatus()"
+                    [disabled]="orderStatusUpdateForm.status === 'DISABLED'"
+                  >
+                    更新訂單狀態 Update Order Status
+                  </button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

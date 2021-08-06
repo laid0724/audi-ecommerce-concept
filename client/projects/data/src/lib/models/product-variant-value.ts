@@ -4,4 +4,5 @@ export interface ProductVariantValue {
   variantId: number;
   name: string;
   stock: number;
+  sku: string;
 }

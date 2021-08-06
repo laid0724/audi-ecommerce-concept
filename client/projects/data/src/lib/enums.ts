@@ -27,3 +27,10 @@ export enum DynamicDocumentType {
   News = 'news',
   Faq = 'faq'
 }
+
+export enum OrderStatus {
+  Placed = 'placed',
+  Shipped = 'shipped',
+  Delivered = 'delivered',
+  Canceled = 'canceled'
+}

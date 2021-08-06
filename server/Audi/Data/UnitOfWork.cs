@@ -16,6 +16,7 @@ namespace Audi.Data
 
         public IUserRepository UserRepository => new UserRepository(_context, _mapper);
         public IProductRepository ProductRepository => new ProductRepository(_context, _mapper);
+        public IOrderRepository OrderRepository => new OrderRepository(_context, _mapper);
         public IPhotoRepository PhotoRepository => new PhotoRepository(_context, _mapper);
         public IDynamicDocumentRepository DynamicDocumentRepository => new DynamicDocumentRepository(_context, _mapper);
 
