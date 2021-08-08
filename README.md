@@ -131,6 +131,7 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - en/zh switch using transloco
 - not found
 - server error
+- splash screen using audi drum beat animation
 - live chat
 - product list
 - articles, e.g., news, events, promotions

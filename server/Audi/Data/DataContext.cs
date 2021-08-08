@@ -34,6 +34,11 @@ namespace Audi.Data
         public DbSet<AppUserPhoto> AppUserPhotos { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Homepage> Homepages { get; set; }
+        public DbSet<CarouselItem> CarouselItems { get; set; }
+        public DbSet<HomepageCarouselItem> HomepageCarouselItems { get; set; }
+        public DbSet<CarouselItemPhoto> CarouselItemPhotos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -111,13 +116,9 @@ namespace Audi.Data
                 .OnDelete(DeleteBehavior.Restrict);
             // relationship end
 
-            builder.Entity<Product>()
-                .HasMany(p => p.ProductPhotos)
-                .WithOne(pp => pp.Product)
-                .HasForeignKey(pp => pp.ProductId)
-                .IsRequired()
-                .OnDelete(DeleteBehavior.Restrict);
+            // relationship for Product, ProductVariant, ProductVariantValue, ProductSku, ProductSkuValue
 
+            // Product
             builder.Entity<Product>()
                 .Property<WysiwygGrid>(p => p.Wysiwyg)
                 .HasColumnType("jsonb")
@@ -125,8 +126,6 @@ namespace Audi.Data
                     w => JsonConvert.SerializeObject(w),
                     w => JsonConvert.DeserializeObject<WysiwygGrid>(w))
                 .HasDefaultValueSql("'{}'");
-
-            // relationship for Product, ProductVariant, ProductVariantValue, ProductSku, ProductSkuValue
 
             // ProductSku
             builder
@@ -263,6 +262,13 @@ namespace Audi.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             // relationship for: Product <-> ProductPhoto <-> Photo
+            builder.Entity<Product>()
+                .HasMany(p => p.ProductPhotos)
+                .WithOne(pp => pp.Product)
+                .HasForeignKey(pp => pp.ProductId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.Entity<ProductPhoto>()
                 .HasKey(e => new { e.ProductId, e.PhotoId });
 
@@ -278,6 +284,56 @@ namespace Audi.Data
                 .Entity<ProductPhoto>()
                 .HasOne(e => e.Photo)
                 .WithMany(e => e.ProductPhotos)
+                .HasForeignKey(e => e.PhotoId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+            // relationship end
+
+            // relationship for Homepage <-> HomepageCarouselItem <-> CarouselItem
+            builder
+                .Entity<Homepage>()
+                .HasMany(e => e.CarouselItems)
+                .WithOne(e => e.Homepage)
+                .HasForeignKey(e => e.HomepageId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+            
+            builder.Entity<HomepageCarouselItem>()
+                .HasKey(e => new { e.HomepageId, e.CarouselItemId });
+            
+            builder
+                .Entity<CarouselItem>()
+                .HasMany(e => e.HomepageCarouselItems)
+                .WithOne(e => e.CarouselItem)
+                .HasForeignKey(e => e.CarouselItemId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.ClientCascade);
+            // relationship end
+
+            // relationship for: CarouselItem <-> CarouselItemPhoto <-> Photo
+            builder
+                .Entity<CarouselItem>()
+                .HasOne(e => e.Photo)
+                .WithOne(e => e.CarouselItem)
+                .HasForeignKey<CarouselItemPhoto>(e => e.PhotoId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<CarouselItemPhoto>()
+                .HasKey(e => new { e.CarouselItemId, e.PhotoId });
+
+            builder
+                .Entity<CarouselItemPhoto>()
+                .HasOne(e => e.CarouselItem)
+                .WithOne(e => e.Photo)
+                .HasForeignKey<CarouselItemPhoto>(e => e.CarouselItemId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder
+                .Entity<CarouselItemPhoto>()
+                .HasOne(e => e.Photo)
+                .WithMany(e => e.CarouselItemPhotos)
                 .HasForeignKey(e => e.PhotoId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
