@@ -34,14 +34,39 @@ namespace Audi.Data
 
         public async Task<ICollection<CarouselItemDto>> GetCarouselItemsAsync(string type)
         {
-            var carouselItem = await _context.CarouselItems
+            var carouselItems = await _context.CarouselItems
                 .Include(ci => ci.Photo)
                     .ThenInclude(p => p.Photo)
                 .Where(ci => ci.Type.ToLower().Trim() == type.ToLower().Trim())
                 .ProjectTo<CarouselItemDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
+            return carouselItems;
+        }
+
+        public async Task<HomepageCarouselItemDto> GetHomepageCarouselItemAsync(int carouselItemId)
+        {
+            var carouselItem = await _context.HomepageCarouselItems
+                .Include(e => e.CarouselItem)
+                    .ThenInclude(ci => ci.Photo)
+                        .ThenInclude(p => p.Photo)
+                .Where(hci => hci.CarouselItemId == carouselItemId)
+                .ProjectTo<HomepageCarouselItemDto>(_mapper.ConfigurationProvider)
+                .SingleOrDefaultAsync();
+
             return carouselItem;
+        }
+        public async Task<ICollection<HomepageCarouselItemDto>> GetHomepageCarouselItemsAsync(int homepageId)
+        {
+            var carouselItems = await _context.HomepageCarouselItems
+                .Include(e => e.CarouselItem)
+                    .ThenInclude(ci => ci.Photo)
+                        .ThenInclude(p => p.Photo)
+                .Where(hci => hci.HomepageId == homepageId)
+                .ProjectTo<HomepageCarouselItemDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            return carouselItems;
         }
 
         public void AddCarouselItem(CarouselItem carouselItem)
