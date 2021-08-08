@@ -19,6 +19,8 @@ namespace Audi.Data
         public IOrderRepository OrderRepository => new OrderRepository(_context, _mapper);
         public IPhotoRepository PhotoRepository => new PhotoRepository(_context, _mapper);
         public IDynamicDocumentRepository DynamicDocumentRepository => new DynamicDocumentRepository(_context, _mapper);
+        public IHomepageRepository HomepageRepository => new HomepageRepository(_context, _mapper);
+        public ICarouselRepository CarouselRepository => new CarouselRepository(_context, _mapper);
 
         // do not save changes within repositories, that is now the unit of work's job!
         public async Task<bool> Complete()

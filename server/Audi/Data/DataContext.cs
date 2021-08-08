@@ -338,7 +338,7 @@ namespace Audi.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
             // relationship end
-
+            
             builder.Entity<DynamicDocument>()
                 .Property<WysiwygGrid>(e => e.Wysiwyg)
                 .HasColumnType("jsonb")
