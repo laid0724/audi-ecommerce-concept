@@ -702,7 +702,7 @@ namespace Audi.Controllers
 
             if (userImage == null) return NotFound("Photo does not exist.");
 
-            if (userImage.Photo.PublicId != null)
+            if (!string.IsNullOrWhiteSpace(userImage.Photo.PublicId))
             {
                 var result = await _photoService.DeletePhotoAsync(userImage.Photo.PublicId);
                 if (result.Error != null)
