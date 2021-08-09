@@ -28,7 +28,7 @@ namespace Audi.Data
                             .ThenInclude(cip => cip.Photo)
                 .Where(h => h.Language.ToLower().Trim() == language.ToLower().Trim())
                 .SingleOrDefaultAsync();
-            
+
             if (homepage == null) return null;
 
             var homepageDto = _mapper.Map<HomepageDto>(homepage);
@@ -55,6 +55,10 @@ namespace Audi.Data
                     .ToList();
 
                 homepageDto.FeaturedProducts = orderedProducts;
+            }
+            else
+            {
+                homepageDto.FeaturedProducts = new ProductDto[] { };
             }
 
             return homepageDto;

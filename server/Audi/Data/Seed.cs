@@ -116,7 +116,8 @@ namespace Audi.Data
             {
                 var zhHomepage = new Homepage
                 {
-                    Language = "zh"
+                    Language = "zh",
+                    FeaturedProductIds = new int[] { }
                 };
 
                 unitOfWork.HomepageRepository.AddHomepage(zhHomepage);
@@ -126,7 +127,8 @@ namespace Audi.Data
             {
                 var enHomepage = new Homepage
                 {
-                    Language = "en"
+                    Language = "en",
+                    FeaturedProductIds = new int[] { }
                 };
 
                 unitOfWork.HomepageRepository.AddHomepage(enHomepage);
