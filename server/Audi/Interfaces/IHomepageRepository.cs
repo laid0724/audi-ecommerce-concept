@@ -6,7 +6,8 @@ namespace Audi.Interfaces
 {
     public interface IHomepageRepository
     {
-        Task<HomepageDto> GetHomepageAsync(string language);
+        Task<Homepage> GetHomepageAsync(string language);
+        Task<HomepageDto> GetHomepageDtoAsync(string language);
         void AddHomepage(Homepage homepage);
         void UpdateHomepage(Homepage homepage);
         void DeleteHomepage(Homepage homepage);

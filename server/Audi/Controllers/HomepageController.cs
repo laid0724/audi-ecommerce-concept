@@ -40,7 +40,7 @@ namespace Audi.Controllers
         {
             if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
 
-            var homepage = await _unitOfWork.HomepageRepository.GetHomepageAsync(language);
+            var homepage = await _unitOfWork.HomepageRepository.GetHomepageDtoAsync(language);
 
             if (homepage == null) return NotFound();
 
@@ -54,11 +54,9 @@ namespace Audi.Controllers
         {
             if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
 
-            var homepageDto = await _unitOfWork.HomepageRepository.GetHomepageAsync(language);
+            var homepage = await _unitOfWork.HomepageRepository.GetHomepageAsync(language);
 
-            if (homepageDto == null) return NotFound();
-
-            var homepage = _mapper.Map<Homepage>(homepageDto);
+            if (homepage == null) return NotFound();
 
             homepage.FeaturedProductIds = request.FeaturedProductIds;
 
@@ -66,7 +64,7 @@ namespace Audi.Controllers
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
             {
-                var updatedHomepage = await _unitOfWork.HomepageRepository.GetHomepageAsync(language);
+                var updatedHomepage = await _unitOfWork.HomepageRepository.GetHomepageDtoAsync(language);
                 return Ok(updatedHomepage);
             }
 

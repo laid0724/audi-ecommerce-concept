@@ -19,7 +19,21 @@ namespace Audi.Data
             _context = context;
         }
 
-        public async Task<HomepageDto> GetHomepageAsync(string language)
+        public async Task<Homepage> GetHomepageAsync(string language)
+        {
+            var homepage = await _context.Homepages
+                .Include(h => h.CarouselItems)
+                    .ThenInclude(hci => hci.CarouselItem)
+                        .ThenInclude(ci => ci.Photo)
+                            .ThenInclude(cip => cip.Photo)
+                .Where(h => h.Language.ToLower().Trim() == language.ToLower().Trim())
+                .AsNoTracking()
+                .SingleOrDefaultAsync();
+
+            return homepage;
+        }
+
+        public async Task<HomepageDto> GetHomepageDtoAsync(string language)
         {
             var homepage = await _context.Homepages
                 .Include(h => h.CarouselItems)

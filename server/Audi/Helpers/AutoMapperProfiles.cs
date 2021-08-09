@@ -251,11 +251,6 @@ namespace Audi.Helpers
                     opt => opt.MapFrom(src => src.Id)
                 );
             CreateMap<OrderItemUpsertDto, OrderItem>();
-            CreateMap<HomepageDto, Homepage>()
-                .ForMember(
-                    dest => dest.FeaturedProductIds,
-                    opt => opt.MapFrom(src => src.FeaturedProducts.Select(p => p.Id))
-                );
             CreateMap<CarouselItemDto, CarouselItem>()
                 .ForMember(
                     dest => dest.PhotoId,
