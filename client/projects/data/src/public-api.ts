@@ -4,6 +4,7 @@
 
 // Models
 export * from './lib/models/pagination';
+export * from './lib/models/photo';
 export * from './lib/models/user';
 export * from './lib/models/user-photo';
 export * from './lib/models/sensitive-user-data';
@@ -23,6 +24,10 @@ export * from './lib/models/wysiwyg';
 export * from './lib/models/dynamic-document';
 export * from './lib/models/dynamic-document-params';
 export * from './lib/models/dynamic-document-photo';
+export * from './lib/models/homepage';
+export * from './lib/models/homepage-carousel-item';
+export * from './lib/models/carousel-item';
+export * from './lib/models/carousel-item-photo';
 export * from './lib/models/faq';
 export * from './lib/models/credit-card';
 
@@ -38,6 +43,7 @@ export * from './lib/services/products.service';
 export * from './lib/services/photo.service';
 export * from './lib/services/dynamic-documents.service';
 export * from './lib/services/orders.service';
+export * from './lib/services/homepage.service';
 
 // Interceptors
 export * from './lib/interceptors/error.interceptor';
