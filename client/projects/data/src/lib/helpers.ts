@@ -76,6 +76,10 @@ export function isNullOrEmptyString(val: string | null | undefined): boolean {
   return val == null || (val && val.trim() === '') || val.length === 0;
 }
 
+export function hasDuplicates(array: any[]): boolean {
+  return new Set(array).size !== array.length;
+}
+
 export function stringToBoolean(string: string) {
   return string === 'false' ? false : !!string;
 }
