@@ -1,0 +1,177 @@
+<div class="row">
+  <div class="col-12 d-flex justify-content-end">
+    <audi-sys-language-selector></audi-sys-language-selector>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-12">
+    <form clrForm [formGroup]="carouselForm" #carouselFormRef>
+      <div class="card mt-0">
+        <div
+          class="
+            card-header
+            py-3
+            d-flex
+            align-items-center
+            justify-content-between
+          "
+        >
+          首頁輪播圖管理 | HOMEPAGE CAROUSEL MANAGEMENT
+          <button class="btn btn-primary btn-sm m-0" type="button">
+            新增輪播圖 Add New Carousel Item
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="container">
+            <div class="row">
+              <div class="col-12"></div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card-footer d-flex align-items-center mt-1 justify-content-end"
+        >
+          <button type="button" class="btn btn-primary me-0">儲存 Save</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <div class="col-12">
+    <form clrForm [formGroup]="featuredProductForm" #featuredProductFormRef>
+      <div class="card mt-0">
+        <div
+          class="
+            card-header
+            py-3
+            d-flex
+            align-items-center
+            justify-content-between
+          "
+        >
+          首頁精選產品管理 | HOMEPAGE FEATURED PRODUCT MANAGEMENT
+          <button
+            class="btn btn-primary btn-sm m-0"
+            type="button"
+            (click)="addFeaturedProduct()"
+          >
+            新增精選產品 Add Featured Product
+          </button>
+        </div>
+        <div class="card-body">
+          <div
+            class="container"
+            *ngIf="featuredProductIdsFA.controls.length > 0"
+          >
+            <div class="row mt-3 mb-2">
+              <div
+                class="col-12"
+                formArrayName="featuredProductIds"
+                cdkDropList
+                (cdkDropListDropped)="onDropFeaturedProduct($event)"
+              >
+                <div
+                  cdkDrag
+                  class="row drag-drop-rows"
+                  *ngFor="
+                    let featuredProductId of featuredProductIdsFA.controls;
+                    let i = index;
+                    let last = last
+                  "
+                >
+                  <div class="col-12">
+                    <div
+                      class="row featured-product-row"
+                      style="margin-top: 5px"
+                      [ngStyle]="{ 'margin-bottom': !last ? '5px' : null }"
+                    >
+                      <div
+                        class="
+                          col-1
+                          d-flex
+                          align-items-center
+                          justify-content-center
+                          px-0
+                          py-1
+                        "
+                      >
+                        <div class="drag-drop-sort-icon" cdkDragHandle>
+                          <clr-icon shape="two-way-arrows right"></clr-icon>
+                        </div>
+                      </div>
+                      <div class="col-10 px-0 py-1">
+                        <audi-sys-product-selector
+                          class="mt-0"
+                          [label]="
+                            (i + 1).toString() + ') 精選產品 Featured Product'
+                          "
+                          [formControlName]="i.toString()"
+                          [clrLayout]="'vertical'"
+                        >
+                        </audi-sys-product-selector>
+                      </div>
+                      <div
+                        class="
+                          col-1
+                          d-flex
+                          align-items-center
+                          justify-content-center
+                          px-0
+                          py-1
+                        "
+                      >
+                        <button
+                          class="btn btn-danger btn-sm btn-icon m-0"
+                          type="button"
+                          (click)="removeFeaturedProduct(i)"
+                        >
+                          <clr-icon shape="trash"></clr-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="drag-drop-placeholder" *cdkDragPlaceholder></div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="row"
+              *ngIf="
+                featuredProductIdsFA.hasError('hasDuplicateValues') &&
+                featuredProductIdsFA.touched
+              "
+            >
+              <div class="col-12">
+                <clr-alert
+                  class="mt-2"
+                  [clrAlertIcon]="'exclamation-circle'"
+                  [clrAlertType]="'danger'"
+                  [clrAlertClosable]="false"
+                >
+                  <clr-alert-item
+                    >不可有重複商品 Duplicate products are not
+                    allowed</clr-alert-item
+                  >
+                </clr-alert>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="card-footer d-flex align-items-center mt-1 justify-content-end"
+        >
+          <button
+            type="button"
+            class="btn btn-primary me-0"
+            (click)="onSubmitFeaturedProduct()"
+          >
+            儲存 Save
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

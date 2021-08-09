@@ -65,6 +65,17 @@ const routes: Routes = [
               ),
           },
           {
+            path: 'homepage',
+            resolve: { data: LanguageSelectorResolver },
+            data: {
+              languageSettings: DEFAULT_ZH_EN_ONLY,
+            },
+            loadChildren: () =>
+              import(
+                './feature-modules/homepage-management/homepage-management.module'
+              ).then((m) => m.HomepageManagementModule),
+          },
+          {
             path: 'products',
             resolve: { data: LanguageSelectorResolver },
             data: {

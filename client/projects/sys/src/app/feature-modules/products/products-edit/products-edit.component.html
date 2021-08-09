@@ -47,6 +47,7 @@
 
                 <audi-sys-product-category-selector
                   formControlName="productCategoryId"
+                  [clrLayout]="'vertical'"
                 >
                 </audi-sys-product-category-selector>
 
@@ -96,7 +97,8 @@
                       formControlName="isVisible"
                     />
                     <label>{{
-                      productForm.get('isVisible')?.value | toZh: 'isVisibleWithEn'
+                      productForm.get('isVisible')?.value
+                        | toZh: 'isVisibleWithEn'
                     }}</label>
                   </clr-toggle-wrapper>
                   <clr-control-helper
