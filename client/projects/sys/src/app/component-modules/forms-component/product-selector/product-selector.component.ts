@@ -1,6 +1,11 @@
-import { forwardRef, Input } from '@angular/core';
-import { OnDestroy } from '@angular/core';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   ControlContainer,
   ControlValueAccessor,
@@ -8,48 +13,36 @@ import {
   FormControlDirective,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import {
-  LanguageStateService,
-  ProductCategory,
-  ProductsService,
-} from '@audi/data';
+import { ProductsService, LanguageStateService, Product } from '@audi/data';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 
-type CategoriesToShow = 'all' | 'parent' | 'children';
-
 @Component({
-  selector: 'audi-sys-product-category-selector',
-  templateUrl: './product-category-selector.component.html',
-  styleUrls: ['./product-category-selector.component.scss'],
+  selector: 'audi-sys-product-selector',
+  templateUrl: './product-selector.component.html',
+  styleUrls: ['./product-selector.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ProductCategorySelectorComponent),
+      useExisting: forwardRef(() => ProductSelectorComponent),
       multi: true,
     },
   ],
 })
-export class ProductCategorySelectorComponent
+export class ProductSelectorComponent
   implements OnInit, ControlValueAccessor, OnDestroy
 {
   @ViewChild(FormControlDirective, { static: true })
   formControlDirective: FormControlDirective;
 
   @Input()
-  label = '產品分類 Product Category';
+  label = '產品 Product';
 
   @Input()
   helperText = '';
 
   @Input()
   clrLayout: 'horizontal' | 'vertical' = 'horizontal';
-
-  @Input()
-  show: CategoriesToShow = 'all';
-
-  @Input()
-  excludedId: number;
 
   @Input()
   formControl: FormControl;
@@ -62,7 +55,7 @@ export class ProductCategorySelectorComponent
       this.controlContainer.control?.get(this.formControlName)) as FormControl;
   }
 
-  productCategories: ProductCategory[];
+  products: Product[];
 
   loading = true;
 
@@ -81,33 +74,11 @@ export class ProductCategorySelectorComponent
     // we are chaining from the language state so that when language is selected this is refreshed accordingly
     this.languageState.language$
       .pipe(
-        switchMap((_) => this.productsService.allParentCategories$),
+        switchMap((_) => this.productsService.allProducts$),
         takeUntil(this.destroy$)
       )
-      .subscribe((parentCategories: ProductCategory[]) => {
-        switch (this.show) {
-          case 'parent':
-            this.productCategories = parentCategories;
-            break;
-          case 'children':
-            this.productCategories = parentCategories
-              .flatMap((pc) => [pc, ...pc.children])
-              .filter((pc) => !pc.isTopLevel);
-            break;
-          default:
-            this.productCategories = parentCategories.flatMap((pc) => [
-              pc,
-              ...pc.children,
-            ]);
-            break;
-        }
-
-        if (this.excludedId != null) {
-          this.productCategories = this.productCategories.filter(
-            (pc) => pc.id !== this.excludedId
-          );
-        }
-
+      .subscribe((products: Product[]) => {
+        this.products = products;
         this.loading = false;
       });
   }

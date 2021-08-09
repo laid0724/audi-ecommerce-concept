@@ -5,12 +5,9 @@
     [formControl]="control"
     [ngClass]="{ 'mt-1': clrLayout === 'horizontal' }"
   >
-    <option [ngValue]="null">無分類 No Category</option>
-    <option
-      *ngFor="let productCategory of productCategories"
-      [value]="productCategory.id"
-    >
-      {{ productCategory.name }}
+    <option [ngValue]="null">無產品 No Product</option>
+    <option *ngFor="let product of products" [value]="product.id">
+      {{ product.name }}
     </option>
   </select>
   <clr-control-helper>{{ helperText }}</clr-control-helper>
