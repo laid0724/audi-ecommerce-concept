@@ -7,12 +7,17 @@ namespace Audi.Interfaces
 {
     public interface ICarouselRepository
     {
-        Task<CarouselItemDto> GetCarouselItemAsync(int carouselItemId);
-        Task<ICollection<CarouselItemDto>> GetCarouselItemsAsync(string type);
-        Task<HomepageCarouselItemDto> GetHomepageCarouselItemAsync(int carouselItemId);
-        Task<ICollection<HomepageCarouselItemDto>> GetHomepageCarouselItemsAsync(int homepageId);
+        Task<CarouselItem> GetCarouselItemAsync(int carouselItemId);
+        Task<CarouselItemDto> GetCarouselItemDtoAsync(int carouselItemId);
+        Task<ICollection<CarouselItemDto>> GetCarouselItemDtosAsync(string type);
+        Task<HomepageCarouselItem> GetHomepageCarouselItemAsync(int carouselItemId);
+        Task<HomepageCarouselItemDto> GetHomepageCarouselItemDtoAsync(int carouselItemId);
+        Task<ICollection<HomepageCarouselItemDto>> GetHomepageCarouselItemDtosAsync(int homepageId);
         void AddCarouselItem(CarouselItem carouselItem);
         void UpdateCarouselItem(CarouselItem carouselItem);
-        void RemoveCarouselItem(CarouselItem carouselItem);
+        void DeleteCarouselItem(CarouselItem carouselItem);
+        void AddHomepageCarouselItem(HomepageCarouselItem homepageCarouselItem);
+        void UpdateHomepageCarouselItem(HomepageCarouselItem homepageCarouselItem);
+        void DeleteHomepageCarouselItem(HomepageCarouselItem homepageCarouselItem);
     }
 }

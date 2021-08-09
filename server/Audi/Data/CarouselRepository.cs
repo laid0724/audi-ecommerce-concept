@@ -20,7 +20,18 @@ namespace Audi.Data
             _context = context;
         }
 
-        public async Task<CarouselItemDto> GetCarouselItemAsync(int carouselItemId)
+        public async Task<CarouselItem> GetCarouselItemAsync(int carouselItemId)
+        {
+            var carouselItem = await _context.CarouselItems
+                .Include(ci => ci.Photo)
+                    .ThenInclude(p => p.Photo)
+                .Where(ci => ci.Id == carouselItemId)
+                .SingleOrDefaultAsync();
+
+            return carouselItem;
+        }
+
+        public async Task<CarouselItemDto> GetCarouselItemDtoAsync(int carouselItemId)
         {
             var carouselItem = await _context.CarouselItems
                 .Include(ci => ci.Photo)
@@ -32,7 +43,7 @@ namespace Audi.Data
             return carouselItem;
         }
 
-        public async Task<ICollection<CarouselItemDto>> GetCarouselItemsAsync(string type)
+        public async Task<ICollection<CarouselItemDto>> GetCarouselItemDtosAsync(string type)
         {
             var carouselItems = await _context.CarouselItems
                 .Include(ci => ci.Photo)
@@ -44,7 +55,18 @@ namespace Audi.Data
             return carouselItems;
         }
 
-        public async Task<HomepageCarouselItemDto> GetHomepageCarouselItemAsync(int carouselItemId)
+        public async Task<HomepageCarouselItem> GetHomepageCarouselItemAsync(int carouselItemId)
+        {
+            var carouselItem = await _context.HomepageCarouselItems
+                .Include(e => e.CarouselItem)
+                    .ThenInclude(ci => ci.Photo)
+                        .ThenInclude(p => p.Photo)
+                .Where(hci => hci.CarouselItemId == carouselItemId)
+                .SingleOrDefaultAsync();
+
+            return carouselItem;
+        }
+        public async Task<HomepageCarouselItemDto> GetHomepageCarouselItemDtoAsync(int carouselItemId)
         {
             var carouselItem = await _context.HomepageCarouselItems
                 .Include(e => e.CarouselItem)
@@ -56,7 +78,7 @@ namespace Audi.Data
 
             return carouselItem;
         }
-        public async Task<ICollection<HomepageCarouselItemDto>> GetHomepageCarouselItemsAsync(int homepageId)
+        public async Task<ICollection<HomepageCarouselItemDto>> GetHomepageCarouselItemDtosAsync(int homepageId)
         {
             var carouselItems = await _context.HomepageCarouselItems
                 .Include(e => e.CarouselItem)
@@ -79,9 +101,23 @@ namespace Audi.Data
             _context.CarouselItems.Update(carouselItem);
         }
 
-        public void RemoveCarouselItem(CarouselItem carouselItem)
+        public void DeleteCarouselItem(CarouselItem carouselItem)
         {
             _context.CarouselItems.Remove(carouselItem);
+        }
+        public void AddHomepageCarouselItem(HomepageCarouselItem homepageCarouselItem)
+        {
+            _context.HomepageCarouselItems.Add(homepageCarouselItem);
+        }
+
+        public void UpdateHomepageCarouselItem(HomepageCarouselItem homepageCarouselItem)
+        {
+            _context.HomepageCarouselItems.Update(homepageCarouselItem);
+        }
+
+        public void DeleteHomepageCarouselItem(HomepageCarouselItem homepageCarouselItem)
+        {
+            _context.HomepageCarouselItems.Remove(homepageCarouselItem);
         }
     }
 }

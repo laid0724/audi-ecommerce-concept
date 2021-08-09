@@ -27,11 +27,14 @@ namespace Audi.Data
                         .ThenInclude(ci => ci.Photo)
                             .ThenInclude(cip => cip.Photo)
                 .Where(h => h.Language.ToLower().Trim() == language.ToLower().Trim())
+                .AsNoTracking()
                 .SingleOrDefaultAsync();
 
             if (homepage == null) return null;
 
             var homepageDto = _mapper.Map<HomepageDto>(homepage);
+
+            homepageDto.CarouselItems = homepageDto.CarouselItems.OrderBy(ci => ci.Sort).ToList();
 
             var featuredProductsOrdering = homepage.FeaturedProductIds.ToList();
 
