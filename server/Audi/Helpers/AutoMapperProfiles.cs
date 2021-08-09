@@ -251,6 +251,21 @@ namespace Audi.Helpers
                     opt => opt.MapFrom(src => src.Id)
                 );
             CreateMap<OrderItemUpsertDto, OrderItem>();
+            CreateMap<HomepageDto, Homepage>()
+                .ForMember(
+                    dest => dest.FeaturedProductIds,
+                    opt => opt.MapFrom(src => src.FeaturedProducts.Select(p => p.Id))
+                );
+            CreateMap<CarouselItemDto, CarouselItem>()
+                .ForMember(
+                    dest => dest.PhotoId,
+                    opt => opt.MapFrom(src => src.Photo.Id)
+                );
+            CreateMap<CarouselItemUpsertDto, CarouselItem>()
+                .ForMember(
+                    dest => dest.Type,
+                    opt => opt.MapFrom(src => src.Type.ToLower().Trim())
+                );
 
             CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
         }
