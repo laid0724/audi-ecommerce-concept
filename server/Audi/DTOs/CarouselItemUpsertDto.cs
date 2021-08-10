@@ -13,5 +13,6 @@ namespace Audi.DTOs
         public string PrimaryButtonUrl { get; set; }
         public string SecondaryButtonLabel { get; set; }
         public string SecondaryButtonUrl { get; set; }
+        public string Color { get; set; }
     }
 }
