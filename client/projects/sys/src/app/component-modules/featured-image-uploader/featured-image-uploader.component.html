@@ -1,9 +1,19 @@
 <ng-container *ngIf="modelIdKey && modelIdValue">
   <div class="clr-form-control clr-row">
-    <label class="clr-control-label clr-col-12 clr-col-md-2"
+    <label
+      class="clr-control-label"
+      [ngClass]="{
+        'clr-col-12 clr-col-md-2': clrLayout === 'horizontal',
+        'clr-col-12': clrLayout === 'vertical'
+      }"
       >精選圖片 Featured Image</label
     >
-    <div class="clr-col-12 clr-col-md-10">
+    <div
+      [ngClass]="{
+        'clr-col-12 clr-col-md-10': clrLayout === 'horizontal',
+        'clr-col-12 mt-2': clrLayout === 'vertical'
+      }"
+    >
       <div class="row" *ngIf="featuredImage">
         <div class="col-12 mb-2">
           <div class="img-wrapper" style="--aspect-ratio: 16/9">

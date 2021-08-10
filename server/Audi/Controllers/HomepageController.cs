@@ -223,7 +223,7 @@ namespace Audi.Controllers
         }
 
         [SwaggerOperation(Summary = "add photo to homepage carousel item")]
-        // [Authorize(Policy = "RequireModerateRole")]
+        [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("carousel/{carouselItemId}/photos")]
         public async Task<ActionResult<HomepageCarouselItemDto>> AddPhotoToHomepageCarouselItem(int carouselItemId, IFormFile file)
         {
@@ -266,9 +266,9 @@ namespace Audi.Controllers
         }
 
         [SwaggerOperation(Summary = "remove photo from homepage carousel item")]
-        // [Authorize(Policy = "RequireModerateRole")]
-        [HttpDelete("carousel/{carouselItemId}/photos/{photoId}")]
-        public async Task<ActionResult<HomepageCarouselItemDto>> RemovePhotoFromHomepageCarouselItem(int carouselItemId, int photoId)
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpDelete("carousel/{carouselItemId}/photos")]
+        public async Task<ActionResult<HomepageCarouselItemDto>> RemovePhotoFromHomepageCarouselItem(int carouselItemId)
         {
             var carouselItem = await _unitOfWork.CarouselRepository.GetCarouselItemAsync(carouselItemId);
 

@@ -23,7 +23,7 @@ import {
 } from '@audi/data';
 import { ClrForm } from '@clr/angular';
 import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { switchMap, take, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
@@ -60,6 +60,12 @@ export class HomepageManagementComponent implements OnInit, OnDestroy {
 
   get featuredProductIdsFA(): FormArray {
     return this.featuredProductForm.get('featuredProductIds') as FormArray;
+  }
+
+  public getCarouselItem(
+    carouselItemId: number
+  ): HomepageCarouselItem | undefined {
+    return this.carouselItems.find(({ id }) => id === carouselItemId);
   }
 
   destroy$ = new Subject<boolean>();
@@ -142,6 +148,52 @@ export class HomepageManagementComponent implements OnInit, OnDestroy {
     this.carouselItemModalOpen = false;
   }
 
+  deleteCarouselItemPhotoFn(
+    carouselItemId: number
+  ): () => Observable<HomepageCarouselItem> {
+    const fn = () =>
+      this.homepageService.removePhotoFromHomepageCarouselItem(carouselItemId);
+    return fn;
+  }
+
+  onCarouselItemPhotoChange(changedCarouselItem: HomepageCarouselItem): void {
+    const previousCarouselItem = this.carouselItems.find(
+      ({ id }) => id === changedCarouselItem.id
+    );
+
+    if (previousCarouselItem != undefined) {
+      this.carouselItems[this.carouselItems.indexOf(previousCarouselItem)] =
+        changedCarouselItem;
+    }
+  }
+
+  onSortCarouselItem(previousIndex: number, newIndex: number) {
+    if (newIndex === -1) {
+      return;
+    }
+    if (newIndex >= this.carouselItems.length) {
+      return;
+    }
+    if (previousIndex === newIndex) {
+      return;
+    }
+
+    swapArrayElement(this.carouselItems, previousIndex, newIndex);
+  }
+
+  onSaveCarouselItemSortingOrder() {
+    const newCarouselItemsSortOrder = this.carouselItems.map(({ id }) => id);
+
+    this.homepageService
+      .sortHomepageCarouselItems({
+        carouselItemIds: newCarouselItemsSortOrder,
+      })
+      .pipe(take(1))
+      .subscribe((carouselItems: HomepageCarouselItem[]) => {
+        this.carouselItems = carouselItems;
+      });
+  }
+
   removeCarouselItem(carouselItemId: number): void {
     this.homepageService
       .deleteHomepageCarouselItem(carouselItemId)
@@ -184,35 +236,6 @@ export class HomepageManagementComponent implements OnInit, OnDestroy {
       this.closeCarouselItemModal();
       this.toastr.success('Saved successfully', '儲存成功');
     });
-
-    // todo: chain image upload
-  }
-
-  onSortCarouselItem(previousIndex: number, newIndex: number) {
-    if (newIndex === -1) {
-      return;
-    }
-    if (newIndex >= this.carouselItems.length) {
-      return;
-    }
-    if (previousIndex === newIndex) {
-      return;
-    }
-
-    swapArrayElement(this.carouselItems, previousIndex, newIndex);
-  }
-
-  onSaveCarouselItemSortingOrder() {
-    const newCarouselItemsSortOrder = this.carouselItems.map(({ id }) => id);
-
-    this.homepageService
-      .sortHomepageCarouselItems({
-        carouselItemIds: newCarouselItemsSortOrder,
-      })
-      .pipe(take(1))
-      .subscribe((carouselItems: HomepageCarouselItem[]) => {
-        this.carouselItems = carouselItems;
-      });
   }
 
   addFeaturedProduct(): void {

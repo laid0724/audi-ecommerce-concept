@@ -92,11 +92,10 @@ export class HomepageService {
   }
 
   removePhotoFromHomepageCarouselItem(
-    carouselItemId: number,
-    photoId: number
+    carouselItemId: number
   ): Observable<HomepageCarouselItem> {
     return this.http.delete<HomepageCarouselItem>(
-      `${this.endpoint}/carousel/${carouselItemId}/photos/${photoId}`
+      `${this.endpoint}/carousel/${carouselItemId}/photos`
     );
   }
 }

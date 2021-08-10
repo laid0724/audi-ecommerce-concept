@@ -434,7 +434,20 @@
         >
       </clr-input-container>
 
-      <!-- TODO: photo uploader -->
+      <audi-sys-featured-image-uploader
+        *ngIf="!isNullOrEmptyString(carouselForm.get('id')?.value?.toString())"
+        [clrLayout]="'vertical'"
+        [modelIdKey]="'carouselItemId'"
+        [modelIdValue]="carouselForm.get('id')?.value"
+        [featuredImage]="getCarouselItem(carouselForm.get('id')?.value)?.photo"
+        [deleteFeaturedImageHttpMethod]="
+          deleteCarouselItemPhotoFn(carouselForm.get('id')?.value)
+        "
+        [addFeaturedImageEndpoint]="
+          'homepage/carousel/' + carouselForm.get('id')?.value + '/photos'
+        "
+        (imageChanges)="onCarouselItemPhotoChange($event)"
+      ></audi-sys-featured-image-uploader>
 
       <clr-toggle-container>
         <label>顯示狀態 Visibility</label>
@@ -450,20 +463,37 @@
       </clr-toggle-container>
     </form>
   </div>
-  <div class="modal-footer">
-    <button
-      type="button"
-      class="btn btn-primary-outline"
-      (click)="closeCarouselItemModal()"
+  <div
+    class="modal-footer d-flex align-items-center"
+    [ngClass]="
+      isNullOrEmptyString(carouselForm.get('id')?.value?.toString())
+        ? 'justify-content-between'
+        : 'justify-content-end'
+    "
+  >
+    <ng-container
+      *ngIf="isNullOrEmptyString(carouselForm.get('id')?.value?.toString())"
     >
-      取消 Cancel
-    </button>
-    <button
-      type="button"
-      class="btn btn-primary"
-      (click)="onSubmitCarouselItem(carouselForm.get('id')?.value)"
-    >
-      確認 Ok
-    </button>
+      <p class="p3 ms-2 mt-0" style="color: #8c8c8c">
+        *圖片須在建檔之後才能上傳
+      </p>
+    </ng-container>
+
+    <div class="d-flex">
+      <button
+        type="button"
+        class="btn btn-primary-outline"
+        (click)="closeCarouselItemModal()"
+      >
+        取消 Cancel
+      </button>
+      <button
+        type="button"
+        class="btn btn-primary"
+        (click)="onSubmitCarouselItem(carouselForm.get('id')?.value)"
+      >
+        確認 Ok
+      </button>
+    </div>
   </div>
 </clr-modal>
