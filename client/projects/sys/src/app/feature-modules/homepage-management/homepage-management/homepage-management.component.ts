@@ -1,14 +1,9 @@
 import { HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormGroup,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   BusyService,
+  CarouselColor,
   CarouselType,
   duplicateValuesValidator,
   Homepage,
@@ -57,6 +52,15 @@ export class HomepageManagementComponent implements OnInit, OnDestroy {
 
   carouselItems: HomepageCarouselItem[] = [];
   carouselItemModalOpen: boolean = false;
+  carouselItemColorOptions: CarouselColor[] = [
+    null,
+    ...Object.keys(CarouselColor).map(
+      (key) => (CarouselColor as unknown as any)[key]
+    ),
+  ];
+  carouselItemColors = CarouselColor;
+
+  destroy$ = new Subject<boolean>();
 
   get featuredProductIdsFA(): FormArray {
     return this.featuredProductForm.get('featuredProductIds') as FormArray;
@@ -67,8 +71,6 @@ export class HomepageManagementComponent implements OnInit, OnDestroy {
   ): HomepageCarouselItem | undefined {
     return this.carouselItems.find(({ id }) => id === carouselItemId);
   }
-
-  destroy$ = new Subject<boolean>();
 
   public isNullOrEmptyString: (value: any) => boolean = isNullOrEmptyString;
 
@@ -122,6 +124,7 @@ export class HomepageManagementComponent implements OnInit, OnDestroy {
       primaryButtonUrl: [null, [Validators.pattern(URL_REGEX)]],
       secondaryButtonLabel: [null],
       secondaryButtonUrl: [null, [Validators.pattern(URL_REGEX)]],
+      color: [CarouselColor.Black, [Validators.required]],
     });
   }
 

@@ -38,3 +38,8 @@ export enum OrderStatus {
 export enum CarouselType {
   Homepage = 'homepage',
 }
+
+export enum CarouselColor {
+  Black = 'black',
+  White = 'white',
+}

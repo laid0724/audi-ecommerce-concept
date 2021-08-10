@@ -15,8 +15,7 @@
   background-position: center;
   background-repeat: no-repeat;
   &-bg-overlay {
-    background-color: rgba(0, 0, 0);
-    opacity: 0.3;
+    background-color: rgba(0, 0, 0, 0.3);
     position: absolute;
     top: 0;
     bottom: 0;
