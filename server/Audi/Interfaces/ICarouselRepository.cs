@@ -9,9 +9,11 @@ namespace Audi.Interfaces
     {
         Task<CarouselItem> GetCarouselItemAsync(int carouselItemId);
         Task<CarouselItemDto> GetCarouselItemDtoAsync(int carouselItemId);
+        Task<ICollection<CarouselItem>> GetCarouselItemsAsync(string type);
         Task<ICollection<CarouselItemDto>> GetCarouselItemDtosAsync(string type);
         Task<HomepageCarouselItem> GetHomepageCarouselItemAsync(int carouselItemId);
         Task<HomepageCarouselItemDto> GetHomepageCarouselItemDtoAsync(int carouselItemId);
+        Task<ICollection<HomepageCarouselItem>> GetHomepageCarouselItemsAsync(int homepageId);
         Task<ICollection<HomepageCarouselItemDto>> GetHomepageCarouselItemDtosAsync(int homepageId);
         void AddCarouselItem(CarouselItem carouselItem);
         void UpdateCarouselItem(CarouselItem carouselItem);

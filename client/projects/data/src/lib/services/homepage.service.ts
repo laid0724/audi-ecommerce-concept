@@ -19,6 +19,10 @@ export interface CarouselItemUpsert {
   secondaryButtonUrl: string;
 }
 
+export interface HomepageCarouselItemsSort {
+  carouselItemIds: number[];
+}
+
 export interface HomepageFeaturedProductsUpsert {
   featuredProductIds: number[];
 }
@@ -62,9 +66,28 @@ export class HomepageService {
     );
   }
 
+  sortHomepageCarouselItems(
+    request: HomepageCarouselItemsSort
+  ): Observable<HomepageCarouselItem[]> {
+    return this.http.patch<HomepageCarouselItem[]>(
+      `${this.endpoint}/carousel/sort`,
+      request
+    );
+  }
+
   deleteHomepageCarouselItem(carouselItemId: number): Observable<null> {
     return this.http.delete<null>(
       `${this.endpoint}/carousel/${carouselItemId}`
+    );
+  }
+
+  addPhotoToHomepageCarouselItem(
+    carouselItemId: number,
+    file: File
+  ): Observable<HomepageCarouselItem> {
+    return this.http.post<HomepageCarouselItem>(
+      `${this.endpoint}/carousel/${carouselItemId}/photos`,
+      file
     );
   }
 

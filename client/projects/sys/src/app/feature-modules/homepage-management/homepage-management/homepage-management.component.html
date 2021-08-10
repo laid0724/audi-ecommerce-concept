@@ -6,42 +6,204 @@
 
 <div class="row mt-3">
   <div class="col-12">
-    <form clrForm [formGroup]="carouselForm" #carouselFormRef>
-      <div class="card mt-0">
-        <div
-          class="
-            card-header
-            py-3
-            d-flex
-            align-items-center
-            justify-content-between
-          "
+    <div class="card mt-0">
+      <div
+        class="
+          card-header
+          py-3
+          d-flex
+          align-items-center
+          justify-content-between
+        "
+      >
+        首頁輪播圖管理 | HOMEPAGE CAROUSEL MANAGEMENT
+        <button
+          class="btn btn-primary btn-sm m-0"
+          type="button"
+          (click)="openCarouselItemModal()"
         >
-          首頁輪播圖管理 | HOMEPAGE CAROUSEL MANAGEMENT
-          <button class="btn btn-primary btn-sm m-0" type="button">
-            新增輪播圖 Add New Carousel Item
-          </button>
-        </div>
-        <div class="card-body">
-          <div class="container">
-            <div class="row">
-              <div class="col-12"></div>
+          新增輪播圖 Add New Carousel Item
+        </button>
+      </div>
+      <div class="card-body">
+        <div class="container">
+          <div class="row">
+            <div class="col-12">
+              <div
+                class="row bordered-row mt-3"
+                *ngFor="
+                  let carouselItem of carouselItems;
+                  let i = index;
+                  let first = first;
+                  let last = last
+                "
+              >
+                <div class="col-12">
+                  <div class="row">
+                    <div
+                      class="
+                        col-1
+                        d-flex
+                        flex-column
+                        align-items-center
+                        justify-content-center
+                        p-0
+                      "
+                    >
+                      <button
+                        class="btn btn-sm btn-icon btn-primary me-0"
+                        type="button"
+                        (click)="onSortCarouselItem(i, i - 1)"
+                        [disabled]="first"
+                      >
+                        <clr-icon shape="arrow up"></clr-icon>
+                      </button>
+                      <button
+                        class="btn btn-sm btn-icon btn-primary me-0"
+                        type="button"
+                        (click)="onSortCarouselItem(i, i + 1)"
+                        [disabled]="last"
+                      >
+                        <clr-icon shape="arrow down"></clr-icon>
+                      </button>
+                    </div>
+                    <div class="col-10">
+                      <div
+                        class="carousel-item-wrapper"
+                        style="--aspect-ratio: 16/9"
+                      >
+                        <div
+                          class="
+                            carousel-item
+                            bordered
+                            d-flex
+                            flex-column
+                            align-items-start
+                            justify-content-between
+                          "
+                          [ngStyle]="{
+                            backgroundImage: !isNullOrEmptyString(
+                              carouselItems[i]?.photo?.url
+                            )
+                              ? 'url(' + carouselItems[i].photo.url + ')'
+                              : null
+                          }"
+                        >
+                          <div class="carousel-item-bg-overlay"></div>
+                          <h1
+                            class="h1 my-auto z-index-2 text-black"
+                            *ngIf="!isNullOrEmptyString(carouselItems[i].title)"
+                          >
+                            {{ carouselItems[i].title }}
+                          </h1>
+                          <h3
+                            class="h3 my-auto z-index-2 text-black"
+                            *ngIf="
+                              !isNullOrEmptyString(carouselItems[i].subTitle)
+                            "
+                          >
+                            {{ carouselItems[i].subTitle }}
+                          </h3>
+                          <p
+                            class="p1 my-auto z-index-2 text-black"
+                            *ngIf="!isNullOrEmptyString(carouselItems[i].body)"
+                          >
+                            {{ carouselItems[i].body }}
+                          </p>
+                          <div class="d-flex mt-auto z-index-2">
+                            <a
+                              *ngIf="
+                                !isNullOrEmptyString(
+                                  carouselItems[i].primaryButtonLabel
+                                )
+                              "
+                              [attr.href]="
+                                !isNullOrEmptyString(
+                                  carouselItems[i].primaryButtonUrl
+                                )
+                                  ? carouselItems[i].primaryButtonUrl
+                                  : null
+                              "
+                              target="_blank"
+                            >
+                              <button class="btn btn-primary" type="button">
+                                {{ carouselItems[i].primaryButtonLabel }}
+                              </button>
+                            </a>
+                            <a
+                              *ngIf="
+                                !isNullOrEmptyString(
+                                  carouselItems[i].secondaryButtonLabel
+                                )
+                              "
+                              [attr.href]="
+                                !isNullOrEmptyString(
+                                  carouselItems[i].secondaryButtonUrl
+                                )
+                                  ? carouselItems[i].secondaryButtonUrl
+                                  : null
+                              "
+                              target="_blank"
+                            >
+                              <button class="btn btn-secondary" type="button">
+                                {{ carouselItems[i].secondaryButtonLabel }}
+                              </button>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="
+                        col-1
+                        d-flex
+                        align-items-center
+                        justify-content-center
+                        p-0
+                      "
+                    >
+                      <clr-button-group>
+                        <clr-button
+                          class="btn-primary btn-sm btn-icon m-0"
+                          type="button"
+                          (click)="openCarouselItemModal(carouselItem)"
+                        >
+                          <clr-icon shape="cog"></clr-icon>
+                        </clr-button>
+                        <clr-button
+                          class="btn-danger btn-sm btn-icon m-0"
+                          type="button"
+                          (click)="removeCarouselItem(carouselItem.id)"
+                        >
+                          <clr-icon shape="trash"></clr-icon>
+                        </clr-button>
+                      </clr-button-group>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-        <div
-          class="card-footer d-flex align-items-center mt-1 justify-content-end"
-        >
-          <button type="button" class="btn btn-primary me-0">儲存 Save</button>
-        </div>
       </div>
-    </form>
+      <div
+        class="card-footer d-flex align-items-center mt-1 justify-content-end"
+      >
+        <button
+          type="button"
+          class="btn btn-primary me-0"
+          (click)="onSaveCarouselItemSortingOrder()"
+        >
+          儲存輪播圖順序 Save Carousel Order
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="row mt-3">
   <div class="col-12">
-    <form clrForm [formGroup]="featuredProductForm" #featuredProductFormRef>
+    <form clrForm [formGroup]="featuredProductForm" #featuredProductClrForm>
       <div class="card mt-0">
         <div
           class="
@@ -84,7 +246,7 @@
                 >
                   <div class="col-12">
                     <div
-                      class="row featured-product-row"
+                      class="row bordered-row"
                       style="margin-top: 5px"
                       [ngStyle]="{ 'margin-bottom': !last ? '5px' : null }"
                     >
@@ -175,3 +337,133 @@
     </form>
   </div>
 </div>
+
+<clr-modal [(clrModalOpen)]="carouselItemModalOpen" [clrModalClosable]="false">
+  <h3 class="modal-title">
+    {{ carouselForm.get('id')?.value === null ? '新增' : '編輯' }}輪播圖
+    {{ carouselForm.get('id')?.value === null ? 'Create' : 'Edit' }} Carousel
+    Item
+  </h3>
+  <div class="modal-body">
+    <form
+      clrForm
+      [formGroup]="carouselForm"
+      #carouselClrForm
+      [clrLayout]="'vertical'"
+    >
+      <clr-input-container class="w-100 mt-0">
+        <label>標題 Title</label>
+        <input type="text" clrInput formControlName="title" class="w-100" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-input-container>
+      <clr-input-container class="w-100">
+        <label>副標題 Sub Title</label>
+        <input type="text" clrInput formControlName="subTitle" class="w-100" />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-input-container>
+      <clr-textarea-container class="w-100">
+        <label>內容 Body</label>
+        <textarea
+          clrTextarea
+          formControlName="body"
+          rows="5"
+          class="w-100"
+        ></textarea>
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-textarea-container>
+      <clr-input-container class="w-100">
+        <label>按鈕標題 Primary Button Title</label>
+        <input
+          type="text"
+          clrInput
+          formControlName="primaryButtonLabel"
+          class="w-100"
+        />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-input-container>
+      <clr-input-container class="w-100">
+        <label>按鈕連結 Primary Button Url</label>
+        <input
+          type="text"
+          clrInput
+          formControlName="primaryButtonUrl"
+          class="w-100"
+        />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+        <clr-control-error *clrIfError="'pattern'"
+          >請輸入正確的網址，例如https://www.google.com Please enter a valid
+          url, e.g., https://www.google.com</clr-control-error
+        >
+      </clr-input-container>
+      <clr-input-container class="w-100">
+        <label>副按鈕標題 Secondary Button Title</label>
+        <input
+          type="text"
+          clrInput
+          formControlName="secondaryButtonLabel"
+          class="w-100"
+        />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-input-container>
+      <clr-input-container class="w-100">
+        <label>副按鈕連結 Secondary Button Url</label>
+        <input
+          type="text"
+          clrInput
+          formControlName="secondaryButtonUrl"
+          class="w-100"
+        />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+        <clr-control-error *clrIfError="'pattern'"
+          >請輸入正確的網址，例如https://www.google.com Please enter a valid
+          url, e.g., https://www.google.com</clr-control-error
+        >
+      </clr-input-container>
+
+      <!-- TODO: photo uploader -->
+
+      <clr-toggle-container>
+        <label>顯示狀態 Visibility</label>
+        <clr-toggle-wrapper class="mt-2">
+          <input type="checkbox" clrToggle formControlName="isVisible" />
+          <label>{{
+            carouselForm.get('isVisible')?.value | toZh: 'isVisibleWithEn'
+          }}</label>
+        </clr-toggle-wrapper>
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-toggle-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary-outline"
+      (click)="closeCarouselItemModal()"
+    >
+      取消 Cancel
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary"
+      (click)="onSubmitCarouselItem(carouselForm.get('id')?.value)"
+    >
+      確認 Ok
+    </button>
+  </div>
+</clr-modal>

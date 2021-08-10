@@ -1,4 +1,4 @@
-import { OnDestroy, ViewChild } from '@angular/core';
+import { HostListener, OnDestroy, ViewChild } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import {
   FormArray,
@@ -9,13 +9,17 @@ import {
 } from '@angular/forms';
 import {
   BusyService,
+  CarouselType,
   duplicateValuesValidator,
   Homepage,
   HomepageCarouselItem,
   HomepageService,
+  isNullOrEmptyString,
   LanguageCode,
   LanguageStateService,
   Product,
+  swapArrayElement,
+  URL_REGEX,
 } from '@audi/data';
 import { ClrForm } from '@clr/angular';
 import { ToastrService } from 'ngx-toastr';
@@ -28,22 +32,39 @@ import { switchMap, take, takeUntil, tap } from 'rxjs/operators';
   styleUrls: ['./homepage-management.component.scss'],
 })
 export class HomepageManagementComponent implements OnInit, OnDestroy {
-  @ViewChild('carouselFormRef', { read: ClrForm }) carouselClrForm: ClrForm;
-  @ViewChild('featuredProductFormRef', { read: ClrForm })
+  @HostListener('document:keydown.escape', ['$event']) onEscapeHandler(
+    event: KeyboardEvent
+  ) {
+    if (this.carouselItemModalOpen) {
+      this.closeCarouselItemModal();
+    }
+  }
+
+  @HostListener('document:keydown.enter', ['$event']) onEnterHandler(
+    event: KeyboardEvent
+  ) {
+    if (this.carouselItemModalOpen) {
+      this.onSubmitCarouselItem(this.carouselForm.get('id')?.value);
+    }
+  }
+
+  @ViewChild('carouselClrForm', { read: ClrForm }) carouselClrForm: ClrForm;
+  @ViewChild('featuredProductClrForm', { read: ClrForm })
   featuredProductClrForm: ClrForm;
 
   carouselForm: FormGroup;
   featuredProductForm: FormGroup;
 
-  get carouselItemsFA(): FormArray {
-    return this.carouselForm.get('carouselItems') as FormArray;
-  }
+  carouselItems: HomepageCarouselItem[] = [];
+  carouselItemModalOpen: boolean = false;
 
   get featuredProductIdsFA(): FormArray {
     return this.featuredProductForm.get('featuredProductIds') as FormArray;
   }
 
   destroy$ = new Subject<boolean>();
+
+  public isNullOrEmptyString: (value: any) => boolean = isNullOrEmptyString;
 
   constructor(
     private languageService: LanguageStateService,
@@ -65,20 +86,13 @@ export class HomepageManagementComponent implements OnInit, OnDestroy {
         tap((homepage: Homepage) => {
           const { carouselItems, featuredProducts } = homepage;
 
-          this.carouselItemsFA.clear();
-          this.featuredProductIdsFA.clear();
+          this.carouselItems = carouselItems;
 
-          carouselItems.forEach(
-            (homepageCarouselItem: HomepageCarouselItem) => {
-              this.addCarouselItem();
-            }
-          );
+          this.featuredProductIdsFA.clear();
 
           featuredProducts.forEach((product: Product) => {
             this.addFeaturedProduct();
           });
-
-          this.carouselItemsFA.patchValue(carouselItems);
 
           this.featuredProductIdsFA.patchValue(
             featuredProducts.map((fp) => fp.id)
@@ -91,7 +105,17 @@ export class HomepageManagementComponent implements OnInit, OnDestroy {
 
   initCarouselForm(): void {
     this.carouselForm = this.fb.group({
-      carouselItems: this.fb.array([]),
+      id: [null],
+      type: [CarouselType.Homepage, [Validators.required]],
+      sort: [0, [Validators.required]],
+      title: [null],
+      subTitle: [null],
+      body: [null],
+      isVisible: [false, [Validators.required]],
+      primaryButtonLabel: [null],
+      primaryButtonUrl: [null, [Validators.pattern(URL_REGEX)]],
+      secondaryButtonLabel: [null],
+      secondaryButtonUrl: [null, [Validators.pattern(URL_REGEX)]],
     });
   }
 
@@ -101,19 +125,35 @@ export class HomepageManagementComponent implements OnInit, OnDestroy {
     });
   }
 
-  addCarouselItem(): void {
-    // TODO
+  openCarouselItemModal(carouselItem?: HomepageCarouselItem): void {
+    if (carouselItem) {
+      this.carouselForm.patchValue(carouselItem);
+    }
 
-    this.carouselItemsFA.push(this.fb.group({}));
+    this.carouselItemModalOpen = true;
   }
 
-  removeCarouselItem(i: number): void {
-    // TODO
-
-    this.carouselItemsFA.removeAt(i);
+  closeCarouselItemModal(): void {
+    this.carouselForm.reset({
+      type: CarouselType.Homepage,
+      isVisible: false,
+      sort: 0,
+    });
+    this.carouselItemModalOpen = false;
   }
 
-  onSubmitCarouselItems(): void {
+  removeCarouselItem(carouselItemId: number): void {
+    this.homepageService
+      .deleteHomepageCarouselItem(carouselItemId)
+      .pipe(take(1))
+      .subscribe((_) => {
+        this.carouselItems = this.carouselItems.filter(
+          (c) => c.id !== carouselItemId
+        );
+      });
+  }
+
+  onSubmitCarouselItem(carouselItemId: number | null): void {
     if (this.carouselForm.invalid) {
       this.carouselClrForm.markAsTouched();
       this.carouselForm.markAllAsTouched();
@@ -121,22 +161,58 @@ export class HomepageManagementComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // todo
+    const obs$ =
+      carouselItemId != null
+        ? this.homepageService.updateHomepageCarouselItem(
+            this.carouselForm.value
+          )
+        : this.homepageService.addHomepageCarouselItem(this.carouselForm.value);
+
+    obs$.pipe(take(1)).subscribe((carouselItem: HomepageCarouselItem) => {
+      if (!this.carouselItems.map(({ id }) => id).includes(carouselItem.id)) {
+        this.carouselItems = [carouselItem, ...this.carouselItems];
+      } else {
+        const editedItem = this.carouselItems.find(
+          ({ id }) => id === carouselItem.id
+        );
+
+        if (editedItem !== undefined) {
+          this.carouselItems[this.carouselItems.indexOf(editedItem)] =
+            carouselItem;
+        }
+      }
+      this.closeCarouselItemModal();
+      this.toastr.success('Saved successfully', '儲存成功');
+    });
+
+    // todo: chain image upload
   }
 
-  // this should be of type CdkDragDrop<any[]> but angular compiler
-  // insists that the event being passed in from the template and throws error
-  onDropCarouselItem(dropEvent: any) {
-    if (dropEvent.previousIndex === dropEvent.currentIndex) {
+  onSortCarouselItem(previousIndex: number, newIndex: number) {
+    if (newIndex === -1) {
+      return;
+    }
+    if (newIndex >= this.carouselItems.length) {
+      return;
+    }
+    if (previousIndex === newIndex) {
       return;
     }
 
-    // TODO: call api each time
+    swapArrayElement(this.carouselItems, previousIndex, newIndex);
+  }
 
-    // const draggedRow = this.featuredProductIdsFA.at(dropEvent.previousIndex);
-    // this.featuredProductIdsFA.removeAt(dropEvent.previousIndex);
-    // this.featuredProductIdsFA.insert(dropEvent.currentIndex, draggedRow);
-    // this.featuredProductIdsFA.updateValueAndValidity();
+  onSaveCarouselItemSortingOrder() {
+    const newCarouselItemsSortOrder = this.carouselItems.map(({ id }) => id);
+
+    this.homepageService
+      .sortHomepageCarouselItems({
+        carouselItemIds: newCarouselItemsSortOrder,
+      })
+      .pipe(take(1))
+      .subscribe((carouselItems: HomepageCarouselItem[]) => {
+        this.carouselItems = carouselItems;
+      });
   }
 
   addFeaturedProduct(): void {

@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Audi.DTOs;
 using Audi.Entities;
@@ -31,6 +33,11 @@ namespace Audi.Controllers
             public class UpdateFeaturedProducts
             {
                 public int[] FeaturedProductIds { get; set; }
+            }
+
+            public class SortCarouselItems
+            {
+                public int[] CarouselItemIds { get; set; }
             }
         }
 
@@ -140,10 +147,53 @@ namespace Audi.Controllers
             return BadRequest("failed to update homepage carousel item");
         }
 
+        [SwaggerOperation(Summary = "sort homepage carousel item")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPatch("carousel/sort")]
+        public async Task<ActionResult<ICollection<HomepageCarouselItemDto>>> SortHomepageCarouselItems([FromBody] Requests.SortCarouselItems request, [FromHeader(Name = "X-LANGUAGE")] string language)
+        {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+
+            if (request.CarouselItemIds.Count() < 1) return BadRequest("carousel item ids not provided");
+
+            var homepage = await _unitOfWork.HomepageRepository.GetHomepageAsync(language);
+
+            if (homepage == null) return NotFound();
+
+            var requestedCarouselItems = homepage.CarouselItems
+                .Select(hci => hci.CarouselItem)
+                .Where(c => request.CarouselItemIds.Contains(c.Id))
+                .ToList();
+
+            foreach (var item in requestedCarouselItems.Select((value, i) => new { value, i }))
+            {
+                var carouselItem = item.value;
+                var index = item.i;
+
+                var newSortIndex = request.CarouselItemIds.ToList().IndexOf(carouselItem.Id) + 1;
+
+                carouselItem.Sort = newSortIndex;
+
+                _unitOfWork.CarouselRepository.UpdateCarouselItem(carouselItem);
+            };
+
+            if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
+            {
+                var homepageCarouselItemDtos = await _unitOfWork.CarouselRepository.GetHomepageCarouselItemDtosAsync(homepage.Id);
+                return Ok(
+                    homepageCarouselItemDtos
+                        .OrderBy(hci => hci.Sort)
+                        .ThenByDescending(hci => hci.Id)
+                );
+            }
+
+            return BadRequest("failed to sort homepage carousel item");
+        }
+
         [SwaggerOperation(Summary = "delete homepage carousel item")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("carousel/{carouselItemId}")]
-        public async Task<ActionResult> UpdateHomepageCarouselItem(int carouselItemId)
+        public async Task<ActionResult> DeleteHomepageCarouselItem(int carouselItemId)
         {
             var homepageCarouselItem = await _unitOfWork.CarouselRepository.GetHomepageCarouselItemAsync(carouselItemId);
 
@@ -151,17 +201,19 @@ namespace Audi.Controllers
 
             var carouselItemPhoto = homepageCarouselItem.CarouselItem.Photo;
 
-            if (!string.IsNullOrWhiteSpace(carouselItemPhoto.Photo.PublicId))
+            if (carouselItemPhoto != null && !string.IsNullOrWhiteSpace(carouselItemPhoto.Photo.PublicId))
             {
                 var result = await _photoService.DeletePhotoAsync(carouselItemPhoto.Photo.PublicId);
+
                 if (result.Error != null)
                 {
                     return BadRequest(result.Error.Message);
                 }
+
+                _unitOfWork.PhotoRepository.DeleteCarouselItemPhoto(carouselItemPhoto);
+                _unitOfWork.PhotoRepository.DeletePhoto(carouselItemPhoto.Photo);
             }
 
-            _unitOfWork.PhotoRepository.DeleteCarouselItemPhoto(carouselItemPhoto);
-            _unitOfWork.PhotoRepository.DeletePhoto(carouselItemPhoto.Photo);
             _unitOfWork.CarouselRepository.DeleteHomepageCarouselItem(homepageCarouselItem);
             _unitOfWork.CarouselRepository.DeleteCarouselItem(homepageCarouselItem.CarouselItem);
 
@@ -171,7 +223,7 @@ namespace Audi.Controllers
         }
 
         [SwaggerOperation(Summary = "add photo to homepage carousel item")]
-        [Authorize(Policy = "RequireModerateRole")]
+        // [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("carousel/{carouselItemId}/photos")]
         public async Task<ActionResult<HomepageCarouselItemDto>> AddPhotoToHomepageCarouselItem(int carouselItemId, IFormFile file)
         {
@@ -214,7 +266,7 @@ namespace Audi.Controllers
         }
 
         [SwaggerOperation(Summary = "remove photo from homepage carousel item")]
-        [Authorize(Policy = "RequireModerateRole")]
+        // [Authorize(Policy = "RequireModerateRole")]
         [HttpDelete("carousel/{carouselItemId}/photos/{photoId}")]
         public async Task<ActionResult<HomepageCarouselItemDto>> RemovePhotoFromHomepageCarouselItem(int carouselItemId, int photoId)
         {

@@ -84,6 +84,10 @@ export function stringToBoolean(string: string) {
   return string === 'false' ? false : !!string;
 }
 
+export function swapArrayElement(array: any[], from: number, to: number): void {
+  array.splice(to, 0, array.splice(from, 1)[0]);
+}
+
 export function formControlAssertion(
   abstractControl: AbstractControl | null
 ): FormControl {

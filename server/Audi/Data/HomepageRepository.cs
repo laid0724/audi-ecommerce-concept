@@ -48,7 +48,10 @@ namespace Audi.Data
 
             var homepageDto = _mapper.Map<HomepageDto>(homepage);
 
-            homepageDto.CarouselItems = homepageDto.CarouselItems.OrderBy(ci => ci.Sort).ToList();
+            homepageDto.CarouselItems = homepageDto.CarouselItems
+                .OrderBy(ci => ci.Sort)
+                .ThenByDescending(ci => ci.Id)
+                .ToList();
 
             var featuredProductsOrdering = homepage.FeaturedProductIds.ToList();
 
