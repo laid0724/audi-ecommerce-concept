@@ -122,3 +122,9 @@
 clr-datepicker-view-manager {
   z-index: 5000 !important;
 }
+
+audi-sys-product-selector.mt-0 {
+  .clr-form-control {
+    margin-top: 0 !important;
+  }
+}

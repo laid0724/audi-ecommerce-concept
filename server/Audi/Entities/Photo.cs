@@ -12,5 +12,6 @@ namespace Audi.Entities
         public ICollection<ProductPhoto> ProductPhotos { get; set; }
         public ICollection<DynamicDocumentPhoto> DynamicDocumentPhotos { get; set; }
         public ICollection<AppUserPhoto> AppUserPhotos { get; set; }
+        public ICollection<CarouselItemPhoto> CarouselItemPhotos { get; set; }
     }
 }

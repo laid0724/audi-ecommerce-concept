@@ -1,0 +1,15 @@
+<clr-select-container class="clr-select-width">
+  <label>{{ label }}</label>
+  <select
+    clrSelect
+    [formControl]="control"
+    [ngClass]="{ 'mt-1': clrLayout === 'horizontal' }"
+  >
+    <option [ngValue]="null">無產品 No Product</option>
+    <option *ngFor="let product of products" [value]="product.id">
+      {{ product.name }}
+    </option>
+  </select>
+  <clr-control-helper>{{ helperText }}</clr-control-helper>
+  <clr-control-error *clrIfError="'required'">必填 Required</clr-control-error>
+</clr-select-container>

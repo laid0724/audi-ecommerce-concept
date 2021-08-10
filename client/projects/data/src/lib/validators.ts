@@ -6,7 +6,7 @@ import {
   ValidatorFn,
 } from '@angular/forms';
 import { endOfDay, isBefore, parseJSON } from 'date-fns';
-import { isNullOrEmptyString } from './helpers';
+import { hasDuplicates, isNullOrEmptyString } from './helpers';
 import { DATE_REGEX } from './regex';
 
 export function hasSameValueValidator(
@@ -18,6 +18,22 @@ export function hasSameValueValidator(
       // @ts-ignore
       control?.parent?.controls[matchingControlName].value;
     return controlValue === valueToCompare ? null : { isNotSameValue: true };
+  };
+}
+
+// for form arrays only
+export function duplicateValuesValidator(): ValidatorFn {
+  return (control: AbstractControl) => {
+    const controlValues = (control as FormArray).controls.map((c) =>
+      c.value?.toString()
+    );
+
+    const hasDuplicateValues = hasDuplicates(controlValues);
+
+    const error: ValidationErrors | null = hasDuplicateValues
+      ? { hasDuplicateValues: true }
+      : null;
+    return error;
   };
 }
 
@@ -110,15 +126,18 @@ export function clrDatagridDateRangeFilterValidator(
   return null;
 }
 
-export function atLeastOneSelectedValidator(
-  fa: FormArray
-): ValidationErrors | null {
-  const atLeastOneSelected: boolean = fa.controls.some(({ value }) => !!value);
+// for form arrays only, e.g., radio buttons
+export function atLeastOneSelectedValidator(): ValidatorFn {
+  return (control: AbstractControl) => {
+    const atLeastOneSelected: boolean = (control as FormArray).controls.some(
+      ({ value }) => !!value
+    );
 
-  const error: ValidationErrors | null = !atLeastOneSelected
-    ? { atLeastOneSelectedError: true }
-    : null;
-  return error;
+    const error: ValidationErrors | null = !atLeastOneSelected
+      ? { atLeastOneSelectedError: true }
+      : null;
+    return error;
+  };
 }
 
 export function isEarlierThanTodayValidator(

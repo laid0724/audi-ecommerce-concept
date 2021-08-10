@@ -106,6 +106,37 @@ export class ProductsService {
     )
   );
 
+  allProductsRefresher$ = new ReplaySubject(1);
+  allProducts$ = this.allProductsRefresher$.asObservable().pipe(
+    startWith(null),
+    switchMap(() =>
+      this.getProducts({
+        pageNumber: 1,
+        pageSize: 100,
+      }).pipe(
+        expand((pagedProducts: PaginatedResult<Product[]>) =>
+          this.getProducts({
+            pageNumber: pagedProducts.pagination.currentPage + 1,
+            pageSize: 100,
+          })
+        ),
+        takeWhile(
+          (pagedProducts: PaginatedResult<Product[]>) =>
+            pagedProducts.pagination.currentPage <
+            pagedProducts.pagination.totalPages,
+          true
+        ),
+        concatMap(
+          (pagedProducts: PaginatedResult<Product[]>) => pagedProducts.result
+        ),
+        reduce((accumulator: Product[], product: Product) => {
+          accumulator.push(product);
+          return accumulator;
+        }, [])
+      )
+    )
+  );
+
   constructor(private http: HttpClient) {}
 
   addProductCategory(
@@ -231,18 +262,26 @@ export class ProductsService {
   }
 
   getProductVariant(variantId: number): Observable<ProductVariant> {
-    return this.http.get<ProductVariant>(`${this.endpoint}/variants/${variantId}`);
+    return this.http.get<ProductVariant>(
+      `${this.endpoint}/variants/${variantId}`
+    );
   }
 
   getProductVariants(productId: number): Observable<ProductVariant[]> {
-    return this.http.get<ProductVariant[]>(`${this.endpoint}/variants/all/${productId}`);
+    return this.http.get<ProductVariant[]>(
+      `${this.endpoint}/variants/all/${productId}`
+    );
   }
 
-  addProductVariant(request: ProductVariantUpsertRequest): Observable<ProductVariant> {
+  addProductVariant(
+    request: ProductVariantUpsertRequest
+  ): Observable<ProductVariant> {
     return this.http.post<ProductVariant>(`${this.endpoint}/variants`, request);
   }
 
-  updateProductVariant(request: ProductVariantUpsertRequest): Observable<ProductVariant> {
+  updateProductVariant(
+    request: ProductVariantUpsertRequest
+  ): Observable<ProductVariant> {
     return this.http.put<ProductVariant>(`${this.endpoint}/variants`, request);
   }
 
@@ -250,24 +289,44 @@ export class ProductsService {
     return this.http.delete<null>(`${this.endpoint}/variants/${variantId}`);
   }
 
-  getProductVariantValue(variantValueId: number): Observable<ProductVariantValue> {
-    return this.http.get<ProductVariantValue>(`${this.endpoint}/variants/values/${variantValueId}`);
+  getProductVariantValue(
+    variantValueId: number
+  ): Observable<ProductVariantValue> {
+    return this.http.get<ProductVariantValue>(
+      `${this.endpoint}/variants/values/${variantValueId}`
+    );
   }
 
-  getProductVariantValues(variantId: number): Observable<ProductVariantValue[]> {
-    return this.http.get<ProductVariantValue[]>(`${this.endpoint}/variants/values/all/${variantId}`);
+  getProductVariantValues(
+    variantId: number
+  ): Observable<ProductVariantValue[]> {
+    return this.http.get<ProductVariantValue[]>(
+      `${this.endpoint}/variants/values/all/${variantId}`
+    );
   }
 
-  addProductVariantValue(request: ProductVariantValueUpsertRequest): Observable<ProductVariantValue> {
-    return this.http.post<ProductVariantValue>(`${this.endpoint}/variants/values`, request);
+  addProductVariantValue(
+    request: ProductVariantValueUpsertRequest
+  ): Observable<ProductVariantValue> {
+    return this.http.post<ProductVariantValue>(
+      `${this.endpoint}/variants/values`,
+      request
+    );
   }
 
-  updateProductVariantValue(request: ProductVariantValueUpsertRequest): Observable<ProductVariantValue> {
-    return this.http.put<ProductVariantValue>(`${this.endpoint}/variants/values`, request);
+  updateProductVariantValue(
+    request: ProductVariantValueUpsertRequest
+  ): Observable<ProductVariantValue> {
+    return this.http.put<ProductVariantValue>(
+      `${this.endpoint}/variants/values`,
+      request
+    );
   }
 
   deleteProductVariantValue(variantValueId: number): Observable<null> {
-    return this.http.delete<null>(`${this.endpoint}/variants/values/${variantValueId}`);
+    return this.http.delete<null>(
+      `${this.endpoint}/variants/values/${variantValueId}`
+    );
   }
 
   setMainProductPhoto(photoId: number): Observable<null> {

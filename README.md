@@ -97,7 +97,6 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 #### API
 
 - Order creation email and status update email
-- Homepage table and repo / controller
 - user like product
 ** these need language property zh/en **
 - add photo property to product category
@@ -108,14 +107,13 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - Statistics table and repo / controller
 
 #### Sys
-- homepage module
-  - with following sections: hero carousel, latest news/events/promotions, featured product, latest product, misc
+
+- user like product 1-to-M
+- sys inbox
+- live chat module with signalr
+- add photo to product category
 - ngx charts for statistics
 - ng select control value accessor
-- live chat module with signalr
-- sys inbox
-- user like product 1-to-M
-- add photo to product category
 
 #### Public
 
@@ -131,6 +129,8 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - en/zh switch using transloco
 - not found
 - server error
+- splash screen using audi drum beat animation
+- homepage with following sections: hero carousel, latest news/events/promotions, featured product, latest product, misc
 - live chat
 - product list
 - articles, e.g., news, events, promotions

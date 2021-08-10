@@ -1,6 +1,5 @@
-export interface UserPhoto {
-  id: number;
-  url: string;
-  createdAt: Date;
+import { Photo } from './photo';
+
+export interface UserPhoto extends Photo {
   userId: number;
 }

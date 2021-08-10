@@ -19,6 +19,7 @@ namespace Audi.Interfaces
         // product
         Task<Product> GetProductByIdAsync(int productId);
         Task<Product> GetProductByPhotoIdAsync(int photoId);
+        Task<ICollection<ProductDto>> GetProductsByIdsAsync(int[] productIds);
         Task<PagedList<ProductDto>> GetProductsAsync(ProductParams productParams);
         void AddProduct(Product product);
         void UpdateProduct(Product product);

@@ -25,12 +25,16 @@ export enum WysiwygRowType {
 export enum DynamicDocumentType {
   Event = 'events',
   News = 'news',
-  Faq = 'faq'
+  Faq = 'faq',
 }
 
 export enum OrderStatus {
   Placed = 'placed',
   Shipped = 'shipped',
   Delivered = 'delivered',
-  Canceled = 'canceled'
+  Canceled = 'canceled',
+}
+
+export enum CarouselType {
+  Homepage = 'homepage',
 }

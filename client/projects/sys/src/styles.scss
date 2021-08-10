@@ -3,9 +3,17 @@
 
 .debug {
   border: 1px solid red !important;
+}
+
+.debug-all {
+  border: 1px solid red !important;
   * {
     border: 1px solid red !important;
   }
+}
+
+.text-black {
+  color: var(--audi-black) !important;
 }
 
 .text-error {

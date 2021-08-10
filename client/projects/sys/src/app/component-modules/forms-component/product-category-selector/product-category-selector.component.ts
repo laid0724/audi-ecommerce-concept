@@ -38,15 +38,22 @@ export class ProductCategorySelectorComponent
 
   @Input()
   label = '產品分類 Product Category';
+
   @Input()
   helperText = '';
+
+  @Input()
+  clrLayout: 'horizontal' | 'vertical' = 'horizontal';
+
   @Input()
   show: CategoriesToShow = 'all';
+
   @Input()
   excludedId: number;
 
   @Input()
   formControl: FormControl;
+
   @Input()
   formControlName: string;
 

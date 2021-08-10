@@ -415,7 +415,7 @@ namespace Audi.Controllers
 
             if (dynamicDocumentPhoto == null) return NotFound("Photo does not exist.");
 
-            if (dynamicDocumentPhoto.Photo.PublicId != null)
+            if (!string.IsNullOrWhiteSpace(dynamicDocumentPhoto.Photo.PublicId))
             {
                 var result = await _photoService.DeletePhotoAsync(dynamicDocumentPhoto.Photo.PublicId);
                 if (result.Error != null)

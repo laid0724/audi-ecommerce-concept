@@ -1,6 +1,5 @@
-export interface DynamicDocumentPhoto {
-  id: number;
-  url: string;
-  createdAt: Date;
+import { Photo } from './photo';
+
+export interface DynamicDocumentPhoto extends Photo {
   dynamicDocumentId: number;
 }

@@ -185,6 +185,30 @@ namespace Audi.Data
             return productCategory;
         }
 
+        public async Task<ICollection<ProductDto>> GetProductsByIdsAsync(int[] productIds)
+        {
+            var ordering = productIds.ToList();
+
+            var products = await _context.Products
+                .Include(p => p.ProductCategory)
+                .Include(p => p.ProductPhotos)
+                    .ThenInclude(p => p.Photo)
+                .Include(p => p.ProductSkus)
+                    .ThenInclude(ps => ps.ProductSkuValues)
+                .Include(p => p.ProductVariants)
+                    .ThenInclude(pv => pv.ProductVariantValues)
+                .Where(p => productIds.Contains(p.Id))
+                .ProjectTo<ProductDto>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+
+            var orderedProducts = products
+                .AsEnumerable()
+                .OrderBy(p => ordering.IndexOf(p.Id))
+                .ToList();
+
+            return orderedProducts;
+        }
+
         public async Task<PagedList<ProductDto>> GetProductsAsync(ProductParams productParams)
         {
             var query = _context.Products

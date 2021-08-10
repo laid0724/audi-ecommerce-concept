@@ -222,6 +222,87 @@ namespace server.Data.Migrations
                     b.ToTable("idt_user_roles");
                 });
 
+            modelBuilder.Entity("Audi.Entities.CarouselItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<string>("Body")
+                        .HasColumnType("text")
+                        .HasColumnName("body");
+
+                    b.Property<bool>("IsVisible")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_visible");
+
+                    b.Property<int>("PhotoId")
+                        .HasColumnType("integer")
+                        .HasColumnName("photo_id");
+
+                    b.Property<string>("PrimaryButtonLabel")
+                        .HasColumnType("text")
+                        .HasColumnName("primary_button_label");
+
+                    b.Property<string>("PrimaryButtonUrl")
+                        .HasColumnType("text")
+                        .HasColumnName("primary_button_url");
+
+                    b.Property<string>("SecondaryButtonLabel")
+                        .HasColumnType("text")
+                        .HasColumnName("secondary_button_label");
+
+                    b.Property<string>("SecondaryButtonUrl")
+                        .HasColumnType("text")
+                        .HasColumnName("secondary_button_url");
+
+                    b.Property<int>("Sort")
+                        .HasColumnType("integer")
+                        .HasColumnName("sort");
+
+                    b.Property<string>("SubTitle")
+                        .HasColumnType("text")
+                        .HasColumnName("sub_title");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("text")
+                        .HasColumnName("title");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("text")
+                        .HasColumnName("type");
+
+                    b.HasKey("Id")
+                        .HasName("pk_carousel_items");
+
+                    b.ToTable("carousel_items");
+                });
+
+            modelBuilder.Entity("Audi.Entities.CarouselItemPhoto", b =>
+                {
+                    b.Property<int>("CarouselItemId")
+                        .HasColumnType("integer")
+                        .HasColumnName("carousel_item_id");
+
+                    b.Property<int>("PhotoId")
+                        .HasColumnType("integer")
+                        .HasColumnName("photo_id");
+
+                    b.HasKey("CarouselItemId", "PhotoId")
+                        .HasName("pk_carousel_item_photos");
+
+                    b.HasIndex("CarouselItemId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_carousel_item_photos_carousel_item_id");
+
+                    b.HasIndex("PhotoId")
+                        .HasDatabaseName("ix_carousel_item_photos_photo_id");
+
+                    b.ToTable("carousel_item_photos");
+                });
+
             modelBuilder.Entity("Audi.Entities.DynamicDocument", b =>
                 {
                     b.Property<int>("Id")
@@ -307,6 +388,47 @@ namespace server.Data.Migrations
                         .HasDatabaseName("ix_dynamic_document_photos_photo_id");
 
                     b.ToTable("dynamic_document_photos");
+                });
+
+            modelBuilder.Entity("Audi.Entities.Homepage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int[]>("FeaturedProductIds")
+                        .HasColumnType("integer[]")
+                        .HasColumnName("featured_product_ids");
+
+                    b.Property<string>("Language")
+                        .HasColumnType("text")
+                        .HasColumnName("language");
+
+                    b.HasKey("Id")
+                        .HasName("pk_homepages");
+
+                    b.ToTable("homepages");
+                });
+
+            modelBuilder.Entity("Audi.Entities.HomepageCarouselItem", b =>
+                {
+                    b.Property<int>("HomepageId")
+                        .HasColumnType("integer")
+                        .HasColumnName("homepage_id");
+
+                    b.Property<int>("CarouselItemId")
+                        .HasColumnType("integer")
+                        .HasColumnName("carousel_item_id");
+
+                    b.HasKey("HomepageId", "CarouselItemId")
+                        .HasName("pk_homepage_carousel_items");
+
+                    b.HasIndex("CarouselItemId")
+                        .HasDatabaseName("ix_homepage_carousel_items_carousel_item_id");
+
+                    b.ToTable("homepage_carousel_items");
                 });
 
             modelBuilder.Entity("Audi.Entities.Order", b =>
@@ -879,6 +1001,25 @@ namespace server.Data.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Audi.Entities.CarouselItemPhoto", b =>
+                {
+                    b.HasOne("Audi.Entities.CarouselItem", "CarouselItem")
+                        .WithOne("Photo")
+                        .HasForeignKey("Audi.Entities.CarouselItemPhoto", "CarouselItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Audi.Entities.Photo", "Photo")
+                        .WithMany("CarouselItemPhotos")
+                        .HasForeignKey("PhotoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CarouselItem");
+
+                    b.Navigation("Photo");
+                });
+
             modelBuilder.Entity("Audi.Entities.DynamicDocumentPhoto", b =>
                 {
                     b.HasOne("Audi.Entities.DynamicDocument", "DynamicDocument")
@@ -896,6 +1037,25 @@ namespace server.Data.Migrations
                     b.Navigation("DynamicDocument");
 
                     b.Navigation("Photo");
+                });
+
+            modelBuilder.Entity("Audi.Entities.HomepageCarouselItem", b =>
+                {
+                    b.HasOne("Audi.Entities.CarouselItem", "CarouselItem")
+                        .WithMany("HomepageCarouselItems")
+                        .HasForeignKey("CarouselItemId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("Audi.Entities.Homepage", "Homepage")
+                        .WithMany("CarouselItems")
+                        .HasForeignKey("HomepageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CarouselItem");
+
+                    b.Navigation("Homepage");
                 });
 
             modelBuilder.Entity("Audi.Entities.Order", b =>
@@ -1117,10 +1277,22 @@ namespace server.Data.Migrations
                     b.Navigation("UserRoles");
                 });
 
+            modelBuilder.Entity("Audi.Entities.CarouselItem", b =>
+                {
+                    b.Navigation("HomepageCarouselItems");
+
+                    b.Navigation("Photo");
+                });
+
             modelBuilder.Entity("Audi.Entities.DynamicDocument", b =>
                 {
                     b.Navigation("FeaturedImage")
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Audi.Entities.Homepage", b =>
+                {
+                    b.Navigation("CarouselItems");
                 });
 
             modelBuilder.Entity("Audi.Entities.Order", b =>
@@ -1131,6 +1303,8 @@ namespace server.Data.Migrations
             modelBuilder.Entity("Audi.Entities.Photo", b =>
                 {
                     b.Navigation("AppUserPhotos");
+
+                    b.Navigation("CarouselItemPhotos");
 
                     b.Navigation("DynamicDocumentPhotos");
 

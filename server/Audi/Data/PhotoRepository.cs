@@ -20,6 +20,11 @@ namespace Audi.Data
             _context = context;
         }
 
+        public void AddCarouselItemPhoto(CarouselItemPhoto carouselItemPhoto)
+        {
+            _context.CarouselItemPhotos.Add(carouselItemPhoto);
+        }
+
         public void AddDynamicDocumentPhoto(DynamicDocumentPhoto dynamicDocumentPhoto)
         {
             _context.DynamicDocumentPhotos.Add(dynamicDocumentPhoto);
@@ -38,6 +43,11 @@ namespace Audi.Data
         public void AddUserPhoto(AppUserPhoto appUserPhoto)
         {
             _context.AppUserPhotos.Add(appUserPhoto);
+        }
+
+        public void DeleteCarouselItemPhoto(CarouselItemPhoto carouselItemPhoto)
+        {
+            _context.CarouselItemPhotos.Remove(carouselItemPhoto);
         }
 
         public void DeleteDynamicDocumentPhoto(DynamicDocumentPhoto dynamicDocumentPhoto)

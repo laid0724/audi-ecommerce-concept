@@ -58,6 +58,20 @@ namespace Audi.Helpers
                     opt => opt.MapFrom(src => src.Photo.CreatedAt)
                 );
 
+            CreateMap<CarouselItemPhoto, CarouselItemPhotoDto>()
+                .ForMember(
+                    dest => dest.Url,
+                    opt => opt.MapFrom(src => src.Photo.Url)
+                )
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.PhotoId)
+                )
+                .ForMember(
+                    dest => dest.CreatedAt,
+                    opt => opt.MapFrom(src => src.Photo.CreatedAt)
+                );
+
             CreateMap<AppUserPhoto, UserPhotoDto>()
                 .ForMember(
                     dest => dest.Url,
@@ -166,6 +180,60 @@ namespace Audi.Helpers
             CreateMap<DynamicDocument, EventDto>();
             CreateMap<DynamicDocument, NewsDto>();
 
+            CreateMap<CarouselItem, CarouselItemDto>();
+
+            CreateMap<HomepageCarouselItem, HomepageCarouselItemDto>()
+                .ForMember(
+                    dest => dest.Id,
+                    opt => opt.MapFrom(src => src.CarouselItemId)
+                )
+                .ForMember(
+                    dest => dest.Type,
+                    opt => opt.MapFrom(src => src.CarouselItem.Type)
+                )
+                .ForMember(
+                    dest => dest.Sort,
+                    opt => opt.MapFrom(src => src.CarouselItem.Sort)
+                )
+                .ForMember(
+                    dest => dest.Title,
+                    opt => opt.MapFrom(src => src.CarouselItem.Title)
+                )
+                .ForMember(
+                    dest => dest.SubTitle,
+                    opt => opt.MapFrom(src => src.CarouselItem.SubTitle)
+                )
+                .ForMember(
+                    dest => dest.Body,
+                    opt => opt.MapFrom(src => src.CarouselItem.Body)
+                )
+                .ForMember(
+                    dest => dest.IsVisible,
+                    opt => opt.MapFrom(src => src.CarouselItem.IsVisible)
+                )
+                .ForMember(
+                    dest => dest.PrimaryButtonLabel,
+                    opt => opt.MapFrom(src => src.CarouselItem.PrimaryButtonLabel)
+                )
+                .ForMember(
+                    dest => dest.PrimaryButtonUrl,
+                    opt => opt.MapFrom(src => src.CarouselItem.PrimaryButtonUrl)
+                )
+                .ForMember(
+                    dest => dest.SecondaryButtonLabel,
+                    opt => opt.MapFrom(src => src.CarouselItem.SecondaryButtonLabel)
+                )
+                .ForMember(
+                    dest => dest.SecondaryButtonUrl,
+                    opt => opt.MapFrom(src => src.CarouselItem.SecondaryButtonUrl)
+                )
+                .ForMember(
+                    dest => dest.Photo,
+                    opt => opt.MapFrom(src => src.CarouselItem.Photo)
+                );
+
+            CreateMap<Homepage, HomepageDto>();
+
             // reverse map from dto to entity model:
 
             CreateMap<RegisterDto, AppUser>();
@@ -183,6 +251,16 @@ namespace Audi.Helpers
                     opt => opt.MapFrom(src => src.Id)
                 );
             CreateMap<OrderItemUpsertDto, OrderItem>();
+            CreateMap<CarouselItemDto, CarouselItem>()
+                .ForMember(
+                    dest => dest.PhotoId,
+                    opt => opt.MapFrom(src => src.Photo.Id)
+                );
+            CreateMap<CarouselItemUpsertDto, CarouselItem>()
+                .ForMember(
+                    dest => dest.Type,
+                    opt => opt.MapFrom(src => src.Type.ToLower().Trim())
+                );
 
             CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
         }

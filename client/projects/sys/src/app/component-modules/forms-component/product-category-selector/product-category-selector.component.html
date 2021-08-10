@@ -1,9 +1,11 @@
 <clr-select-container class="clr-select-width">
   <label>{{ label }}</label>
-  <select clrSelect [formControl]="control" class="mt-1">
-    <option [ngValue]="null">
-      無分類 No Category
-    </option>
+  <select
+    clrSelect
+    [formControl]="control"
+    [ngClass]="{ 'mt-1': clrLayout === 'horizontal' }"
+  >
+    <option [ngValue]="null">無分類 No Category</option>
     <option
       *ngFor="let productCategory of productCategories"
       [value]="productCategory.id"

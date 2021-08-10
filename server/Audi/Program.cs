@@ -53,6 +53,7 @@ namespace Audi
 
                 await Seed.SeedUsers(userManager, roleManager, configuration);
                 await Seed.SeedFaq(unitOfWork);
+                await Seed.SeedHomepage(unitOfWork);
             }
             catch (Exception ex)
             {

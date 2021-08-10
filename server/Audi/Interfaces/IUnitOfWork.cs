@@ -9,6 +9,8 @@ namespace Audi.Interfaces
         IOrderRepository OrderRepository { get; }
         IPhotoRepository PhotoRepository { get; }
         IDynamicDocumentRepository DynamicDocumentRepository { get; }
+        IHomepageRepository HomepageRepository { get; }
+        ICarouselRepository CarouselRepository { get; }
         Task<bool> Complete();
         bool HasChanges();
     }

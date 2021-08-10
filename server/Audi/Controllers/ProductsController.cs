@@ -560,7 +560,7 @@ namespace Audi.Controllers
                 return BadRequest("Cannot delete your main photo.");
             }
 
-            if (productPhoto.Photo.PublicId != null)
+            if (!string.IsNullOrWhiteSpace(productPhoto.Photo.PublicId))
             {
                 var result = await _photoService.DeletePhotoAsync(productPhoto.Photo.PublicId);
                 if (result.Error != null)

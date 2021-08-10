@@ -17,6 +17,8 @@ export class FeaturedImageUploaderComponent implements OnInit, OnChanges {
   @Input() modelIdValue: number;
   @Input() featuredImage: any;
   @Input() addFeaturedImageEndpoint: string;
+  @Input()
+  clrLayout: 'horizontal' | 'vertical' = 'horizontal';
   @Input() deleteFeaturedImageHttpMethod: () => Observable<any>;
   @Output() imageChanges = new EventEmitter<any>();
 
@@ -111,9 +113,9 @@ export class FeaturedImageUploaderComponent implements OnInit, OnChanges {
   deleteFeaturedImage(): void {
     this.deleteFeaturedImageHttpMethod()
       .pipe(take(1))
-      .subscribe(() => {
+      .subscribe((res: any) => {
         this.toastr.success('成功 Success');
-        this.imageChanges.emit(null);
+        this.imageChanges.emit(res);
       });
   }
 }

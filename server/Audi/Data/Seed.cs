@@ -102,5 +102,42 @@ namespace Audi.Data
                 await unitOfWork.Complete();
             }
         }
+
+        public static async Task SeedHomepage(IUnitOfWork unitOfWork)
+        {
+            var zhHomepageExists = await unitOfWork.HomepageRepository.GetHomepageAsync("zh") != null;
+            var enHomepageExists = await unitOfWork.HomepageRepository.GetHomepageAsync("en") != null;
+
+            var homepagesExist = zhHomepageExists && enHomepageExists;
+
+            if (homepagesExist) return;
+
+            if (!zhHomepageExists)
+            {
+                var zhHomepage = new Homepage
+                {
+                    Language = "zh",
+                    FeaturedProductIds = new int[] { }
+                };
+
+                unitOfWork.HomepageRepository.AddHomepage(zhHomepage);
+            }
+
+            if (!enHomepageExists)
+            {
+                var enHomepage = new Homepage
+                {
+                    Language = "en",
+                    FeaturedProductIds = new int[] { }
+                };
+
+                unitOfWork.HomepageRepository.AddHomepage(enHomepage);
+            }
+
+            if (unitOfWork.HasChanges())
+            {
+                await unitOfWork.Complete();
+            }
+        }
     }
 }
