@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CarouselType } from '../enums';
+import { CarouselColor, CarouselType } from '../enums';
 import { Homepage } from '../models/homepage';
 import { HomepageCarouselItem } from '../models/homepage-carousel-item';
 
@@ -17,6 +17,7 @@ export interface CarouselItemUpsert {
   primaryButtonUrl: string;
   secondaryButtonLabel: string;
   secondaryButtonUrl: string;
+  color: CarouselColor;
 }
 
 export interface HomepageCarouselItemsSort {

@@ -91,13 +91,29 @@
                         >
                           <div class="carousel-item-bg-overlay"></div>
                           <h1
-                            class="h1 my-auto z-index-2 text-black"
+                            class="h1 my-auto z-index-2"
+                            [ngClass]="{
+                              'text-black':
+                                carouselItems[i].color ===
+                                carouselItemColors.Black,
+                              'text-white':
+                                carouselItems[i].color ===
+                                carouselItemColors.White
+                            }"
                             *ngIf="!isNullOrEmptyString(carouselItems[i].title)"
                           >
                             {{ carouselItems[i].title }}
                           </h1>
                           <h3
-                            class="h3 my-auto z-index-2 text-black"
+                            class="h3 my-auto z-index-2"
+                            [ngClass]="{
+                              'text-black':
+                                carouselItems[i].color ===
+                                carouselItemColors.Black,
+                              'text-white':
+                                carouselItems[i].color ===
+                                carouselItemColors.White
+                            }"
                             *ngIf="
                               !isNullOrEmptyString(carouselItems[i].subTitle)
                             "
@@ -105,7 +121,15 @@
                             {{ carouselItems[i].subTitle }}
                           </h3>
                           <p
-                            class="p1 my-auto z-index-2 text-black"
+                            class="p1 my-auto z-index-2"
+                            [ngClass]="{
+                              'text-black':
+                                carouselItems[i].color ===
+                                carouselItemColors.Black,
+                              'text-white':
+                                carouselItems[i].color ===
+                                carouselItemColors.White
+                            }"
                             *ngIf="!isNullOrEmptyString(carouselItems[i].body)"
                           >
                             {{ carouselItems[i].body }}
@@ -126,7 +150,18 @@
                               "
                               target="_blank"
                             >
-                              <button class="btn btn-primary" type="button">
+                              <button
+                                class="btn"
+                                [ngClass]="{
+                                  'btn-primary':
+                                    carouselItems[i].color ===
+                                    carouselItemColors.Black,
+                                  'btn-info':
+                                    carouselItems[i].color ===
+                                    carouselItemColors.White
+                                }"
+                                type="button"
+                              >
                                 {{ carouselItems[i].primaryButtonLabel }}
                               </button>
                             </a>
@@ -145,7 +180,18 @@
                               "
                               target="_blank"
                             >
-                              <button class="btn btn-secondary" type="button">
+                              <button
+                                class="btn"
+                                [ngClass]="{
+                                  'btn-outline':
+                                    carouselItems[i].color ===
+                                    carouselItemColors.Black,
+                                  'btn-inverse':
+                                    carouselItems[i].color ===
+                                    carouselItemColors.White
+                                }"
+                                type="button"
+                              >
                                 {{ carouselItems[i].secondaryButtonLabel }}
                               </button>
                             </a>
@@ -448,6 +494,31 @@
         "
         (imageChanges)="onCarouselItemPhotoChange($event)"
       ></audi-sys-featured-image-uploader>
+
+      <clr-select-container class="clr-select-width mt-0">
+        <label>顏色 Color</label>
+        <select clrSelect formControlName="color">
+          <option
+            *ngFor="let color of carouselItemColorOptions"
+            [value]="color"
+          >
+            <ng-container [ngSwitch]="color">
+              <ng-container *ngSwitchCase="null"
+                >請選擇顏色 Please select a color</ng-container
+              >
+              <ng-container *ngSwitchCase="carouselItemColors.Black"
+                >黑 Black</ng-container
+              >
+              <ng-container *ngSwitchCase="carouselItemColors.White"
+                >白 White</ng-container
+              >
+            </ng-container>
+          </option>
+        </select>
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+      </clr-select-container>
 
       <clr-toggle-container>
         <label>顯示狀態 Visibility</label>

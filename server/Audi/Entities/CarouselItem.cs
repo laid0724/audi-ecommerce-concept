@@ -16,6 +16,7 @@ namespace Audi.Entities
         public string PrimaryButtonUrl { get; set; }
         public string SecondaryButtonLabel { get; set; }
         public string SecondaryButtonUrl { get; set; }
+        public string Color { get; set; } = "black"; // black or white
         public int PhotoId { get; set; }
         public CarouselItemPhoto Photo { get; set; }
         public ICollection<HomepageCarouselItem> HomepageCarouselItems { get; set; }

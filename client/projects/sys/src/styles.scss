@@ -12,8 +12,13 @@
   }
 }
 
-.text-black {
-  color: var(--audi-black) !important;
+.text {
+  &-black {
+    color: var(--audi-black) !important;
+  }
+  &-white {
+    color: var(--audi-white) !important;
+  }
 }
 
 .text-error {

@@ -1,4 +1,4 @@
-import { CarouselType } from '../enums';
+import { CarouselColor, CarouselType } from '../enums';
 import { CarouselItemPhoto } from './carousel-item-photo';
 
 export interface CarouselItem {
@@ -13,5 +13,6 @@ export interface CarouselItem {
   primaryButtonUrl: string;
   secondaryButtonLabel: string;
   secondaryButtonUrl: string;
+  color: CarouselColor;
   photo: CarouselItemPhoto;
 }

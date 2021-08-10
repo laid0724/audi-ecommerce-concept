@@ -87,6 +87,11 @@ namespace Audi.Controllers
 
             if (request.Type.ToLower().Trim() != "homepage") return BadRequest("invalid carousel item type");
 
+            if (
+                request.Color.ToLower().Trim() != "white" &&
+                request.Color.ToLower().Trim() != "black"
+            ) return BadRequest("invalid carousel item color");
+
             var homepage = await _unitOfWork.HomepageRepository.GetHomepageAsync(language);
 
             if (homepage == null) return NotFound();
@@ -122,6 +127,11 @@ namespace Audi.Controllers
         {
             if (!request.Id.HasValue) return BadRequest("carousel item id is null");
 
+            if (
+                request.Color.ToLower().Trim() != "white" &&
+                request.Color.ToLower().Trim() != "black"
+            ) return BadRequest("invalid carousel item color");
+
             var carouselItem = await _unitOfWork.CarouselRepository.GetCarouselItemAsync(request.Id.Value);
 
             if (carouselItem == null) return NotFound();
@@ -135,6 +145,7 @@ namespace Audi.Controllers
             carouselItem.PrimaryButtonUrl = request.PrimaryButtonUrl;
             carouselItem.SecondaryButtonLabel = request.SecondaryButtonLabel;
             carouselItem.SecondaryButtonUrl = request.SecondaryButtonUrl;
+            carouselItem.Color = request.Color.ToLower().Trim();
 
             _unitOfWork.CarouselRepository.UpdateCarouselItem(carouselItem);
 

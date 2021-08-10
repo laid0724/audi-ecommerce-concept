@@ -228,6 +228,10 @@ namespace Audi.Helpers
                     opt => opt.MapFrom(src => src.CarouselItem.SecondaryButtonUrl)
                 )
                 .ForMember(
+                    dest => dest.Color,
+                    opt => opt.MapFrom(src => src.CarouselItem.Color)
+                )
+                .ForMember(
                     dest => dest.Photo,
                     opt => opt.MapFrom(src => src.CarouselItem.Photo)
                 );
@@ -260,6 +264,10 @@ namespace Audi.Helpers
                 .ForMember(
                     dest => dest.Type,
                     opt => opt.MapFrom(src => src.Type.ToLower().Trim())
+                )
+                .ForMember(
+                    dest => dest.Color,
+                    opt => opt.MapFrom(src => src.Color.ToLower().Trim())
                 );
 
             CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
