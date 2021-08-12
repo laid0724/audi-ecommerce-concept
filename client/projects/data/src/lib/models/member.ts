@@ -1,5 +1,6 @@
 import { Roles } from '@audi/data';
 import { Order } from './order';
+import { Product } from './product';
 import { UserPhoto } from './user-photo';
 
 export interface Member {
@@ -17,4 +18,5 @@ export interface Member {
   userImage: UserPhoto;
   orders: Order[];
   roles: Roles[];
+  likedProducts: Product[];
 }

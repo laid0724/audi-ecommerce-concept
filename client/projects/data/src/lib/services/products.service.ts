@@ -339,4 +339,16 @@ export class ProductsService {
   deleteProductPhoto(photoId: number): Observable<null> {
     return this.http.delete<null>(`${this.endpoint}/photos/${photoId}`);
   }
+
+  getLikedProducts(): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.endpoint}/likes`);
+  }
+
+  likeProduct(productId: number): Observable<Product[]> {
+    return this.http.post<Product[]>(`${this.endpoint}/likes/${productId}`, {});
+  }
+
+  unlikeProduct(productId: number): Observable<Product[]> {
+    return this.http.delete<Product[]>(`${this.endpoint}/likes/${productId}`);
+  }
 }
