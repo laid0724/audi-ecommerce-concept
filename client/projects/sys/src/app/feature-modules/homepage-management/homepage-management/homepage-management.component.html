@@ -89,7 +89,10 @@
                               : null
                           }"
                         >
-                          <div class="carousel-item-bg-overlay"></div>
+                          <div
+                            class="carousel-item-bg-overlay"
+                            *ngIf="!isPureImageCarousel(carouselItems[i])"
+                          ></div>
                           <h1
                             class="h1 my-auto z-index-2"
                             [ngClass]="{
