@@ -1,0 +1,39 @@
+// see: https://www.audi.com/ci/en/intro/basics/colours.html
+$audi-black: #000000;
+$audi-red: #f50537;
+$audi-white: #ffffff;
+$audi-grey-1: #f2f2f2;
+$audi-grey-2: #e5e5e5;
+$audi-grey-3: #d9d9d9;
+$audi-grey-4: #cccccc;
+$audi-grey-5: #b3b3b3;
+$audi-grey-6: #999999;
+$audi-grey-7: #808080;
+$audi-grey-8: #666666;
+$audi-grey-9: #4c4c4c;
+$audi-grey-10: #333333;
+$audi-grey-11: #1a1a1a;
+$audi-success: #009900;
+$audi-warning: #ffaa00;
+$audi-error: #bb0a30;
+
+// css3 variables, which clarity uses and we can directly override:
+:root {
+  --audi-black: #000000;
+  --audi-red: #f50537;
+  --audi-white: #ffffff;
+  --audi-grey-1: #f2f2f2;
+  --audi-grey-2: #e5e5e5;
+  --audi-grey-3: #d9d9d9;
+  --audi-grey-4: #cccccc;
+  --audi-grey-5: #b3b3b3;
+  --audi-grey-6: #999999;
+  --audi-grey-7: #808080;
+  --audi-grey-8: #666666;
+  --audi-grey-9: #4c4c4c;
+  --audi-grey-10: #333333;
+  --audi-grey-11: #1a1a1a;
+  --audi-success: #009900;
+  --audi-warning: #ffaa00;
+  --audi-error: #bb0a30;
+}
