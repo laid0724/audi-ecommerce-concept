@@ -1,17 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
-using Audi.Data.Extensions;
 using Audi.DTOs;
-using Audi.Entities;
 using Audi.Extensions;
 using Audi.Helpers;
 using Audi.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
@@ -67,7 +60,6 @@ namespace Audi.Controllers
         }
 
         [SwaggerOperation(Summary = "get a member")]
-
         [Authorize(Policy = "RequireModerateRole")]
         [HttpGet("moderators/{userId}")]
         public async Task<ActionResult<MemberDto>> GetModerator(int userId)
@@ -78,6 +70,5 @@ namespace Audi.Controllers
 
             return Ok(member);
         }
-
     }
 }
