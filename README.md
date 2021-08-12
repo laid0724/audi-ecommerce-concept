@@ -97,18 +97,18 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 #### API
 
 - Order creation email and status update email
-- user like product
 ** these need language property zh/en **
 - add photo property to product category
 **
 - email / messaging / inbox functionality
+  - inbox system for users, admin can send promo messages to them
+  - notification system for users
 - SignalR for live chat
 - site-wide search
 - Statistics table and repo / controller
 
 #### Sys
 
-- user like product 1-to-M
 - sys inbox
 - live chat module with signalr
 - add photo to product category
@@ -133,6 +133,7 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - homepage with following sections: hero carousel, latest news/events/promotions, featured product, latest product, misc
 - live chat
 - product list
+- user like product feature
 - articles, e.g., news, events, promotions
 - single product page using fullpage - first page has product info and carousel, second page custom wysiwyg content and product recommendations in same category
 - cart

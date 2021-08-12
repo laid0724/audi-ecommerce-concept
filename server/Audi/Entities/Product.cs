@@ -63,5 +63,6 @@ namespace Audi.Entities
         public ICollection<ProductPhoto> ProductPhotos { get; set; }
         public ICollection<ProductVariant> ProductVariants { get; set; }
         public ICollection<ProductSku> ProductSkus { get; set; }
+        public ICollection<AppUserProduct> AppUserProducts { get; set; } 
     }
 }

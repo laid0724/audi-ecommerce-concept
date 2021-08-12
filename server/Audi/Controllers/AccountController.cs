@@ -139,6 +139,8 @@ namespace Audi.Controllers
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
+            var likedProductIds = await _unitOfWork.ProductRepository.GetProductIdsLikedByUserAsync(user.Id);
+
             return Ok(new UserDto
             {
                 Id = user.Id,
@@ -148,6 +150,7 @@ namespace Audi.Controllers
                 Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
+                LikedProductIds = likedProductIds.ToArray(),
             });
         }
 
@@ -196,6 +199,7 @@ namespace Audi.Controllers
                 Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
+                LikedProductIds = new int[] { }
             });
         }
 
@@ -240,6 +244,7 @@ namespace Audi.Controllers
                 Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
+                LikedProductIds = new int[] { }
             });
         }
 
@@ -267,6 +272,8 @@ namespace Audi.Controllers
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
+            var likedProductIds = await _unitOfWork.ProductRepository.GetProductIdsLikedByUserAsync(user.Id);
+
             return Ok(new UserDto
             {
                 Id = user.Id,
@@ -276,6 +283,7 @@ namespace Audi.Controllers
                 Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
+                LikedProductIds = likedProductIds.ToArray(),
             });
         }
 
@@ -348,7 +356,7 @@ namespace Audi.Controllers
         public async Task<ActionResult<SensitiveUserDataDto>> GetPersonalInfo()
         {
             var apiUserId = User.GetUserId();
-            
+
             if (apiUserId == 0) return Unauthorized();
 
             var user = await _userManager.Users
@@ -453,6 +461,8 @@ namespace Audi.Controllers
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
+            var likedProductIds = await _unitOfWork.ProductRepository.GetProductIdsLikedByUserAsync(user.Id);
+
             return Ok(new UserDto
             {
                 Id = user.Id,
@@ -462,6 +472,7 @@ namespace Audi.Controllers
                 Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
+                LikedProductIds = likedProductIds.ToArray(),
             });
         }
 
@@ -483,6 +494,8 @@ namespace Audi.Controllers
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
+            var likedProductIds = await _unitOfWork.ProductRepository.GetProductIdsLikedByUserAsync(user.Id);
+
             return Ok(new UserDto
             {
                 Id = user.Id,
@@ -492,6 +505,7 @@ namespace Audi.Controllers
                 Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
+                LikedProductIds = likedProductIds.ToArray(),
             });
         }
 
@@ -509,6 +523,8 @@ namespace Audi.Controllers
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
+            var likedProductIds = await _unitOfWork.ProductRepository.GetProductIdsLikedByUserAsync(user.Id);
+
             return Ok(new UserDto
             {
                 Id = user.Id,
@@ -518,6 +534,7 @@ namespace Audi.Controllers
                 Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
+                LikedProductIds = likedProductIds.ToArray(),
             });
         }
 
@@ -535,6 +552,8 @@ namespace Audi.Controllers
 
             var userRoles = await _userManager.GetRolesAsync(user);
 
+            var likedProductIds = await _unitOfWork.ProductRepository.GetProductIdsLikedByUserAsync(user.Id);
+
             return Ok(new UserDto
             {
                 Id = user.Id,
@@ -544,6 +563,7 @@ namespace Audi.Controllers
                 Token = await _tokenService.CreateTokenAsync(user),
                 IsDisabled = user.IsDisabled,
                 EmailConfirmed = user.EmailConfirmed,
+                LikedProductIds = likedProductIds.ToArray(),
             });
         }
 

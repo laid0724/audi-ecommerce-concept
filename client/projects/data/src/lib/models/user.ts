@@ -7,4 +7,5 @@ export interface User {
   roles: Roles[];
   isDisabled: boolean;
   emailConfirmed: boolean;
+  likedProductIds: number[]
 }

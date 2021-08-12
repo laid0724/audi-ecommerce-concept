@@ -28,10 +28,11 @@ namespace Audi.Entities
         public DateTime DateOfBirth { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
         public DateTime LastActive { get; set; } = DateTime.UtcNow;
+        public bool IsDisabled { get; set; } = false;
         public int UserImageId { get; set; }
         public AppUserPhoto UserImage { get; set; }
         public ICollection<AppUserRole> UserRoles { get; set; }
         public ICollection<Order> Orders { get; set; }
-        public bool IsDisabled { get; set; } = false;
+        public ICollection<AppUserProduct> AppUserProducts { get; set; }
     }
 }

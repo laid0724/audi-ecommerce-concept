@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Audi.Data.Extensions;
@@ -578,6 +577,79 @@ namespace Audi.Controllers
             }
 
             return BadRequest("Failed to delete photo.");
+        }
+
+        [SwaggerOperation(Summary = "get products liked by a user")]
+        [HttpGet("likes")]
+        public async Task<ActionResult<ICollection<ProductDto>>> GetLikedProducts([FromHeader(Name = "X-LANGUAGE")] string language)
+        {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+
+            var userId = User.GetUserId();
+
+            var productsLikedByUser = await _unitOfWork.ProductRepository.GetProductDtosLikedByUserAsync(userId, language);
+
+            return Ok(productsLikedByUser);
+        }
+
+        [SwaggerOperation(Summary = "user like a product")]
+        [HttpPost("likes/{productId}")]
+        public async Task<ActionResult<ICollection<ProductDto>>> LikeProduct(int productId, [FromHeader(Name = "X-LANGUAGE")] string language)
+        {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+
+            var userId = User.GetUserId();
+
+            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(userId);
+
+            if (user == null) return NotFound();
+
+            var product = await _unitOfWork.ProductRepository.GetProductByIdAsync(productId);
+
+            if (product == null) return NotFound();
+
+            var alreadyLiked = await _unitOfWork.ProductRepository.GetAppUserProductAsync(userId, productId) != null;
+
+            if (alreadyLiked) return BadRequest("already liked");
+
+            var appUserProduct = new AppUserProduct
+            {
+                UserId = user.Id,
+                ProductId = product.Id
+            };
+
+            _unitOfWork.ProductRepository.AddAppUserProduct(appUserProduct);
+
+            if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
+            {
+                var productsLikedByUser = await _unitOfWork.ProductRepository.GetProductDtosLikedByUserAsync(user.Id, language);
+                return Ok(productsLikedByUser);
+            }
+
+            return BadRequest("failed to like product");
+        }
+
+        [SwaggerOperation(Summary = "user unlike a product")]
+        [HttpDelete("likes/{productId}")]
+        public async Task<ActionResult<ICollection<ProductDto>>> UnlikeProduct(int productId, [FromHeader(Name = "X-LANGUAGE")] string language)
+        {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+
+            var userId = User.GetUserId();
+
+            var appUserProduct = await _unitOfWork.ProductRepository.GetAppUserProductAsync(userId, productId);
+
+            if (appUserProduct == null) return NotFound();
+
+            _unitOfWork.ProductRepository.DeleteAppUserProduct(appUserProduct);
+
+            if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
+            {
+                var productsLikedByUser = await _unitOfWork.ProductRepository.GetProductDtosLikedByUserAsync(userId, language);
+                return Ok(productsLikedByUser);
+            }
+
+            return BadRequest("failed to unlike product");
         }
     }
 }
