@@ -52,5 +52,12 @@ namespace Audi.Interfaces
         void AddProductSkuValue(ProductSkuValue productSkuValue);
         void UpdateProductSkuValue(ProductSkuValue productSkuValue);
         void DeleteProductSkuValue(ProductSkuValue productSkuValue);
+
+        // app user products (products liked by user feature)
+        Task<ICollection<int>> GetProductIdsLikedByUserAsync(int userId);
+        Task<ICollection<ProductDto>> GetProductDtosLikedByUserAsync(int userId, string language);
+        Task<AppUserProduct> GetAppUserProductAsync(int userId, int productId);
+        void AddAppUserProduct(AppUserProduct appUserProduct);
+        void DeleteAppUserProduct(AppUserProduct appUserProduct);
     }
 }

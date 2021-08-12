@@ -475,5 +475,60 @@ namespace Audi.Data
             productSkuValue.IsDeleted = true;
             _context.Entry<ProductSkuValue>(productSkuValue).State = EntityState.Modified;
         }
+
+        public async Task<ICollection<int>> GetProductIdsLikedByUserAsync(int userId)
+        {
+            var user = await _context.Users
+                .Include(u => u.AppUserProducts)
+                .Where(u => u.Id == userId)
+                .SingleOrDefaultAsync();
+
+            var likedProductIds = user.AppUserProducts
+                .Select(up => up.Product)
+                .Where(p => !p.IsDeleted)
+                .Select(p => p.Id)
+                .ToList();
+
+            return likedProductIds;
+        }
+
+        public async Task<ICollection<ProductDto>> GetProductDtosLikedByUserAsync(int userId, string language)
+        {
+            var user = await _context.Users
+                .Include(u => u.AppUserProducts)
+                    .ThenInclude(up => up.Product)
+                        .ThenInclude(p => p.ProductVariants)
+                            .ThenInclude(pv => pv.ProductVariantValues)
+                                .ThenInclude(pvv => pvv.ProductSkuValues)
+                                    .ThenInclude(psv => psv.ProductSku)
+                .Where(u => u.Id == userId)
+                .SingleOrDefaultAsync();
+
+            var likedProducts = user.AppUserProducts
+                .Select(up => up.Product)
+                .Where(p => !p.IsDeleted && p.Language.ToLower().Trim() == language.ToLower().Trim())
+                .ToList();
+
+            var likedProductDtos = _mapper.Map<ICollection<ProductDto>>(likedProducts);
+
+            return likedProductDtos;
+        }
+
+        public async Task<AppUserProduct> GetAppUserProductAsync(int userId, int productId)
+        {
+            var appUserProduct = await _context.AppUserProducts.FindAsync(userId, productId);
+
+            return appUserProduct;
+        }
+
+        public void AddAppUserProduct(AppUserProduct appUserProduct)
+        {
+            _context.AppUserProducts.Add(appUserProduct);
+        }
+
+        public void DeleteAppUserProduct(AppUserProduct appUserProduct)
+        {
+            _context.AppUserProducts.Remove(appUserProduct);
+        }
     }
 }

@@ -24,6 +24,10 @@ namespace Audi.Helpers
                 .ForMember(
                     dest => dest.Roles,
                     opt => opt.MapFrom(src => src.UserRoles.Select(r => r.Role.ToString()))
+                )
+                .ForMember(
+                    dest => dest.LikedProducts,
+                    opt => opt.MapFrom(src => src.AppUserProducts.Select(up => up.Product))
                 );
 
             CreateMap<AppUser, SensitiveUserDataDto>();
