@@ -38,6 +38,7 @@ namespace Audi.Data
         public DbSet<CarouselItem> CarouselItems { get; set; }
         public DbSet<HomepageCarouselItem> HomepageCarouselItems { get; set; }
         public DbSet<CarouselItemPhoto> CarouselItemPhotos { get; set; }
+        public DbSet<AppUserProduct> AppUserProducts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -98,6 +99,46 @@ namespace Audi.Data
                 .HasForeignKey(u => u.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
+            // relationship end
+
+            // relationship for: AppUser <-> AppUserProduct <-> Product
+            builder.Entity<AppUserProduct>()
+                .HasKey(e => new { e.UserId, e.ProductId });
+
+            builder.Entity<AppUserProduct>()
+                .HasOne(up => up.Product)
+                .WithMany(p => p.AppUserProducts)
+                .HasForeignKey(up => up.ProductId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<AppUserProduct>()
+                .HasOne(up => up.User)
+                .WithMany(p => p.AppUserProducts)
+                .HasForeignKey(up => up.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<AppUser>()
+                .HasMany(u => u.AppUserProducts)
+                .WithOne(up => up.User)
+                .HasForeignKey(u => u.UserId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Entity<Product>()
+                .HasMany(u => u.AppUserProducts)
+                .WithOne(up => up.Product)
+                .HasForeignKey(u => u.ProductId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
             // relationship end
 
             // relationship for ProductCategory <-> ProductCategory <-> Product
@@ -297,10 +338,10 @@ namespace Audi.Data
                 .HasForeignKey(e => e.HomepageId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
-            
+
             builder.Entity<HomepageCarouselItem>()
                 .HasKey(e => new { e.HomepageId, e.CarouselItemId });
-            
+
             builder
                 .Entity<CarouselItem>()
                 .HasMany(e => e.HomepageCarouselItems)
@@ -338,7 +379,7 @@ namespace Audi.Data
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
             // relationship end
-            
+
             builder.Entity<DynamicDocument>()
                 .Property<WysiwygGrid>(e => e.Wysiwyg)
                 .HasColumnType("jsonb")

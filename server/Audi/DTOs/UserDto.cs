@@ -10,5 +10,6 @@ namespace Audi.DTOs
         public string[] Roles { get; set; }
         public bool IsDisabled { get; set; }
         public bool EmailConfirmed { get; set; }
+        public int[] LikedProductIds { get; set; }
     }
 }

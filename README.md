@@ -102,6 +102,8 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - add photo property to product category
 **
 - email / messaging / inbox functionality
+  - inbox system for users, admin can send promo messages to them
+  - notification system for users
 - SignalR for live chat
 - site-wide search
 - Statistics table and repo / controller

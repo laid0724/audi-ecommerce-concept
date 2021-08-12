@@ -18,6 +18,7 @@ namespace Audi.DTOs
         public DateTime CreatedAt { get; set; }
         public DateTime LastActive { get; set; }
         public UserPhotoDto UserImage { get; set; }
+        public ICollection<ProductDto> LikedProducts { get; set; }
         public ICollection<OrderDto> Orders { get; set; }
         public string[] Roles { get; set; }
     }
