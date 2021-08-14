@@ -177,6 +177,7 @@
               "projects/public/src/assets"
             ],
             "styles": [
+              "node_modules/normalize.css/normalize.css",
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/@audi/audi-ui/dist/audi-ui.min.css",
               "projects/public/src/styles.scss"
