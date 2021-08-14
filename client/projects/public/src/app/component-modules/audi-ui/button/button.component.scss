@@ -1,0 +1,11 @@
+:host(.w-full) {
+  .aui-button {
+    width: 100%;
+  }
+}
+
+:host(.block) {
+  .aui-button {
+    display: block;
+  }
+}
