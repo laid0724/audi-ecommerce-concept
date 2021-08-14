@@ -1,0 +1,9 @@
+<div
+  class="aui-button-group"
+  [ngClass]="{
+    'aui-button-group--icons': type === 'icon',
+    'aui-button-group--texts': type === 'text'
+  }"
+>
+  <ng-content select="audi-button"></ng-content>
+</div>
