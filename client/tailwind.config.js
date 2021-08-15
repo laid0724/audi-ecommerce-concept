@@ -1,6 +1,6 @@
 module.exports = {
   purge: {
-    enabled: true,
+    enabled: false,
     content: [
       './projects/data/src/**/*.{html,ts}',
       './projects/sys/src/**/*.{html,ts}',
@@ -8,6 +8,7 @@ module.exports = {
     ],
   },
   darkMode: false, // or 'media' or 'class'
+  important: true,
   theme: {
     extend: {},
   },

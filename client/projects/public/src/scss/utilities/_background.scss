@@ -1,0 +1,58 @@
+.background {
+  &-color {
+    &-black {
+      background-color: $audi-black;
+    }
+    &-white {
+      background-color: $audi-white;
+    }
+    &-red {
+      background-color: $audi-red;
+    }
+    &-green,
+    &-success {
+      background-color: $audi-success;
+    }
+    &-yellow,
+    &-warning {
+      background-color: $audi-warning;
+    }
+    &-error,
+    &-danger {
+      background-color: $audi-error;
+    }
+    &-grey-1 {
+      background-color: $audi-grey-1;
+    }
+    &-grey-2 {
+      background-color: $audi-grey-2;
+    }
+    &-grey-3 {
+      background-color: $audi-grey-3;
+    }
+    &-grey-4 {
+      background-color: $audi-grey-4;
+    }
+    &-grey-5 {
+      background-color: $audi-grey-5;
+    }
+    &-grey-6 {
+      background-color: $audi-grey-6;
+    }
+    &-grey-7 {
+      background-color: $audi-grey-7;
+    }
+    &-grey-8 {
+      background-color: $audi-grey-8;
+    }
+    &-grey-9 {
+      background-color: $audi-grey-9;
+    }
+    &-grey-10 {
+      background-color: $audi-grey-10;
+    }
+    &-grey-11 {
+      background-color: $audi-grey-11;
+    }
+  }
+}

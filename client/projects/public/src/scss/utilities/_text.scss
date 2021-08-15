@@ -1,0 +1,28 @@
+.text {
+  &-white {
+    color: $audi-white;
+  }
+
+  &-black {
+    color: $audi-black;
+  }
+
+  &-green,
+  &-success {
+    color: $audi-success;
+  }
+
+  &-warning,
+  &-yellow {
+    color: $audi-warning;
+  }
+
+  &-error,
+  &-danger {
+    color: $audi-error;
+  }
+
+  &-red {
+    color: $audi-red;
+  }
+}
