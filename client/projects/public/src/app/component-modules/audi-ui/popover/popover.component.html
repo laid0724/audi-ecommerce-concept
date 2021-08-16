@@ -1,0 +1,12 @@
+<ng-content #triggeringElement></ng-content>
+
+<div
+  *ngIf="triggeringElement?.nativeElement?.id != undefined"
+  class="aui-popover aui-js-popover"
+  role="tooltip"
+  [id]="this.popoverId"
+  [attr.for]="triggeringElement?.nativeElement?.id"
+  [attr.data-placement]="placement"
+>
+  <ng-content select=".aui-popover__content"></ng-content>
+</div>

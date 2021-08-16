@@ -24,6 +24,13 @@ export enum AudiModalType {
   FullPage = 'full-page',
 }
 
+export enum AudiPopoverPlacement {
+  Top = 'top',
+  Bottom = 'bottom',
+  Left = 'left',
+  Right = 'right',
+}
+
 export enum AudiButton {
   Primary = 'primary',
   Secondary = 'secondary',
