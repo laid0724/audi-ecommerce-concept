@@ -32,7 +32,7 @@ import { switchMap, take, takeUntil, tap, map } from 'rxjs/operators';
 import {
   addWysiwygRow,
   wysiwygGridValidatorBuilderFn,
-} from '../../../component-modules/forms-component/wysiwyg-grid/wysiwyg-grid.component';
+} from '../../../component-modules/form-components/wysiwyg-grid/wysiwyg-grid.component';
 
 // TODO: can deactivate guard and dynamically generate modal component to confirm
 // FIXME: if you are in an en product, you refresh the page the the language state

@@ -7,7 +7,7 @@ import { ProductsCategoryListComponent } from './products-category-list/products
 import { ProductsEditComponent } from './products-edit/products-edit.component';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { LanguageSelectorModule } from '../../component-modules/language-selector/language-selector.module';
-import { FormsComponentModule } from '../../component-modules/forms-component/forms-component.module';
+import { FormComponentsModule } from '../../component-modules/form-components/form-components.module';
 import { PipesModule } from '@audi/data';
 import { ClrDatagridUtilitiesModule } from '../../component-modules/clr-datagrid-utilities/clr-datagrid-utilities.module';
 import { ProductPhotoUploaderComponent } from './product-photo-uploader/product-photo-uploader.component';
@@ -27,7 +27,7 @@ import { ProductVariantEditorComponent } from './product-variant-editor/product-
     ClarityModule,
     ProductsRoutingModule,
     LanguageSelectorModule,
-    FormsComponentModule,
+    FormComponentsModule,
     PipesModule,
     ClrDatagridUtilitiesModule,
     FileUploadModule,

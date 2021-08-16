@@ -32,4 +32,4 @@ const COMPONENTS = [
   ],
   exports: [NgSelectModule, FormsModule, ReactiveFormsModule, ...COMPONENTS],
 })
-export class FormsComponentModule {}
+export class FormComponentsModule {}
