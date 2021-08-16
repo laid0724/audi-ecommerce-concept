@@ -1,3 +1,25 @@
 .aui-button {
   font-size: 13px;
 }
+
+.aui-modal-dialog__close {
+  svg {
+    * {
+      stroke: $audi-black;
+    }
+  }
+  &--black {
+    svg {
+      * {
+        stroke: $audi-black !important;
+      }
+    }
+  }
+  &--white {
+    svg {
+      * {
+        stroke: $audi-white !important;
+      }
+    }
+  }
+}

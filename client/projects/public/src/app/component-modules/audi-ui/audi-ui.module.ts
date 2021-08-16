@@ -7,6 +7,7 @@ import { CardComponent } from './card/card.component';
 import { ModalComponent } from './modal/modal.component';
 import { CardGridComponent } from './card-grid/card-grid.component';
 import { CardGridItemComponent } from './card-grid-item/card-grid-item.component';
+import { ModalService } from './services/modal.service';
 
 const COMPONENTS = [
   ButtonComponent,
@@ -18,8 +19,11 @@ const COMPONENTS = [
   ModalComponent,
 ];
 
+const PROVIDERS = [ModalService];
+
 @NgModule({
   declarations: [...COMPONENTS],
+  providers: [...PROVIDERS],
   imports: [CommonModule],
   exports: [...COMPONENTS],
 })

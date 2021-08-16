@@ -14,6 +14,8 @@ export class ButtonComponent implements OnInit {
   @Input() isActive: boolean = false;
 
   ngOnInit(): void {
-    initAudiModules(AudiModuleName.Response);
+    initAudiModules(AudiModuleName.Response).forEach((button) =>
+      button.components?.upgradeElements()
+    );
   }
 }

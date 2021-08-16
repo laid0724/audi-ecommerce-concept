@@ -1,16 +1,3 @@
-export enum AudiButton {
-  Primary = 'primary',
-  Secondary = 'secondary',
-  Text = 'text',
-  Icon = 'icon',
-  IconLarge = 'icon-large',
-}
-
-export enum AudiButtonGroup {
-  Text = 'text',
-  Icon = 'icon',
-}
-
 export enum AudiColor {
   Black = 'black',
   White = 'white',
@@ -29,4 +16,23 @@ export enum AudiColor {
   Warning = 'warning',
   Success = 'success',
   Error = 'error',
+}
+
+export enum AudiModalType {
+  Default = 'default',
+  Scrollable = 'scrollable',
+  FullPage = 'full-page',
+}
+
+export enum AudiButton {
+  Primary = 'primary',
+  Secondary = 'secondary',
+  Text = 'text',
+  Icon = 'icon',
+  IconLarge = 'icon-large',
+}
+
+export enum AudiButtonGroup {
+  Text = 'text',
+  Icon = 'icon',
 }

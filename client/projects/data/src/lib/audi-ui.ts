@@ -33,9 +33,9 @@ export type AudiModule = {
   module: any; // no type files are written for audi ui..gotta read their source code on your own to figure it out buddy!
 };
 
-export type InitializedAudiComponents = {
+export type AudiComponents = {
   moduleName: AudiModuleName;
-  components: any[];
+  components: any | any[];
 };
 
 const {
@@ -65,7 +65,7 @@ const {
 
 export function initAudiModules(
   ...modulesToInit: AudiModuleName[]
-): InitializedAudiComponents[] {
+): AudiComponents[] {
   if (
     'classList' in document.createElement('div') &&
     'querySelector' in document &&
@@ -120,12 +120,21 @@ export function initAudiModules(
     ];
   }
 
-  const initializedModules: InitializedAudiComponents[] = [
+  // const initializedModules: AudiComponents[] = [
+  //   ...uninitializedModules.map((m: AudiModule) => ({
+  //     moduleName: m.name,
+  //     components: m.module.upgradeElements(),
+  //   })),
+  // ];
+
+  // return uninitializedModules;
+
+  const components: AudiComponents[] = [
     ...uninitializedModules.map((m: AudiModule) => ({
       moduleName: m.name,
-      components: m.module.upgradeElements(),
+      components: m.module,
     })),
   ];
 
-  return initializedModules;
+  return components;
 }

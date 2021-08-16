@@ -1,0 +1,51 @@
+<div
+  [id]="modalId"
+  class="aui-modal aui-js-modal"
+  tabindex="-1"
+  role="dialog"
+  aria-hidden="true"
+>
+  <div
+    class="aui-modal-dialog {{ type === 'full-page' ? bgColorClass : null }}"
+    [ngClass]="{
+      'aui-modal-dialog--layer': type === 'default',
+      'aui-modal-dialog--window': type === 'scrollable',
+      'aui-modal-dialog--fullpage': type === 'full-page'
+    }"
+  >
+    <div
+      class="aui-modal-dialog__body {{
+        type === 'scrollable' || type === 'full-page' ? bgColorClass : null
+      }}"
+    >
+      <div
+        class="aui-modal-dialog__content text-{{ textColor }} {{
+          bgColorClass
+        }}"
+      >
+        <h2 class="aui-headline-{{ headerSize }} mb-5">{{ header }}</h2>
+        <ng-content></ng-content>
+        <ng-container *ngIf="type === 'default' && isClosable">
+          <ng-container *ngTemplateOutlet="modalCloseBtn"></ng-container>
+        </ng-container>
+      </div>
+      <ng-container
+        *ngIf="(type === 'scrollable' || type === 'full-page') && isClosable"
+      >
+        <ng-container *ngTemplateOutlet="modalCloseBtn"></ng-container>
+      </ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalCloseBtn>
+  <div
+    class="aui-modal-dialog__close"
+    [ngClass]="{
+      'aui-modal-dialog__close--black': textColor === 'black',
+      'aui-modal-dialog__close--white': textColor === 'white'
+    }"
+    data-dismiss="modal"
+    (click)="this.toggleAndEmitIsOpen()"
+  ></div>
+</ng-template>
