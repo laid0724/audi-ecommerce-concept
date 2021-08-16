@@ -148,7 +148,3 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - breadcrumbs
 - notifications / badge
 - modal
-
-#### Data
-
-- carve out individual audi components, with control value accessor and all that. export as module

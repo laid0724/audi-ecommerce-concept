@@ -1,3 +1,8 @@
+body {
+  @include audi-fonts;
+  @include audi-transition-effect;
+}
+
 .aui-button {
   font-size: 13px;
 }
@@ -27,5 +32,18 @@
 .aui-popover__arrow-shape {
   * {
     fill: $audi-white !important;
+  }
+}
+
+.aui-textfield__field {
+  audi-icon {
+    position: absolute;
+    top: calc(50% + 6px);
+    transform: translateY(-50%);
+    svg {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 }

@@ -5,13 +5,14 @@ import {
   ErrorInterceptorProvider,
   JwtInterceptorProvider,
   LoadingInterceptorProvider,
-  LanguageHeaderInterceptorProvider
+  LanguageHeaderInterceptorProvider,
 } from '@audi/data';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AudiUiModule } from './component-modules/audi-ui/audi-ui.module';
+import { FormComponentsModule } from './component-modules/form-components/form-components.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,13 +22,14 @@ import { AudiUiModule } from './component-modules/audi-ui/audi-ui.module';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     NgxSpinnerModule,
-    AudiUiModule
+    AudiUiModule,
+    FormComponentsModule,
   ],
   providers: [
     ErrorInterceptorProvider,
     JwtInterceptorProvider,
     LoadingInterceptorProvider,
-    LanguageHeaderInterceptorProvider
+    LanguageHeaderInterceptorProvider,
   ],
   bootstrap: [AppComponent],
 })

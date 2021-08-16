@@ -43,3 +43,12 @@ export enum AudiButtonGroup {
   Text = 'text',
   Icon = 'icon',
 }
+
+export enum AudiControlType {
+  Input = 'input',
+  Textarea = 'textarea',
+  Select = 'select',
+  Radio = 'radio',
+  Checkbox = 'checkbox',
+  Toggle = 'toggle'
+}
