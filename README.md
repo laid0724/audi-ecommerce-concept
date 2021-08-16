@@ -119,9 +119,7 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 
 - RWD
 - Angular universal
-- Tailwind css
 - fullpage angular
-- Install audi ui / fonts / icons
 - Swiper - 3 styles
   1. homepage banner
   2. product recommendation

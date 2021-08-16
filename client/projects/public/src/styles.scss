@@ -19,6 +19,10 @@
   @include audi-transition-effect;
 }
 
+a {
+  cursor: pointer;
+}
+
 // body {
 //   background-color: $audi-grey-5;
 // }

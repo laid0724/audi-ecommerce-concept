@@ -5,17 +5,17 @@ import {
   ElementRef,
   Input,
   OnInit,
+  OnDestroy,
+  Renderer2,
 } from '@angular/core';
 import { AudiComponents, AudiModuleName, initAudiModules } from '@audi/data';
 import { AudiPopoverPlacement } from '../enums';
-
-import { v4 as uuid } from 'uuid';
-import { OnDestroy } from '@angular/core';
 import {
   AudiPopoverComponent,
   PopoverService,
 } from '../services/popover.service';
-import { Renderer2 } from '@angular/core';
+
+import { v4 as uuid } from 'uuid';
 
 // TODO: rfx this into a directive?
 

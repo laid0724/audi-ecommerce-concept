@@ -10,6 +10,8 @@ import { CardGridItemComponent } from './card-grid-item/card-grid-item.component
 import { ModalService } from './services/modal.service';
 import { PopoverComponent } from './popover/popover.component';
 import { PopoverService } from './services/popover.service';
+import { TooltipComponent } from './tooltip/tooltip.component';
+import { TooltipService } from './services/tooltip.service';
 
 const COMPONENTS = [
   ButtonComponent,
@@ -20,9 +22,10 @@ const COMPONENTS = [
   CardGridItemComponent,
   ModalComponent,
   PopoverComponent,
+  TooltipComponent,
 ];
 
-const PROVIDERS = [ModalService, PopoverService];
+const PROVIDERS = [ModalService, PopoverService, TooltipService];
 
 @NgModule({
   declarations: [...COMPONENTS],
