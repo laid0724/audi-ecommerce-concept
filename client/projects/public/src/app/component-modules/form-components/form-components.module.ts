@@ -7,6 +7,7 @@ import { ControlValidComponent } from './control-valid/control-valid.component';
 import { ControlErrorComponent } from './control-error/control-error.component';
 import { InputContainerComponent } from './input-container/input-container.component';
 import { TextareaContainerComponent } from './textarea-container/textarea-container.component';
+import { SelectContainerComponent } from './select-container/select-container.component';
 
 const COMPONENTS = [
   ControlDescriptionComponent,
@@ -14,6 +15,7 @@ const COMPONENTS = [
   ControlErrorComponent,
   InputContainerComponent,
   TextareaContainerComponent,
+  SelectContainerComponent,
 ];
 
 @NgModule({

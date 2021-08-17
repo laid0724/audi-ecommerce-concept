@@ -1,60 +1,55 @@
-import { AfterViewInit } from '@angular/core';
 import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
 import {
-  ControlContainer,
   ControlValueAccessor,
-  FormControl,
   FormControlDirective,
+  FormControl,
+  ControlContainer,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import {
-  AudiComponents,
-  AudiModuleName,
-  initAudiModules,
-  isNullOrEmptyString,
-} from '@audi/data';
+import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
 
 /*
-  USAGE:
+  USAGE
 
   <form [formGroup]="form">
-    <audi-textarea-container
+    <audi-select-container
       formControlName="name"
-      [label]="'Name'"
+      [label]="'name'"
       [smallLabel]="' (optional)'"
       [isLightTheme]="false"
-      [wordLimit]="160"
+      [floatingLabel]="true"
     >
-      <audi-control-description>lorem ipsum</audi-control-description>
-      <audi-control-valid>lorem ipsum</audi-control-valid>
-      <audi-control-error>required</audi-control-error>
-    </audi-textarea-container>
+      <option *ngFor="let value of [1, 2, 3, 4, 5, 6]" [value]="value">
+        {{ value }}
+      </option>
+      <audi-control-description [type]="'select'"
+        >lorem ipsum</audi-control-description
+      >
+      <audi-control-error [type]="'select'">required</audi-control-error>
+    </audi-select-container>
   </form>
 */
 
 @Component({
-  selector: 'audi-textarea-container',
-  templateUrl: './textarea-container.component.html',
-  styleUrls: ['./textarea-container.component.scss'],
+  selector: 'audi-select-container',
+  templateUrl: './select-container.component.html',
+  styleUrls: ['./select-container.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TextareaContainerComponent),
+      useExisting: forwardRef(() => SelectContainerComponent),
       multi: true,
     },
   ],
 })
-export class TextareaContainerComponent
-  implements AfterViewInit, ControlValueAccessor
-{
+export class SelectContainerComponent implements OnInit, ControlValueAccessor {
   @ViewChild(FormControlDirective, { static: true })
   formControlDirective: FormControlDirective;
 
+  @Input() floatingLabel: boolean = true;
   @Input() isLightTheme: boolean = false;
   @Input() label: string;
   @Input() smallLabel: string;
-  @Input() rows: number = 3;
-  @Input() wordLimit: number | null = null;
 
   @Input()
   formControl: FormControl;
@@ -69,18 +64,13 @@ export class TextareaContainerComponent
 
   isDisabled: boolean = false;
 
-  public isNullOrEmptyString: (val: string | null | undefined) => boolean =
-    isNullOrEmptyString;
-
   constructor(private controlContainer: ControlContainer) {}
 
-  ngAfterViewInit(): void {
-    // we're using after view init instead of on init so that the word limit feature works
-    // given that this life cycle happens after input has been passed in
-    const audiTextfieldModules = initAudiModules(AudiModuleName.Textfield);
+  ngOnInit(): void {
+    const audiSelectModules = initAudiModules(AudiModuleName.Select);
 
-    audiTextfieldModules.forEach((textfieldModule: AudiComponents) => {
-      const textfields = textfieldModule.components.upgradeElements();
+    audiSelectModules.forEach((selectModule: AudiComponents) => {
+      const selects = selectModule.components.upgradeElements();
     });
   }
 

@@ -1,3 +1,8 @@
-<span class="aui-textfield__description">
+<span
+  [ngClass]="{
+    'aui-textfield__description': type === 'input' || type === 'textarea',
+    'aui-select__description': type === 'select'
+  }"
+>
   <ng-content></ng-content>
 </span>
