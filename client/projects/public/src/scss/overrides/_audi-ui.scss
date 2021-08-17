@@ -47,3 +47,31 @@ body {
     }
   }
 }
+
+.aui-textfield__counter {
+  & ~ audi-control-description .aui-textfield__description,
+  & ~ audi-control-valid .aui-textfield__valid,
+  & ~ audi-control-error .aui-textfield__error {
+    margin-top: -1.25rem !important;
+    padding-right: 4em !important;
+  }
+}
+
+audi-textarea-container {
+  &.ng-invalid.ng-touched {
+    .aui-textfield {
+      &__field {
+        border-color: $audi-error !important;
+      }
+      &__focus-line {
+        background-color: $audi-error !important;
+      }
+      &__input {
+        color: $audi-error !important;
+      }
+    }
+    .aui-textfield__label {
+      color: $audi-error !important;
+    }
+  }
+}

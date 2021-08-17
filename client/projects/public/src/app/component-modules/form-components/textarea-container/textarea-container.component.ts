@@ -1,3 +1,4 @@
+import { AfterViewInit } from '@angular/core';
 import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
 import {
   ControlContainer,
@@ -14,46 +15,45 @@ import {
 } from '@audi/data';
 
 /*
-  USAGE
+  USAGE:
 
-  <form [formGroup]="form">
-    <audi-input-container
+    <form [formGroup]="form">
+    <audi-textarea-container
       formControlName="name"
       [label]="'Name'"
       [smallLabel]="' (optional)'"
-      [iconName]="'search'"
       [isLightTheme]="false"
-      [floatingLabel]="true"
-    >
-      <audi-control-description>lorem ipsum</audi-control-description>
+      [wordLimit]="160"
+      ><audi-control-description>lorem ipsum</audi-control-description>
       <audi-control-valid>lorem ipsum</audi-control-valid>
-      <audi-control-error>required</audi-control-error>
-    </audi-input-container>
+      <audi-control-error>required</audi-control-error></audi-textarea-container
+    >
   </form>
 */
 
 @Component({
-  selector: 'audi-input-container',
-  templateUrl: './input-container.component.html',
-  styleUrls: ['./input-container.component.scss'],
+  selector: 'audi-textarea-container',
+  templateUrl: './textarea-container.component.html',
+  styleUrls: ['./textarea-container.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputContainerComponent),
+      useExisting: forwardRef(() => TextareaContainerComponent),
       multi: true,
     },
   ],
 })
-export class InputContainerComponent implements OnInit, ControlValueAccessor {
+export class TextareaContainerComponent
+  implements AfterViewInit, ControlValueAccessor
+{
   @ViewChild(FormControlDirective, { static: true })
   formControlDirective: FormControlDirective;
 
-  @Input() floatingLabel: boolean = true;
   @Input() isLightTheme: boolean = false;
-  @Input() type: 'text' | 'number' | 'password' = 'text';
-  @Input() iconName: string;
   @Input() label: string;
   @Input() smallLabel: string;
+  @Input() rows: number = 3;
+  @Input() wordLimit: number | null = null;
 
   @Input()
   formControl: FormControl;
@@ -73,7 +73,9 @@ export class InputContainerComponent implements OnInit, ControlValueAccessor {
 
   constructor(private controlContainer: ControlContainer) {}
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
+    // we're using after view init instead of on init so that the word limit feature works
+    // given that this life cycle happens after input has been passed in
     const audiTextfieldModules = initAudiModules(AudiModuleName.Textfield);
 
     audiTextfieldModules.forEach((textfieldModule: AudiComponents) => {

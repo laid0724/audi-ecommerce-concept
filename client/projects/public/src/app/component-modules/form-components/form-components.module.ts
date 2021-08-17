@@ -6,12 +6,14 @@ import { ControlDescriptionComponent } from './control-description/control-descr
 import { ControlValidComponent } from './control-valid/control-valid.component';
 import { ControlErrorComponent } from './control-error/control-error.component';
 import { InputContainerComponent } from './input-container/input-container.component';
+import { TextareaContainerComponent } from './textarea-container/textarea-container.component';
 
 const COMPONENTS = [
   ControlDescriptionComponent,
   ControlValidComponent,
   ControlErrorComponent,
   InputContainerComponent,
+  TextareaContainerComponent,
 ];
 
 @NgModule({
