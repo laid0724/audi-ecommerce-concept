@@ -13,7 +13,7 @@ export enum AudiModuleName {
   Header = 'Header',
   Modal = 'Modal',
   Nav = 'Nav',
-  Notification = 'Notificaiton',
+  Notification = 'Notification',
   Pagination = 'Pagination',
   Player = 'Player',
   Popover = 'Popover',
