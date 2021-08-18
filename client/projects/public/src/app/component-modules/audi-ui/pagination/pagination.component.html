@@ -1,0 +1,162 @@
+<!-- Mobile, PrevNext, and Minimal Pagination -->
+<nav *ngIf="type !== 'desktop'">
+  <ul class="aui-pager" [ngClass]="{ 'aui-theme-light': isLightTheme }">
+    <!-- Previous Arrow Icon -->
+    <li class="aui-pager__item">
+      <a
+        class="aui-pager__prev"
+        [attr.disabled]="pagination.currentPage === 1 ? true : null"
+        (click)="
+          pagination.currentPage > 1
+            ? onPageChange(pagination.currentPage - 1)
+            : null
+        "
+      >
+        <i class="aui-pager__prev-icon">
+          <svg viewBox="0 0 8 13"><path d="M1.5,1 l6,6 l-6,6" /></svg>
+        </i>
+        <!-- Previous Text -->
+        <span class="aui-pager__prev-text ml-4" *ngIf="type === 'prev-next'"
+          >Previous</span
+        >
+      </a>
+    </li>
+    <!-- Mobile Current Page Indicator -->
+    <li class="aui-pager__item" *ngIf="type === 'mobile'">
+      <span class="aui-pager__pagination"
+        ><span class="aui-pager__current">{{ pagination.currentPage }}</span
+        >/{{ pagination.totalPages }}</span
+      >
+    </li>
+    <!-- Next Arrow Icon -->
+    <li class="aui-pager__item">
+      <a
+        class="aui-pager__next"
+        [attr.disabled]="
+          pagination.currentPage === pagination.totalPages ? true : null
+        "
+        (click)="
+          pagination.currentPage < pagination.totalPages
+            ? onPageChange(pagination.currentPage + 1)
+            : null
+        "
+      >
+        <!-- Next Text -->
+        <span class="aui-pager__next-text mr-4" *ngIf="type === 'prev-next'"
+          >Next</span
+        >
+        <i class="aui-pager__next-icon">
+          <svg viewBox="0 0 8 13"><path d="M1.5,1 l6,6 l-6,6" /></svg>
+        </i>
+      </a>
+    </li>
+  </ul>
+</nav>
+
+<!-- Default & Desktop Pagination -->
+<nav
+  class="aui-pagination aui-js-pagination"
+  [ngClass]="{ 'aui-theme-light': isLightTheme }"
+  *ngIf="
+    pagination.totalItems > 0 && pagination.totalPages > 1 && type === 'desktop'
+  "
+>
+  <ul class="aui-pagination__items">
+    <!-- Previous Arrow Icon -->
+    <li class="aui-pagination__item">
+      <a
+        class="aui-pagination__prev"
+        [attr.disabled]="pagination.currentPage === 1 ? true : null"
+        (click)="
+          pagination.currentPage > 1
+            ? onPageChange(pagination.currentPage - 1)
+            : null
+        "
+      >
+        <i class="aui-pagination__prev-icon">
+          <svg viewBox="0 0 8 13"><path d="M1.5,1 l6,6 l-6,6" /></svg>
+        </i>
+
+        <span class="aui-sr-only">Previous</span>
+      </a>
+    </li>
+
+    <!-- First -->
+    <li
+      class="aui-pagination__item"
+      [ngClass]="{ 'is-active': pagination.currentPage === 1 }"
+    >
+      <a
+        class="aui-pagination__link"
+        [attr.disabled]="pagination.currentPage === 1 ? true : null"
+        [ngClass]="{ 'is-active': pagination.currentPage === 1 }"
+        (click)="onPageChange(1)"
+        >1</a
+      >
+    </li>
+
+    <!-- Ellipsis -->
+    <li class="aui-pagination__item">
+      <span class="aui-pagination__ellipsis">…</span>
+    </li>
+
+    <!-- Page Numbers -->
+    <li
+      class="aui-pagination__item"
+      *ngFor="let p of range"
+      [ngClass]="{ 'is-active': pagination.currentPage === p }"
+      (click)="onPageChange(p)"
+    >
+      <a
+        class="aui-pagination__link"
+        [ngClass]="{ 'is-active': pagination.currentPage === p }"
+        >{{ p }}</a
+      >
+    </li>
+
+    <!-- Ellipsis -->
+    <li class="aui-pagination__item">
+      <span class="aui-pagination__ellipsis">…</span>
+    </li>
+
+    <!-- Last -->
+    <li
+      class="aui-pagination__item"
+      [ngClass]="{
+        'is-active': pagination.currentPage === pagination.totalPages
+      }"
+    >
+      <a
+        class="aui-pagination__link"
+        [attr.disabled]="
+          pagination.currentPage === pagination.totalPages ? true : null
+        "
+        [ngClass]="{
+          'is-active': pagination.currentPage === pagination.totalPages
+        }"
+        (click)="onPageChange(pagination.totalPages)"
+        >{{ pagination.totalPages }}</a
+      >
+    </li>
+
+    <!-- Next Arrow Icon -->
+    <li class="aui-pagination__item">
+      <a
+        class="aui-pagination__next"
+        [attr.disabled]="
+          pagination.currentPage === pagination.totalPages ? true : null
+        "
+        (click)="
+          pagination.currentPage < pagination.totalPages
+            ? onPageChange(pagination.currentPage + 1)
+            : null
+        "
+      >
+        <i class="aui-pagination__next-icon">
+          <svg viewBox="0 0 8 13"><path d="M1.5,1 l6,6 l-6,6" /></svg>
+        </i>
+        <span class="aui-sr-only">Next</span>
+      </a>
+    </li>
+  </ul>
+</nav>

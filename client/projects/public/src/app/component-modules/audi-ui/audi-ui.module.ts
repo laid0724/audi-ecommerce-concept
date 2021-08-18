@@ -13,6 +13,7 @@ import { PopoverComponent } from './popover/popover.component';
 import { PopoverService } from './services/popover.service';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { TooltipService } from './services/tooltip.service';
+import { PaginationComponent } from './pagination/pagination.component';
 
 const COMPONENTS = [
   ButtonComponent,
@@ -23,6 +24,7 @@ const COMPONENTS = [
   ModalComponent,
   PopoverComponent,
   TooltipComponent,
+  PaginationComponent,
 ];
 
 const PROVIDERS = [ModalService, PopoverService, TooltipService];

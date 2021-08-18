@@ -53,3 +53,10 @@ export enum AudiControlType {
   Toggle = 'toggle',
   Grid = 'grid',
 }
+
+export enum AudiPaginationType {
+  Desktop = 'desktop',
+  Mobile = 'mobile',
+  PrevNext = 'prev-next',
+  Minimal = 'minimal',
+}
