@@ -12,6 +12,7 @@ import { RadioContainerComponent } from './radio-container/radio-container.compo
 import { ControlGridComponent } from './control-grid/control-grid.component';
 import { ProjectAsFieldDirective } from './project-as-field.directive';
 import { ProjectAsFieldsDirective } from './project-as-fields.directive';
+import { CheckboxContainerComponent } from './checkbox-container/checkbox-container.component';
 
 const COMPONENTS = [
   ControlDescriptionComponent,
@@ -22,13 +23,14 @@ const COMPONENTS = [
   TextareaContainerComponent,
   SelectContainerComponent,
   RadioContainerComponent,
-  ProjectAsFieldDirective,
-  ProjectAsFieldsDirective,
+  CheckboxContainerComponent,
 ];
 
+const DIRECTIVES = [ProjectAsFieldDirective, ProjectAsFieldsDirective];
+
 @NgModule({
-  declarations: [...COMPONENTS],
+  declarations: [...COMPONENTS, ...DIRECTIVES],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, IconModule],
-  exports: [...COMPONENTS],
+  exports: [...COMPONENTS, ...DIRECTIVES],
 })
 export class FormComponentsModule {}
