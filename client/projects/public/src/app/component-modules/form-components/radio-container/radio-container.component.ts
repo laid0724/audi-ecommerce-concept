@@ -5,8 +5,6 @@ import {
   FormControl,
   ControlContainer,
   NG_VALUE_ACCESSOR,
-  FormGroup,
-  FormGroupDirective,
 } from '@angular/forms';
 import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
 
@@ -74,11 +72,7 @@ export class RadioContainerComponent implements OnInit, ControlValueAccessor {
 
   get control(): FormControl {
     return (this.formControl ||
-      this.fg.get(this.formControlName)) as FormControl;
-  }
-
-  get fg(): FormGroup {
-    return (this.controlContainer as FormGroupDirective).form;
+      this.controlContainer.control?.get(this.formControlName)) as FormControl;
   }
 
   constructor(private controlContainer: ControlContainer) {}
