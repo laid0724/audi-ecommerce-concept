@@ -50,5 +50,6 @@ export enum AudiControlType {
   Select = 'select',
   Radio = 'radio',
   Checkbox = 'checkbox',
-  Toggle = 'toggle'
+  Toggle = 'toggle',
+  Grid = 'grid',
 }

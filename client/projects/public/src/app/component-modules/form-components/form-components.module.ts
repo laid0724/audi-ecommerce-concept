@@ -8,14 +8,22 @@ import { ControlErrorComponent } from './control-error/control-error.component';
 import { InputContainerComponent } from './input-container/input-container.component';
 import { TextareaContainerComponent } from './textarea-container/textarea-container.component';
 import { SelectContainerComponent } from './select-container/select-container.component';
+import { RadioContainerComponent } from './radio-container/radio-container.component';
+import { ControlGridComponent } from './control-grid/control-grid.component';
+import { ProjectAsFieldDirective } from './project-as-field.directive';
+import { ProjectAsFieldsDirective } from './project-as-fields.directive';
 
 const COMPONENTS = [
   ControlDescriptionComponent,
   ControlValidComponent,
   ControlErrorComponent,
+  ControlGridComponent,
   InputContainerComponent,
   TextareaContainerComponent,
   SelectContainerComponent,
+  RadioContainerComponent,
+  ProjectAsFieldDirective,
+  ProjectAsFieldsDirective,
 ];
 
 @NgModule({
