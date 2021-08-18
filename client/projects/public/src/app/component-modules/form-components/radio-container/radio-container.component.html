@@ -1,0 +1,16 @@
+<label
+  class="aui-radio aui-js-radio mr-5 mt-3"
+  [ngClass]="{
+    'is-disabled': isDisabled,
+    'aui-theme-light': isLightTheme,
+    'is-checked': control.value !== null && control.value === value
+  }"
+>
+  <input
+    class="aui-radio__input"
+    type="radio"
+    [value]="value"
+    [formControl]="control"
+  />
+  <span class="aui-radio__label">{{ label }}</span>
+</label>

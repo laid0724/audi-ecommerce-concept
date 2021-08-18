@@ -14,15 +14,12 @@
   <!-- see: https://stackoverflow.com/questions/59185318/get-multiple-ng-template-ref-values-using-contentchildren-in-angular-5 -->
 
   <ng-container *ngIf="fieldsTemplates.length > 0">
-    <div
-      class="aui-fieldset__fields mb-1"
-      *ngFor="let fields of fieldsTemplates"
-    >
+    <div class="aui-fieldset__fields" *ngFor="let fields of fieldsTemplates">
       <ng-template [ngTemplateOutlet]="fields.template"></ng-template>
     </div>
   </ng-container>
 
-  <div class="aui-fieldset__fields mb-1" *ngIf="fieldTemplates.length > 0">
+  <div class="aui-fieldset__fields" *ngIf="fieldTemplates.length > 0">
     <div class="aui-fieldset__field" *ngFor="let field of fieldTemplates">
       <ng-template [ngTemplateOutlet]="field.template"></ng-template>
     </div>
