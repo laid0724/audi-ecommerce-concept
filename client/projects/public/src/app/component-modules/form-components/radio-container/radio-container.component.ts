@@ -64,6 +64,9 @@ export class RadioContainerComponent implements OnInit, ControlValueAccessor {
   @Input() value: any;
 
   @Input()
+  isDisabled: boolean = false;
+
+  @Input()
   formControl: FormControl;
 
   @Input()
@@ -77,8 +80,6 @@ export class RadioContainerComponent implements OnInit, ControlValueAccessor {
   get fg(): FormGroup {
     return (this.controlContainer as FormGroupDirective).form;
   }
-
-  isDisabled: boolean = false;
 
   constructor(private controlContainer: ControlContainer) {}
 
