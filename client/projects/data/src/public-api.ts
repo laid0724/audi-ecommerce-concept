@@ -59,6 +59,9 @@ export * from './lib/guards/auth.guard';
 export * from './lib/guards/admin.guard';
 export * from './lib/guards/member.guard';
 
+// Injection Tokens
+export * from './lib/tokens';
+
 // Misc
 export * from './lib/pipes/pipes.module';
 export * from './lib/regex';

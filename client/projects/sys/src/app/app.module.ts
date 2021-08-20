@@ -12,6 +12,7 @@ import {
   LanguageHeaderInterceptorProvider,
   LanguageSelectorResolver,
   JwtInterceptorProvider,
+  INJECT_TOASTR,
 } from '@audi/data';
 import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
@@ -40,6 +41,10 @@ import { QuillModule } from 'ngx-quill';
     LoadingInterceptorProvider,
     LanguageHeaderInterceptorProvider,
     LanguageSelectorResolver,
+    {
+      provide: INJECT_TOASTR,
+      useValue: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
