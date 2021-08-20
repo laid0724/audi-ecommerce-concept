@@ -9,7 +9,7 @@ import { NotificationService } from '../../services/notification.service';
   styleUrls: ['./notification.component.scss'],
 })
 export class NotificationComponent implements AfterViewInit {
-  @Input() style: 'dark' | 'light' = 'light';
+  @Input() audiStyle: 'dark' | 'light' = 'light';
   @Input() bgColor: AudiColor | string = '';
   @Input() textColor: AudiColor | string = '';
   @Input() toastMessage: string = '';

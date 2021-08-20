@@ -1,5 +1,4 @@
-import { ViewContainerRef } from '@angular/core';
-import { Directive } from '@angular/core';
+import { ViewContainerRef, Directive} from '@angular/core';
 
 @Directive({
   selector: '[notificationInjectionMarker]',

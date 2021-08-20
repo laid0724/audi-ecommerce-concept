@@ -68,3 +68,15 @@ export enum AudiNotificationType {
   Warning = 'warning',
   Danger = 'danger',
 }
+
+export enum AudiAlertStyle {
+  Default = 'default',
+  Success = 'success',
+  Warning = 'warning',
+  Danger = 'danger',
+}
+
+export enum AudiAlertType {
+  Default = 'default',
+  Global = 'global'
+}

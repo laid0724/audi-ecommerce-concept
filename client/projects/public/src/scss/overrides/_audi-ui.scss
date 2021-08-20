@@ -75,3 +75,20 @@ audi-textarea-container {
     }
   }
 }
+
+.aui-alert {
+  &--sticky {
+    transition: none !important;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 0 2px 0 rgb(0 0 0 / 5%), 0 0 50px 0 rgb(0 0 0 / 7%);
+    z-index: 1700;
+  }
+
+  &__content {
+    margin-right: 0 !important;
+  }
+}

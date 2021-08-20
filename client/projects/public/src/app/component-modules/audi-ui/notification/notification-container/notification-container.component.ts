@@ -17,7 +17,7 @@ import { NotificationInjectionMarkerDirective } from '../notification-injection-
 import { NotificationComponent } from '../notification/notification.component';
 
 export interface NotificationConfig {
-  style?: 'dark' | 'light';
+  audiStyle: 'dark' | 'light';
   bgColor?: AudiColor | string;
   textColor?: AudiColor | string;
 }
@@ -89,8 +89,8 @@ export class NotificationContainerComponent implements OnInit, OnDestroy {
     const componentRef = hostViewContainerRef.createComponent(componentFactory);
 
     if (settings != null) {
-      if (!isNullOrEmptyString(settings.style)) {
-        componentRef.instance.style = settings.style!;
+      if (!isNullOrEmptyString(settings.audiStyle)) {
+        componentRef.instance.audiStyle = settings.audiStyle!;
       }
       if (!isNullOrEmptyString(settings.bgColor)) {
         componentRef.instance.bgColor = settings.bgColor!;
@@ -107,19 +107,19 @@ export class NotificationContainerComponent implements OnInit, OnDestroy {
 
   private showNotification(message: string): void {
     this.showNotificationBase(message, {
-      style: 'light',
+      audiStyle: 'light',
     });
   }
 
   private showInfoNotification(message: string): void {
     this.showNotificationBase(message, {
-      style: 'dark',
+      audiStyle: 'dark',
     });
   }
 
   private showSuccessNotification(message: string): void {
     this.showNotificationBase(message, {
-      style: 'dark',
+      audiStyle: 'dark',
       bgColor: AudiColor.Success,
       textColor: AudiColor.White,
     });
@@ -127,7 +127,7 @@ export class NotificationContainerComponent implements OnInit, OnDestroy {
 
   private showDangerNotification(message: string): void {
     this.showNotificationBase(message, {
-      style: 'dark',
+      audiStyle: 'dark',
       bgColor: AudiColor.Error,
       textColor: AudiColor.White,
     });
@@ -135,7 +135,7 @@ export class NotificationContainerComponent implements OnInit, OnDestroy {
 
   private showWarningNotification(message: string): void {
     this.showNotificationBase(message, {
-      style: 'dark',
+      audiStyle: 'dark',
       bgColor: AudiColor.Warning,
       textColor: AudiColor.White,
     });
