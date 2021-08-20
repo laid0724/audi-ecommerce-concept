@@ -56,7 +56,7 @@ export class NotificationService {
     this._notificationTrigger$.next(notification);
   }
 
-  danger(message: string): void {
+  error(message: string): void {
     const notification: AudiNotification = {
       message,
       type: AudiNotificationType.Danger,
