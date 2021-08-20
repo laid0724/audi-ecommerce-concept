@@ -12,7 +12,7 @@ import { AudiColor, AudiNotificationType } from '../../enums';
 import {
   AudiNotification,
   NotificationService,
-} from '../../services/notification.service';
+} from '../../services/notification-service/notification.service';
 import { NotificationInjectionMarkerDirective } from '../notification-injection-marker.directive';
 import { NotificationComponent } from '../notification/notification.component';
 

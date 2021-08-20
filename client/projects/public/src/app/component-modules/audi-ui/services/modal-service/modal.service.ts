@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ModalServiceModule } from './modal-service.module';
 
 export interface AudiModalComponent {
   id: string;
@@ -7,7 +8,7 @@ export interface AudiModalComponent {
 }
 
 @Injectable({
-  providedIn: 'any',
+  providedIn: ModalServiceModule,
 })
 export class ModalService {
   upgradedModals: AudiModalComponent[] = [];

@@ -13,7 +13,7 @@ import { AudiPopoverPlacement } from '../enums';
 import {
   AudiPopoverComponent,
   PopoverService,
-} from '../services/popover.service';
+} from '../services/popover-service/popover.service';
 
 import { v4 as uuid } from 'uuid';
 

@@ -11,7 +11,10 @@ import {
 } from '@angular/core';
 import { AudiModuleName, initAudiModules, AudiComponents } from '@audi/data';
 import { AudiColor, AudiModalType } from '../enums';
-import { AudiModalComponent, ModalService } from '../services/modal.service';
+import {
+  AudiModalComponent,
+  ModalService,
+} from '../services/modal-service/modal.service';
 
 import { v4 as uuid } from 'uuid';
 

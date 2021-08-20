@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
-import { AudiNotificationType } from '../enums';
-import { NotificationModule } from '../notification/notification.module';
+import { AudiNotificationType } from '../../enums';
+import { NotificationServiceModule } from './notification-service.module';
 
 export interface AudiNotification {
   message: string;
@@ -9,7 +9,7 @@ export interface AudiNotification {
 }
 
 @Injectable({
-  providedIn: NotificationModule,
+  providedIn: NotificationServiceModule,
 })
 export class NotificationService {
   private _notificationTrigger$ = new ReplaySubject<AudiNotification | null>(

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AccountService, Roles, User } from '@audi/data';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { NotificationService } from './component-modules/audi-ui/services/notification.service';
+import { NotificationService } from './component-modules/audi-ui/services/notification-service/notification.service';
 @Component({
   selector: 'audi-root',
   templateUrl: './app.component.html',

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { TooltipServiceModule } from './tooltip-service.module';
 
 export interface AudiTooltipComponent {
   _id: string;
 }
 
 @Injectable({
-  providedIn: 'any',
+  providedIn: TooltipServiceModule,
 })
 export class TooltipService {
   upgradedTooltips: AudiTooltipComponent[] = [];

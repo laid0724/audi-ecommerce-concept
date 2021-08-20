@@ -1,7 +1,7 @@
 import { Component, AfterViewInit, Input } from '@angular/core';
 import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
 import { AudiColor } from '../../enums';
-import { NotificationService } from '../../services/notification.service';
+import { NotificationService } from '../../services/notification-service/notification.service';
 
 @Component({
   selector: 'audi-notification',

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
+import { PopoverServiceModule } from './popover-service.module';
 
 export interface AudiPopoverComponent {
   _id: string;
 }
 
 @Injectable({
-  providedIn: 'any',
+  providedIn: PopoverServiceModule,
 })
 export class PopoverService {
   upgradedPopovers: AudiPopoverComponent[] = [];

@@ -11,7 +11,7 @@ import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
 import {
   AudiTooltipComponent,
   TooltipService,
-} from '../services/tooltip.service';
+} from '../services/tooltip-service/tooltip.service';
 
 import { v4 as uuid } from 'uuid';
 

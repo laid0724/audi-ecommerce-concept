@@ -8,14 +8,14 @@ import { CardComponent } from './card/card.component';
 import { ModalComponent } from './modal/modal.component';
 import { CardGridComponent } from './card-grid/card-grid.component';
 import { CardGridItemComponent } from './card-grid-item/card-grid-item.component';
-import { ModalService } from './services/modal.service';
 import { PopoverComponent } from './popover/popover.component';
-import { PopoverService } from './services/popover.service';
 import { TooltipComponent } from './tooltip/tooltip.component';
-import { TooltipService } from './services/tooltip.service';
 import { PaginationComponent } from './pagination/pagination.component';
 import { NotificationModule } from './notification/notification.module';
 import { AlertModule } from './alert/alert.module';
+import { ModalServiceModule } from './services/modal-service/modal-service.module';
+import { PopoverServiceModule } from './services/popover-service/popover-service.module';
+import { TooltipServiceModule } from './services/tooltip-service/tooltip-service.module';
 
 const COMPONENTS = [
   ButtonComponent,
@@ -29,18 +29,22 @@ const COMPONENTS = [
   PaginationComponent,
 ];
 
-const PROVIDERS = [ModalService, PopoverService, TooltipService];
+const SERVICE_MODULES = [
+  ModalServiceModule,
+  PopoverServiceModule,
+  TooltipServiceModule,
+];
 
 @NgModule({
   declarations: [...COMPONENTS],
-  providers: [...PROVIDERS],
   imports: [
     CommonModule,
     IconModule,
     FormComponentsModule,
     NotificationModule,
     AlertModule,
+    ...SERVICE_MODULES,
   ],
-  exports: [...COMPONENTS, NotificationModule, AlertModule],
+  exports: [...COMPONENTS, ...SERVICE_MODULES, NotificationModule, AlertModule],
 })
 export class AudiUiModule {}
