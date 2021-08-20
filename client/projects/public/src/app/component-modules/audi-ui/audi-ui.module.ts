@@ -14,6 +14,7 @@ import { PopoverService } from './services/popover.service';
 import { TooltipComponent } from './tooltip/tooltip.component';
 import { TooltipService } from './services/tooltip.service';
 import { PaginationComponent } from './pagination/pagination.component';
+import { NotificationModule } from './notification/notification.module';
 
 const COMPONENTS = [
   ButtonComponent,
@@ -32,7 +33,7 @@ const PROVIDERS = [ModalService, PopoverService, TooltipService];
 @NgModule({
   declarations: [...COMPONENTS],
   providers: [...PROVIDERS],
-  imports: [CommonModule, IconModule, FormComponentsModule],
+  imports: [CommonModule, IconModule, FormComponentsModule, NotificationModule],
   exports: [...COMPONENTS],
 })
 export class AudiUiModule {}

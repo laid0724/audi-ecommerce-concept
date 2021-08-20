@@ -60,3 +60,11 @@ export enum AudiPaginationType {
   PrevNext = 'prev-next',
   Minimal = 'minimal',
 }
+
+export enum AudiNotificationType {
+  Default = 'default',
+  Info = 'info',
+  Success = 'success',
+  Warning = 'warning',
+  Danger = 'danger',
+}
