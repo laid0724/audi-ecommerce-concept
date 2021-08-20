@@ -45,6 +45,9 @@ export * from './lib/services/dynamic-documents.service';
 export * from './lib/services/orders.service';
 export * from './lib/services/homepage.service';
 
+// Directives
+export * from './lib/directives/apply-attribute.directive';
+
 // Interceptors
 export * from './lib/interceptors/error.interceptor';
 export * from './lib/interceptors/jwt.interceptor';
