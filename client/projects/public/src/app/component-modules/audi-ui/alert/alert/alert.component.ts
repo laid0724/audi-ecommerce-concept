@@ -1,13 +1,36 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ComponentFactoryResolver,
+  ComponentRef,
+  Input,
+  Type,
+  ViewChild,
+  ChangeDetectorRef,
+  OnDestroy,
+} from '@angular/core';
 import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
 import { AudiAlertType, AudiColor } from '../../enums';
+import { AlertInjectionMarkerDirective } from '../alert-injection-marker.directive';
+
+// this component can be either dynamically created via alert-container-global
+// or just simply included in the template via alert-container;
+// in addition to being created dynamically, this component can ALSO dynamically generate
+// and project components of any type into this template.
+// see: https://malcoded.com/posts/angular-dynamic-components/
 
 @Component({
   selector: 'audi-alert',
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.scss'],
 })
-export class AlertComponent implements AfterViewInit {
+export class AlertComponent implements AfterViewInit, OnDestroy {
+  @ViewChild(AlertInjectionMarkerDirective, { static: false })
+  dynamicComponentInjectionPoint: AlertInjectionMarkerDirective;
+
+  public dynamicComponentRef: ComponentRef<any>;
+  public dynamicComponentType: Type<any> | null = null;
+
   @Input() openDelay: number | null = null;
   @Input() timeOut: number | null = null;
   @Input() type: AudiAlertType | string = AudiAlertType.Default;
@@ -15,8 +38,20 @@ export class AlertComponent implements AfterViewInit {
   @Input() bgColor: AudiColor | string = AudiColor.White;
   @Input() textColor: AudiColor | string = AudiColor.Black;
 
+  constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private cdr: ChangeDetectorRef
+  ) {}
+
   ngAfterViewInit(): void {
-    console.log(this.audiStyle);
+    // here, we need to load the dynamically inserted component in this life cycle hook or else the audi alert get messed up.
+    // but it will result in an ExpressionChangedAfterItHasBeenCheckedError due to the nature of this hook.
+    // To prevent that, we need to tell angular to re-run change detection after we have generated the dynamic component.
+    if (this.dynamicComponentType !== null) {
+      this.loadDynamicComponent(this.dynamicComponentType);
+      this.cdr.detectChanges();
+    }
+
     const alert = initAudiModules(AudiModuleName.Alert);
 
     alert.forEach((m: AudiComponents) => {
@@ -36,5 +71,22 @@ export class AlertComponent implements AfterViewInit {
         });
       }
     });
+  }
+
+  loadDynamicComponent(componentType: Type<any>): void {
+    let componentFactory =
+      this.componentFactoryResolver.resolveComponentFactory(componentType);
+
+    let viewContainerRef = this.dynamicComponentInjectionPoint.viewContainerRef;
+    viewContainerRef.clear();
+
+    this.dynamicComponentRef =
+      viewContainerRef.createComponent(componentFactory);
+  }
+
+  ngOnDestroy(): void {
+    if (this.dynamicComponentRef) {
+      this.dynamicComponentRef.destroy();
+    }
   }
 }

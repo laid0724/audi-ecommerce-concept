@@ -2,7 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AccountService, Roles, User } from '@audi/data';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AlertService } from './component-modules/audi-ui/services/alert-service/alert.service';
 import { NotificationService } from './component-modules/audi-ui/services/notification-service/notification.service';
+
 @Component({
   selector: 'audi-root',
   templateUrl: './app.component.html',
@@ -13,7 +15,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private accountService: AccountService,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private alertService: AlertService
   ) {}
 
   ngOnInit(): void {

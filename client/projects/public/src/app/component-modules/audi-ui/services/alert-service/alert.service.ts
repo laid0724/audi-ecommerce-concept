@@ -1,67 +1,70 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
-import { AudiAlertType, AudiAlertStyle } from '../../enums';
+import { AudiAlertStyle } from '../../enums';
 import { AlertServiceModule } from './alert-service.module';
 
-export interface AudiAlert {
-  message: string;
-  type: AudiAlertType;
+export interface AudiGlobalAlert {
   style: AudiAlertStyle;
-  delay?: number;
+  componentToInject: Type<any>;
+  openDelay?: number;
   timeOut?: number;
 }
 
 @Injectable({
-  providedIn: AlertServiceModule
+  providedIn: AlertServiceModule,
 })
 export class AlertService {
-  private _alertTrigger$ = new ReplaySubject<AudiAlert | null>(Infinity);
-  alertTrigger$: Observable<AudiAlert | null> =
+  private _alertTrigger$ = new ReplaySubject<AudiGlobalAlert | null>(Infinity);
+  alertTrigger$: Observable<AudiGlobalAlert | null> =
     this._alertTrigger$.asObservable();
 
-  show(message: string, delay?: number, timeOut?: number): void {
-    const alert: AudiAlert = {
-      message,
-      type: AudiAlertType.Global,
+  show(componentToInject: Type<any>, openDelay?: number, timeOut?: number): void {
+    const alert: AudiGlobalAlert = {
+      componentToInject,
       style: AudiAlertStyle.Default,
-      delay: delay ?? 0,
-      timeOut: timeOut ?? 0,
+      openDelay: openDelay ?? undefined,
+      timeOut: timeOut ?? undefined,
     };
 
     this._alertTrigger$.next(alert);
   }
 
-  warning(message: string, delay?: number, timeOut?: number): void {
-    const alert: AudiAlert = {
-      message,
-      type: AudiAlertType.Global,
+  warning(
+    componentToInject: Type<any>,
+    openDelay?: number,
+    timeOut?: number
+  ): void {
+    const alert: AudiGlobalAlert = {
+      componentToInject,
       style: AudiAlertStyle.Warning,
-      delay: delay ?? 0,
-      timeOut: timeOut ?? 0,
+      openDelay: openDelay ?? undefined,
+      timeOut: timeOut ?? undefined,
     };
 
     this._alertTrigger$.next(alert);
   }
 
-  success(message: string, delay?: number, timeOut?: number): void {
-    const alert: AudiAlert = {
-      message,
-      type: AudiAlertType.Global,
+  success(
+    componentToInject: Type<any>,
+    openDelay?: number,
+    timeOut?: number
+  ): void {
+    const alert: AudiGlobalAlert = {
+      componentToInject,
       style: AudiAlertStyle.Success,
-      delay: delay ?? 0,
-      timeOut: timeOut ?? 0,
+      openDelay: openDelay ?? undefined,
+      timeOut: timeOut ?? undefined,
     };
 
     this._alertTrigger$.next(alert);
   }
 
-  error(message: string, delay?: number, timeOut?: number): void {
-    const alert: AudiAlert = {
-      message,
-      type: AudiAlertType.Global,
+  error(componentToInject: Type<any>, openDelay?: number, timeOut?: number): void {
+    const alert: AudiGlobalAlert = {
+      componentToInject,
       style: AudiAlertStyle.Danger,
-      delay: delay ?? 0,
-      timeOut: timeOut ?? 0,
+      openDelay: openDelay ?? undefined,
+      timeOut: timeOut ?? undefined,
     };
 
     this._alertTrigger$.next(alert);
