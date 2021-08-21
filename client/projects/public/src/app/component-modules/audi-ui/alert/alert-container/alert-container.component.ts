@@ -15,7 +15,7 @@ import { AudiAlertStyle, AudiColor } from '../../enums';
     <audi-button-group class="mt-4 block">
       <audi-button
         [type]="'primary'"
-        applyAttribute
+        attributeSetter
         [attributeName]="'data-close'"
         [applyToInnerNode]="true"
         >Primary</audi-button

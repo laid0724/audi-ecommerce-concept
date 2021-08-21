@@ -8,7 +8,7 @@ import {
 /*
   USAGE:
   <audi-button
-    applyAttribute
+    attributeSetter
     [attributeName]="'data-close'"
     [applyToInnerNode]="true"
   >
@@ -17,9 +17,9 @@ import {
 */
 
 @Directive({
-  selector: '[applyAttribute]',
+  selector: '[attributeSetter]',
 })
-export class ApplyAttributeDirective implements OnInit {
+export class AttributeSetterDirective implements OnInit {
   @Input() attributeName: string;
   @Input() attributeValue: any = '';
   @Input() applyToInnerNode: boolean = false;

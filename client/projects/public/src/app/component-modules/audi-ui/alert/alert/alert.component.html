@@ -14,11 +14,11 @@
   <div class="aui-alert__content">
     <!-- NOTE: add 'data-close' attribute to projected elements, e.g., a button, to close this alert -->
     <!--
-      BUT if using a host element, e.g., audi-button, you must use applyAttribute directive
+      BUT if using a host element, e.g., audi-button, you must use attibuteSetter directive
       to propagate the element to the inner html element or else audi ui's js cannot detect it,
       e.g.,:
         <audi-button
-          applyAttribute
+          attributeSetter
           [attributeName]="'data-close'"
           [applyToInnerNode]="true"
           >Primary</audi-button

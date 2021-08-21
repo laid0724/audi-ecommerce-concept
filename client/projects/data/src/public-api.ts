@@ -46,7 +46,7 @@ export * from './lib/services/orders.service';
 export * from './lib/services/homepage.service';
 
 // Directives
-export * from './lib/directives/apply-attribute.directive';
+export * from './lib/directives/attribute-setter.directive';
 
 // Interceptors
 export * from './lib/interceptors/error.interceptor';

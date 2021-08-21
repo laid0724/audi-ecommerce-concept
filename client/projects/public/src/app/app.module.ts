@@ -10,7 +10,7 @@ import {
   LanguageHeaderInterceptorProvider,
   LanguageSelectorResolver,
   INJECT_TOASTR,
-  ApplyAttributeDirective,
+  AttributeSetterDirective,
 } from '@audi/data';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppRoutingModule } from './app-routing.module';
@@ -19,7 +19,7 @@ import { AudiUiModule } from './component-modules/audi-ui/audi-ui.module';
 import { FormComponentsModule } from './component-modules/form-components/form-components.module';
 import { ProjectAsTemplateDirective } from './component-modules/project-as-template.directive';
 
-const DIRECTIVES = [ProjectAsTemplateDirective, ApplyAttributeDirective];
+const DIRECTIVES = [ProjectAsTemplateDirective, AttributeSetterDirective];
 
 @NgModule({
   declarations: [AppComponent, ...DIRECTIVES],
