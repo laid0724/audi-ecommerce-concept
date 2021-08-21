@@ -16,6 +16,8 @@ import { AlertModule } from './alert/alert.module';
 import { ModalServiceModule } from './services/modal-service/modal-service.module';
 import { PopoverServiceModule } from './services/popover-service/popover-service.module';
 import { TooltipServiceModule } from './services/tooltip-service/tooltip-service.module';
+import { BadgeComponent } from './badge/badge.component';
+import { IconWithBadgeComponent } from './icon-with-badge/icon-with-badge.component';
 
 const COMPONENTS = [
   ButtonComponent,
@@ -27,6 +29,8 @@ const COMPONENTS = [
   PopoverComponent,
   TooltipComponent,
   PaginationComponent,
+  BadgeComponent,
+  IconWithBadgeComponent
 ];
 
 const SERVICE_MODULES = [
@@ -45,6 +49,12 @@ const SERVICE_MODULES = [
     AlertModule,
     ...SERVICE_MODULES,
   ],
-  exports: [...COMPONENTS, ...SERVICE_MODULES, NotificationModule, AlertModule],
+  exports: [
+    ...COMPONENTS,
+    ...SERVICE_MODULES,
+    IconModule,
+    NotificationModule,
+    AlertModule,
+  ],
 })
 export class AudiUiModule {}

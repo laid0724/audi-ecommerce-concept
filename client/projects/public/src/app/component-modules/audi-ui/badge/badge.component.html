@@ -1,0 +1,10 @@
+<span
+  class="aui-badge background-color-{{ bgColor }} text-{{ textColor }}"
+  [ngClass]="{
+    'aui-badge--small': isSmall,
+    'aui-badge--small-text': isSmallText,
+    'is-hidden': isHidden
+  }"
+>
+  <ng-content></ng-content>
+</span>

@@ -1,0 +1,27 @@
+<div
+  class="relative inline-block"
+  [ngClass]="{
+    'w-6 h-6': size === 'small',
+    'w-12 h-12': size === 'large'
+  }"
+>
+  <audi-icon
+    [size]="size"
+    [iconName]="iconName"
+    class="absolute top-0 right-0 bottom-0 left-0 text-{{ iconColor }}"
+  ></audi-icon>
+  <audi-badge
+    [bgColor]="badgeBgColor"
+    [textColor]="badgeTextColor"
+    [isSmallText]="badgeIsSmallText"
+    [isHidden]="badgeIsHidden"
+    [isSmall]="size === 'small'"
+    class="absolute"
+    [ngClass]="{
+      '-top-3 -right-3': size === 'small',
+      '-top-2 -right-2': size === 'large'
+    }"
+  >
+    <ng-content></ng-content>
+  </audi-badge>
+</div>

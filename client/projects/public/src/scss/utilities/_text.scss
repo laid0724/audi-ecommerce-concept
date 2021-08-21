@@ -1,28 +1,40 @@
 .text {
   &-white {
     color: $audi-white !important;
+    stroke: $audi-white !important;
+    fill: $audi-white !important;
   }
 
   &-black {
     color: $audi-black !important;
+    stroke: $audi-black !important;
+    fill: $audi-black !important;
   }
 
   &-green,
   &-success {
     color: $audi-success !important;
+    stroke: $audi-white !important;
+    fill: $audi-white !important;
   }
 
   &-warning,
   &-yellow {
     color: $audi-warning !important;
+    stroke: $audi-warning !important;
+    fill: $audi-warning !important;
   }
 
   &-error,
   &-danger {
     color: $audi-error !important;
+    stroke: $audi-error !important;
+    fill: $audi-error !important;
   }
 
   &-red {
     color: $audi-red !important;
+    stroke: $audi-red !important;
+    fill: $audi-red !important;
   }
 }
