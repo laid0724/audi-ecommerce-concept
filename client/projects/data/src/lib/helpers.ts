@@ -276,3 +276,7 @@ export function toZhMapper(
       return '';
   }
 }
+
+export function spreadNumberAsArray(n: number): number[] {
+  return [...Array(n).keys()];
+}

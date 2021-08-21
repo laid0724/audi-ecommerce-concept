@@ -18,6 +18,7 @@ import { PopoverServiceModule } from './services/popover-service/popover-service
 import { TooltipServiceModule } from './services/tooltip-service/tooltip-service.module';
 import { BadgeComponent } from './badge/badge.component';
 import { IconWithBadgeComponent } from './icon-with-badge/icon-with-badge.component';
+import { IndicatorComponent } from './indicator/indicator.component';
 
 const COMPONENTS = [
   ButtonComponent,
@@ -30,7 +31,8 @@ const COMPONENTS = [
   TooltipComponent,
   PaginationComponent,
   BadgeComponent,
-  IconWithBadgeComponent
+  IconWithBadgeComponent,
+  IndicatorComponent
 ];
 
 const SERVICE_MODULES = [

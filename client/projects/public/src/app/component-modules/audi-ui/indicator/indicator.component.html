@@ -1,0 +1,20 @@
+<div
+  *ngIf="totalItems && totalItems > 1"
+  class="aui-indicator aui-js-indicator block my-4"
+  [ngClass]="{
+    'aui-indicator--shadow': isShadowed,
+    'aui-theme-light': isLightTheme,
+    'aui-theme-image': isImageBackground
+  }"
+>
+  <ul class="aui-indicator__items">
+    <li class="aui-indicator__item" *ngFor="let item of items; let i = index">
+      <a
+        class="aui-indicator__action"
+        [ngClass]="{ 'is-active': currentItem === i + 1 }"
+        (click)="onCurrentItemChange(i + 1)"
+        >{{ i + 1 }}</a
+      >
+    </li>
+  </ul>
+</div>
