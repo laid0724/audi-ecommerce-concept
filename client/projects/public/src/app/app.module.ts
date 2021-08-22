@@ -12,12 +12,12 @@ import {
   INJECT_TOASTR,
   AttributeSetterDirective,
 } from '@audi/data';
-import { NgxSpinnerModule } from 'ngx-spinner';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AudiUiModule } from './component-modules/audi-ui/audi-ui.module';
 import { FormComponentsModule } from './component-modules/form-components/form-components.module';
 import { ProjectAsTemplateDirective } from './component-modules/project-as-template.directive';
+import { SplashScreenModule } from './feature-modules/splash-screen/splash-screen.module';
 
 const DIRECTIVES = [ProjectAsTemplateDirective, AttributeSetterDirective];
 
@@ -28,7 +28,7 @@ const DIRECTIVES = [ProjectAsTemplateDirective, AttributeSetterDirective];
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NgxSpinnerModule,
+    SplashScreenModule,
     AudiUiModule,
     FormComponentsModule,
     ReactiveFormsModule,

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AccountService, Roles, User } from '@audi/data';
-import { Subject } from 'rxjs';
+import { AccountService, BusyService, Roles, User } from '@audi/data';
+import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AlertService } from './component-modules/audi-ui/services/alert-service/alert.service';
 import { NotificationService } from './component-modules/audi-ui/services/notification-service/notification.service';
@@ -13,14 +13,21 @@ import { NotificationService } from './component-modules/audi-ui/services/notifi
 export class AppComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<boolean>();
 
+  isLoadingApiRequests$: Observable<boolean>;
+
   constructor(
     private accountService: AccountService,
+    private busyService: BusyService,
     private notificationService: NotificationService,
     private alertService: AlertService
   ) {}
 
   ngOnInit(): void {
     this.setUserFromLocalStorage();
+
+    this.isLoadingApiRequests$ = this.busyService.isBusy$.pipe(
+      takeUntil(this.destroy$)
+    );
   }
 
   setUserFromLocalStorage(): void {
