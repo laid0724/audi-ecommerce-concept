@@ -1,0 +1,28 @@
+<div
+  *ngIf="showSplash"
+  class="audi-splash-screen"
+  [ngStyle]="{ opacity: splashOpacity }"
+>
+  <audi-spinner
+    [isContinuous]="true"
+    *ngIf="isMobile || (!videoIsLoaded && !videoIsPlaying)"
+  ></audi-spinner>
+
+  <!-- see: https://stackoverflow.com/questions/53756695/angular-html-fullscreen-video-autoplay-not-working -->
+  <video
+    *ngIf="!isMobile && !isBusy"
+    #audiLandingVideo
+    (canplay)="audiLandingVideo.play()"
+    (loadedmetadata)="audiLandingVideo.muted = true"
+    (ended)="onSplashVideoEnded()"
+    [ngClass]="{
+      hidden: !videoIsLoaded,
+      block: videoIsLoaded
+    }"
+  >
+    <source
+      src="assets/videos/audi-splash-screen-dynamic-bg.mp4"
+      type="video/mp4"
+    />
+  </video>
+</div>

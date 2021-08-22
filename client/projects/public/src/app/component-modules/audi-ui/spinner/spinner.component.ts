@@ -61,12 +61,13 @@ export class SpinnerComponent implements AfterViewInit, OnChanges {
     });
   }
 
-  // 0-100
   updateSpinnerProgess(progress: number) {
-    const progressRatio = progress / 100;
+    if (progress >= 0 && progress <= 100) {
+      const progressRatio = progress / 100;
 
-    this.spinners.forEach((spinner: any) => {
-      spinner.progress(progressRatio);
-    });
+      this.spinners.forEach((spinner: any) => {
+        spinner.progress(progressRatio);
+      });
+    }
   }
 }

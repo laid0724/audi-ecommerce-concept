@@ -1,64 +1,34 @@
-<!-- audi grid system -->
-<!-- <div class="aui-layout">
-  <div class="aui-grid text-center debug">
-    <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-    <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-    <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-    <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-    <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-    <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-    <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-    <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-    <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-    <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-    <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-    <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-    <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-    <div class="aui-cell aui-cell--11 debug"><i>11</i></div>
-    <div class="aui-cell aui-cell--2 debug"><i>2</i></div>
-    <div class="aui-cell aui-cell--10 debug"><i>10</i></div>
-    <div class="aui-cell aui-cell--3 debug"><i>3</i></div>
-    <div class="aui-cell aui-cell--9 debug"><i>9</i></div>
-    <div class="aui-cell aui-cell--4 debug"><i>4</i></div>
-    <div class="aui-cell aui-cell--8 debug"><i>8</i></div>
-    <div class="aui-cell aui-cell--5 debug"><i>5</i></div>
-    <div class="aui-cell aui-cell--7 debug"><i>7</i></div>
-    <div class="aui-cell aui-cell--6 debug"><i>6</i></div>
-    <div class="aui-cell aui-cell--6 debug"><i>6</i></div>
-    <div class="aui-cell aui-cell--6 debug">
-      <div class="aui-grid debug">
-        <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-        <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-        <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-        <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-        <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-        <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-        <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-        <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-        <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-        <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-        <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-        <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-        <div class="aui-cell aui-cell--1 debug"><i>1</i></div>
-        <div class="aui-cell aui-cell--11 debug"><i>11</i></div>
-        <div class="aui-cell aui-cell--2 debug"><i>2</i></div>
-        <div class="aui-cell aui-cell--10 debug"><i>10</i></div>
-        <div class="aui-cell aui-cell--3 debug"><i>3</i></div>
-        <div class="aui-cell aui-cell--9 debug"><i>9</i></div>
-        <div class="aui-cell aui-cell--4 debug"><i>4</i></div>
-        <div class="aui-cell aui-cell--8 debug"><i>8</i></div>
-        <div class="aui-cell aui-cell--5 debug"><i>5</i></div>
-        <div class="aui-cell aui-cell--7 debug"><i>7</i></div>
-        <div class="aui-cell aui-cell--6 debug"><i>6</i></div>
-        <div class="aui-cell aui-cell--6 debug"><i>6</i></div>
+<div class="aui-layout">
+  <div class="aui-grid">
+    <div class="aui-cell aui-cell--12">
+      <div class="container py-10">
+        <router-outlet></router-outlet>
+
+        <!-- TODO:
+          - (nav)igation / tabs
+          - flyout / breadcrumb
+          - header
+          - carousel sliders: use swiper & fslightbox.js
+
+          - do i need a datepicker? ng2-date-picker
+        -->
       </div>
     </div>
   </div>
-</div> -->
+</div>
 
-<!-- audi table -->
+<audi-alert-container-global></audi-alert-container-global>
+<audi-notification-container></audi-notification-container>
+<audi-progress-bar
+  *ngIf="isLoadingApiRequests$ | async"
+  class="w-screen fixed bottom-0 left-0 right-0"
+  [isContinuous]="true"
+></audi-progress-bar>
+<audi-splash-screen></audi-splash-screen>
 
-<!-- <div class="container mx-auto">
+<!-- audi table template -->
+<!--
+
   <div
     class="
       aui-table
@@ -100,26 +70,5 @@
       </tr>
     </table>
   </div>
-</div> -->
 
-<div class="container mx-auto py-10">
-  <router-outlet></router-outlet>
-
-  <!-- TODO:
-    - (nav)igation / tabs
-    - flyout / breadcrumb
-    - header
-    - carousel sliders: use swiper & fslightbox.js
-
-    - do i need a datepicker? ng2-date-picker
-  -->
-</div>
-
-<audi-alert-container-global></audi-alert-container-global>
-<audi-notification-container></audi-notification-container>
-<audi-progress-bar
-  *ngIf="isLoadingApiRequests$ | async"
-  class="w-screen fixed bottom-0 left-0 right-0"
-  [isContinuous]="true"
-></audi-progress-bar>
-<!-- <audi-splash-screen></audi-splash-screen> -->
+-->

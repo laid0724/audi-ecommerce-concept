@@ -45,12 +45,13 @@ export class ProgressBarComponent implements AfterViewInit, OnChanges {
     }
   }
 
-  // 0-100
   updateProgressBar(progress: number) {
-    const progressRatio = progress / 100;
+    if (progress >= 0 && progress <= 100) {
+      const progressRatio = progress / 100;
 
-    this.progressBars.forEach((bar: any) => {
-      bar.progress(progressRatio);
-    });
+      this.progressBars.forEach((bar: any) => {
+        bar.progress(progressRatio);
+      });
+    }
   }
 }
