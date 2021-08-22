@@ -19,6 +19,8 @@ import { TooltipServiceModule } from './services/tooltip-service/tooltip-service
 import { BadgeComponent } from './badge/badge.component';
 import { IconWithBadgeComponent } from './icon-with-badge/icon-with-badge.component';
 import { IndicatorComponent } from './indicator/indicator.component';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 
 const COMPONENTS = [
   ButtonComponent,
@@ -32,7 +34,9 @@ const COMPONENTS = [
   PaginationComponent,
   BadgeComponent,
   IconWithBadgeComponent,
-  IndicatorComponent
+  IndicatorComponent,
+  SpinnerComponent,
+  ProgressBarComponent
 ];
 
 const SERVICE_MODULES = [
