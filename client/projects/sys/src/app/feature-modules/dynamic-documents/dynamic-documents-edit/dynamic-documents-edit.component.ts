@@ -30,7 +30,7 @@ import {
 import {
   addWysiwygRow,
   wysiwygGridValidatorBuilderFn,
-} from '../../../component-modules/forms-component/wysiwyg-grid/wysiwyg-grid.component';
+} from '../../../component-modules/form-components/wysiwyg-grid/wysiwyg-grid.component';
 import {
   DynamicDocumentData,
   DynamicDocumentFormField,

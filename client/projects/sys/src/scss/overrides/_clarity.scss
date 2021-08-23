@@ -13,7 +13,7 @@
   --clr-btn-default-outline-box-shadow-color: var(--audi-grey-8);
   --clr-btn-default-bg-color: var(--audi-white);
   --clr-btn-default-color: var(--audi-black);
-  --clr-btn-default-border-color: var(--audi-white);
+  --clr-btn-default-border-color: var(--audi-black);
   --clr-btn-default-hover-bg-color: var(--audi-grey-1);
   --clr-btn-default-hover-color: var(--audi-black);
   --clr-btn-default-box-shadow-color: var(--audi-black);
@@ -32,6 +32,10 @@
   clr-icon {
     color: #666 !important;
   }
+}
+
+.btn-info {
+  border-color: $audi-white !important;
 }
 
 .clr-input-width {

@@ -1,0 +1,18 @@
+<button
+  type="button"
+  class="aui-button aui-js-response"
+  [ngClass]="{
+    'aui-button--primary': type === 'primary',
+    'aui-button--secondary': type === 'secondary',
+    'aui-button--text': type === 'text',
+    'aui-button--icon aui-button--round audi-icon': type === 'icon',
+    'aui-button--icon aui-button--round aui-button--icon--large audi-icon audi-icon--large':
+      type === 'icon-large',
+    'aui-theme-light': isLightTheme,
+    'is-disabled': isDisabled,
+    'is-active': isActive
+  }"
+>
+  <ng-content select="audi-icon"></ng-content>
+  <ng-content></ng-content>
+</button>

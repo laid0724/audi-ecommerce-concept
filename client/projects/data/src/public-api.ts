@@ -45,6 +45,9 @@ export * from './lib/services/dynamic-documents.service';
 export * from './lib/services/orders.service';
 export * from './lib/services/homepage.service';
 
+// Directives
+export * from './lib/directives/attribute-setter.directive';
+
 // Interceptors
 export * from './lib/interceptors/error.interceptor';
 export * from './lib/interceptors/jwt.interceptor';
@@ -58,6 +61,9 @@ export * from './lib/resolvers/language-selector.resolver';
 export * from './lib/guards/auth.guard';
 export * from './lib/guards/admin.guard';
 export * from './lib/guards/member.guard';
+
+// Injection Tokens
+export * from './lib/tokens';
 
 // Misc
 export * from './lib/pipes/pipes.module';

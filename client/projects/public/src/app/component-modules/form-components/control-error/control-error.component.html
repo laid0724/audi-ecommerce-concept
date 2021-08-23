@@ -1,0 +1,10 @@
+<span
+  [ngClass]="{
+    'aui-textfield__error': type === 'input' || type === 'textarea',
+    'aui-select__error': type === 'select',
+    'aui-checkbox__error': type === 'checkbox',
+    'aui-fieldset__error': type === 'grid'
+  }"
+>
+  <ng-content></ng-content>
+</span>

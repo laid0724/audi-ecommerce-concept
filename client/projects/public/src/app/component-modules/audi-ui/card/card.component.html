@@ -1,0 +1,35 @@
+<div
+  class="aui-card background-color-{{ bgColor }} text-{{ textColor }}"
+  [ngClass]="{
+    'aui-card--action': isClickable,
+    'aui-card--image': !isNullOrEmptyString(backgroundImageUrl)
+  }"
+  [ngStyle]="{
+    backgroundImage: !isNullOrEmptyString(backgroundImageUrl)
+      ? 'url(' + backgroundImageUrl + ')'
+      : null
+  }"
+>
+  <div class="aui-card__cover" *ngIf="!isNullOrEmptyString(coverImageUrl)">
+    <div class="aui-card__cover-image">
+      <img [src]="coverImageUrl" />
+    </div>
+  </div>
+  <div class="aui-card__body">
+    <div class="aui-card__content">
+      <p class="aui-small" *ngIf="!isNullOrEmptyString(headerSmallCaption)">
+        {{ headerSmallCaption }}
+      </p>
+      <h2 class="aui-headline-{{ headerSize }}">{{ header }}</h2>
+      <p
+        class="aui-shortread"
+        *ngIf="!isNullOrEmptyString(headerPreviewCaption)"
+      >
+        {{ headerPreviewCaption }}
+      </p>
+    </div>
+    <div class="aui-card__content pt-0">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<label
+  class="aui-checkbox aui-js-checkbox mr-5 mt-3"
+  [ngClass]="{
+    'is-disabled': isDisabled,
+    'is-invalid': control.touched && control.invalid,
+    'is-checked': control.value !== null && control.value,
+    'aui-theme-light': isLightTheme
+  }"
+>
+  <input
+    class="aui-checkbox__input"
+    type="checkbox"
+    [formControl]="control"
+    [attr.disabled]="isDisabled ? true : null"
+    [attr.checked]="control.value !== null && control.value"
+    [attr.invalid]="control.invalid ? true : null"
+  />
+  <span class="aui-checkbox__label">{{ label }}</span>
+  <ng-content
+    *ngIf="control.touched && control.invalid"
+    select="audi-control-error"
+  ></ng-content>
+</label>

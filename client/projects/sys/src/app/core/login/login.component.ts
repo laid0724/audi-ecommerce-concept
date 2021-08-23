@@ -14,7 +14,6 @@ import { ClrForm, ClrLoadingState } from '@clr/angular';
 import { ToastrService } from 'ngx-toastr';
 import { of, Subject } from 'rxjs';
 import { filter, switchMap, take, takeUntil, tap } from 'rxjs/operators';
-import {} from '@audi/data';
 
 @Component({
   selector: 'audi-sys-login',
@@ -45,7 +44,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initLoginForm();
     this.initResetPwForm();
-    initAudiModules(AudiModuleName.Response);
+    initAudiModules(AudiModuleName.Response).forEach((module) =>
+      module.components?.upgradeElements()
+    );
 
     this.route.data
       .pipe(

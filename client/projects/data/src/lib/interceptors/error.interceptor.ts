@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Injector, Optional } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -11,10 +11,27 @@ import { Observable, throwError } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { catchError } from 'rxjs/operators';
+import { NotificationService } from 'projects/public/src/app/component-modules/audi-ui/services/notification-service/notification.service';
+import { INJECT_TOASTR } from '../tokens';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
-  constructor(private router: Router, private toastr: ToastrService) {}
+  toastr: ToastrService | null;
+
+  constructor(
+    @Inject(INJECT_TOASTR) private useToastr: boolean,
+    @Optional() private audiNotificationService: NotificationService,
+    private injector: Injector,
+    private router: Router
+  ) {
+    // here, we are using injector to conditionally inject the toastr service based on the INJECT_TOASTR token.
+    // i am doing this because the @Optional decorator does not work with toastr service, as it insists on looking for its module when injected
+    // see: https://stackoverflow.com/questions/43450259/how-to-conditionally-inject-service-into-component
+    // and see: https://stackoverflow.com/questions/52110168/angular-6-is-it-possible-to-inject-service-by-condition
+    if (useToastr) {
+      this.toastr = injector.get<ToastrService>(ToastrService);
+    }
+  }
 
   intercept(
     request: HttpRequest<unknown>,
@@ -34,9 +51,9 @@ export class ErrorInterceptor implements HttpInterceptor {
               }
               throw modalStateErrors.flat(Infinity);
             } else if (typeof error.error === 'object') {
-              this.toastr.error(error.statusText, error.status.toString());
+              this.toastr?.error(error.statusText, error.status.toString());
             } else {
-              this.toastr.error(
+              this.toastr?.error(
                 error.error,
                 `${error.status.toString()} ${error.statusText}`
               );
@@ -44,11 +61,14 @@ export class ErrorInterceptor implements HttpInterceptor {
             break;
           case 401: // Unauthorized
             // this.toastr.error(error.statusText, error.status.toString());
-            this.toastr.error('Wrong username or password', '錯誤的帳戶或密碼');
+            this.toastr?.error(
+              'Wrong username or password',
+              '錯誤的帳戶或密碼'
+            );
             break;
           case 403: // Forbidden
             // TODO: aggregate all cases and show display messages accordingly, e.g., email_not_confirmed, locked_out, etc
-            this.toastr.error(
+            this.toastr?.error(
               error.error,
               `${error.status} ${error.statusText}`
             );
@@ -67,7 +87,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             this.router.navigateByUrl('/server-error', navigationExtras);
             break;
           default:
-            this.toastr.error('Something unexpected went wrong.');
+            this.toastr?.error('Something unexpected went wrong.');
             console.log('Error Caught::', error);
             break;
         }

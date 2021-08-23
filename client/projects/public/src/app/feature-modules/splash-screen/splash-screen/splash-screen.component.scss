@@ -1,0 +1,28 @@
+.audi-splash-screen {
+  background-color: var(--audi-white);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  z-index: 2000;
+  opacity: 1;
+  transition: opacity 1s var(--audi-transition-timing-function);
+}
+
+// see: https://stackoverflow.com/questions/4380105/html5-video-scale-modes
+video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+}

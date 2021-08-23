@@ -1,31 +1,46 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   ErrorInterceptorProvider,
   JwtInterceptorProvider,
   LoadingInterceptorProvider,
-  LanguageHeaderInterceptorProvider
+  LanguageHeaderInterceptorProvider,
+  LanguageSelectorResolver,
+  INJECT_TOASTR,
+  AttributeSetterDirective,
 } from '@audi/data';
-import { NgxSpinnerModule } from 'ngx-spinner';
-import { ToastrModule } from 'ngx-toastr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { AudiUiModule } from './component-modules/audi-ui/audi-ui.module';
+import { FormComponentsModule } from './component-modules/form-components/form-components.module';
+import { ProjectAsTemplateDirective } from './component-modules/project-as-template.directive';
+import { SplashScreenModule } from './feature-modules/splash-screen/splash-screen.module';
+
+const DIRECTIVES = [ProjectAsTemplateDirective, AttributeSetterDirective];
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, ...DIRECTIVES],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
-    ToastrModule.forRoot(),
-    NgxSpinnerModule,
+    AppRoutingModule,
+    HttpClientModule,
+    AudiUiModule,
+    SplashScreenModule,
   ],
   providers: [
     ErrorInterceptorProvider,
     JwtInterceptorProvider,
     LoadingInterceptorProvider,
-    LanguageHeaderInterceptorProvider
+    LanguageHeaderInterceptorProvider,
+    LanguageSelectorResolver,
+    {
+      provide: INJECT_TOASTR,
+      useValue: false,
+    },
   ],
   bootstrap: [AppComponent],
 })

@@ -5,7 +5,7 @@ import { OrdersRoutingModule } from './orders-routing.module';
 import { OrdersSingleComponent } from './orders-single/orders-single.component';
 import { OrdersListComponent } from './orders-list/orders-list.component';
 import { ClarityModule } from '@clr/angular';
-import { FormsComponentModule } from '../../component-modules/forms-component/forms-component.module';
+import { FormComponentsModule } from '../../component-modules/form-components/form-components.module';
 import { PipesModule } from '@audi/data';
 import { ClrDatagridUtilitiesModule } from '../../component-modules/clr-datagrid-utilities/clr-datagrid-utilities.module';
 
@@ -15,7 +15,7 @@ import { ClrDatagridUtilitiesModule } from '../../component-modules/clr-datagrid
     CommonModule,
     ClarityModule,
     OrdersRoutingModule,
-    FormsComponentModule,
+    FormComponentsModule,
     PipesModule,
     ClrDatagridUtilitiesModule,
   ],

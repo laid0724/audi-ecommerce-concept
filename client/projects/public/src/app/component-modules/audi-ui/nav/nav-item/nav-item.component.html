@@ -1,0 +1,23 @@
+<li class="aui-nav__item">
+  <button
+    class="aui-nav__action"
+    type="button"
+    [attr.disabled]="isDisabled ? true : null"
+    [ngClass]="{
+      'is-active': isActive,
+      'is-disabled': isDisabled
+    }"
+  >
+    <a
+      [attr.href]="!isNullOrEmptyString(externalLink) ? externalLink : null"
+      [attr.target]="!isNullOrEmptyString(externalLink) ? '_target' : null"
+    >
+      <audi-icon
+        *ngIf="!isNullOrEmptyString(iconName)"
+        [size]="iconSize"
+        [iconName]="iconName"
+      ></audi-icon>
+      <ng-content></ng-content>
+    </a>
+  </button>
+</li>

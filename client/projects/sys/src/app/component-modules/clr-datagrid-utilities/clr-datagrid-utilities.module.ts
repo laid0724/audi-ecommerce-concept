@@ -5,7 +5,7 @@ import { ClarityModule } from '@clr/angular';
 import { ClrDgBooleanBtnFilterComponent } from './clr-dg-boolean-btn-filter/clr-dg-boolean-btn-filter.component';
 import { ClrDgServersideRangeFilterComponent } from './clr-dg-serverside-range-filter/clr-dg-serverside-range-filter.component';
 import { ClrDgProductCategoryFilterComponent } from './clr-dg-product-category-filter/clr-dg-product-category-filter.component';
-import { FormsComponentModule } from '../forms-component/forms-component.module';
+import { FormComponentsModule } from '../form-components/form-components.module';
 import { ClrDgDateRangeFilterComponent } from './clr-dg-date-range-filter/clr-dg-date-range-filter.component';
 import { ClrDgCustomBtnFilterComponent } from './clr-dg-custom-btn-filter/clr-dg-custom-btn-filter.component';
 
@@ -20,7 +20,7 @@ const COMPONENTS = [
 
 @NgModule({
   declarations: [...COMPONENTS],
-  imports: [CommonModule, ClarityModule, FormsComponentModule],
+  imports: [CommonModule, ClarityModule, FormComponentsModule],
   exports: [...COMPONENTS],
 })
 export class ClrDatagridUtilitiesModule {}

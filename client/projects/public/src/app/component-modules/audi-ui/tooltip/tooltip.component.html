@@ -1,0 +1,14 @@
+<ng-content #triggeringElement></ng-content>
+
+<span
+  *ngIf="triggeringElement?.nativeElement?.id != undefined"
+  class="aui-tooltip aui-js-tooltip"
+  [ngClass]="{
+    'aui-tooltip--dark': isDarkTheme
+  }"
+  [id]="tooltipId"
+  [attr.for]="triggeringElement?.nativeElement?.id"
+>
+  <ng-content select="img.aui-tooltip__media"></ng-content>
+  <ng-content select=".aui-tooltip__text"></ng-content>
+</span>

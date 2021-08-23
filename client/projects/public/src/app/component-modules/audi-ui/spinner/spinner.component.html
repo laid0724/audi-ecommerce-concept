@@ -1,0 +1,8 @@
+<div
+  class="aui-spinner aui-js-spinner"
+  [ngClass]="{
+    'aui-theme-light': isLightTheme,
+    'aui-spinner--progress': !isContinuous && progress !== null,
+    'aui-spinner--continuous': isContinuous
+  }"
+></div>

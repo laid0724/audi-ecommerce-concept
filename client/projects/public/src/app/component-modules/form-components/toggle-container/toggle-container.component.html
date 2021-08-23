@@ -1,0 +1,47 @@
+<label
+  class="aui-switch"
+  [ngClass]="{
+    'aui-theme-light': isLightTheme,
+    'is-disabled': isDisabled,
+    'aui-switch--equal':
+      !isNullOrEmptyString(labelLeft) && !isNullOrEmptyString(labelRight),
+    'aui-switch--text-left':
+      !isNullOrEmptyString(labelLeft) && isNullOrEmptyString(labelRight)
+  }"
+>
+  <input
+    class="aui-switch__input"
+    type="checkbox"
+    [formControl]="control"
+    [attr.disabled]="isDisabled ? true : null"
+    [attr.checked]="control.value !== null && control.value"
+  />
+
+  <!-- LABEL ON LEFT SIDE -->
+  <span
+    class="aui-switch__text"
+    [ngClass]="{
+      'aui-switch__text--left':
+        (!isNullOrEmptyString(labelLeft) && !isNullOrEmptyString(labelRight)) ||
+        (!isNullOrEmptyString(labelLeft) && isNullOrEmptyString(labelRight))
+    }"
+    *ngIf="!isNullOrEmptyString(labelLeft)"
+    >{{ labelLeft }}</span
+  >
+  <!-- LABEL ON RIGHT SIDE -->
+  <span
+    class="aui-switch__text"
+    *ngIf="isNullOrEmptyString(labelLeft) && !isNullOrEmptyString(labelRight)"
+  >
+    {{ labelRight }}
+  </span>
+  <!-- LABEL ON BOTH SIDES -->
+  <span
+    class="aui-switch__text aui-switch__text--right"
+    *ngIf="!isNullOrEmptyString(labelLeft) && !isNullOrEmptyString(labelRight)"
+    >{{ labelRight }}</span
+  >
+  <span class="aui-switch__track" aria-hidden="true">
+    <span class="aui-switch__thumb"></span>
+  </span>
+</label>

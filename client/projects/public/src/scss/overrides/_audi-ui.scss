@@ -1,0 +1,143 @@
+body {
+  @include audi-fonts;
+  @include audi-transition-effect;
+}
+
+.aui-button {
+  font-size: 13px;
+}
+
+.aui-modal-dialog__close {
+  svg {
+    * {
+      stroke: $audi-black;
+    }
+  }
+  &--black {
+    svg {
+      * {
+        stroke: $audi-black !important;
+      }
+    }
+  }
+  &--white {
+    svg {
+      * {
+        stroke: $audi-white !important;
+      }
+    }
+  }
+}
+
+.aui-popover__arrow-shape {
+  * {
+    fill: $audi-white !important;
+  }
+}
+
+.aui-textfield__field {
+  audi-icon {
+    position: absolute;
+    top: calc(50% + 6px);
+    transform: translateY(-50%);
+    svg {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
+.aui-textfield__counter {
+  & ~ audi-control-description .aui-textfield__description,
+  & ~ audi-control-valid .aui-textfield__valid,
+  & ~ audi-control-error .aui-textfield__error {
+    margin-top: -1.25rem !important;
+    padding-right: 4em !important;
+  }
+}
+
+audi-textarea-container {
+  &.ng-invalid.ng-touched {
+    .aui-textfield {
+      &__field {
+        border-color: $audi-error !important;
+      }
+      &__focus-line {
+        background-color: $audi-error !important;
+      }
+      &__input {
+        color: $audi-error !important;
+      }
+    }
+    .aui-textfield__label {
+      color: $audi-error !important;
+    }
+  }
+}
+
+.aui-alert {
+  &--sticky {
+    // transition: none !important;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 0 2px 0 rgb(0 0 0 / 5%), 0 0 50px 0 rgb(0 0 0 / 7%);
+    z-index: 1700;
+  }
+
+  &__content {
+    margin-right: 0 !important;
+  }
+}
+
+.aui-nav {
+  &.aui-theme-black {
+    audi-nav-item {
+      &:not(:last-child) {
+        border-bottom: 1px solid rgba($audi-white, 0.2);
+      }
+    }
+  }
+  audi-nav-item {
+    display: block;
+    &:not(:last-child) {
+      border-bottom: 1px solid rgba($audi-black, 0.1);
+    }
+    .aui-nav__item {
+      .aui-nav__action {
+        audi-icon {
+          position: relative;
+          margin-right: 0.75em;
+          vertical-align: middle;
+          display: inline;
+        }
+      }
+    }
+  }
+  &__toggle-label {
+    audi-icon {
+      position: relative;
+      margin-right: 0.75em;
+      vertical-align: middle;
+      display: inline;
+    }
+  }
+  &--bar {
+    audi-nav-item {
+      display: inline-flex;
+      flex: 0 0 auto;
+      padding: 0 #{unit(8) / 2};
+
+      &:first-child {
+        padding-left: 0;
+      }
+
+      &:last-child {
+        padding-right: 0;
+      }
+    }
+  }
+}

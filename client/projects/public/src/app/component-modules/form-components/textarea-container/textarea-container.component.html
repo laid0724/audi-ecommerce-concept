@@ -1,0 +1,40 @@
+<div
+  class="aui-textfield aui-js-textfield aui-textfield--multiline mt-3"
+  [ngClass]="{
+    'aui-theme-light': isLightTheme,
+    'is-dirty': control.dirty && control.touched,
+    'is-valid': control.valid && control.touched,
+    'is-invalid': control.invalid && control.touched,
+    'is-disabled': isDisabled
+  }"
+  data-autosize
+  [attr.data-count]="wordLimit"
+>
+  <div class="aui-textfield__field">
+    <textarea
+      class="aui-textfield__input"
+      [formControl]="control"
+      [rows]="rows"
+    ></textarea>
+    <label class="aui-textfield__label"
+      >{{ label }}<span class="aui-small">{{ smallLabel }}</span></label
+    >
+  </div>
+  <ng-content
+    *ngIf="
+      (control.pristine && control.untouched) ||
+      (control.untouched && control.dirty && control.valid)
+    "
+    select="audi-control-description"
+  ></ng-content>
+
+  <ng-content
+    *ngIf="control.touched && control.dirty && control.valid"
+    select="audi-control-valid"
+  ></ng-content>
+
+  <ng-content
+    *ngIf="control.touched && control.invalid"
+    select="audi-control-error"
+  ></ng-content>
+</div>

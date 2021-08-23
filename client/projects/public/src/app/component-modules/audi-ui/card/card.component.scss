@@ -1,0 +1,26 @@
+:host(.w-full) {
+  .aui-card {
+    width: 100%;
+  }
+}
+
+:host(.block) {
+  .aui-card {
+    display: block;
+  }
+}
+
+:host {
+  flex: 1 1 auto;
+  width: 100%;
+}
+
+.aui-card--action {
+  cursor: pointer;
+}
+
+// hide if ng content is empty
+// see: https://stackoverflow.com/questions/38692881/how-to-check-whether-ng-content-exists
+.aui-card__content:empty {
+  display: none;
+}

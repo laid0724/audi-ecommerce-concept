@@ -6,7 +6,7 @@ import { HomepageManagementComponent } from './homepage-management/homepage-mana
 
 import { PipesModule } from '@audi/data';
 import { ClarityModule } from '@clr/angular';
-import { FormsComponentModule } from '../../component-modules/forms-component/forms-component.module';
+import { FormComponentsModule } from '../../component-modules/form-components/form-components.module';
 import { LanguageSelectorModule } from '../../component-modules/language-selector/language-selector.module';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FeaturedImageUploaderModule } from '../../component-modules/featured-image-uploader/featured-image-uploader.module';
@@ -18,7 +18,7 @@ import { FeaturedImageUploaderModule } from '../../component-modules/featured-im
     ClarityModule,
     HomepageManagementRoutingModule,
     LanguageSelectorModule,
-    FormsComponentModule,
+    FormComponentsModule,
     PipesModule,
     FeaturedImageUploaderModule,
     DragDropModule,

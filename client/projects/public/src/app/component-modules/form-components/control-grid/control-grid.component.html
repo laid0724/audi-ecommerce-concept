@@ -1,0 +1,30 @@
+<fieldset
+  class="aui-fieldset"
+  [ngClass]="{
+    'aui-fieldset--textfields': type === 'input' || type === 'textarea',
+    'aui-fieldset--select': type === 'select',
+    'aui-fieldset--radio':
+      type === 'radio' || type === 'checkbox' || type === 'toggle',
+    'is-invalid': isInvalid
+  }"
+>
+  <legend class="aui-fieldset__legend">
+    {{ label }}
+  </legend>
+  <!-- see: https://stackoverflow.com/questions/59185318/get-multiple-ng-template-ref-values-using-contentchildren-in-angular-5 -->
+
+  <ng-container *ngIf="fieldsTemplates.length > 0">
+    <div class="aui-fieldset__fields" *ngFor="let fields of fieldsTemplates">
+      <ng-template [ngTemplateOutlet]="fields.template"></ng-template>
+    </div>
+  </ng-container>
+
+  <div class="aui-fieldset__fields" *ngIf="fieldTemplates.length > 0">
+    <div class="aui-fieldset__field" *ngFor="let field of fieldTemplates">
+      <ng-template [ngTemplateOutlet]="field.template"></ng-template>
+    </div>
+  </div>
+  <ng-container *ngIf="isInvalid">
+    <ng-content select="audi-control-error"></ng-content>
+  </ng-container>
+</fieldset>

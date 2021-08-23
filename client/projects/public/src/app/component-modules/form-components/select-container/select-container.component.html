@@ -1,0 +1,33 @@
+<div
+  class="aui-select aui-js-select mt-3"
+  [ngClass]="{
+    'aui-select--floating-label': floatingLabel,
+    'aui-theme-light': isLightTheme,
+    'is-dirty': control.dirty && control.touched,
+    'is-valid': control.valid && control.touched,
+    'is-invalid': control.invalid && control.touched,
+    'is-disabled': isDisabled
+  }"
+>
+  <select class="aui-select__input" [formControl]="control">
+    <option selected disabled class="aui-select__input-label" [ngValue]="null">
+      {{ label }}<span class="aui-small">{{ smallLabel }}</span>
+    </option>
+    <ng-content select="option"></ng-content>
+  </select>
+  <label class="aui-select__label"
+    >{{ label }}<span class="aui-small">{{ smallLabel }}</span></label
+  >
+  <ng-content
+    *ngIf="
+      (control.pristine && control.untouched) ||
+      (control.touched && control.dirty && control.valid)
+    "
+    select="audi-control-description"
+  ></ng-content>
+
+  <ng-content
+    *ngIf="control.touched && control.invalid"
+    select="audi-control-error"
+  ></ng-content>
+</div>

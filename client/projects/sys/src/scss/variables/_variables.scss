@@ -1,1 +1,9 @@
 @import './color';
+
+$audi-transition-time: 0.25s;
+$audi-transition-timing-function: cubic-bezier(0.75, 0.02, 0.5, 1);
+
+:root {
+  --audi-transition-time: $audi-transition-time;
+  --audi-transition-timing-function: $audi-transition-timing-function;
+}

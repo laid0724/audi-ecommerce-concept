@@ -1,0 +1,10 @@
+@import './stroke';
+
+@mixin audi-fonts {
+  font-family: $font-family-base;
+}
+
+@mixin audi-transition-effect {
+  transition: 0.25s;
+  transition-timing-function: cubic-bezier(0.75, 0.02, 0.5, 1);
+}

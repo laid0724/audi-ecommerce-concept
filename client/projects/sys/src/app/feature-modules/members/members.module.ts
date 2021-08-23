@@ -4,7 +4,7 @@ import { MembersRoutingModule } from './members-routing.module';
 import { ClarityModule } from '@clr/angular';
 import { PipesModule } from '@audi/data';
 import { ClrDatagridUtilitiesModule } from '../../component-modules/clr-datagrid-utilities/clr-datagrid-utilities.module';
-import { FormsComponentModule } from '../../component-modules/forms-component/forms-component.module';
+import { FormComponentsModule } from '../../component-modules/form-components/form-components.module';
 import { MembersListComponent } from './members-list/members-list.component';
 import { MembersSingleComponent } from './members-single/members-single.component';
 
@@ -17,7 +17,7 @@ import { MembersSingleComponent } from './members-single/members-single.componen
     CommonModule,
     ClarityModule,
     MembersRoutingModule,
-    FormsComponentModule,
+    FormComponentsModule,
     PipesModule,
     ClrDatagridUtilitiesModule,
   ],

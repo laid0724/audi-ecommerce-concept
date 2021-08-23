@@ -1,11 +1,9 @@
-import { ElementRef } from "@angular/core";
-import { AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
+import { OnDestroy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import {
   AccountService,
   User,
   Roles,
-  initAudiModules,
 } from '@audi/data';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
@@ -16,7 +14,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AppComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<boolean>();
 
   constructor(
@@ -26,10 +24,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.setUserFromLocalStorage();
-  }
-
-  ngAfterViewInit(): void {
-    const audiComponents = initAudiModules();
   }
 
   setUserFromLocalStorage(): void {
