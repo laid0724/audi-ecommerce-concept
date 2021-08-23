@@ -1,0 +1,10 @@
+<nav
+  class="aui-nav aui-js-nav aui-nav--dropdown"
+  [ngClass]="{ 'aui-theme-black': isLightTheme }"
+>
+  <div class="aui-nav__panel">
+    <ul class="aui-nav__items">
+      <ng-content select="audi-nav-item"></ng-content>
+    </ul>
+  </div>
+</nav>

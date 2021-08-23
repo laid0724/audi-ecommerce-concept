@@ -4,28 +4,28 @@
 import * as aui from '@audi/audi-ui';
 
 export enum AudiModuleName {
-  Alert = 'Alert',
-  Audioplayer = 'Audioplayer',
+  Alert = 'Alert', // done
+  Audioplayer = 'Audioplayer', // ignore
   Breadcrumb = 'Breadcrumb',
-  Checkbox = 'Checkbox',
-  Dropdown = 'Dropdown',
+  Checkbox = 'Checkbox', // done
+  Dropdown = 'Dropdown', // done
   Flyout = 'Flyout',
   Header = 'Header',
-  Modal = 'Modal',
+  Modal = 'Modal', // done
   Nav = 'Nav',
-  Notification = 'Notification',
-  Pagination = 'Pagination',
-  Player = 'Player',
-  Popover = 'Popover',
-  Progress = 'Progress',
-  Radio = 'Radio',
-  Response = 'Response', // UI animation effects, such as btn
-  Select = 'Select',
+  Notification = 'Notification', // done
+  Pagination = 'Pagination', // done
+  Player = 'Player', // ignore
+  Popover = 'Popover', // done
+  Progress = 'Progress', // done
+  Radio = 'Radio', // done
+  Response = 'Response', // UI animation effects, such as btn // done
+  Select = 'Select', // done
   Slider = 'Slider',
-  Indicator = 'Indicator',
-  Spinner = 'Spinner',
-  Textfield = 'Textfield',
-  Tooltip = 'Tooltip',
+  Indicator = 'Indicator', // done
+  Spinner = 'Spinner', // done
+  Textfield = 'Textfield', // done
+  Tooltip = 'Tooltip', // done
 }
 
 export type AudiModule = {

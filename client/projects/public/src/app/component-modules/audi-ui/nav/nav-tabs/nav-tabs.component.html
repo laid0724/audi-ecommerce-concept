@@ -1,0 +1,25 @@
+<nav
+  class="aui-nav aui-js-nav aui-nav--tab {{ AudiNavThemeClass }}"
+  [ngClass]="{ 'aui-nav--small': isSmall || !isDesktop }"
+>
+  <div class="aui-nav__panel">
+    <ul class="aui-nav__items">
+      <audi-nav-item
+        *ngFor="let tab of tabs"
+        [isActive]="tab.isActive"
+        [isDisabled]="tab.isDisabled"
+        (click)="!tab.isDisabled && !tab.isActive ? onSelectTab(tab) : null"
+        >{{ tab.tabTitle }}</audi-nav-item
+      >
+    </ul>
+  </div>
+</nav>
+<div
+  class="p-4 sm:p-8"
+  [ngClass]="{
+    'background-color-grey-2 text-black': theme !== 'grey',
+    'background-color-grey-10 text-white': theme === 'grey'
+  }"
+>
+  <ng-content select="audi-nav-tab"></ng-content>
+</div>

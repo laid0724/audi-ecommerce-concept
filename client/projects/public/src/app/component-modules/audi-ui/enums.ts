@@ -80,3 +80,11 @@ export enum AudiAlertType {
   Default = 'default',
   Global = 'global'
 }
+
+export enum AudiNavThemeClass {
+  Black = 'aui-theme-black',
+  WarmSilver = 'aui-theme-warmsilver',
+  Silver = 'aui-theme-silver',
+  Red = 'aui-theme-red',
+  Grey = 'aui-theme-gray10-gray20'
+}

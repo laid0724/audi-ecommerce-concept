@@ -21,6 +21,7 @@ import { IconWithBadgeComponent } from './icon-with-badge/icon-with-badge.compon
 import { IndicatorComponent } from './indicator/indicator.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
+import { NavModule } from './nav/nav.module';
 
 const COMPONENTS = [
   ButtonComponent,
@@ -36,7 +37,7 @@ const COMPONENTS = [
   IconWithBadgeComponent,
   IndicatorComponent,
   SpinnerComponent,
-  ProgressBarComponent
+  ProgressBarComponent,
 ];
 
 const SERVICE_MODULES = [
@@ -53,6 +54,7 @@ const SERVICE_MODULES = [
     FormComponentsModule,
     NotificationModule,
     AlertModule,
+    NavModule,
     ...SERVICE_MODULES,
   ],
   exports: [
@@ -61,6 +63,7 @@ const SERVICE_MODULES = [
     IconModule,
     NotificationModule,
     AlertModule,
+    NavModule,
   ],
 })
 export class AudiUiModule {}

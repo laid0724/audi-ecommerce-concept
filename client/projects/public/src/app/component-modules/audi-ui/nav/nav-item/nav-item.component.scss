@@ -1,0 +1,7 @@
+button.aui-nav__action {
+  &.is-disabled {
+    a {
+      cursor: not-allowed;
+    }
+  }
+}

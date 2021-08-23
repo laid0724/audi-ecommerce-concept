@@ -1,6 +1,8 @@
 @import './color';
 @import './font';
 
+$audi-rem-base: 16px !default; // in px
+$audi-base-unit: 4px !default; // in px
 $audi-transition-time: 0.25s;
 $audi-transition-timing-function: cubic-bezier(0.75, 0.02, 0.5, 1);
 
