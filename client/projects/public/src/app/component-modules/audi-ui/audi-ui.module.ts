@@ -23,6 +23,7 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { NavModule } from './nav/nav.module';
 import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
+import { HeaderComponent } from './header/header.component';
 
 const COMPONENTS = [
   ButtonComponent,
@@ -39,6 +40,7 @@ const COMPONENTS = [
   IndicatorComponent,
   SpinnerComponent,
   ProgressBarComponent,
+  HeaderComponent,
 ];
 
 const SERVICE_MODULES = [
