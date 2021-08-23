@@ -25,13 +25,11 @@ const DIRECTIVES = [ProjectAsTemplateDirective, AttributeSetterDirective];
   declarations: [AppComponent, ...DIRECTIVES],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
     HttpClientModule,
-    SplashScreenModule,
     AudiUiModule,
-    FormComponentsModule,
-    ReactiveFormsModule,
+    SplashScreenModule,
   ],
   providers: [
     ErrorInterceptorProvider,

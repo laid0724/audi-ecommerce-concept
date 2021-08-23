@@ -15,6 +15,12 @@ import { AudiButton } from '../enums';
     <audi-icon size="large" iconName="system-download"></audi-icon>
   </audi-button>
 
+  btn primary with icon and text
+  <audi-button type="primary" class="flex">
+    <audi-icon size="small" iconName="download"></audi-icon>
+    <span class="ml-2">Download</span>
+  </audi-button>
+
   btn primary
   <audi-button type="primary">
     Button

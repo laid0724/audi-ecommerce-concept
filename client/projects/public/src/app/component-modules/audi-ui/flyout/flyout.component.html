@@ -1,0 +1,16 @@
+<div
+  class="aui-flyout aui-js-flyout"
+  [ngClass]="{
+    'aui-flyout--center': position === 'center',
+    'aui-flyout--right': position === 'right',
+    'aui-theme-light': isLightTheme
+  }"
+>
+  <ng-content #triggeringElement></ng-content>
+
+  <div class="aui-flyout__panel">
+    <div class="aui-flyout__panel-content">
+      <ng-content select=".flyout-content"></ng-content>
+    </div>
+  </div>
+</div>

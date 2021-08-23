@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormComponentsModule } from 'projects/sys/src/app/component-modules/form-components/form-components.module';
 
+import { FormComponentsModule } from 'projects/sys/src/app/component-modules/form-components/form-components.module';
 import { IconModule } from './icon/icon.module';
 import { NotificationModule } from './notification/notification.module';
 import { AlertModule } from './alert/alert.module';
@@ -10,6 +10,7 @@ import { ModalModule } from './modal/modal.module';
 import { PopoverModule } from './popover/popover.module';
 import { TooltipModule } from './tooltip/tooltip.module';
 import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
+import { FlyoutModule } from './flyout/flyout.module';
 
 import { ButtonComponent } from './button/button.component';
 import { ButtonGroupComponent } from './button-group/button-group.component';
@@ -48,11 +49,13 @@ const MODULES = [
   ModalModule,
   PopoverModule,
   TooltipModule,
+  FlyoutModule,
+  FormComponentsModule
 ];
 
 @NgModule({
   declarations: [...COMPONENTS],
-  imports: [CommonModule, FormComponentsModule, ...MODULES],
+  imports: [CommonModule, ...MODULES],
   exports: [...COMPONENTS, ...MODULES],
 })
 export class AudiUiModule {}
