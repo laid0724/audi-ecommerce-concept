@@ -11,34 +11,15 @@ import { PopoverModule } from './popover/popover.module';
 import { TooltipModule } from './tooltip/tooltip.module';
 import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
 import { FlyoutModule } from './flyout/flyout.module';
-
-import { ButtonComponent } from './button/button.component';
-import { ButtonGroupComponent } from './button-group/button-group.component';
-import { CardComponent } from './card/card.component';
-import { CardGridComponent } from './card-grid/card-grid.component';
-import { CardGridItemComponent } from './card-grid-item/card-grid-item.component';
-import { PaginationComponent } from './pagination/pagination.component';
-import { BadgeComponent } from './badge/badge.component';
-import { IconWithBadgeComponent } from './icon-with-badge/icon-with-badge.component';
-import { IndicatorComponent } from './indicator/indicator.component';
-import { SpinnerComponent } from './spinner/spinner.component';
-import { ProgressBarComponent } from './progress-bar/progress-bar.component';
-import { HeaderComponent } from './header/header.component';
-
-const COMPONENTS = [
-  ButtonComponent,
-  ButtonGroupComponent,
-  CardComponent,
-  CardGridComponent,
-  CardGridItemComponent,
-  PaginationComponent,
-  BadgeComponent,
-  IconWithBadgeComponent,
-  IndicatorComponent,
-  SpinnerComponent,
-  ProgressBarComponent,
-  HeaderComponent,
-];
+import { ButtonModule } from './button/button.module';
+import { CardModule } from './card/card.module';
+import { PaginationModule } from './pagination/pagination.module';
+import { BadgeModule } from './badge/badge.module';
+import { IconWithBadgeModule } from './icon-with-badge/icon-with-badge.module';
+import { IndicatorModule } from './indicator/indicator.module';
+import { SpinnerModule } from './spinner/spinner.module';
+import { ProgressBarModule } from './progress-bar/progress-bar.module';
+import { HeaderModule } from './header/header.module';
 
 const MODULES = [
   IconModule,
@@ -50,12 +31,20 @@ const MODULES = [
   PopoverModule,
   TooltipModule,
   FlyoutModule,
-  FormComponentsModule
+  FormComponentsModule,
+  ButtonModule,
+  CardModule,
+  PaginationModule,
+  BadgeModule,
+  IconWithBadgeModule,
+  IndicatorModule,
+  SpinnerModule,
+  ProgressBarModule,
+  HeaderModule,
 ];
 
 @NgModule({
-  declarations: [...COMPONENTS],
   imports: [CommonModule, ...MODULES],
-  exports: [...COMPONENTS, ...MODULES],
+  exports: [...MODULES],
 })
 export class AudiUiModule {}
