@@ -10,7 +10,6 @@ import {
   initAudiModules,
   AudiModuleName,
   AudiComponents,
-  isNullOrEmptyString,
 } from '@audi/data';
 import { AudiNavThemeClass } from '../../enums';
 import { Subscription } from 'rxjs';
@@ -86,9 +85,6 @@ export class NavBarComponent implements OnInit, AfterViewInit, OnDestroy {
   _breakpointObserverSubscription: Subscription;
 
   public AudiNavThemeClass: AudiNavThemeClass | null;
-
-  public isNullOrEmptyString: (val: string | null | undefined) => boolean =
-    isNullOrEmptyString;
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 

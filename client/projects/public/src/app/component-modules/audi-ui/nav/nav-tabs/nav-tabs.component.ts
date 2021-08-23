@@ -12,7 +12,6 @@ import {
   initAudiModules,
   AudiModuleName,
   AudiComponents,
-  isNullOrEmptyString,
 } from '@audi/data';
 import { AudiNavThemeClass } from '../../enums';
 import { AudiNavThemeInput } from '../nav-bar/nav-bar.component';
@@ -83,9 +82,6 @@ export class NavTabsComponent
   _breakpointObserverSubscription: Subscription;
 
   public AudiNavThemeClass: AudiNavThemeClass | null;
-
-  public isNullOrEmptyString: (val: string | null | undefined) => boolean =
-    isNullOrEmptyString;
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 

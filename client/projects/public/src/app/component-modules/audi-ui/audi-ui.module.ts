@@ -22,6 +22,7 @@ import { IndicatorComponent } from './indicator/indicator.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { ProgressBarComponent } from './progress-bar/progress-bar.component';
 import { NavModule } from './nav/nav.module';
+import { BreadcrumbModule } from './breadcrumb/breadcrumb.module';
 
 const COMPONENTS = [
   ButtonComponent,
@@ -55,6 +56,7 @@ const SERVICE_MODULES = [
     NotificationModule,
     AlertModule,
     NavModule,
+    BreadcrumbModule,
     ...SERVICE_MODULES,
   ],
   exports: [
@@ -64,6 +66,7 @@ const SERVICE_MODULES = [
     NotificationModule,
     AlertModule,
     NavModule,
+    BreadcrumbModule,
   ],
 })
 export class AudiUiModule {}
