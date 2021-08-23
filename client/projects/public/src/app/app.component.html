@@ -4,10 +4,20 @@
   <div class="aui-grid">
     <div class="aui-cell aui-cell--12">
       <router-outlet></router-outlet>
-      <!-- TODO:
+      <!-- TODO: note - all RWD
           - carousel sliders: use swiper & fslightbox.js
-          - transloco & routing implementation
+            3 types of sliders:
+              1. default, for homepage, with indicators
+              2. card sliders
+              3. products slider
+              4. product image slider (on click expand to fslightbox)
+              4. hero audi slider (with color box for text on one side)
+              5. featured item slider
 
+          - transloco & routing implementation
+          - nav
+          - footer
+          - menu
         -->
     </div>
   </div>
@@ -20,7 +30,7 @@
   class="w-screen fixed bottom-0 left-0 right-0"
   [isContinuous]="true"
 ></audi-progress-bar>
-<audi-splash-screen></audi-splash-screen>
+<!-- <audi-splash-screen></audi-splash-screen> -->
 
 <!-- audi table template -->
 <!--
