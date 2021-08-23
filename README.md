@@ -127,7 +127,6 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - en/zh switch using transloco
 - not found
 - server error
-- splash screen using audi drum beat animation
 - homepage with following sections: hero carousel, latest news/events/promotions, featured product, latest product, misc
 - live chat
 - product list
@@ -142,9 +141,3 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - member's area
 - nav
 - footer
-- carve out audi ui as angular components
-- form control validation states
-- cards
-- breadcrumbs
-- notifications / badge
-- modal
