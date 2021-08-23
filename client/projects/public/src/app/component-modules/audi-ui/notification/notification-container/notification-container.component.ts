@@ -20,6 +20,7 @@ export interface NotificationConfig {
   audiStyle: 'dark' | 'light';
   bgColor?: AudiColor | string;
   textColor?: AudiColor | string;
+  timeout: number | null;
 }
 
 // notifications are dynamically generated
@@ -48,26 +49,26 @@ export class NotificationContainerComponent implements OnInit, OnDestroy {
       this.notificationService.notificationTrigger$.subscribe(
         (notification: AudiNotification | null) => {
           if (notification) {
-            const { message, type } = notification;
+            const { message, type, timeout } = notification;
 
             switch (type) {
               case AudiNotificationType.Default:
-                this.showNotification(message);
+                this.showNotification(message, timeout);
                 break;
               case AudiNotificationType.Info:
-                this.showInfoNotification(message);
+                this.showInfoNotification(message, timeout);
                 break;
               case AudiNotificationType.Warning:
-                this.showWarningNotification(message);
+                this.showWarningNotification(message, timeout);
                 break;
               case AudiNotificationType.Success:
-                this.showSuccessNotification(message);
+                this.showSuccessNotification(message, timeout);
                 break;
               case AudiNotificationType.Danger:
-                this.showDangerNotification(message);
+                this.showDangerNotification(message, timeout);
                 break;
               default:
-                this.showNotification(message);
+                this.showNotification(message, timeout);
                 break;
             }
           }
@@ -98,6 +99,8 @@ export class NotificationContainerComponent implements OnInit, OnDestroy {
       if (!isNullOrEmptyString(settings.textColor)) {
         componentRef.instance.textColor = settings.textColor!;
       }
+
+      componentRef.instance.notificationTimeout = settings.timeout;
     }
 
     componentRef.instance.toastMessage = message;
@@ -105,39 +108,53 @@ export class NotificationContainerComponent implements OnInit, OnDestroy {
     this.componentRefs.push(componentRef);
   }
 
-  private showNotification(message: string): void {
+  private showNotification(message: string, timeout: number | null): void {
     this.showNotificationBase(message, {
       audiStyle: 'light',
+      timeout,
     });
   }
 
-  private showInfoNotification(message: string): void {
+  private showInfoNotification(message: string, timeout: number | null): void {
     this.showNotificationBase(message, {
       audiStyle: 'dark',
+      timeout,
     });
   }
 
-  private showSuccessNotification(message: string): void {
+  private showSuccessNotification(
+    message: string,
+    timeout: number | null
+  ): void {
     this.showNotificationBase(message, {
       audiStyle: 'dark',
       bgColor: AudiColor.Success,
       textColor: AudiColor.White,
+      timeout,
     });
   }
 
-  private showDangerNotification(message: string): void {
+  private showDangerNotification(
+    message: string,
+    timeout: number | null
+  ): void {
     this.showNotificationBase(message, {
       audiStyle: 'dark',
       bgColor: AudiColor.Error,
       textColor: AudiColor.White,
+      timeout,
     });
   }
 
-  private showWarningNotification(message: string): void {
+  private showWarningNotification(
+    message: string,
+    timeout: number | null
+  ): void {
     this.showNotificationBase(message, {
       audiStyle: 'dark',
       bgColor: AudiColor.Warning,
       textColor: AudiColor.White,
+      timeout,
     });
   }
 

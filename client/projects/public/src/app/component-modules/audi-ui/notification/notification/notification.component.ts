@@ -1,7 +1,6 @@
 import { Component, AfterViewInit, Input } from '@angular/core';
 import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
 import { AudiColor } from '../../enums';
-import { NotificationService } from '../../services/notification-service/notification.service';
 
 @Component({
   selector: 'audi-notification',
@@ -13,8 +12,7 @@ export class NotificationComponent implements AfterViewInit {
   @Input() bgColor: AudiColor | string = '';
   @Input() textColor: AudiColor | string = '';
   @Input() toastMessage: string = '';
-
-  constructor(private notificationService: NotificationService) {}
+  @Input() notificationTimeout: number | null = null;
 
   ngAfterViewInit(): void {
     const notifications = initAudiModules(AudiModuleName.Notification);
@@ -22,11 +20,11 @@ export class NotificationComponent implements AfterViewInit {
     notifications.forEach((m: AudiComponents) => {
       const notificationComponents = m.components.upgradeElements();
 
-      if (this.notificationService.notificationTimeout !== null) {
+      if (this.notificationTimeout !== null) {
         notificationComponents.forEach((n: any) => {
           setTimeout(() => {
             n.close();
-          }, this.notificationService.notificationTimeout as number);
+          }, this.notificationTimeout as number);
         });
       }
     });

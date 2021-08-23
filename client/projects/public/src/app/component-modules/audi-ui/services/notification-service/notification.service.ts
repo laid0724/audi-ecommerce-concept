@@ -6,6 +6,7 @@ import { NotificationServiceModule } from './notification-service.module';
 export interface AudiNotification {
   message: string;
   type: AudiNotificationType;
+  timeout: number | null;
 }
 
 @Injectable({
@@ -18,48 +19,51 @@ export class NotificationService {
   notificationTrigger$: Observable<AudiNotification | null> =
     this._notificationTrigger$.asObservable();
 
-  notificationTimeout: number | null = 3000;
-
-  show(message: string): void {
+  show(message: string, timeout: number | null = null): void {
     const notification: AudiNotification = {
       message,
       type: AudiNotificationType.Default,
+      timeout,
     };
 
     this._notificationTrigger$.next(notification);
   }
 
-  info(message: string): void {
+  info(message: string, timeout: number | null = null): void {
     const notification: AudiNotification = {
       message,
       type: AudiNotificationType.Info,
+      timeout,
     };
 
     this._notificationTrigger$.next(notification);
   }
 
-  warning(message: string): void {
+  warning(message: string, timeout: number | null = null): void {
     const notification: AudiNotification = {
       message,
       type: AudiNotificationType.Warning,
+      timeout,
     };
 
     this._notificationTrigger$.next(notification);
   }
 
-  success(message: string): void {
+  success(message: string, timeout: number | null = null): void {
     const notification: AudiNotification = {
       message,
       type: AudiNotificationType.Success,
+      timeout,
     };
 
     this._notificationTrigger$.next(notification);
   }
 
-  error(message: string): void {
+  error(message: string, timeout: number | null = null): void {
     const notification: AudiNotification = {
       message,
       type: AudiNotificationType.Danger,
+      timeout,
     };
 
     this._notificationTrigger$.next(notification);
