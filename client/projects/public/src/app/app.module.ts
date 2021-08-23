@@ -1,6 +1,5 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
@@ -15,7 +14,6 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AudiUiModule } from './component-modules/audi-ui/audi-ui.module';
-import { FormComponentsModule } from './component-modules/form-components/form-components.module';
 import { ProjectAsTemplateDirective } from './component-modules/project-as-template.directive';
 import { SplashScreenModule } from './feature-modules/splash-screen/splash-screen.module';
 
