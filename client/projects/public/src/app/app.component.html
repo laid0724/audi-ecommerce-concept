@@ -1,3 +1,15 @@
+<!-- TODO: note - all RWD
+    - carousel sliders: use swiper & fslightbox.js
+        - product image slider (on click expand to fslightbox)
+        - hero audi slider (with color box for text on one side)
+        - featured item slider
+
+    - transloco & routing implementation
+    - nav
+    - footer
+    - menu
+  -->
+
 <audi-header>
   <div class="w-screen flex items-center justify-between">
     <audi-button type="icon-large">
@@ -27,24 +39,7 @@
   </div>
 </audi-header>
 
-<div class="aui-layout">
-  <div class="aui-grid">
-    <div class="aui-cell aui-cell--12">
-      <router-outlet></router-outlet>
-      <!-- TODO: note - all RWD
-          - carousel sliders: use swiper & fslightbox.js
-              - product image slider (on click expand to fslightbox)
-              - hero audi slider (with color box for text on one side)
-              - featured item slider
-
-          - transloco & routing implementation
-          - nav
-          - footer
-          - menu
-        -->
-    </div>
-  </div>
-</div>
+<router-outlet></router-outlet>
 
 <audi-alert-container-global></audi-alert-container-global>
 <audi-notification-container></audi-notification-container>
@@ -54,6 +49,19 @@
   [isContinuous]="true"
 ></audi-progress-bar>
 <!-- <audi-splash-screen></audi-splash-screen> -->
+
+<!--
+  audi grid system:
+  wrap component templates inside of this,
+  not in app component in case you want full screen sliders
+-->
+<!-- <div class="aui-layout">
+  <div class="aui-grid">
+    <div class="aui-cell aui-cell--12">
+
+    </div>
+  </div>
+</div> -->
 
 <!-- audi table template -->
 <!--

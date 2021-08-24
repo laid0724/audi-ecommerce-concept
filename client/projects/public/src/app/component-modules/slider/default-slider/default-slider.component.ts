@@ -24,18 +24,22 @@ SwiperCore.use([Navigation, Autoplay]);
 /*
 
   USAGE:
+
   <audi-default-slider
-    [autoplay]="true"
+    [autoplay]="false"
     [isLightTheme]="false"
-    [indicatorOnImage]="true"
+    [indicatorInSlide]="false"
     [indicatorIsShadowed]="false"
+    [indicatorOnly]="false"
+    [allowDrag]="true"
   >
-    SLIDE HERE
-    CAN BE ANY ELEMENT BUT YOU MUST PIN *projectAsTemplate DIRECTIVE
-    <img
-      *projectAsTemplate
-      src="imgUrl"
-    />
+    <ng-container *ngFor="let slide of [1, 2, 3, 4, 5]">
+      <img
+        class="mx-auto object-cover w-screen"
+        *projectAsTemplate
+        src="https://www.forbes.com/advisor/wp-content/uploads/2021/04/dogecoin.jpeg-900x510.jpg"
+      />
+    </ng-container>
   </audi-default-slider>
 
 */
@@ -57,8 +61,10 @@ export class DefaultSliderComponent implements AfterViewInit {
   @Input() autoplayTransitionTime: number = 3000;
 
   @Input() isLightTheme: boolean = false;
-  @Input() indicatorOnImage: boolean = false;
+  @Input() indicatorInSlide: boolean = false;
   @Input() indicatorIsShadowed: boolean = false;
+  @Input() indicatorOnly: boolean = false;
+  @Input() allowDrag: boolean = false;
 
   swiperInstance: Swiper;
 

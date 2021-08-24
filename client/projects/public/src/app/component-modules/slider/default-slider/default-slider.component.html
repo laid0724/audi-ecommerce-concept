@@ -1,14 +1,18 @@
 <swiper
   #swiper
   [slidesPerView]="1"
-  [navigation]="{
-    prevEl: prevArrow,
-    nextEl: nextArrow
-  }"
+  [navigation]="
+    !indicatorOnly
+      ? {
+          prevEl: prevArrow,
+          nextEl: nextArrow
+        }
+      : false
+  "
   [autoHeight]="true"
   [loop]="false"
-  [grabCursor]="false"
-  [allowTouchMove]="false"
+  [grabCursor]="allowDrag"
+  [allowTouchMove]="allowDrag"
   [autoplay]="autoplay ? { delay: autoplayTransitionTime } : false"
   [initialSlide]="activeSlide"
   (activeIndexChange)="onActiveSlideChange($event)"
@@ -17,12 +21,17 @@
     <ng-container [ngTemplateOutlet]="slide.template"></ng-container>
   </ng-template>
 
-  <span slot="container-start">
+  <span
+    slot="container-start"
+    [ngClass]="{
+      hidden: indicatorOnly
+    }"
+  >
     <div
       #prevArrow
       class="previous-arrow"
       [ngClass]="{
-        'previous-arrow--indicator-is-inside-slide': indicatorOnImage
+        'previous-arrow--indicator-is-inside-slide': indicatorInSlide
       }"
     >
       <audi-icon
@@ -40,7 +49,7 @@
       #nextArrow
       class="next-arrow"
       [ngClass]="{
-        'next-arrow--indicator-is-inside-slide': indicatorOnImage
+        'next-arrow--indicator-is-inside-slide': indicatorInSlide
       }"
     >
       <audi-icon
@@ -59,11 +68,11 @@
     slot="container-end"
     class="pagination"
     [ngClass]="{
-      'pagination--inside-slide': indicatorOnImage
+      'pagination--inside-slide': indicatorInSlide
     }"
   >
     <audi-indicator
-      [isImageBackground]="indicatorOnImage"
+      [isImageBackground]="indicatorInSlide"
       [isLightTheme]="isLightTheme"
       [isShadowed]="indicatorIsShadowed"
       [totalItems]="slides.length"
