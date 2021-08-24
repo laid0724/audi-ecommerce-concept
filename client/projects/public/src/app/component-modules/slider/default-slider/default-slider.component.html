@@ -1,1 +1,74 @@
-<p>default-slider works!</p>
+<swiper
+  #swiper
+  [slidesPerView]="1"
+  [navigation]="{
+    prevEl: prevArrow,
+    nextEl: nextArrow
+  }"
+  [autoHeight]="true"
+  [loop]="false"
+  [grabCursor]="false"
+  [allowTouchMove]="false"
+  [autoplay]="autoplay ? { delay: autoplayTransitionTime } : false"
+  [initialSlide]="activeSlide"
+  (activeIndexChange)="onActiveSlideChange($event)"
+>
+  <ng-template swiperSlide *ngFor="let slide of slides; let i = index" let-data>
+    <ng-container [ngTemplateOutlet]="slide.template"></ng-container>
+  </ng-template>
+
+  <span slot="container-start">
+    <div
+      #prevArrow
+      class="previous-arrow"
+      [ngClass]="{
+        'previous-arrow--indicator-is-inside-slide': indicatorOnImage
+      }"
+    >
+      <audi-icon
+        class="clickable"
+        [ngClass]="{
+          'text-grey-5': !isLightTheme,
+          'text-white': isLightTheme
+        }"
+        [size]="'large'"
+        iconName="back"
+      ></audi-icon>
+    </div>
+
+    <div
+      #nextArrow
+      class="next-arrow"
+      [ngClass]="{
+        'next-arrow--indicator-is-inside-slide': indicatorOnImage
+      }"
+    >
+      <audi-icon
+        class="clickable"
+        [ngClass]="{
+          'text-grey-5': !isLightTheme,
+          'text-white': isLightTheme
+        }"
+        [size]="'large'"
+        iconName="forward"
+      ></audi-icon>
+    </div>
+  </span>
+
+  <span
+    slot="container-end"
+    class="pagination"
+    [ngClass]="{
+      'pagination--inside-slide': indicatorOnImage
+    }"
+  >
+    <audi-indicator
+      [isImageBackground]="indicatorOnImage"
+      [isLightTheme]="isLightTheme"
+      [isShadowed]="indicatorIsShadowed"
+      [totalItems]="slides.length"
+      [(currentItem)]="activeSlide"
+      (currentItemChange)="slideTo($event)"
+    ></audi-indicator>
+  </span>
+</swiper>
