@@ -1,0 +1,16 @@
+audi-multi-slides-per-view-slider {
+  .swiper-slide {
+    &-active > :first-child {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    &-prev > :first-child {
+      margin-left: auto;
+      margin-right: 0;
+    }
+    &-next > :first-child {
+      margin-left: 0;
+      margin-right: auto;
+    }
+  }
+}

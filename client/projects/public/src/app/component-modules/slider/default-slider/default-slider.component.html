@@ -13,7 +13,7 @@
   [initialSlide]="activeSlide"
   (activeIndexChange)="onActiveSlideChange($event)"
 >
-  <ng-template swiperSlide *ngFor="let slide of slides; let i = index" let-data>
+  <ng-template swiperSlide *ngFor="let slide of slides">
     <ng-container [ngTemplateOutlet]="slide.template"></ng-container>
   </ng-template>
 

@@ -8,6 +8,13 @@
   &--indicator-is-inside-slide {
     top: 50%;
   }
+
+  &.swiper-button-disabled {
+    audi-icon {
+      cursor: default !important;
+    }
+    opacity: 0.3;
+  }
 }
 
 .previous-arrow {

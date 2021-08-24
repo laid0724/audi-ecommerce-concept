@@ -1,0 +1,22 @@
+.previous-arrow,
+.next-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+
+  &.swiper-button-disabled {
+    audi-icon {
+      cursor: default !important;
+    }
+    opacity: 0.3;
+  }
+}
+
+.previous-arrow {
+  left: 0;
+}
+
+.next-arrow {
+  right: 0;
+}
