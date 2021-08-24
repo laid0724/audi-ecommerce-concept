@@ -9,18 +9,14 @@ import {
   LanguageHeaderInterceptorProvider,
   LanguageSelectorResolver,
   INJECT_TOASTR,
-  AttributeSetterDirective,
 } from '@audi/data';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AudiUiModule } from './component-modules/audi-ui/audi-ui.module';
-import { ProjectAsTemplateDirective } from './component-modules/project-as-template.directive';
 import { SplashScreenModule } from './feature-modules/splash-screen/splash-screen.module';
 
-const DIRECTIVES = [ProjectAsTemplateDirective, AttributeSetterDirective];
-
 @NgModule({
-  declarations: [AppComponent, ...DIRECTIVES],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
