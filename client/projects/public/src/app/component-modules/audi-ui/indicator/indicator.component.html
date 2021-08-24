@@ -11,9 +11,9 @@
     <li class="aui-indicator__item" *ngFor="let item of items; let i = index">
       <a
         class="aui-indicator__action"
-        [ngClass]="{ 'is-active': currentItem === i + 1 }"
-        (click)="onCurrentItemChange(i + 1)"
-        >{{ i + 1 }}</a
+        [ngClass]="{ 'is-active': currentItem === i }"
+        (click)="onCurrentItemChange(i)"
+        >{{ i }}</a
       >
     </li>
   </ul>
