@@ -16,16 +16,17 @@ import { ProjectAsTemplateDirective } from '@audi/data';
 import { SwiperComponent } from 'swiper/angular';
 
 // import Swiper core and required modules
-import SwiperCore, { Navigation, Autoplay, Swiper } from 'swiper/core';
+import SwiperCore, { Navigation, Autoplay, Swiper, EffectFade } from 'swiper/core';
 
 // install Swiper modules
-SwiperCore.use([Navigation, Autoplay]);
+SwiperCore.use([Navigation, Autoplay, EffectFade]);
 
 /*
 
   USAGE:
 
   <audi-default-slider
+    [fadeEffect]="false"
     [autoplay]="false"
     [isLightTheme]="false"
     [indicatorInSlide]="false"
@@ -61,6 +62,7 @@ export class DefaultSliderComponent implements AfterViewInit {
   @Input() autoplayTransitionTime: number = 3000;
 
   @Input() isLightTheme: boolean = false;
+  @Input() fadeEffect: boolean = false;
   @Input() indicatorInSlide: boolean = false;
   @Input() indicatorIsShadowed: boolean = false;
   @Input() indicatorOnly: boolean = false;
