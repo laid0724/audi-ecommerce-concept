@@ -1,7 +1,10 @@
 <audi-header>
   <div class="w-screen flex items-center justify-between">
-    <audi-button type="icon-large">
-      <audi-icon size="large" iconName="off-canvas"></audi-icon>
+    <audi-button type="icon-large" (click)="toggleMenuState()">
+      <audi-icon
+        size="large"
+        [iconName]="menuIsOpen ? 'cancel' : 'off-canvas'"
+      ></audi-icon>
     </audi-button>
     <a [routerLink]="['']" class="w-20 flex items-center justify-center">
       <img src="assets/audi-logo-black.svg" class="w-full" />
