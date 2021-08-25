@@ -6,9 +6,11 @@
         [iconName]="menuIsOpen ? 'cancel' : 'off-canvas'"
       ></audi-icon>
     </audi-button>
-    <a [routerLink]="['']" class="w-20 flex items-center justify-center">
-      <img src="assets/audi-logo-black.svg" class="w-full" />
-    </a>
+    <audi-button type="icon">
+      <a [routerLink]="['']" class="w-20 flex items-center justify-center">
+        <img src="assets/audi-logo-black.svg" class="w-full" />
+      </a>
+    </audi-button>
     <div class="w-12 flex items-center justify-center">
       <audi-flyout [isLightTheme]="false" position="center">
         <audi-button
