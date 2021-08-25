@@ -1,0 +1,32 @@
+<audi-header>
+  <div class="w-screen flex items-center justify-between">
+    <audi-button type="icon-large">
+      <audi-icon size="large" iconName="off-canvas"></audi-icon>
+    </audi-button>
+    <a [routerLink]="['']" class="w-20 flex items-center justify-center">
+      <img src="assets/audi-logo-black.svg" class="w-full" />
+    </a>
+    <div class="w-12 flex items-center justify-center">
+      <audi-flyout [isLightTheme]="false" position="center">
+        <audi-button
+          type="icon"
+          #triggeringElement
+          flyoutTriggerSetter
+          [applyToInnerElement]="true"
+        >
+          <audi-icon size="small" iconName="languages"></audi-icon>
+        </audi-button>
+        <div class="flyout-content">
+          <audi-nav-list [isLightTheme]="false">
+            <audi-nav-item>
+              <p class="text-center w-full">中文 ZH</p>
+            </audi-nav-item>
+            <audi-nav-item class="text-center w-full">
+              <p class="text-center w-full">English EN</p>
+            </audi-nav-item>
+          </audi-nav-list>
+        </div>
+      </audi-flyout>
+    </div>
+  </div>
+</audi-header>

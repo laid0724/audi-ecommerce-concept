@@ -13,6 +13,7 @@ import {
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AudiUiModule } from './component-modules/audi-ui/audi-ui.module';
+import { CoreModule } from './core/core.module';
 import { SplashScreenModule } from './feature-modules/splash-screen/splash-screen.module';
 
 @NgModule({
@@ -24,6 +25,7 @@ import { SplashScreenModule } from './feature-modules/splash-screen/splash-scree
     HttpClientModule,
     AudiUiModule,
     SplashScreenModule,
+    CoreModule,
   ],
   providers: [
     ErrorInterceptorProvider,
