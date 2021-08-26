@@ -35,6 +35,8 @@ export class ProductSelectorComponent
   @ViewChild(FormControlDirective, { static: true })
   formControlDirective: FormControlDirective;
 
+  @Input() showHiddenProducts: boolean = true;
+
   @Input()
   label = '產品 Product';
 
@@ -78,7 +80,9 @@ export class ProductSelectorComponent
         takeUntil(this.destroy$)
       )
       .subscribe((products: Product[]) => {
-        this.products = products;
+        this.products = this.showHiddenProducts
+          ? products
+          : products.filter((p: Product) => p.isVisible);
         this.loading = false;
       });
   }
