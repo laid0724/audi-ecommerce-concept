@@ -43,10 +43,13 @@ namespace Audi.Services
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
+                    // see: https://cloudinary.com/documentation/resizing_and_cropping
                     Transformation = new Transformation()
                         .AspectRatio(16, 9)
-                        .Crop("fill")
-                        .Gravity("center")
+                        // .Crop("fill")
+                        // .Gravity("center")
+                        .Crop("fill_pad")
+                        .Gravity("auto")
                 };
                 uploadResult = await _cloudinary.UploadAsync(uploadParams);
             }
