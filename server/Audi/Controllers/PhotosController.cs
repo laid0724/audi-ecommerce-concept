@@ -28,7 +28,7 @@ namespace Audi.Controllers
         [HttpPost]
         public async Task<ActionResult<string>> UploadPhoto(IFormFile file)
         {
-            var uploadResult = await _photoService.AddPhotoAsync(file);
+            var uploadResult = await _photoService.AddPhotoAsync(file, "cover");
 
             if (uploadResult.Error != null)
             {

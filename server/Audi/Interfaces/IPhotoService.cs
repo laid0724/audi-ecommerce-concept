@@ -6,7 +6,7 @@ namespace Audi.Interfaces
 {
     public interface IPhotoService
     {
-        Task<ImageUploadResult> AddPhotoAsync(IFormFile file);
+        Task<ImageUploadResult> AddPhotoAsync(IFormFile file, string croppingMode);
         Task<DeletionResult> DeletePhotoAsync(string publicId);
     }
 }

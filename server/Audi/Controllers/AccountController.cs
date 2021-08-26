@@ -676,7 +676,7 @@ namespace Audi.Controllers
                 await this.DeleteUserImage(userId);
             }
 
-            var result = await _photoService.AddPhotoAsync(file);
+            var result = await _photoService.AddPhotoAsync(file, "cover");
 
             if (result.Error != null)
             {
