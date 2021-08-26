@@ -74,24 +74,24 @@ export class HomepageManagementComponent implements OnInit, OnDestroy {
 
   public isNullOrEmptyString: (value: any) => boolean = isNullOrEmptyString;
 
-  public isPureImageCarousel(carouselItem: HomepageCarouselItem): boolean {
-    const {
-      id,
-      homepageId,
-      type,
-      sort,
-      isVisible,
-      color,
-      photo,
-      ...carouselItemContent
-    } = carouselItem;
+  // public isPureImageCarousel(carouselItem: HomepageCarouselItem): boolean {
+  //   const {
+  //     id,
+  //     homepageId,
+  //     type,
+  //     sort,
+  //     isVisible,
+  //     color,
+  //     photo,
+  //     ...carouselItemContent
+  //   } = carouselItem;
 
-    const isPureImageCarousel = Object.keys(carouselItemContent)
-      .map((key) => (carouselItemContent as unknown as any)[key])
-      .every((content) => isNullOrEmptyString(content));
+  //   const isPureImageCarousel = Object.keys(carouselItemContent)
+  //     .map((key) => (carouselItemContent as unknown as any)[key])
+  //     .every((content) => isNullOrEmptyString(content));
 
-    return isPureImageCarousel;
-  }
+  //   return isPureImageCarousel;
+  // }
 
   constructor(
     private languageService: LanguageStateService,

@@ -7,36 +7,76 @@
   border-radius: 5px;
 }
 
-.carousel-item {
-  min-height: 300px;
+.carousel-grid {
+  display: grid;
+  grid-template-rows: repeat(1, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   width: 100%;
-  padding: 20px;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  &-bg-overlay {
-    background-color: rgba(0, 0, 0, 0.3);
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-  }
-  &-wrapper {
-    width: 100%;
-    min-height: 300px;
+  min-height: 300px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  &-content {
     padding: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    grid-column: span 2 / span 2;
+    z-index: 2;
+    &-wrapper {
+      height: 100%;
+      width: 100%;;
+      display: flex;
+      flex-direction: column;
+      justify-content:space-between;
+      align-items: flex-start;
+    }
+    &--bg-light {
+      background-color: var(--audi-grey-2);
+    }
+    &--bg-dark {
+      background-color: var(--audi-grey-8);
+    }
   }
-
-  .z-index-2 {
+  &-image {
+    grid-column: span 4 / span 4;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 300px;
+    width: 100%;
     z-index: 2;
   }
 }
+
+// DEFAULT SLIDER STYLE
+
+// .carousel-item {
+//   min-height: 300px;
+//   width: 100%;
+//   padding: 20px;
+//   background-size: cover;
+//   background-position: center;
+//   background-repeat: no-repeat;
+//   // &-bg-overlay {
+//   //   background-color: rgba(0, 0, 0, 0.3);
+//   //   position: absolute;
+//   //   top: 0;
+//   //   bottom: 0;
+//   //   left: 0;
+//   //   right: 0;
+//   //   width: 100%;
+//   //   height: 100%;
+//   //   z-index: 1;
+//   // }
+//   &-wrapper {
+//     width: 100%;
+//     min-height: 300px;
+//     padding: 20px;
+//     margin-top: 20px;
+//     margin-bottom: 20px;
+//   }
+
+//   .z-index-2 {
+//     z-index: 2;
+//   }
+// }
 
 // drag-n-drop stuff
 
@@ -90,4 +130,23 @@
 .swap-col-icon {
   @extend .drag-drop-sort-icon;
   cursor: pointer;
+}
+
+.text-truncate-ellipses {
+  // see: https://stackoverflow.com/questions/3922739/limit-text-length-to-n-lines-using-css
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: wrap;
+  display: inline-block;
+  display: -webkit-box;
+  -webkit-line-clamp: 1; /* number of lines to show */
+  -webkit-box-orient: vertical;
+
+  &--2-lines {
+    -webkit-line-clamp: 2; /* number of lines to show */
+  }
+  &--3-lines {
+    -webkit-line-clamp: 3; /* number of lines to show */
+  }
 }
