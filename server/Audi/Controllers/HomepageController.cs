@@ -242,7 +242,7 @@ namespace Audi.Controllers
 
             if (carouselItem == null) return NotFound();
 
-            var photoUploadResult = await _photoService.AddPhotoAsync(file);
+            var photoUploadResult = await _photoService.AddPhotoAsync(file, "cover");
 
             if (photoUploadResult.Error != null)
             {

@@ -195,6 +195,17 @@ export function toZhMapper(
     }
   }
 
+  if (type === 'isVisibleStatusWithEn') {
+    switch (value) {
+      case true:
+        return '顯示中 Currently Visible';
+      case false:
+        return '隱藏中 Currently Hidden';
+      default:
+        return '';
+    }
+  }
+
   if (type === 'isDisabledWithEn') {
     switch (value) {
       case true:

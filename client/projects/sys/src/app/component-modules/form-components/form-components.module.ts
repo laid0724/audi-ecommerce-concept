@@ -10,6 +10,7 @@ import { QuillEditorComponent } from './quill-editor/quill-editor.component';
 import { WysiwygGridComponent } from './wysiwyg-grid/wysiwyg-grid.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { ProductSelectorComponent } from './product-selector/product-selector.component';
+import { PipesModule } from '@audi/data';
 
 const COMPONENTS = [
   ProductCategorySelectorComponent,
@@ -29,6 +30,7 @@ const COMPONENTS = [
     FileUploadModule,
     QuillModule,
     DragDropModule,
+    PipesModule,
   ],
   exports: [NgSelectModule, FormsModule, ReactiveFormsModule, ...COMPONENTS],
 })

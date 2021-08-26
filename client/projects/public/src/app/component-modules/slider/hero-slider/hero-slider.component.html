@@ -1,0 +1,194 @@
+<swiper
+  #swiper
+  [effect]="fadeEffect ? 'fade' : undefined"
+  [navigation]="{
+    prevEl: prevArrow,
+    nextEl: nextArrow
+  }"
+  [slidesPerView]="1"
+  [autoHeight]="true"
+  [loop]="false"
+  [grabCursor]="validCarouselItems.length > 1 && allowDrag"
+  [allowTouchMove]="validCarouselItems.length > 1 && allowDrag"
+  [autoplay]="autoplay ? { delay: autoplayTransitionTime } : false"
+  [initialSlide]="activeSlide"
+  (activeIndexChange)="onActiveSlideChange($event)"
+>
+  <ng-template swiperSlide *ngFor="let item of validCarouselItems">
+    <ng-container
+      *ngTemplateOutlet="slide; context: { $implicit: item }"
+    ></ng-container>
+  </ng-template>
+
+  <span slot="container-start">
+    <div class="w-full">
+      <div
+        class="arrows-wrapper"
+        [ngClass]="{
+          hidden: validCarouselItems.length < 2
+        }"
+      >
+        <div class="flex flex-row">
+          <div #prevArrow class="previous-arrow background-color-grey-2">
+            <audi-button
+              type="icon-large"
+              [isDisabled]="
+                prevArrow.classList.contains('swiper-button-disabled')
+              "
+            >
+              <audi-icon size="large" iconName="back"></audi-icon>
+            </audi-button>
+          </div>
+          <div #nextArrow class="next-arrow background-color-warm-silver">
+            <audi-button
+              type="icon-large"
+              [isDisabled]="
+                nextArrow.classList.contains('swiper-button-disabled')
+              "
+            >
+              <audi-icon size="large" iconName="forward"></audi-icon>
+            </audi-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </span>
+
+  <span slot="container-end">
+    <!-- DESKTOP -->
+    <div
+      class="pagination w-full my-4 hidden md:flex justify-center items-center"
+    >
+      <audi-indicator
+        [totalItems]="validCarouselItems.length"
+        [(currentItem)]="activeSlide"
+        (currentItemChange)="slideTo($event)"
+      ></audi-indicator>
+    </div>
+  </span>
+</swiper>
+
+<ng-template #slide let-item>
+  <div class="w-full">
+    <div
+      class="w-full flex flex-col-reverse md:grid md:grid-rows-1 md:grid-cols-6"
+    >
+      <div
+        class="md:col-span-3 lg:col-span-2"
+        [ngClass]="{
+          'background-color-grey-8': item.color === 'white',
+          'background-color-grey-2': item.color === 'black'
+        }"
+      >
+        <div class="slide-content flex flex-col w-full h-full p-6 md:p-8">
+          <ng-container *ngIf="!isNullOrEmptyString(item.title)">
+            <h2
+              class="
+                aui-headline-2
+                mb-3
+                text-center
+                md:text-left
+                text-truncate-ellipses
+              "
+              [ngClass]="{
+                'text-white': item.color === 'white',
+                'text-black': item.color === 'black'
+              }"
+            >
+              {{ item.title }}
+            </h2>
+          </ng-container>
+          <ng-container *ngIf="!isNullOrEmptyString(item.subTitle)">
+            <h3
+              class="
+                aui-headline-3
+                my-3
+                text-center
+                md:text-left
+                text-truncate-ellipses text-truncate-ellipses--2-lines
+              "
+              [ngClass]="{
+                'text-white': item.color === 'white',
+                'text-black': item.color === 'black'
+              }"
+            >
+              {{ item.subTitle }}
+            </h3>
+          </ng-container>
+          <ng-container *ngIf="!isNullOrEmptyString(item.body)">
+            <p
+              class="
+                my-3
+                text-center
+                md:text-left
+                text-truncate-ellipses text-truncate-ellipses--3-lines
+              "
+              [ngClass]="{
+                'text-white': item.color === 'white',
+                'text-black': item.color === 'black'
+              }"
+            >
+              {{ item.body }}
+            </p>
+          </ng-container>
+          <ng-container
+            *ngIf="
+              !isNullOrEmptyString(item.primaryButtonLabel) ||
+              !isNullOrEmptyString(item.secondaryButtonLabel)
+            "
+          >
+            <div class="my-3 md:mt-auto flex justify-center md:justify-start">
+              <a
+                *ngIf="!isNullOrEmptyString(item.primaryButtonLabel)"
+                [href]="item.primaryButtonUrl"
+                class="mr-1"
+              >
+                <audi-button
+                  [isLightTheme]="item.color === 'white'"
+                  type="primary"
+                >
+                  {{ item.primaryButtonLabel }}
+                </audi-button>
+              </a>
+              <a
+                *ngIf="!isNullOrEmptyString(item.secondaryButtonLabel)"
+                [href]="item.secondaryButtonUrl"
+              >
+                <audi-button
+                  [isLightTheme]="item.color === 'white'"
+                  type="secondary"
+                >
+                  {{ item.secondaryButtonLabel }}
+                </audi-button>
+              </a>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+      <div class="md:col-span-3 lg:col-span-4 relative">
+        <img class="slide-image object-cover w-full" [src]="item.photo.url" />
+        <!-- MOBILE -->
+        <div
+          class="
+            pagination
+            w-full
+            flex
+            md:hidden
+            justify-center
+            items-center
+            z-auto
+            absolute
+            bottom-0
+          "
+        >
+          <audi-indicator
+            [isImageBackground]="true"
+            [totalItems]="validCarouselItems.length"
+            [(currentItem)]="activeSlide"
+            (currentItemChange)="slideTo($event)"
+          ></audi-indicator>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

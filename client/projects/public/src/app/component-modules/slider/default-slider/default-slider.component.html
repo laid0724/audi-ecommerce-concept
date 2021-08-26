@@ -1,0 +1,84 @@
+<swiper
+  #swiper
+  [effect]="fadeEffect ? 'fade' : undefined"
+  [slidesPerView]="1"
+  [navigation]="
+    !indicatorOnly
+      ? {
+          prevEl: prevArrow,
+          nextEl: nextArrow
+        }
+      : false
+  "
+  [autoHeight]="true"
+  [loop]="false"
+  [grabCursor]="slides.length > 1 && allowDrag"
+  [allowTouchMove]="slides.length > 1 && allowDrag"
+  [autoplay]="autoplay ? { delay: autoplayTransitionTime } : false"
+  [initialSlide]="activeSlide"
+  (activeIndexChange)="onActiveSlideChange($event)"
+>
+  <ng-template swiperSlide *ngFor="let slide of slides">
+    <ng-container [ngTemplateOutlet]="slide.template"></ng-container>
+  </ng-template>
+
+  <span
+    slot="container-start"
+    [ngClass]="{
+      hidden: indicatorOnly || slides.length < 2
+    }"
+  >
+    <div
+      #prevArrow
+      class="previous-arrow"
+      [ngClass]="{
+        'previous-arrow--indicator-is-inside-slide': indicatorInSlide
+      }"
+    >
+      <audi-icon
+        class="clickable"
+        [ngClass]="{
+          'text-grey-5': !isLightTheme,
+          'text-white': isLightTheme
+        }"
+        [size]="'large'"
+        iconName="back"
+      ></audi-icon>
+    </div>
+
+    <div
+      #nextArrow
+      class="next-arrow"
+      [ngClass]="{
+        'next-arrow--indicator-is-inside-slide': indicatorInSlide
+      }"
+    >
+      <audi-icon
+        class="clickable"
+        [ngClass]="{
+          'text-grey-5': !isLightTheme,
+          'text-white': isLightTheme
+        }"
+        [size]="'large'"
+        iconName="forward"
+      ></audi-icon>
+    </div>
+  </span>
+
+  <span
+    slot="container-end"
+    class="pagination"
+    [ngClass]="{
+      'pagination--inside-slide': indicatorInSlide
+    }"
+  >
+    <audi-indicator
+      [isImageBackground]="indicatorInSlide"
+      [isLightTheme]="isLightTheme"
+      [isShadowed]="indicatorIsShadowed"
+      [totalItems]="slides.length"
+      [(currentItem)]="activeSlide"
+      (currentItemChange)="slideTo($event)"
+    ></audi-indicator>
+  </span>
+</swiper>

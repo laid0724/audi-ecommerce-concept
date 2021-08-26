@@ -1,0 +1,78 @@
+audi-multi-slides-per-view-slider {
+  .swiper-slide {
+    &-active > :first-child {
+      margin-left: auto;
+      margin-right: auto;
+    }
+    &-prev > :first-child {
+      margin-left: auto;
+      margin-right: 0;
+    }
+    &-next > :first-child {
+      margin-left: 0;
+      margin-right: auto;
+    }
+  }
+}
+
+.hero-slider-wrapper {
+  height: calc(100vh - #{unit(14)});
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  audi-hero-slider {
+    .arrows-wrapper {
+      z-index: 3;
+      position: absolute;
+      bottom: calc(#{unit(2)} + 4rem);
+      right: 0;
+      display: none;
+      @media (min-width: 768px) {
+        display: block;
+      }
+    }
+    .slide-image {
+      min-height: 45vh;
+      max-height: 45vh;
+      @media (min-width: 576px) {
+        max-height: 100%;
+        min-height: 60vh;
+      }
+      @media (min-width: 1900px) {
+        min-height: 70vh;
+      }
+    }
+  }
+}
+
+.featured-products-slider-wrapper {
+  height: calc(100vh - #{unit(14)});
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  audi-featured-products-slider {
+    .arrows-wrapper {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      display: none;
+      @media (min-width: 768px) {
+        display: block;
+      }
+    }
+
+    .slide-image {
+      min-height: 45vh;
+      max-height: 45vh;
+      @media (min-width: 576px) {
+        max-height: 100%;
+        min-height: 60vh;
+      }
+      @media (min-width: 1900px) {
+        min-height: 70vh;
+      }
+    }
+  }
+}

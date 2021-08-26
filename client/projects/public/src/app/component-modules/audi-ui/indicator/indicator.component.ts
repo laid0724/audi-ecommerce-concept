@@ -35,7 +35,20 @@ export class IndicatorComponent implements AfterViewInit {
   @Input() isShadowed: boolean = false;
 
   @Input() totalItems: number;
-  @Input() currentItem: number = 1;
+
+  _currentItem: number = 0;
+
+  get currentItem(): number {
+    return this._currentItem;
+  }
+
+  @Input('currentItem')
+  set currentItem(value: number) {
+    this._currentItem = value;
+
+    this.updateCurrentIndicator();
+  }
+
   @Output() currentItemChange: EventEmitter<number> =
     new EventEmitter<number>();
 
@@ -46,11 +59,15 @@ export class IndicatorComponent implements AfterViewInit {
     return [];
   }
 
+  indicators: any;
+
   ngAfterViewInit(): void {
     const audiIndicatorModules = initAudiModules(AudiModuleName.Indicator);
 
     audiIndicatorModules.forEach((indicatorModule: AudiComponents) => {
-      indicatorModule.components.upgradeElements();
+      this.indicators = indicatorModule.components.upgradeElements();
+
+      this.updateCurrentIndicator();
     });
   }
 
@@ -59,5 +76,13 @@ export class IndicatorComponent implements AfterViewInit {
       this.currentItem = i;
       this.currentItemChange.emit(this.currentItem);
     }
+  }
+
+  updateCurrentIndicator(): void {
+    setTimeout(() => {
+      this.indicators.forEach((indicator: any) =>
+        indicator.select(this.currentItem)
+      );
+    }, 0);
   }
 }

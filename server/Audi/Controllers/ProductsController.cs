@@ -474,7 +474,7 @@ namespace Audi.Controllers
 
             if (product == null) return NotFound("Product not found");
 
-            var result = await _photoService.AddPhotoAsync(file);
+            var result = await _photoService.AddPhotoAsync(file, "fill_pad");
 
             if (result.Error != null)
             {

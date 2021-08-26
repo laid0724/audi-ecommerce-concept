@@ -3,3 +3,15 @@
     display: flex;
   }
 }
+
+:host(.block) {
+  button.aui-button {
+    display: block;
+  }
+}
+
+:host(.w-full) {
+  button.aui-button {
+    width: 100%;
+  }
+}

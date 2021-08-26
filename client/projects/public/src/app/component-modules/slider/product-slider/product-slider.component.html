@@ -1,0 +1,67 @@
+<div class="container">
+  <swiper
+    #swiper
+    effect="fade"
+    [slidesPerView]="1"
+    [navigation]="{
+      prevEl: prevArrow,
+      nextEl: nextArrow
+    }"
+    [autoHeight]="true"
+    [loop]="false"
+    [grabCursor]="allowDrag"
+    [allowTouchMove]="allowDrag"
+    [autoplay]="autoplay ? { delay: autoplayTransitionTime } : false"
+    (activeIndexChange)="onActiveSlideChange($event)"
+  >
+    <ng-template swiperSlide *ngFor="let imgUrl of imgUrls">
+      <a
+        class="block magnifiable"
+        style="--aspect-ratio: 16/9"
+        data-fslightbox
+        data-type="image"
+        [href]="imgUrl"
+      >
+        <img [src]="imgUrl" class="object-cover" />
+      </a>
+    </ng-template>
+
+    <span
+      slot="container-end"
+      class="flex flex-col justify-center items-center"
+    >
+      <div class="flex flex-row">
+        <div #prevArrow class="previous-arrow background-color-grey-2">
+          <audi-button
+            type="icon-large"
+            [isDisabled]="
+              prevArrow.classList.contains('swiper-button-disabled')
+            "
+          >
+            <audi-icon size="large" iconName="back"></audi-icon>
+          </audi-button>
+        </div>
+        <div #nextArrow class="next-arrow background-color-warm-silver">
+          <audi-button
+            type="icon-large"
+            [isDisabled]="
+              nextArrow.classList.contains('swiper-button-disabled')
+            "
+          >
+            <audi-icon size="large" iconName="forward"></audi-icon>
+          </audi-button>
+        </div>
+      </div>
+      <div class="block my-2">
+        <div class="aui-pager">
+          <li class="aui-pager__item">
+            <span class="aui-pager__pagination"
+              ><span class="aui-pager__current">{{ activeSlide + 1 }}</span
+              >/{{ imgUrls.length }}</span
+            >
+          </li>
+        </div>
+      </div>
+    </span>
+  </swiper>
+</div>

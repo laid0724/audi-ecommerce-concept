@@ -1,0 +1,39 @@
+.previous-arrow,
+.next-arrow {
+  position: absolute;
+  top: calc(50% - 20px);
+  transform: translateY(-50%);
+  z-index: 2;
+
+  &--indicator-is-inside-slide {
+    top: 50%;
+  }
+
+  &.swiper-button-disabled {
+    audi-icon {
+      cursor: default !important;
+    }
+    opacity: 0.3;
+  }
+}
+
+.previous-arrow {
+  left: 0;
+}
+
+.next-arrow {
+  right: 0;
+}
+
+.pagination {
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &--inside-slide {
+    position: absolute;
+    bottom: 2%;
+    width: 100%;
+  }
+}

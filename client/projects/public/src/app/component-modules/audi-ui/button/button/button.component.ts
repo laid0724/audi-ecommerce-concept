@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Input } from '@angular/core';
 import { AudiModuleName, initAudiModules } from '@audi/data';
 import { AudiButton } from '../../enums';
 
@@ -57,15 +57,17 @@ import { AudiButton } from '../../enums';
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent implements AfterViewInit {
   @Input() type: AudiButton | string = AudiButton.Primary;
   @Input() isLightTheme: boolean = false;
   @Input() isDisabled: boolean = false;
   @Input() isActive: boolean = false;
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     initAudiModules(AudiModuleName.Response).forEach((button) =>
-      button.components?.upgradeElements()
+      setTimeout(() => {
+        button.components?.upgradeElements();
+      }, 0)
     );
   }
 }

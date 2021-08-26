@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Audi.Helpers;
 using Audi.Interfaces;
@@ -32,9 +33,20 @@ namespace Audi.Services
             _cloudinary = new Cloudinary(acc);
         }
 
-        public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file)
+        public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file, string croppingMode = "cover")
         {
+            var validCroppingModes = new List<string>() { "cover", "fill_pad" };
+
             var uploadResult = new ImageUploadResult();
+
+            if (string.IsNullOrWhiteSpace(croppingMode) || !validCroppingModes.Contains(croppingMode))
+            {
+                uploadResult.Error = new Error()
+                {
+                    Message = "invalid cropping mod"
+                };
+                return uploadResult;
+            }
 
             if (file.Length > 0)
             {
@@ -43,11 +55,25 @@ namespace Audi.Services
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
-                    Transformation = new Transformation()
+                    // see: https://cloudinary.com/documentation/resizing_and_cropping
+                };
+
+                if (croppingMode == "cover")
+                {
+                    uploadParams.Transformation = new Transformation()
                         .AspectRatio(16, 9)
                         .Crop("fill")
-                        .Gravity("center")
-                };
+                        .Gravity("center");
+                }
+
+                if (croppingMode == "fill_pad")
+                {
+                    uploadParams.Transformation = new Transformation()
+                        .AspectRatio(16, 9)
+                        .Crop("fill_pad")
+                        .Gravity("auto");
+                }
+
                 uploadResult = await _cloudinary.UploadAsync(uploadParams);
             }
             return uploadResult;
@@ -56,7 +82,7 @@ namespace Audi.Services
         public async Task<DeletionResult> DeletePhotoAsync(string publicId)
         {
             var deleteParams = new DeletionParams(publicId);
-            
+
             var result = await _cloudinary.DestroyAsync(deleteParams);
 
             return result;

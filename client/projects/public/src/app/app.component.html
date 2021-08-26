@@ -1,17 +1,13 @@
-<audi-header></audi-header>
+<!-- TODO: note - all RWD
+    - transloco & routing implementation
+    - nav menu expand
+    - footer
+    - homepage
+  -->
 
-<div class="aui-layout">
-  <div class="aui-grid">
-    <div class="aui-cell aui-cell--12">
-      <router-outlet></router-outlet>
-      <!-- TODO:
-          - carousel sliders: use swiper & fslightbox.js
-          - transloco & routing implementation
+<audi-nav></audi-nav>
 
-        -->
-    </div>
-  </div>
-</div>
+<router-outlet></router-outlet>
 
 <audi-alert-container-global></audi-alert-container-global>
 <audi-notification-container></audi-notification-container>
@@ -21,6 +17,19 @@
   [isContinuous]="true"
 ></audi-progress-bar>
 <audi-splash-screen></audi-splash-screen>
+
+<!--
+  audi grid system:
+  wrap component templates inside of this,
+  not in app component in case you want full screen sliders
+-->
+<!-- <div class="aui-layout">
+  <div class="aui-grid">
+    <div class="aui-cell aui-cell--12">
+
+    </div>
+  </div>
+</div> -->
 
 <!-- audi table template -->
 <!--

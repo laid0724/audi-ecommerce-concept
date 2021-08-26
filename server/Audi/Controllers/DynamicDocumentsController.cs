@@ -372,7 +372,7 @@ namespace Audi.Controllers
                 await this.DeleteFeaturedImage(dynamicDocumentId);
             }
 
-            var result = await _photoService.AddPhotoAsync(file);
+            var result = await _photoService.AddPhotoAsync(file, "cover");
 
             if (result.Error != null)
             {

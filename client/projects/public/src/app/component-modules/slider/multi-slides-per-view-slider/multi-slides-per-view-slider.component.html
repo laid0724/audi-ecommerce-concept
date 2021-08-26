@@ -1,0 +1,48 @@
+<swiper
+  #swiper
+  [slidesPerView]="!isDesktop ? 1 : slidesPerView"
+  [spaceBetween]="spaceBetween"
+  [centeredSlides]="true"
+  [centeredSlidesBounds]="true"
+  [centerInsufficientSlides]="true"
+  [navigation]="{
+    prevEl: prevArrow,
+    nextEl: nextArrow
+  }"
+  [autoHeight]="true"
+  [loop]="false"
+  [grabCursor]="true"
+  [allowTouchMove]="true"
+  [autoplay]="autoplay ? { delay: autoplayTransitionTime } : false"
+>
+  <!-- [breakpoints]="breakpoints" -->
+  <ng-template swiperSlide *ngFor="let slide of slides">
+    <ng-container [ngTemplateOutlet]="slide.template"></ng-container>
+  </ng-template>
+
+  <span slot="container-start">
+    <div #prevArrow class="previous-arrow">
+      <audi-icon
+        class="clickable"
+        [ngClass]="{
+          'text-grey-9': !isLightTheme,
+          'text-white': isLightTheme
+        }"
+        [size]="'large'"
+        iconName="back"
+      ></audi-icon>
+    </div>
+
+    <div #nextArrow class="next-arrow">
+      <audi-icon
+        class="clickable"
+        [ngClass]="{
+          'text-grey-9': !isLightTheme,
+          'text-white': isLightTheme
+        }"
+        [size]="'large'"
+        iconName="forward"
+      ></audi-icon>
+    </div>
+  </span>
+</swiper>

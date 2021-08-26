@@ -68,7 +68,162 @@
                       </button>
                     </div>
                     <div class="col-10">
-                      <div
+                      <div class="carousel-grid">
+                        <div
+                          class="carousel-grid-content w-100"
+                          [ngClass]="{
+                            'carousel-grid-content--bg-light':
+                              carouselItems[i].color ===
+                              carouselItemColors.Black,
+                            'carousel-grid-content--bg-dark':
+                              carouselItems[i].color ===
+                              carouselItemColors.White
+                          }"
+                        >
+                          <div class="carousel-grid-content-wrapper">
+                            <h5
+                              class="
+                                h5
+                                my-auto
+                                z-index-2
+                                text-truncate-ellipses
+                              "
+                              [ngClass]="{
+                                'text-black':
+                                  carouselItems[i].color ===
+                                  carouselItemColors.Black,
+                                'text-white':
+                                  carouselItems[i].color ===
+                                  carouselItemColors.White
+                              }"
+                              *ngIf="
+                                !isNullOrEmptyString(carouselItems[i].title)
+                              "
+                            >
+                              {{ carouselItems[i].title }}
+                            </h5>
+                            <h6
+                              class="
+                                h6
+                                my-auto
+                                z-index-2
+                                text-truncate-ellipses
+                                text-truncate-ellipses--2-lines
+                              "
+                              [ngClass]="{
+                                'text-black':
+                                  carouselItems[i].color ===
+                                  carouselItemColors.Black,
+                                'text-white':
+                                  carouselItems[i].color ===
+                                  carouselItemColors.White
+                              }"
+                              *ngIf="
+                                !isNullOrEmptyString(carouselItems[i].subTitle)
+                              "
+                            >
+                              {{ carouselItems[i].subTitle }}
+                            </h6>
+                            <p
+                              class="
+                                p5
+                                my-auto
+                                z-index-2
+                                text-truncate-ellipses
+                                text-truncate-ellipses--3-lines
+                              "
+                              [ngClass]="{
+                                'text-black':
+                                  carouselItems[i].color ===
+                                  carouselItemColors.Black,
+                                'text-white':
+                                  carouselItems[i].color ===
+                                  carouselItemColors.White
+                              }"
+                              *ngIf="
+                                !isNullOrEmptyString(carouselItems[i].body)
+                              "
+                            >
+                              {{ carouselItems[i].body }}
+                            </p>
+                            <div class="d-flex mt-auto z-index-2">
+                              <a
+                                *ngIf="
+                                  !isNullOrEmptyString(
+                                    carouselItems[i].primaryButtonLabel
+                                  )
+                                "
+                                [attr.href]="
+                                  !isNullOrEmptyString(
+                                    carouselItems[i].primaryButtonUrl
+                                  )
+                                    ? carouselItems[i].primaryButtonUrl
+                                    : null
+                                "
+                                target="_blank"
+                              >
+                                <button
+                                  class="btn btn-sm"
+                                  [ngClass]="{
+                                    'btn-primary':
+                                      carouselItems[i].color ===
+                                      carouselItemColors.Black,
+                                    'btn-info':
+                                      carouselItems[i].color ===
+                                      carouselItemColors.White
+                                  }"
+                                  type="button"
+                                >
+                                  {{ carouselItems[i].primaryButtonLabel }}
+                                </button>
+                              </a>
+                              <a
+                                *ngIf="
+                                  !isNullOrEmptyString(
+                                    carouselItems[i].secondaryButtonLabel
+                                  )
+                                "
+                                [attr.href]="
+                                  !isNullOrEmptyString(
+                                    carouselItems[i].secondaryButtonUrl
+                                  )
+                                    ? carouselItems[i].secondaryButtonUrl
+                                    : null
+                                "
+                                target="_blank"
+                              >
+                                <button
+                                  class="btn btn-sm"
+                                  [ngClass]="{
+                                    'btn-outline':
+                                      carouselItems[i].color ===
+                                      carouselItemColors.Black,
+                                    'btn-inverse':
+                                      carouselItems[i].color ===
+                                      carouselItemColors.White
+                                  }"
+                                  type="button"
+                                >
+                                  {{ carouselItems[i].secondaryButtonLabel }}
+                                </button>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="carousel-grid-image"
+                          [ngStyle]="{
+                            backgroundImage: !isNullOrEmptyString(
+                              carouselItems[i]?.photo?.url
+                            )
+                              ? 'url(' + carouselItems[i].photo.url + ')'
+                              : null
+                          }"
+                        ></div>
+                      </div>
+
+                      <!-- DEFAULT SLIDER STYLE -->
+                      <!-- <div
                         class="carousel-item-wrapper"
                         style="--aspect-ratio: 16/9"
                       >
@@ -200,7 +355,7 @@
                             </a>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
                     </div>
                     <div
                       class="
@@ -498,7 +653,7 @@
         (imageChanges)="onCarouselItemPhotoChange($event)"
       ></audi-sys-featured-image-uploader>
 
-      <clr-select-container class="clr-select-width mt-0">
+      <clr-select-container class="clr-select-width">
         <label>顏色 Color</label>
         <select clrSelect formControlName="color">
           <option

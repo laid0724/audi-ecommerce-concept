@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { AccountService, BusyService, Roles, User } from '@audi/data';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -10,12 +16,13 @@ import { NotificationService } from './component-modules/audi-ui/services/notifi
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
   destroy$ = new Subject<boolean>();
 
   isLoadingApiRequests$: Observable<boolean>;
 
   constructor(
+    private cdr: ChangeDetectorRef,
     private accountService: AccountService,
     private busyService: BusyService,
     private notificationService: NotificationService,
@@ -28,6 +35,12 @@ export class AppComponent implements OnInit, OnDestroy {
     this.isLoadingApiRequests$ = this.busyService.isBusy$.pipe(
       takeUntil(this.destroy$)
     );
+  }
+
+  ngAfterViewChecked(): void {
+    // this is necessary because angular will throw after view checked error
+    // everytime isBusy state changes for the progress bar
+    this.cdr.detectChanges();
   }
 
   setUserFromLocalStorage(): void {

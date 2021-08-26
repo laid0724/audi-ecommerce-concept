@@ -11,6 +11,78 @@
     fill: $audi-black !important;
   }
 
+  &-grey-1 {
+    color: $audi-grey-1 !important;
+    stroke: $audi-grey-1 !important;
+    fill: $audi-grey-1 !important;
+  }
+
+  &-grey-2 {
+    color: $audi-grey-2 !important;
+    stroke: $audi-grey-2 !important;
+    fill: $audi-grey-2 !important;
+  }
+
+  &-grey-3 {
+    color: $audi-grey-3 !important;
+    stroke: $audi-grey-3 !important;
+    fill: $audi-grey-3 !important;
+  }
+
+  &-grey-4 {
+    color: $audi-grey-4 !important;
+    stroke: $audi-grey-4 !important;
+    fill: $audi-grey-4 !important;
+  }
+
+  &-grey-5 {
+    color: $audi-grey-5 !important;
+    stroke: $audi-grey-5 !important;
+    fill: $audi-grey-5 !important;
+  }
+
+  &-grey-6 {
+    color: $audi-grey-6 !important;
+    stroke: $audi-grey-6 !important;
+    fill: $audi-grey-6 !important;
+  }
+
+  &-grey-7 {
+    color: $audi-grey-7 !important;
+    stroke: $audi-grey-7 !important;
+    fill: $audi-grey-7 !important;
+  }
+
+  &-grey-8 {
+    color: $audi-grey-8 !important;
+    stroke: $audi-grey-8 !important;
+    fill: $audi-grey-8 !important;
+  }
+
+  &-grey-9 {
+    color: $audi-grey-9 !important;
+    stroke: $audi-grey-9 !important;
+    fill: $audi-grey-9 !important;
+  }
+
+  &-grey-10 {
+    color: $audi-grey-10 !important;
+    stroke: $audi-grey-10 !important;
+    fill: $audi-grey-10 !important;
+  }
+
+  &-grey-11 {
+    color: $audi-grey-11 !important;
+    stroke: $audi-grey-11 !important;
+    fill: $audi-grey-11 !important;
+  }
+
+  &-warm-silver {
+    color: $audi-warm-silver !important;
+    stroke: $audi-warm-silver !important;
+    fill: $audi-warm-silver !important;
+  }
+
   &-green,
   &-success {
     color: $audi-success !important;
@@ -36,5 +108,30 @@
     color: $audi-red !important;
     stroke: $audi-red !important;
     fill: $audi-red !important;
+  }
+
+  &-truncate-ellipses {
+    // see: https://stackoverflow.com/questions/3922739/limit-text-length-to-n-lines-using-css
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    white-space: wrap;
+    display: inline-block;
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* number of lines to show */
+    -webkit-box-orient: vertical;
+
+    &--2-lines {
+      -webkit-line-clamp: 2; /* number of lines to show */
+    }
+    &--3-lines {
+      -webkit-line-clamp: 3; /* number of lines to show */
+    }
+    &--4-lines {
+      -webkit-line-clamp: 3; /* number of lines to show */
+    }
+    &--5-lines {
+      -webkit-line-clamp: 3; /* number of lines to show */
+    }
   }
 }
