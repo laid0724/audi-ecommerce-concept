@@ -12,8 +12,8 @@
   "
   [autoHeight]="true"
   [loop]="false"
-  [grabCursor]="allowDrag"
-  [allowTouchMove]="allowDrag"
+  [grabCursor]="slides.length > 1 && allowDrag"
+  [allowTouchMove]="slides.length > 1 && allowDrag"
   [autoplay]="autoplay ? { delay: autoplayTransitionTime } : false"
   [initialSlide]="activeSlide"
   (activeIndexChange)="onActiveSlideChange($event)"
@@ -25,7 +25,7 @@
   <span
     slot="container-start"
     [ngClass]="{
-      hidden: indicatorOnly
+      hidden: indicatorOnly || slides.length < 2
     }"
   >
     <div

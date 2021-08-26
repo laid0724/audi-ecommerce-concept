@@ -1,1 +1,20 @@
-<div class="background-color-white" style="height: 200vh"></div>
+<ng-container *ngIf="homepageData$ | async; let data">
+  <!-- TODO: replace this wrapper with fullpage.js -->
+  <div class="background-color-white" style="height: 200vh">
+    <div class="aui-layout">
+      <div class="aui-grid">
+        <div class="aui-cell aui-cell--12 hero-slider-wrapper">
+          <div class="w-full">
+            <audi-hero-slider
+              [fadeEffect]="true"
+              [autoplay]="false"
+              [allowDrag]="true"
+              [carouselItems]="data.carouselItems"
+            >
+            </audi-hero-slider>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

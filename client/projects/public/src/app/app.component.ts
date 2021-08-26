@@ -38,6 +38,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
   }
 
   ngAfterViewChecked(): void {
+    // this is necessary because angular will throw after view checked error
+    // everytime isBusy state changes for the progress bar
     this.cdr.detectChanges();
   }
 
