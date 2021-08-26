@@ -120,14 +120,10 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - RWD
 - Angular universal
 - fullpage angular
-- Swiper - 3 styles
-  1. homepage banner
-  2. product recommendation
-  3. product photos
 - en/zh switch using transloco
 - not found
 - server error
-- homepage with following sections: hero carousel, latest news/events/promotions, featured product, latest product, misc
+- homepage with following sections: hero carousel, branding, latest news/events/promotions, featured product, latest product, misc
 - live chat
 - product list
 - user like product feature
@@ -139,5 +135,5 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - login / register / update user info
 - cancel / track order
 - member's area
-- nav
+- expanded nav
 - footer
