@@ -6,9 +6,10 @@ import { IndicatorModule } from '../../audi-ui/indicator/indicator.module';
 import { SwiperModule } from 'swiper/angular';
 import { PipesModule } from '@audi/data';
 
-import { HeroSliderComponent } from './hero-slider.component';
+import { FeaturedProductsSliderComponent } from './featured-products-slider.component';
 
-const COMPONENTS = [HeroSliderComponent];
+
+const COMPONENTS = [FeaturedProductsSliderComponent];
 
 @NgModule({
   declarations: [...COMPONENTS],
@@ -22,4 +23,4 @@ const COMPONENTS = [HeroSliderComponent];
   ],
   exports: [...COMPONENTS],
 })
-export class HeroSliderModule {}
+export class FeaturedProductsSliderModule {}

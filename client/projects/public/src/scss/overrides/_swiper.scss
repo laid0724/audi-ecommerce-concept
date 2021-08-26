@@ -45,3 +45,34 @@ audi-multi-slides-per-view-slider {
     }
   }
 }
+
+.featured-products-slider-wrapper {
+  height: calc(100vh - #{unit(14)});
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  audi-featured-products-slider {
+    .arrows-wrapper {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      display: none;
+      @media (min-width: 768px) {
+        display: block;
+      }
+    }
+
+    .slide-image {
+      min-height: 45vh;
+      max-height: 45vh;
+      @media (min-width: 576px) {
+        max-height: 100%;
+        min-height: 60vh;
+      }
+      @media (min-width: 1900px) {
+        min-height: 70vh;
+      }
+    }
+  }
+}
