@@ -202,11 +202,16 @@ export class ProductVariantEditorComponent implements OnInit {
   toggleEditVariantModal(variantId?: number): void {
     const variantIdControl = this.variantForm.get('id');
     const variantNameControl = this.variantForm.get('name');
+    const variantValueLabelControl = this.variantForm.get('variantValueLabel');
 
     if (variantId) {
       variantIdControl?.patchValue(variantId);
       variantNameControl?.patchValue(
         this.productVariants.find((pv) => pv.id === variantId)?.name
+      );
+      variantValueLabelControl?.patchValue(
+        this.productVariants.find((pv) => pv.id === variantId)
+          ?.variantValueLabel
       );
     } else {
       this.variantForm.reset({
