@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { LanguageCode, LanguageStateService } from '@audi/data';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'audi-nav',
@@ -8,7 +10,9 @@ import { Component, OnInit } from '@angular/core';
 export class NavComponent implements OnInit {
   menuIsOpen = false;
 
-  constructor() {}
+  language$: Observable<LanguageCode> = this.languageService.language$;
+
+  constructor(private languageService: LanguageStateService) {}
 
   ngOnInit(): void {}
 

@@ -14,7 +14,6 @@ import {
   ProductVariantValue,
 } from '@audi/data';
 import { ClrForm } from '@clr/angular';
-import { indexOf } from 'lodash';
 import { take } from 'rxjs/operators';
 
 @Component({

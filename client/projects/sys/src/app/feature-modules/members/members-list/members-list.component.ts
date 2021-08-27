@@ -104,7 +104,7 @@ export class MembersListComponent implements OnInit, OnDestroy {
   ) {
     // this will restart component when hitting the same route,
     // this way refresher will fire again when we reset query params
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   ngOnInit(): void {

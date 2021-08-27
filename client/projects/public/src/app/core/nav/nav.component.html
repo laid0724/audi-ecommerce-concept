@@ -7,31 +7,15 @@
       ></audi-icon>
     </audi-button>
     <audi-button type="icon">
-      <a [routerLink]="['']" class="w-20 flex items-center justify-center">
+      <a
+        [routerLink]="['/', language$ | async, 'home']"
+        class="w-20 flex items-center justify-center"
+      >
         <img src="assets/audi-logo-black.svg" class="w-full" />
       </a>
     </audi-button>
     <div class="w-12 flex items-center justify-center">
-      <audi-flyout [isLightTheme]="false" position="center">
-        <audi-button
-          type="icon"
-          #triggeringElement
-          flyoutTriggerSetter
-          [applyToInnerElement]="true"
-        >
-          <audi-icon size="small" iconName="languages"></audi-icon>
-        </audi-button>
-        <div class="flyout-content">
-          <audi-nav-list [isLightTheme]="false">
-            <audi-nav-item>
-              <p class="text-center w-full">中文 ZH</p>
-            </audi-nav-item>
-            <audi-nav-item class="text-center w-full">
-              <p class="text-center w-full">English EN</p>
-            </audi-nav-item>
-          </audi-nav-list>
-        </div>
-      </audi-flyout>
+      <audi-language-selector></audi-language-selector>
     </div>
   </div>
 </audi-header>
