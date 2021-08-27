@@ -15,6 +15,7 @@ import { AppComponent } from './app.component';
 import { AudiUiModule } from './component-modules/audi-ui/audi-ui.module';
 import { CoreModule } from './core/core.module';
 import { SplashScreenModule } from './feature-modules/splash-screen/splash-screen.module';
+import { TranslocoRootModule } from './transloco/transloco-root.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +27,7 @@ import { SplashScreenModule } from './feature-modules/splash-screen/splash-scree
     AudiUiModule,
     SplashScreenModule,
     CoreModule,
+    TranslocoRootModule,
   ],
   providers: [
     ErrorInterceptorProvider,
