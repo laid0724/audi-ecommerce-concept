@@ -9,7 +9,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { BusyService } from '@audi/data';
+import { BusyService, LanguageStateService } from '@audi/data';
 import { Subscription } from 'rxjs';
 import { SplashScreenStateService } from '../services/splash-screen-state-service/splash-screen-state.service';
 
@@ -31,12 +31,15 @@ export class SplashScreenComponent implements OnInit, AfterViewInit, OnDestroy {
   isMobile: boolean = false;
   isBusy: boolean = true;
 
+  language$ = this.languageService._language$;
+
   _breakpointObserverSubscription: Subscription;
   _isBusySubscription: Subscription;
 
   constructor(
     private splashScreenStateService: SplashScreenStateService,
     private busyService: BusyService,
+    private languageService: LanguageStateService,
     private renderer: Renderer2,
     private breakpointObserver: BreakpointObserver,
     private cdr: ChangeDetectorRef

@@ -9,20 +9,26 @@
   ></audi-spinner>
 
   <!-- see: https://stackoverflow.com/questions/53756695/angular-html-fullscreen-video-autoplay-not-working -->
-  <video
-    *ngIf="!isMobile && !isBusy"
-    #audiLandingVideo
-    (canplay)="audiLandingVideo.play()"
-    (loadedmetadata)="audiLandingVideo.muted = true"
-    (ended)="onSplashVideoEnded()"
-    [ngClass]="{
-      hidden: !videoIsLoaded,
-      block: videoIsLoaded
-    }"
-  >
-    <source
-      src="assets/videos/audi-splash-screen-dynamic-bg.mp4"
-      type="video/mp4"
-    />
-  </video>
+  <ng-container *ngIf="language$ | async; let language">
+    <video
+      *ngIf="!isMobile && !isBusy"
+      #audiLandingVideo
+      (canplay)="audiLandingVideo.play()"
+      (loadedmetadata)="audiLandingVideo.muted = true"
+      (ended)="onSplashVideoEnded()"
+      [ngClass]="{
+        hidden: !videoIsLoaded,
+        block: videoIsLoaded
+      }"
+    >
+      <source
+        [src]="
+          language === 'en'
+            ? 'assets/videos/audi-splash-screen-dynamic-bg-de.mp4'
+            : 'assets/videos/audi-splash-screen-dynamic-bg.mp4'
+        "
+        type="video/mp4"
+      />
+    </video>
+  </ng-container>
 </div>

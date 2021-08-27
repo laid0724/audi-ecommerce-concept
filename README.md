@@ -120,7 +120,6 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - RWD
 - Angular universal
 - fullpage angular
-- en/zh switch using transloco
 - not found
 - server error
 - homepage with following sections: hero carousel, branding, latest news/events/promotions, featured product, latest product, misc

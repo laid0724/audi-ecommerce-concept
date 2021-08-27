@@ -5,6 +5,7 @@ import { IconModule } from '../../audi-ui/icon/icon.module';
 import { IndicatorModule } from '../../audi-ui/indicator/indicator.module';
 import { SwiperModule } from 'swiper/angular';
 import { PipesModule } from '@audi/data';
+import { TranslocoModule } from '@ngneat/transloco';
 
 import { FeaturedProductsSliderComponent } from './featured-products-slider.component';
 
@@ -20,6 +21,7 @@ const COMPONENTS = [FeaturedProductsSliderComponent];
     IconModule,
     IndicatorModule,
     PipesModule,
+    TranslocoModule
   ],
   exports: [...COMPONENTS],
 })

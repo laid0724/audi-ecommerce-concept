@@ -64,7 +64,10 @@
             (currentItemChange)="slideTo($event)"
           ></audi-indicator>
         </div>
-        <div class="arrows-wrapper hidden md:flex flex-row">
+        <div
+          *ngIf="validProducts.length > 1"
+          class="arrows-wrapper hidden md:flex flex-row"
+        >
           <div #prevArrow class="previous-arrow background-color-grey-2">
             <audi-button
               type="icon-large"
@@ -131,7 +134,6 @@
 
           <div class="md:mt-auto">
             <ng-container *ngIf="product.isDiscounted">
-              <!-- TODO: transloco -->
               <div
                 class="
                   my-3
@@ -142,18 +144,29 @@
                 "
               >
                 <h6 class="aui-headline-6 mr-1 text-red">
-                  > 優惠價 NT{{
+                  >
+                  <ng-container
+                    *transloco="let translationOutput; read: 'pricing'"
+                  >
+                    {{
+                      translationOutput('discountedPriceLabel')
+                    }} </ng-container
+                  >NT {{
                     (product.price - product.discountAmount).toLocaleString()
                   }}
                 </h6>
                 <small class="line-through text-grey-8"
-                  >(原價 NT{{ product.price.toLocaleString() }})</small
+                  >(<ng-container
+                    *transloco="let translationOutput; read: 'pricing'"
+                    >{{ translationOutput('originalPriceLabel') }}</ng-container
+                  >NT {{ product.price.toLocaleString() }})</small
                 >
               </div>
             </ng-container>
             <audi-button type="primary" class="block w-full mt-5 md:mt-10">
-              <!-- TODO: transloco -->
-              了解更多
+              <ng-container *transloco="let translationOutput">
+                {{ translationOutput('learnMore') }}
+              </ng-container>
             </audi-button>
           </div>
         </div>

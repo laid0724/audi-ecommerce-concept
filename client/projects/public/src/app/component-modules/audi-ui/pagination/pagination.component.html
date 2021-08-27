@@ -16,9 +16,11 @@
           <svg viewBox="0 0 8 13"><path d="M1.5,1 l6,6 l-6,6" /></svg>
         </i>
         <!-- Previous Text -->
-        <span class="aui-pager__prev-text ml-4" *ngIf="type === 'prev-next'"
-          >Previous</span
-        >
+        <span class="aui-pager__prev-text ml-4" *ngIf="type === 'prev-next'">
+          <ng-container *transloco="let translationOutput; read: 'pagination'">
+            {{ translationOutput('previous') }}
+          </ng-container>
+        </span>
       </a>
     </li>
     <!-- Mobile Current Page Indicator -->
@@ -42,9 +44,11 @@
         "
       >
         <!-- Next Text -->
-        <span class="aui-pager__next-text mr-4" *ngIf="type === 'prev-next'"
-          >Next</span
-        >
+        <span class="aui-pager__next-text mr-4" *ngIf="type === 'prev-next'">
+          <ng-container *transloco="let translationOutput; read: 'pagination'">
+            {{ translationOutput('next') }}
+          </ng-container>
+        </span>
         <i class="aui-pager__next-icon">
           <svg viewBox="0 0 8 13"><path d="M1.5,1 l6,6 l-6,6" /></svg>
         </i>

@@ -1,0 +1,38 @@
+<audi-flyout
+  [isLightTheme]="false"
+  position="center"
+  *ngIf="language$ | async; let language"
+>
+  <audi-button
+    type="icon"
+    #triggeringElement
+    flyoutTriggerSetter
+    [applyToInnerElement]="true"
+  >
+    <audi-icon size="small" iconName="languages"></audi-icon>
+  </audi-button>
+  <div class="flyout-content">
+    <audi-nav-list [isLightTheme]="false">
+      <audi-nav-item
+        [isActive]="language === LanguageCode.Zh"
+        (click)="
+          language !== LanguageCode.Zh
+            ? onSelectLanguage(LanguageCode.Zh)
+            : null
+        "
+      >
+        <p class="text-center w-full">中文 ZH</p>
+      </audi-nav-item>
+      <audi-nav-item
+        [isActive]="language === LanguageCode.En"
+        (click)="
+          language !== LanguageCode.En
+            ? onSelectLanguage(LanguageCode.En)
+            : null
+        "
+      >
+        <p class="text-center w-full">English EN</p>
+      </audi-nav-item>
+    </audi-nav-list>
+  </div>
+</audi-flyout>

@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { SpacedCommaPipe } from './spaced-comma.pipe';
 import { EllipsisPipe } from './ellipsis.pipe';
 import { SafeHtmlPipe } from './safe-html.pipe';
-import { ToCasePipe } from './to-case.pipe';
 import { StringPipe } from './string.pipe';
 import { SortPipe } from './sort.pipe';
 import { SlugPipe } from './slug.pipe';
@@ -22,7 +21,6 @@ const PIPES = [
   SpacedCommaPipe,
   EllipsisPipe,
   SafeHtmlPipe,
-  ToCasePipe,
   StringPipe,
   SortPipe,
   SlugPipe,

@@ -19,7 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   toastr: ToastrService | null;
 
   constructor(
-    @Inject(INJECT_TOASTR) private useToastr: boolean,
+    @Inject(INJECT_TOASTR) private injectToastr: boolean,
     @Optional() private audiNotificationService: NotificationService,
     private injector: Injector,
     private router: Router
@@ -28,7 +28,7 @@ export class ErrorInterceptor implements HttpInterceptor {
     // i am doing this because the @Optional decorator does not work with toastr service, as it insists on looking for its module when injected
     // see: https://stackoverflow.com/questions/43450259/how-to-conditionally-inject-service-into-component
     // and see: https://stackoverflow.com/questions/52110168/angular-6-is-it-possible-to-inject-service-by-condition
-    if (useToastr) {
+    if (injectToastr) {
       this.toastr = injector.get<ToastrService>(ToastrService);
     }
   }

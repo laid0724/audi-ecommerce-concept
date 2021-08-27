@@ -8,6 +8,7 @@ import {
 import { AccountService, BusyService, Roles, User } from '@audi/data';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { TranslocoService } from '@ngneat/transloco';
 import { AlertService } from './component-modules/audi-ui/services/alert-service/alert.service';
 import { NotificationService } from './component-modules/audi-ui/services/notification-service/notification.service';
 
@@ -26,7 +27,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
     private accountService: AccountService,
     private busyService: BusyService,
     private notificationService: NotificationService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private transloco: TranslocoService
   ) {}
 
   ngOnInit(): void {
@@ -69,8 +71,9 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   directUserBasedOnRole(isRightRole: boolean): void {
     if (!isRightRole) {
-      // TODO: transloco
-      this.notificationService.error('你不是會員 You are not a member');
+      this.notificationService.error(
+        this.transloco.translate('errorMessages.notMember')
+      );
       this.accountService.logout();
     }
   }

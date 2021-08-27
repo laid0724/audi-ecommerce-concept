@@ -3,6 +3,7 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { HomepageService } from '@audi/data';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'audi-home',
@@ -17,8 +18,14 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private homepageService: HomepageService,
-    private breakpointObserver: BreakpointObserver
-  ) {}
+    private breakpointObserver: BreakpointObserver,
+    private router: Router
+  ) {
+    // this will restart component when hitting the same route,
+    // this way component will reload when we change route params
+    // e.g., when we switch language
+    router.routeReuseStrategy.shouldReuseRoute = () => false;
+  }
 
   ngOnInit(): void {
     this._breakpointObserverSubscription = this.breakpointObserver
