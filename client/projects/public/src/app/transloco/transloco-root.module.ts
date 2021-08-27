@@ -33,6 +33,9 @@ export class TranslocoHttpLoader implements TranslocoLoader {
         availableLangs: ['en', 'zh'],
         defaultLang: 'zh',
         fallbackLang: 'zh',
+        missingHandler: {
+          allowEmpty: true
+        },
         // Remove this option if your application doesn't support changing language in runtime.
         reRenderOnLangChange: true,
         prodMode: environment.production,
