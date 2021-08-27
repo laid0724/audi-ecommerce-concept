@@ -1,10 +1,7 @@
 <audi-header>
   <div class="w-screen flex items-center justify-between">
     <audi-button type="icon-large" (click)="toggleMenuState()">
-      <audi-icon
-        size="large"
-        [iconName]="menuIsOpen ? 'cancel' : 'off-canvas'"
-      ></audi-icon>
+      <audi-icon size="large" [iconName]="'off-canvas'"></audi-icon>
     </audi-button>
     <audi-button type="icon">
       <a
@@ -19,3 +16,26 @@
     </div>
   </div>
 </audi-header>
+
+<div
+  #menu
+  class="audi-side-nav"
+  [ngClass]="{
+    active: menuIsOpen
+  }"
+>
+  <div class="audi-side-nav__overlay"></div>
+  <div class="audi-side-nav__menu-container">
+    <div class="audi-side-nav__menu-close-btn-wrapper">
+      <div
+        class="audi-side-nav__menu-close-btn"
+        [ngClass]="{ 'inactive-animation': !isPristine && !menuIsOpen }"
+      >
+        <audi-button type="icon-large" (click)="toggleMenuState()">
+          <audi-icon size="large" [iconName]="'cancel'"></audi-icon>
+        </audi-button>
+      </div>
+    </div>
+    <div class="audi-side-nav__menu"></div>
+  </div>
+</div>

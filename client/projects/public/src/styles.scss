@@ -19,6 +19,13 @@ a {
   cursor: pointer;
 }
 
+body {
+  &.scroll-disabled {
+    height: 100%;
+    overflow-y: hidden;
+  }
+}
+
 .clickable {
   cursor: pointer;
 }

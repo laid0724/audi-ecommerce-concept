@@ -1,0 +1,108 @@
+/*
+  NOTE: aui-header has a z-index of 100
+  we want the overlay to be right behind the header,
+  but the side nav to be right on top of it.
+*/
+
+$audi-logo-width: 80px;
+$audi-header-height: 56px;
+
+.audi-side-nav {
+  * {
+    transition: 1s;
+    transition-timing-function: cubic-bezier(0.75, 0.02, 0.5, 1);
+  }
+
+  &.active &__overlay {
+    opacity: 0.8;
+    z-index: 99;
+  }
+
+  &.active &__menu-container {
+    width: 100vw;
+    max-width: 100vw;
+
+    @media (min-width: 768px) {
+      width: calc(50vw - #{$audi-logo-width});
+      max-width: calc(50vw - #{$audi-logo-width});
+    }
+  }
+
+  &.active &__menu-close-btn {
+    animation: appear 1s var(--audi-transition-timing-function) forwards;
+    display: inline-flex;
+  }
+
+  &__overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--audi-black);
+    opacity: 0;
+    z-index: -1;
+  }
+
+  &__menu {
+    display: flex;
+
+    &-container {
+      position: fixed;
+      background-color: white;
+      width: 0;
+      max-width: 0;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 101;
+    }
+
+    &-close-btn {
+      margin-left: auto;
+      display: none;
+
+      &.inactive-animation {
+        animation: disappear 1s var(--audi-transition-timing-function) forwards;
+        display: inline-flex;
+      }
+
+      &-wrapper {
+        height: $audi-header-height;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    display: none;
+  }
+
+  to {
+    opacity: 1;
+    display: inline-flex;
+  }
+}
+
+@keyframes disappear {
+  0% {
+    opacity: 1;
+    display: inline-flex;
+  }
+
+  99% {
+    opacity: 0;
+    display: inline-flex;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
