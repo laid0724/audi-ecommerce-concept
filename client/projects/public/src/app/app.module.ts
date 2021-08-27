@@ -9,6 +9,7 @@ import {
   LanguageHeaderInterceptorProvider,
   LanguageSelectorResolver,
   INJECT_TOASTR,
+  INJECT_TRANSLOCO,
 } from '@audi/data';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,6 +39,10 @@ import { TranslocoRootModule } from './transloco/transloco-root.module';
     {
       provide: INJECT_TOASTR,
       useValue: false,
+    },
+    {
+      provide: INJECT_TRANSLOCO,
+      useValue: true,
     },
   ],
   bootstrap: [AppComponent],

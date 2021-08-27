@@ -1,5 +1,6 @@
-import { Injectable, OnDestroy } from '@angular/core';
+import { Inject, Injectable, Injector, OnDestroy } from '@angular/core';
 import { LanguageCode } from '../enums';
+import { INJECT_TRANSLOCO } from '../tokens';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
 import {
@@ -9,6 +10,7 @@ import {
   ParamMap,
   Event,
 } from '@angular/router';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable({
   providedIn: 'root',
@@ -17,19 +19,37 @@ export class LanguageStateService implements OnDestroy {
   _language$ = new BehaviorSubject<LanguageCode>(LanguageCode.Zh);
   language$ = this._language$.asObservable().pipe(distinctUntilChanged());
 
+  transloco: TranslocoService | null;
+
   destroy$ = new Subject<boolean>();
 
-  constructor(private router: Router) {
+  constructor(
+    @Inject(INJECT_TRANSLOCO) private injectTransloco: boolean,
+    private injector: Injector,
+    private router: Router
+  ) {
     // the only lifecycle hook available to services is OnDestroy,
-    // so im doing this in the constructor instead of OnInit
+    // so im doing these in the constructor instead of OnInit
+
+    /*
+      here, we are using injector to conditionally inject the transloco service based on the INJECT_TRANSLOCO token.
+      i am doing this because the @Optional decorator does not work with transloco service, as it insists on looking for its module when injected
+      see: https://stackoverflow.com/questions/43450259/how-to-conditionally-inject-service-into-component
+      and see: https://stackoverflow.com/questions/52110168/angular-6-is-it-possible-to-inject-service-by-condition
+    */
+    if (injectTransloco) {
+      this.transloco = injector.get<TranslocoService>(TranslocoService);
+    }
+
+    /*
+      doing the following to get router params in a service
+      (because cannot get any params by injecting and using ActivatedRoute in a service's constructor)
+      see: https://stackoverflow.com/questions/40219790/angular-2-get-routeparams-in-a-service
+    */
 
     const validLanguageCodes = Object.keys(LanguageCode).map(
       (key) => (LanguageCode as any)[key]
     );
-
-    // doing this to get router params in a service
-    // (because cannot get any params by injecting and using ActivatedRoute in a service's constructor)
-    // see: https://stackoverflow.com/questions/40219790/angular-2-get-routeparams-in-a-service
 
     const getLeafRoute = (
       route: ActivatedRoute
@@ -72,6 +92,7 @@ export class LanguageStateService implements OnDestroy {
 
   selectLanguage(language: LanguageCode): void {
     this._language$.next(language);
+    this.transloco?.setActiveLang(language);
   }
 
   getCurrentLanguage(): LanguageCode {
