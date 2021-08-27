@@ -11,7 +11,7 @@
   },
   "learnMore": "Learn More",
   "pricing": {
-    "originalPrice": "",
-    "discountedPrice": ""
+    "originalPriceLabel": "",
+    "discountedPriceLabel": ""
   }
 }

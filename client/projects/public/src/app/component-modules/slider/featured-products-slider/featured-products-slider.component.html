@@ -64,7 +64,10 @@
             (currentItemChange)="slideTo($event)"
           ></audi-indicator>
         </div>
-        <div class="arrows-wrapper hidden md:flex flex-row">
+        <div
+          *ngIf="validProducts.length > 1"
+          class="arrows-wrapper hidden md:flex flex-row"
+        >
           <div #prevArrow class="previous-arrow background-color-grey-2">
             <audi-button
               type="icon-large"
@@ -148,16 +151,15 @@
                     {{
                       translationOutput('discountedPriceLabel')
                     }} </ng-container
-                  >NT{{
+                  >NT {{
                     (product.price - product.discountAmount).toLocaleString()
                   }}
                 </h6>
                 <small class="line-through text-grey-8"
                   >(<ng-container
                     *transloco="let translationOutput; read: 'pricing'"
-                  >
-                    {{ translationOutput('originalPriceLabel') }} </ng-container
-                  >NT{{ product.price.toLocaleString() }})</small
+                    >{{ translationOutput('originalPriceLabel') }}</ng-container
+                  >NT {{ product.price.toLocaleString() }})</small
                 >
               </div>
             </ng-container>
