@@ -2,7 +2,13 @@ import { Inject, Injectable, Injector, OnDestroy } from '@angular/core';
 import { LanguageCode } from '../enums';
 import { INJECT_TRANSLOCO } from '../tokens';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  filter,
+  map,
+  startWith,
+  takeUntil,
+} from 'rxjs/operators';
 import {
   Router,
   ActivatedRoute,
@@ -82,7 +88,11 @@ export class LanguageStateService implements OnDestroy {
       takeUntil(this.destroy$)
     );
 
-    languageCode$.subscribe((lang: LanguageCode) => this.selectLanguage(lang));
+    languageCode$.subscribe((lang: LanguageCode) => {
+      if (this.getCurrentLanguage() !== lang) {
+        this.selectLanguage(lang);
+      }
+    });
   }
 
   ngOnDestroy(): void {

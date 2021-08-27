@@ -1,1 +1,17 @@
-{}
+{
+  "errorMessages": {
+    "notMember": "You are not a member"
+  },
+  "homepage": {
+    "featuredProduct": "Featured Products"
+  },
+  "pagination": {
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "learnMore": "Learn More",
+  "pricing": {
+    "originalPrice": "",
+    "discountedPrice": ""
+  }
+}

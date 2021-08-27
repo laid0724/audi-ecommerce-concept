@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
+import { TranslocoModule } from '@ngneat/transloco';
 import { AudiUiModule } from '../../component-modules/audi-ui/audi-ui.module';
 import { SliderModule } from '../../component-modules/slider/slider.module';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -17,6 +18,7 @@ import { SliderModule } from '../../component-modules/slider/slider.module';
     ]),
     AudiUiModule,
     SliderModule,
+    TranslocoModule,
   ],
   exports: [HomeComponent],
 })

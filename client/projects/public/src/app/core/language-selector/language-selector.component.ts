@@ -26,7 +26,7 @@ export class LanguageSelectorComponent implements OnInit {
   }
 
   onSelectLanguage(languageCode: LanguageCode): void {
-    this.languageService.selectLanguage(languageCode);
+    // this.languageService.selectLanguage(languageCode);
     this.router.navigate(['/', languageCode, 'home']);
   }
 }

@@ -9,14 +9,15 @@ import {
 } from '@ngneat/transloco';
 import { Injectable, NgModule } from '@angular/core';
 import { environment } from '../../environments/environment';
+import { BusyService, LanguageCode } from '@audi/data';
 import { tap } from 'rxjs/operators';
-import { BusyService } from '@audi/data';
+import { Observable, of } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TranslocoHttpLoader implements TranslocoLoader {
   constructor(private http: HttpClient, private busyService: BusyService) {}
 
-  getTranslation(lang: string) {
+  getTranslation(lang: LanguageCode): Observable<Translation> {
     return this.http
       .get<Translation>(`${environment.baseUrl}/assets/i18n/${lang}.json`)
       .pipe(tap((translation: Translation) => this.busyService.idle()));

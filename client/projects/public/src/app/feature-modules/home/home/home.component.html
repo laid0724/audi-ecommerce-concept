@@ -25,8 +25,9 @@
       <div class="aui-cell aui-cell--12 featured-products-slider-wrapper">
         <div class="w-full">
           <h2 class="aui-headline-2 text-black text-center mt-0 mb-8 md:mt-8">
-            <!-- TODO: transloco -->
-            精選商品
+            <ng-container *transloco="let translationOutput; read: 'homepage'">
+              {{ translationOutput('featuredProduct') }}
+            </ng-container>
           </h2>
           <audi-featured-products-slider
             [fadeEffect]="true"
