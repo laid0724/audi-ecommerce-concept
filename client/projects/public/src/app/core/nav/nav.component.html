@@ -36,6 +36,17 @@
         </audi-button>
       </div>
     </div>
-    <div class="audi-side-nav__menu"></div>
+    <div
+      class="audi-side-nav__menu"
+      [ngClass]="{ 'inactive-animation': !isPristine && !menuIsOpen }"
+    >
+      <!-- TODO: transloco -->
+      <h2 class="aui-headline-2 my-3">Nav Item 1</h2>
+      <h2 class="aui-headline-2 my-3">Nav Item 2</h2>
+      <h2 class="aui-headline-2 my-3">Nav Item 3</h2>
+      <h2 class="aui-headline-2 my-3">Nav Item 4</h2>
+      <h2 class="aui-headline-2 my-3">Nav Item 5</h2>
+      <!-- TODO: social media icons etcs -->
+    </div>
   </div>
 </div>
