@@ -24,7 +24,7 @@
     active: menuIsOpen
   }"
 >
-  <div class="audi-side-nav__overlay"></div>
+  <div class="audi-side-nav__overlay" (click)="toggleMenuState()"></div>
   <div class="audi-side-nav__menu-container">
     <div class="audi-side-nav__menu-close-btn-wrapper">
       <div
@@ -41,11 +41,24 @@
       [ngClass]="{ 'inactive-animation': !isPristine && !menuIsOpen }"
     >
       <!-- TODO: transloco -->
-      <h3 class="aui-headline-3 mb-4 mt-auto">Nav Item 1</h3>
-      <h3 class="aui-headline-3 my-4">Nav Item 2</h3>
-      <h3 class="aui-headline-3 my-4">Nav Item 3</h3>
-      <h3 class="aui-headline-3 my-4">Nav Item 4</h3>
-      <h3 class="aui-headline-3 my-4">Nav Item 5</h3>
+      <h3
+        class="aui-headline-3 clickable mb-4 mt-auto"
+        (click)="toggleMenuState()"
+      >
+        Nav Item 1
+      </h3>
+      <h3 class="aui-headline-3 clickable my-4" (click)="toggleMenuState()">
+        Nav Item 2
+      </h3>
+      <h3 class="aui-headline-3 clickable my-4" (click)="toggleMenuState()">
+        Nav Item 3
+      </h3>
+      <h3 class="aui-headline-3 clickable my-4" (click)="toggleMenuState()">
+        Nav Item 4
+      </h3>
+      <h3 class="aui-headline-3 clickable my-4" (click)="toggleMenuState()">
+        Nav Item 5
+      </h3>
       <div class="flex mt-auto">
         <audi-button-group type="icon">
           <audi-button type="icon-large">
