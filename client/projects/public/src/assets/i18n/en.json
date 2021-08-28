@@ -13,5 +13,6 @@
   "pricing": {
     "originalPriceLabel": "",
     "discountedPriceLabel": ""
-  }
+  },
+  "menu": {}
 }

@@ -13,5 +13,7 @@
   "pricing": {
     "originalPriceLabel": "原價 ",
     "discountedPriceLabel": "優惠價 "
+  },
+  "menu": {
   }
 }
