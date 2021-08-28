@@ -5,12 +5,20 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { AccountService, BusyService, Roles, User } from '@audi/data';
+import {
+  AccountService,
+  BusyService,
+  isNullOrEmptyString,
+  Roles,
+  User,
+} from '@audi/data';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TranslocoService } from '@ngneat/transloco';
 import { AlertService } from './component-modules/audi-ui/services/alert-service/alert.service';
 import { NotificationService } from './component-modules/audi-ui/services/notification-service/notification.service';
+import { CookieConsentAlertComponent } from './component-modules/alerts/cookie-consent-alert/cookie-consent-alert.component';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'audi-root',
@@ -28,7 +36,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
     private busyService: BusyService,
     private notificationService: NotificationService,
     private alertService: AlertService,
-    private transloco: TranslocoService
+    private transloco: TranslocoService,
+    private cookieService: CookieService
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +46,12 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
     this.isLoadingApiRequests$ = this.busyService.isBusy$.pipe(
       takeUntil(this.destroy$)
     );
+
+    const cookieConsent = this.cookieService.get('cookieConsent');
+
+    if (isNullOrEmptyString(cookieConsent)) {
+      this.alertService.show(CookieConsentAlertComponent);
+    }
   }
 
   ngAfterViewChecked(): void {

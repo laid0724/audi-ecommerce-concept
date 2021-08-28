@@ -9,8 +9,12 @@ import { LanguageSelectorModule } from './language-selector/language-selector.mo
 
 import { NotFoundComponent } from './not-found/not-found.component';
 import { NavComponent } from './nav/nav.component';
+import { FooterComponent } from './footer/footer.component';
+import { FormComponentsModule } from '../component-modules/form-components/form-components.module';
+import { NotificationServiceModule } from '../component-modules/audi-ui/services/notification-service/notification-service.module';
+import { TranslocoModule } from '@ngneat/transloco';
 
-const COMPONENTS = [NotFoundComponent, NavComponent];
+const COMPONENTS = [NotFoundComponent, NavComponent, FooterComponent];
 
 @NgModule({
   declarations: [...COMPONENTS],
@@ -21,7 +25,10 @@ const COMPONENTS = [NotFoundComponent, NavComponent];
     ButtonModule,
     IconModule,
     NavModule,
-    LanguageSelectorModule
+    LanguageSelectorModule,
+    FormComponentsModule,
+    NotificationServiceModule,
+    TranslocoModule,
   ],
   exports: [...COMPONENTS],
 })

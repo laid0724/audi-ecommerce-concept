@@ -9,7 +9,7 @@ $audi-header-height: 56px;
 
 .audi-side-nav {
   * {
-    transition: 1s;
+    transition: 0.8s;
     transition-timing-function: cubic-bezier(0.75, 0.02, 0.5, 1);
   }
 
@@ -19,7 +19,7 @@ $audi-header-height: 56px;
   }
 
   &.active &__menu {
-    animation: appear-menu 2s var(--audi-transition-timing-function) forwards;
+    animation: appear-menu 1.6s var(--audi-transition-timing-function) forwards;
     display: flex;
   }
 
@@ -34,7 +34,7 @@ $audi-header-height: 56px;
   }
 
   &.active &__menu-close-btn {
-    animation: appear-close-btn 1s var(--audi-transition-timing-function)
+    animation: appear-close-btn 0.8s var(--audi-transition-timing-function)
       forwards;
     display: inline-flex;
   }
@@ -60,7 +60,7 @@ $audi-header-height: 56px;
     padding-bottom: $audi-header-height;
 
     &.inactive-animation {
-      animation: disappear-menu 0.6s var(--audi-transition-timing-function)
+      animation: disappear-menu 0.4s var(--audi-transition-timing-function)
         forwards;
       display: flex;
     }
@@ -81,7 +81,7 @@ $audi-header-height: 56px;
       display: none;
 
       &.inactive-animation {
-        animation: disappear-close-btn 1s var(--audi-transition-timing-function)
+        animation: disappear-close-btn 0.8s var(--audi-transition-timing-function)
           forwards;
         display: inline-flex;
       }

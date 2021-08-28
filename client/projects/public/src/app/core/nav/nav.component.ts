@@ -31,12 +31,12 @@ export class NavComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  toggleMenuState(): void {
+  toggleMenuState(isOpen?: boolean): void {
     if (this.isPristine) {
       this.isPristine = false;
     }
 
-    this.menuIsOpen = !this.menuIsOpen;
+    this.menuIsOpen = isOpen ?? !this.menuIsOpen;
 
     this.menuIsOpen
       ? this.renderer.addClass(this.document.body, 'scroll-disabled')

@@ -14,5 +14,29 @@
     "originalPriceLabel": "",
     "discountedPriceLabel": ""
   },
-  "menu": {}
+  "menu": {},
+  "footer": {
+    "privacyPolicy": "Privacy and Cookie Policy",
+    "termsAndConditions": "Terms and Conditions",
+    "faq": "FAQ",
+    "contactUs": "Contact Us",
+    "emailSubscriptionMessage": "Subscribe to receive exclusive information about Audi Taiwan",
+    "emailSubscriptionBtn": "Subscribe"
+  },
+  "cookieConsent": {
+    "title": "Cookies",
+    "messageFirstPart": "We use cookies to offer a better browsing experience, analyze site traffic, personalize content, and serve targeted advertisements. Please review our ",
+    "messageSecondPart": ". By clicking Accept you consent to our use of cookies.",
+    "privacyPolicy": "privacy policy",
+    "acceptBtn": "Accept",
+    "declineBtn": "Decline"
+  },
+  "emailSubscriptionSuccess": "You have successfully subscribed to our newsletter.",
+  "formErrors": {
+    "required": "Required",
+    "email": "Please enter a valid email address"
+  },
+  "formLabels": {
+    "email": "Email"
+  }
 }

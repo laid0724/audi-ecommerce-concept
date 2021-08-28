@@ -11,7 +11,7 @@ import { Injectable, NgModule } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { BusyService, LanguageCode } from '@audi/data';
 import { tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class TranslocoHttpLoader implements TranslocoLoader {
