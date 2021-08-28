@@ -41,12 +41,30 @@
       [ngClass]="{ 'inactive-animation': !isPristine && !menuIsOpen }"
     >
       <!-- TODO: transloco -->
-      <h2 class="aui-headline-2 my-3">Nav Item 1</h2>
-      <h2 class="aui-headline-2 my-3">Nav Item 2</h2>
-      <h2 class="aui-headline-2 my-3">Nav Item 3</h2>
-      <h2 class="aui-headline-2 my-3">Nav Item 4</h2>
-      <h2 class="aui-headline-2 my-3">Nav Item 5</h2>
-      <!-- TODO: social media icons etcs -->
+      <h3 class="aui-headline-3 mb-4 mt-auto">Nav Item 1</h3>
+      <h3 class="aui-headline-3 my-4">Nav Item 2</h3>
+      <h3 class="aui-headline-3 my-4">Nav Item 3</h3>
+      <h3 class="aui-headline-3 my-4">Nav Item 4</h3>
+      <h3 class="aui-headline-3 my-4">Nav Item 5</h3>
+      <div class="flex mt-auto">
+        <audi-button-group type="icon">
+          <audi-button type="icon-large">
+            <a href="https://www.youtube.com/user/auditaiwan" target="_blank">
+              <audi-icon size="large" [iconName]="'system-youtube'"></audi-icon>
+            </a>
+          </audi-button>
+          <audi-button type="icon-large">
+            <a href="https://www.instagram.com/audi_tw" target="_blank">
+              <audi-icon size="large" [iconName]="'system-instagram'"></audi-icon>
+            </a>
+          </audi-button>
+          <audi-button type="icon-large">
+            <a href="https://www.facebook.com/AudiTaiwan" target="_blank">
+              <audi-icon size="large" [iconName]="'system-facebook'"></audi-icon>
+            </a>
+          </audi-button>
+        </audi-button-group>
+      </div>
     </div>
   </div>
 </div>
