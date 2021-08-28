@@ -1,0 +1,49 @@
+<ng-container *ngIf="cookieConsent === null">
+  <h4 class="aui-headline-5">
+    <ng-container *transloco="let translationOutput; read: 'cookieConsent'">{{
+      translationOutput('title')
+    }}</ng-container>
+  </h4>
+
+  <p class="mt-2">
+    <ng-container *transloco="let translationOutput; read: 'cookieConsent'">{{
+      translationOutput('messageFirstPart')
+    }}</ng-container
+    ><a
+      href="https://www.audi.com.tw/tw/web/zh/privacy-policy.html"
+      target="_blank"
+      class="aui-textlink"
+      ><ng-container
+        *transloco="let translationOutput; read: 'cookieConsent'"
+        >{{ translationOutput('privacyPolicy') }}</ng-container
+      ></a
+    ><ng-container *transloco="let translationOutput; read: 'cookieConsent'">{{
+      translationOutput('messageSecondPart')
+    }}</ng-container>
+  </p>
+
+  <audi-button-group class="mt-3 mb-1 block">
+    <audi-button
+      [type]="'primary'"
+      attributeSetter
+      [attributeName]="'data-close'"
+      [applyToInnerNode]="true"
+      (click)="setCookieConsent(1)"
+    >
+      <ng-container *transloco="let translationOutput; read: 'cookieConsent'">
+        {{ translationOutput('acceptBtn') }}
+      </ng-container>
+    </audi-button>
+    <audi-button
+      [type]="'secondary'"
+      attributeSetter
+      [attributeName]="'data-close'"
+      [applyToInnerNode]="true"
+      (click)="setCookieConsent(0)"
+    >
+      <ng-container *transloco="let translationOutput; read: 'cookieConsent'">
+        {{ translationOutput('declineBtn') }}
+      </ng-container>
+    </audi-button>
+  </audi-button-group>
+</ng-container>

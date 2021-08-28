@@ -14,5 +14,14 @@
     "originalPriceLabel": "",
     "discountedPriceLabel": ""
   },
-  "menu": {}
+  "menu": {},
+  "footer": {},
+  "cookieConsent": {
+    "title": "Cookies",
+    "messageFirstPart": "We use cookies to offer a better browsing experience, analyze site traffic, personalize content, and serve targeted advertisements. Please review our ",
+    "messageSecondPart": ". By clicking Accept you consent to our use of cookies.",
+    "privacyPolicy": "privacy policy",
+    "acceptBtn": "Accept",
+    "declineBtn": "Decline"
+  }
 }

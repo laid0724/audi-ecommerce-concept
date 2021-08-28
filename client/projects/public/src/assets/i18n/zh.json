@@ -14,6 +14,14 @@
     "originalPriceLabel": "原價 ",
     "discountedPriceLabel": "優惠價 "
   },
-  "menu": {
+  "menu": {},
+  "footer": {},
+  "cookieConsent": {
+    "title": "Cookies",
+    "messageFirstPart": "我們將使用您的cookie資訊來優化網站並改善使用者體驗。 當您繼續瀏覽本網站即表示您願意接受本網站的",
+    "messageSecondPart": "並有權使用您的cookies資訊。",
+    "privacyPolicy": "隱私政策",
+    "acceptBtn": "接受",
+    "declineBtn": "不接受"
   }
 }
