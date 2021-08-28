@@ -34,6 +34,6 @@ const DIRECTIVES = [ProjectAsFieldDirective, ProjectAsFieldsDirective];
 @NgModule({
   declarations: [...COMPONENTS, ...DIRECTIVES],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, IconModule],
-  exports: [...COMPONENTS, ...DIRECTIVES],
+  exports: [...COMPONENTS, ...DIRECTIVES, FormsModule, ReactiveFormsModule],
 })
 export class FormComponentsModule {}

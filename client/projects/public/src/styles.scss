@@ -26,6 +26,10 @@ body {
   }
 }
 
+.router-outlet-wrapper {
+  min-height: 100vh;
+}
+
 .clickable {
   cursor: pointer;
 }
