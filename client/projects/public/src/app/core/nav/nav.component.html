@@ -1,6 +1,6 @@
 <audi-header>
   <div class="w-screen flex items-center justify-between">
-    <audi-button type="icon-large" (click)="toggleMenuState()">
+    <audi-button type="icon-large" (click)="toggleMenuState(true)">
       <audi-icon size="large" [iconName]="'off-canvas'"></audi-icon>
     </audi-button>
     <audi-button type="icon">
@@ -24,14 +24,17 @@
     active: menuIsOpen
   }"
 >
-  <div class="audi-side-nav__overlay" (click)="toggleMenuState()"></div>
+  <div
+    class="audi-side-nav__overlay"
+    (click)="!isPristine ? toggleMenuState(false) : null"
+  ></div>
   <div class="audi-side-nav__menu-container">
     <div class="audi-side-nav__menu-close-btn-wrapper">
       <div
         class="audi-side-nav__menu-close-btn"
         [ngClass]="{ 'inactive-animation': !isPristine && !menuIsOpen }"
       >
-        <audi-button type="icon-large" (click)="toggleMenuState()">
+        <audi-button type="icon-large" (click)="toggleMenuState(false)">
           <audi-icon size="large" [iconName]="'cancel'"></audi-icon>
         </audi-button>
       </div>
@@ -43,20 +46,32 @@
       <!-- TODO: transloco -->
       <h3
         class="aui-headline-3 clickable mb-4 mt-auto"
-        (click)="toggleMenuState()"
+        (click)="toggleMenuState(false)"
       >
         Nav Item 1
       </h3>
-      <h3 class="aui-headline-3 clickable my-4" (click)="toggleMenuState()">
+      <h3
+        class="aui-headline-3 clickable my-4"
+        (click)="toggleMenuState(false)"
+      >
         Nav Item 2
       </h3>
-      <h3 class="aui-headline-3 clickable my-4" (click)="toggleMenuState()">
+      <h3
+        class="aui-headline-3 clickable my-4"
+        (click)="toggleMenuState(false)"
+      >
         Nav Item 3
       </h3>
-      <h3 class="aui-headline-3 clickable my-4" (click)="toggleMenuState()">
+      <h3
+        class="aui-headline-3 clickable my-4"
+        (click)="toggleMenuState(false)"
+      >
         Nav Item 4
       </h3>
-      <h3 class="aui-headline-3 clickable my-4" (click)="toggleMenuState()">
+      <h3
+        class="aui-headline-3 clickable my-4"
+        (click)="toggleMenuState(false)"
+      >
         Nav Item 5
       </h3>
       <div class="flex mt-auto">
