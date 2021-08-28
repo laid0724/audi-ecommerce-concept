@@ -134,5 +134,4 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - login / register / update user info
 - cancel / track order
 - member's area
-- expanded nav
 - footer
