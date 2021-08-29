@@ -5,7 +5,7 @@
     [options]="fullpageConfig"
     (ref)="getFullpageRef($event)"
   >
-    <div class="section">
+    <div class="section relative">
       <div class="aui-layout background-color-white">
         <div class="aui-grid">
           <div class="aui-cell aui-cell--12 hero-slider-wrapper">
@@ -20,6 +20,9 @@
             </div>
           </div>
         </div>
+      </div>
+      <div *ngIf="isDesktop" class="scroll-indicator">
+        <audi-icon size="large" iconName="arrow-down"></audi-icon>
       </div>
     </div>
     <div class="section">
