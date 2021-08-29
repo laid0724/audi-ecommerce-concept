@@ -1,11 +1,11 @@
-<ng-container *ngIf="homepageData$ | async; let data">
+<ng-container *ngIf="data$ | async; let data; else: loading">
   <div
     fullpage
     id="fullpage"
     [options]="fullpageConfig"
     (ref)="getFullpageRef($event)"
   >
-    <div class="section" *ngIf="data.carouselItems.length > 0">
+    <div class="section" *ngIf="data.homepageData.carouselItems.length > 0">
       <div class="aui-layout background-color-white">
         <div class="aui-grid">
           <div class="aui-cell aui-cell--12 hero-slider-wrapper">
@@ -14,7 +14,7 @@
                 [fadeEffect]="true"
                 [autoplay]="false"
                 [allowDrag]="!isDesktop"
-                [carouselItems]="data.carouselItems"
+                [carouselItems]="data.homepageData.carouselItems"
               >
               </audi-hero-slider>
             </div>
@@ -82,7 +82,7 @@
         </div>
       </div>
     </div>
-    <div class="section" *ngIf="data.featuredProducts.length > 0">
+    <div class="section" *ngIf="data.homepageData.featuredProducts.length > 0">
       <div class="aui-layout background-color-white">
         <div class="aui-grid">
           <div class="aui-cell aui-cell--12 featured-products-slider-wrapper">
@@ -97,7 +97,7 @@
               <audi-featured-products-slider
                 [fadeEffect]="true"
                 [allowDrag]="!isDesktop"
-                [featuredProducts]="data.featuredProducts"
+                [featuredProducts]="data.homepageData.featuredProducts"
               ></audi-featured-products-slider>
             </div>
           </div>
@@ -118,3 +118,18 @@
     </div>
   </div>
 </ng-container>
+
+<ng-template #loading>
+  <div
+    class="
+      full-screen-height
+      mt-14
+      flex
+      items-center
+      justify-center
+      background-color-grey-2
+    "
+  >
+    <audi-spinner class="block" [isContinuous]="true"></audi-spinner>
+  </div>
+</ng-template>

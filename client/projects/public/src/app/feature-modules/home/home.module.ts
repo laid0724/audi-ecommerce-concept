@@ -9,6 +9,7 @@ import { FooterModule } from '../../core/footer/footer.module';
 import { CardModule } from '../../component-modules/audi-ui/card/card.module';
 
 import { HomeComponent } from './home/home.component';
+import { SpinnerModule } from '../../component-modules/audi-ui/spinner/spinner.module';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -25,7 +26,8 @@ import { HomeComponent } from './home/home.component';
     TranslocoModule,
     AngularFullpageModule,
     FooterModule,
-    CardModule
+    CardModule,
+    SpinnerModule,
   ],
   exports: [HomeComponent],
 })

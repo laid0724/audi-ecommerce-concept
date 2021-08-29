@@ -28,7 +28,8 @@ body {
 }
 
 .router-outlet-wrapper {
-  min-height: 100vh;
+  // margin-top: 56px;
+  min-height: $full-screen-minus-audi-header;
 }
 
 .clickable {
