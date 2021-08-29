@@ -151,7 +151,8 @@
                     {{
                       translationOutput('discountedPriceLabel')
                     }} </ng-container
-                  >NT {{
+                  >NT
+                  {{
                     (product.price - product.discountAmount).toLocaleString()
                   }}
                 </h6>
@@ -164,7 +165,7 @@
               </div>
             </ng-container>
             <audi-button type="primary" class="block w-full mt-5 md:mt-10">
-              <ng-container *transloco="let translationOutput">
+              <ng-container *transloco="let translationOutput; read: 'buttons'">
                 {{ translationOutput('learnMore') }}
               </ng-container>
             </audi-button>

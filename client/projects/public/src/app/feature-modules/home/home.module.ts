@@ -6,6 +6,7 @@ import { AudiUiModule } from '../../component-modules/audi-ui/audi-ui.module';
 import { SliderModule } from '../../component-modules/slider/slider.module';
 import { AngularFullpageModule } from '@fullpage/angular-fullpage';
 import { FooterModule } from '../../core/footer/footer.module';
+import { CardModule } from '../../component-modules/audi-ui/card/card.module';
 
 import { HomeComponent } from './home/home.component';
 
@@ -24,6 +25,7 @@ import { HomeComponent } from './home/home.component';
     TranslocoModule,
     AngularFullpageModule,
     FooterModule,
+    CardModule
   ],
   exports: [HomeComponent],
 })

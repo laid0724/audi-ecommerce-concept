@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { HomepageService } from '@audi/data';
+import { HomepageService, LanguageStateService } from '@audi/data';
 import { take } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   homepageData$ = this.homepageService.getHomepage().pipe(take(1));
+  language$ = this.languageService.language$;
 
   fullpageConfig: any;
   fullpageRef: any;
@@ -20,9 +21,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   _breakpointObserverSubscription: Subscription;
 
   constructor(
-    private homepageService: HomepageService,
     private breakpointObserver: BreakpointObserver,
-    private router: Router
+    private router: Router,
+    private homepageService: HomepageService,
+    private languageService: LanguageStateService
   ) {
     // this will restart component when hitting the same route,
     // this way component will reload when we change route params
@@ -33,12 +35,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     // see: https://github.com/alvarotrigo/fullPage.js
     this.fullpageConfig = {
       // fullpage options
-      licenseKey: 'YOUR_KEY_HERE',
+      licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
       verticalCentered: false,
       fitToSection: true,
       scrollOverflow: true,
       resetSlider: true,
-      paddingTop: '56px', // account for header height
+      paddingTop: '56px', // fixed header height
     };
   }
 
