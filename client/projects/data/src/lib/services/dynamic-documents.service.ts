@@ -7,6 +7,7 @@ import { Faq, FaqItem } from '../models/faq';
 import { PaginatedResult } from '../models/pagination';
 import { WysiwygGrid } from '../models/wysiwyg';
 import { getPaginatedResult, getPaginationHeaders } from '../helpers';
+import { DynamicDocumentType } from '../enums';
 
 interface DynamicDocumentUpsertRequest {
   id?: number;
@@ -44,7 +45,8 @@ interface FaqCrudFunctions {
 
 const buildCrudFunctions = <TUpsertRequest, TResult>(
   http: HttpClient,
-  endpoint: string
+  endpoint: string,
+  documentType: DynamicDocumentType
 ): DynamicDocumentCrudFunctions<TUpsertRequest, TResult> => {
   return {
     getOne: (dynamicDocumentId: number) =>
@@ -60,6 +62,8 @@ const buildCrudFunctions = <TUpsertRequest, TResult>(
           params = params.append(key, property.toString());
         }
       });
+
+      params = params.append('type', documentType);
 
       return getPaginatedResult<TResult[]>(http, endpoint, params);
     },
@@ -93,16 +97,19 @@ export class DynamicDocumentsService {
   constructor(private http: HttpClient) {
     this.news = buildCrudFunctions<DynamicDocumentUpsertRequest, News>(
       http,
-      this.endpoint + '/news'
+      this.endpoint + '/news',
+      DynamicDocumentType.News
     );
     this.events = buildCrudFunctions<DynamicDocumentUpsertRequest, Event>(
       http,
-      this.endpoint + '/events'
+      this.endpoint + '/events',
+      DynamicDocumentType.Event
     );
 
     const faqCrud = buildCrudFunctions<FaqUpsertRequest, Faq>(
       http,
-      this.endpoint + '/faq'
+      this.endpoint + '/faq',
+      DynamicDocumentType.Faq
     );
 
     this.faq = {
