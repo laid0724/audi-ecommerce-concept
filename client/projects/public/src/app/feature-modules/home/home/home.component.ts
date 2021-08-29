@@ -13,6 +13,9 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit, OnDestroy {
   homepageData$ = this.homepageService.getHomepage().pipe(take(1));
 
+  fullpageConfig: any;
+  fullpageRef: any;
+
   isDesktop: boolean;
   _breakpointObserverSubscription: Subscription;
 
@@ -25,6 +28,18 @@ export class HomeComponent implements OnInit, OnDestroy {
     // this way component will reload when we change route params
     // e.g., when we switch language
     router.routeReuseStrategy.shouldReuseRoute = () => false;
+
+    // for more details on config options please visit fullPage.js docs
+    // see: https://github.com/alvarotrigo/fullPage.js
+    this.fullpageConfig = {
+      // fullpage options
+      licenseKey: 'YOUR_KEY_HERE',
+      verticalCentered: false,
+      fitToSection: true,
+      scrollOverflow: true,
+      resetSlider: true,
+      paddingTop: '56px', // account for header height
+    };
   }
 
   ngOnInit(): void {
@@ -33,6 +48,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((state: BreakpointState) => {
         this.isDesktop = state.matches;
       });
+  }
+
+  getFullpageRef(fullpageRef: any) {
+    this.fullpageRef = fullpageRef;
   }
 
   ngOnDestroy(): void {
