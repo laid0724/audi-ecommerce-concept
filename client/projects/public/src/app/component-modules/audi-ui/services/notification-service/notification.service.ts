@@ -5,6 +5,7 @@ import { NotificationServiceModule } from './notification-service.module';
 
 export interface AudiNotification {
   message: string;
+  title: string | null;
   type: AudiNotificationType;
   timeout: number | null;
 }
@@ -19,9 +20,14 @@ export class NotificationService {
   notificationTrigger$: Observable<AudiNotification | null> =
     this._notificationTrigger$.asObservable();
 
-  show(message: string, timeout: number | null = null): void {
+  show(
+    message: string,
+    title: string | null = null,
+    timeout: number | null = null
+  ): void {
     const notification: AudiNotification = {
       message,
+      title,
       type: AudiNotificationType.Default,
       timeout,
     };
@@ -29,9 +35,14 @@ export class NotificationService {
     this._notificationTrigger$.next(notification);
   }
 
-  info(message: string, timeout: number | null = null): void {
+  info(
+    message: string,
+    title: string | null = null,
+    timeout: number | null = null
+  ): void {
     const notification: AudiNotification = {
       message,
+      title,
       type: AudiNotificationType.Info,
       timeout,
     };
@@ -39,9 +50,14 @@ export class NotificationService {
     this._notificationTrigger$.next(notification);
   }
 
-  warning(message: string, timeout: number | null = null): void {
+  warning(
+    message: string,
+    title: string | null = null,
+    timeout: number | null = null
+  ): void {
     const notification: AudiNotification = {
       message,
+      title,
       type: AudiNotificationType.Warning,
       timeout,
     };
@@ -49,9 +65,14 @@ export class NotificationService {
     this._notificationTrigger$.next(notification);
   }
 
-  success(message: string, timeout: number | null = null): void {
+  success(
+    message: string,
+    title: string | null = null,
+    timeout: number | null = null
+  ): void {
     const notification: AudiNotification = {
       message,
+      title,
       type: AudiNotificationType.Success,
       timeout,
     };
@@ -59,9 +80,14 @@ export class NotificationService {
     this._notificationTrigger$.next(notification);
   }
 
-  error(message: string, timeout: number | null = null): void {
+  error(
+    message: string,
+    title: string | null = null,
+    timeout: number | null = null
+  ): void {
     const notification: AudiNotification = {
       message,
+      title,
       type: AudiNotificationType.Danger,
       timeout,
     };

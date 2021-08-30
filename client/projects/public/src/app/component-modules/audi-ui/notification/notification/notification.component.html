@@ -11,6 +11,9 @@
 >
   <!-- data-close (add this attribute to allow users to close notification on click) -->
   <div class="aui-notification__content">
+    <h6 class="aui-headline-6 mb-2" *ngIf="!isNullOrEmptyString(toastTitle)">
+      {{ toastTitle }}
+    </h6>
     {{ toastMessage }}
   </div>
 </div>
