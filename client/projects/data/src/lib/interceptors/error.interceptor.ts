@@ -52,10 +52,21 @@ export class ErrorInterceptor implements HttpInterceptor {
               throw modalStateErrors.flat(Infinity);
             } else if (typeof error.error === 'object') {
               this.toastr?.error(error.statusText, error.status.toString());
+              // TODO: transloco
+              this.audiNotificationService?.error(
+                error.statusText,
+                error.status.toString(),
+                3000
+              );
             } else {
               this.toastr?.error(
                 error.error,
                 `${error.status.toString()} ${error.statusText}`
+              );
+              this.audiNotificationService?.error(
+                error.error,
+                `${error.status.toString()} ${error.statusText}`,
+                3000
               );
             }
             break;
@@ -65,12 +76,24 @@ export class ErrorInterceptor implements HttpInterceptor {
               'Wrong username or password',
               '錯誤的帳戶或密碼'
             );
+            // TODO: transloco
+            this.audiNotificationService?.error(
+              'Wrong username or password',
+              '錯誤的帳戶或密碼',
+              3000
+            );
             break;
           case 403: // Forbidden
             // TODO: aggregate all cases and show display messages accordingly, e.g., email_not_confirmed, locked_out, etc
             this.toastr?.error(
               error.error,
               `${error.status} ${error.statusText}`
+            );
+            // TODO: transloco
+            this.audiNotificationService?.error(
+              error.error,
+              `${error.status} ${error.statusText}`,
+              3000
             );
             break;
           case 404: // Not Found
