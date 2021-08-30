@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
-import { SplashScreenStateServiceModule } from './splash-screen-state.service.module';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
-  providedIn: SplashScreenStateServiceModule,
+  providedIn: 'root',
 })
 export class SplashScreenStateService {
-  _splashScreenIsOff$ = new Subject<boolean>();
+  _splashScreenIsOff$ = new BehaviorSubject<boolean>(false);
   splashScreenIsOff$ = this._splashScreenIsOff$.asObservable();
 
   disableSplashScreen() {

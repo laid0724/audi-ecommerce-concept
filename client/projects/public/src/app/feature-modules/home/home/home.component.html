@@ -12,13 +12,17 @@
           <div class="aui-grid">
             <div class="aui-cell aui-cell--12 hero-slider-wrapper">
               <div class="w-full">
-                <audi-hero-slider
-                  [fadeEffect]="true"
-                  [autoplay]="true"
-                  [allowDrag]="!isDesktop"
-                  [carouselItems]="data.homepageData.carouselItems"
+                <ng-container
+                  *ngIf="splashScreenIsOff$ | async; let splashScreenIsOff"
                 >
-                </audi-hero-slider>
+                  <audi-hero-slider
+                    [fadeEffect]="true"
+                    [autoplay]="splashScreenIsOff"
+                    [allowDrag]="!isDesktop"
+                    [carouselItems]="data.homepageData.carouselItems"
+                  >
+                  </audi-hero-slider>
+                </ng-container>
               </div>
             </div>
           </div>

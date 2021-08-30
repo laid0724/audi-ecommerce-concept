@@ -113,8 +113,7 @@ export class SplashScreenComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSplashVideoEnded(): void {
-    this.hideSplashAnimation();
-    this.ngOnDestroy();
+    this.splashScreenStateService.disableSplashScreen();
   }
 
   ngOnDestroy(): void {

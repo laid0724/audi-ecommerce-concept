@@ -7,9 +7,9 @@ import { SliderModule } from '../../component-modules/slider/slider.module';
 import { AngularFullpageModule } from '@fullpage/angular-fullpage';
 import { FooterModule } from '../../core/footer/footer.module';
 import { CardModule } from '../../component-modules/audi-ui/card/card.module';
+import { SpinnerModule } from '../../component-modules/audi-ui/spinner/spinner.module';
 
 import { HomeComponent } from './home/home.component';
-import { SpinnerModule } from '../../component-modules/audi-ui/spinner/spinner.module';
 
 @NgModule({
   declarations: [HomeComponent],
@@ -27,7 +27,7 @@ import { SpinnerModule } from '../../component-modules/audi-ui/spinner/spinner.m
     AngularFullpageModule,
     FooterModule,
     CardModule,
-    SpinnerModule,
+    SpinnerModule
   ],
   exports: [HomeComponent],
 })

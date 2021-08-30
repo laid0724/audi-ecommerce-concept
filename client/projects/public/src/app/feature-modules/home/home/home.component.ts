@@ -16,6 +16,7 @@ import {
 import { map, take } from 'rxjs/operators';
 import { combineLatest, Observable, Subscription, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
+import { SplashScreenStateService } from '../../splash-screen/services/splash-screen-state-service/splash-screen-state.service';
 
 interface HomepageData {
   homepageData: Homepage;
@@ -84,6 +85,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     latestDocuments: this.latestDocuments$,
   }).pipe(take(1));
 
+  splashScreenIsOff$ = this.splashscreenService._splashScreenIsOff$;
+
   language$ = this.languageService.language$;
 
   fullpageConfig: any;
@@ -92,7 +95,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   isDesktop: boolean;
   _breakpointObserverSubscription: Subscription;
 
-  public isNullOrEmptyString: (val: string | null | undefined) => boolean = isNullOrEmptyString;
+  public isNullOrEmptyString: (val: string | null | undefined) => boolean =
+    isNullOrEmptyString;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -100,7 +104,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private languageService: LanguageStateService,
     private homepageService: HomepageService,
     private productsService: ProductsService,
-    private dynamicDocumentService: DynamicDocumentsService
+    private dynamicDocumentService: DynamicDocumentsService,
+    private splashscreenService: SplashScreenStateService
   ) {
     // this will restart component when hitting the same route,
     // this way component will reload when we change route params
