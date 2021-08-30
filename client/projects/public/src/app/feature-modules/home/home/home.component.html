@@ -88,6 +88,7 @@
               <ng-container *ngFor="let document of data.latestDocuments">
                 <div *projectAsTemplate class="max-w-xs">
                   <audi-card
+                    [isClickable]="true"
                     [headerSize]="4"
                     [header]="document.title"
                     [headerSmallCaption]="
@@ -98,7 +99,7 @@
                     [coverImageUrl]="
                       !isNullOrEmptyString(document?.featuredImage?.url)
                         ? document.featuredImage.url
-                        : 'assets/images/placeholder-black.png'
+                        : 'assets/images/placeholder.png'
                     "
                     [isBordered]="true"
                     textAlign="center"
