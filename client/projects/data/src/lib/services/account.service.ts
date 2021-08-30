@@ -122,6 +122,11 @@ export class AccountService {
     this.router.navigateByUrl('/');
   }
 
+  logoutWithoutRedirect(): void {
+    localStorage.removeItem('user');
+    this.currentUserSource.next(undefined);
+  }
+
   changeUserRole(request: RolesUpsert): Observable<User> {
     return this.http.patch<User>(`${this.endpoint}/assign-role`, request);
   }

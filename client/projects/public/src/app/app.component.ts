@@ -76,7 +76,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
           if (user != null) {
             this.directUserBasedOnRole(this.userHasRightRole(user));
           }
-        });
+        })
+        .unsubscribe();
     } else {
       this.accountService.setCurrentUser(null);
     }
@@ -90,7 +91,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
   directUserBasedOnRole(isRightRole: boolean): void {
     if (!isRightRole) {
       this.notificationService.error(
-        this.transloco.translate('errorMessages.notMember')
+        this.transloco.translate('errorMessages.notMember'),
+        3000
       );
       this.accountService.logout();
     }
