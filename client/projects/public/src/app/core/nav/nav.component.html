@@ -1,7 +1,7 @@
 <ng-container *ngIf="language$ | async; let language">
   <audi-header>
     <div class="w-screen flex items-center justify-between relative">
-      <audi-button type="icon-large" (click)="toggleMenuState(true)">
+      <audi-button type="icon-large" (click)="toggleMenuState(true)" class="z-1">
         <audi-icon size="large" [iconName]="'off-canvas'"></audi-icon>
       </audi-button>
       <div
