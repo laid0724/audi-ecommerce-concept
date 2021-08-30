@@ -7,7 +7,9 @@
     "branding": "Audi 原廠配件與精品",
     "brandingContent1": "Audi 推出的各式獨家配件及精品無不散發 Audi 獨具一格的迷人魅力，從多個方面完美融入您的生活。",
     "brandingContent2": "",
-    "brandingContent3": "無論是想為摯愛製造驚喜，或是好好犒賞自己您都能安心選購 Audi 精品配件，因為每樣產品必定兼具 Audi 品質、設計與精神，無一缺漏。"
+    "brandingContent3": "無論是想為摯愛製造驚喜，或是好好犒賞自己您都能安心選購 Audi 精品配件，因為每樣產品必定兼具 Audi 品質、設計與精神，無一缺漏。",
+    "latestDocuments": "最新資訊",
+    "newestProducts": "最新商品"
   },
   "pagination": {
     "previous": "上一頁",
@@ -15,6 +17,7 @@
   },
   "buttons": {
     "learnMore": "了解更多",
+    "exploreCTA": "即刻探索",
     "productsCTA": "立即鑑賞"
   },
   "pricing": {

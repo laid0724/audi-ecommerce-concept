@@ -9,6 +9,7 @@ import {
   News,
   PaginatedResult,
   Product,
+  ProductPhoto,
   ProductsService,
 } from '@audi/data';
 import { map, take } from 'rxjs/operators';
@@ -128,6 +129,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getFullpageRef(fullpageRef: any) {
     this.fullpageRef = fullpageRef;
+  }
+
+  getProductMainPhoto(photos: ProductPhoto[]): ProductPhoto | undefined {
+    return photos.find((p) => p.isMain);
   }
 
   ngOnDestroy(): void {

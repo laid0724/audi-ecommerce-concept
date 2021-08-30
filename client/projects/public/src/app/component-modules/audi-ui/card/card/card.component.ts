@@ -10,6 +10,7 @@ import { AudiColor } from '../../enums';
 export class CardComponent {
   @Input() bgColor: AudiColor | string = AudiColor.White;
   @Input() textColor: AudiColor | string = AudiColor.Black;
+  @Input() textAlign: 'left' | 'center' | 'right' = 'left';
   @Input() headerSize: number = 5;
   @Input() header: string = '';
   @Input() headerSmallCaption: string = '';

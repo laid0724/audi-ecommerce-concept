@@ -151,8 +151,7 @@
                     {{
                       translationOutput('discountedPriceLabel')
                     }} </ng-container
-                  >NT
-                  {{
+                  >${{
                     (product.price - product.discountAmount).toLocaleString()
                   }}
                 </h6>
@@ -160,7 +159,7 @@
                   >(<ng-container
                     *transloco="let translationOutput; read: 'pricing'"
                     >{{ translationOutput('originalPriceLabel') }}</ng-container
-                  >NT {{ product.price.toLocaleString() }})</small
+                  >${{ product.price.toLocaleString() }})</small
                 >
               </div>
             </ng-container>

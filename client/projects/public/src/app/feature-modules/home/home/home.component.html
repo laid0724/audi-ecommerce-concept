@@ -4,6 +4,7 @@
     id="fullpage"
     [options]="fullpageConfig"
     (ref)="getFullpageRef($event)"
+    class="-mt-14"
   >
     <div class="section" *ngIf="data.homepageData.carouselItems.length > 0">
       <div class="aui-layout background-color-white">
@@ -45,7 +46,7 @@
                     [headerSize]="3"
                     [header]="translationOutput('branding')"
                   >
-                    <p class="mb-3">
+                    <p class="mt-4 mb-3">
                       {{ translationOutput('brandingContent1') }}
                     </p>
                     <p class="my-3">
@@ -62,7 +63,7 @@
                       <ng-container
                         *transloco="let translationOutput; read: 'buttons'"
                       >
-                        {{ translationOutput('productsCTA') }}
+                        {{ translationOutput('exploreCTA') }}
                       </ng-container>
                     </audi-button>
                   </audi-card>
@@ -107,8 +108,74 @@
     <div class="section fp-auto-height">
       <div class="aui-layout background-color-white">
         <div class="aui-grid">
-          <div class="aui-cell aui-cell--12 full-screen-height">
-            TODO: LATEST PRODUCTS IN MULTI VIEW SLIDER
+          <div
+            class="
+              aui-cell aui-cell--12
+              full-screen-height
+              flex
+              items-center
+              justify-center
+            "
+          >
+            <div class="w-full">
+              <h2 class="aui-headline-2 text-black text-center mt-0 mb-8">
+                <ng-container
+                  *transloco="let translationOutput; read: 'homepage'"
+                >
+                  {{ translationOutput('newestProducts') }}
+                </ng-container>
+              </h2>
+              <audi-multi-slides-per-view-slider
+                [slidesPerView]="3"
+                [spaceBetween]="10"
+                [autoplay]="false"
+                [isLightTheme]="false"
+              >
+                <ng-container *ngFor="let product of data.newestProducts">
+                  <div *projectAsTemplate class="max-w-xs">
+                    <audi-card
+                      [headerSize]="3"
+                      [header]="product.name"
+                      textAlign="center"
+                      [coverImageUrl]="getProductMainPhoto(product.photos)!.url"
+                    >
+                      <div class="flex flex-col items-center justify-center">
+                        <div
+                          class="
+                            small
+                            text-grey-8
+                            text-truncate-ellipses
+                            text-truncate-ellipses--3-lines
+                            mt-3
+                            mb-4
+                          "
+                        >
+                          {{ product.description }}
+                        </div>
+                      </div>
+
+                      <audi-button
+                        type="primary"
+                        class="block w-full"
+                        [routerLink]="[
+                          '/',
+                          language$ | async,
+                          'products',
+                          product.productCategoryId,
+                          product.id
+                        ]"
+                      >
+                        <ng-container
+                          *transloco="let translationOutput; read: 'buttons'"
+                        >
+                          {{ translationOutput('productsCTA') }}
+                        </ng-container>
+                      </audi-button>
+                    </audi-card>
+                  </div>
+                </ng-container>
+              </audi-multi-slides-per-view-slider>
+            </div>
           </div>
         </div>
       </div>

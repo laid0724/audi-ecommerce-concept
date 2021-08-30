@@ -7,7 +7,9 @@
     "branding": "Audi Collections",
     "brandingContent1": "Precise workmanship and a progressive design: show your enthusiasm with the elegant premium items of the Audi collection.",
     "brandingContent2": "You will love the high-quality materials, careful workmanship and an especially attractive presentation.",
-    "brandingContent3": "As with the Audi models, the items in the Audi collection are subject to extremely high-quality standards."
+    "brandingContent3": "As with the Audi models, the items in the Audi collection are subject to extremely high-quality standards.",
+    "latestDocuments": "News & Events",
+    "newestProducts": "New Products"
   },
   "pagination": {
     "previous": "Previous",
@@ -15,7 +17,8 @@
   },
   "buttons": {
     "learnMore": "Learn More",
-    "productsCTA": "Explore Now"
+    "exploreCTA": "Explore Now",
+    "productsCTA": "Shop Now"
   },
   "pricing": {
     "originalPriceLabel": "",
