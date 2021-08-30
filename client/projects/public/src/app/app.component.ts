@@ -9,6 +9,7 @@ import {
   AccountService,
   BusyService,
   isNullOrEmptyString,
+  LanguageStateService,
   Roles,
   User,
 } from '@audi/data';
@@ -37,11 +38,13 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
     private notificationService: NotificationService,
     private alertService: AlertService,
     private transloco: TranslocoService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private languageService: LanguageStateService
   ) {}
 
   ngOnInit(): void {
     this.setUserFromLocalStorage();
+    this.languageService.setLanguageByRoute();
 
     this.isLoadingApiRequests$ = this.busyService.isBusy$.pipe(
       takeUntil(this.destroy$)
