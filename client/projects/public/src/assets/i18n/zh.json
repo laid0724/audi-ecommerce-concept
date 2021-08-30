@@ -1,4 +1,6 @@
 {
+  "notFound": "查無資訊",
+  "serverError": "系統錯誤",
   "errorMessages": {
     "notMember": "你不是會員"
   },

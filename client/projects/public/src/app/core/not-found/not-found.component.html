@@ -1,1 +1,20 @@
-<p>not-found works!</p>
+<div class="aui-layout not-found-bg" *transloco="let translationOutput">
+  <div class="aui-grid">
+    <div
+      class="
+        aui-cell aui-cell--12
+        p-0
+        full-screen-height
+        flex flex-col
+        items-center
+        justify-center
+        text-white
+      "
+    >
+      <h2 class="aui-headline-2 text-9xl text-center z-2">404</h2>
+      <h3 class="aui-headline-2 mt-8 text-center z-2">
+        {{ translationOutput('notFound') }}
+      </h3>
+    </div>
+  </div>
+</div>

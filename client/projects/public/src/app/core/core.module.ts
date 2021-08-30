@@ -8,12 +8,13 @@ import { NavModule } from '../component-modules/audi-ui/nav/nav.module';
 import { LanguageSelectorModule } from './language-selector/language-selector.module';
 import { NotificationServiceModule } from '../component-modules/audi-ui/services/notification-service/notification-service.module';
 import { TranslocoModule } from '@ngneat/transloco';
-
-import { NotFoundComponent } from './not-found/not-found.component';
-import { NavComponent } from './nav/nav.component';
 import { FooterModule } from './footer/footer.module';
 
-const COMPONENTS = [NotFoundComponent, NavComponent];
+import { NavComponent } from './nav/nav.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { ServerErrorComponent } from './server-error/server-error.component';
+
+const COMPONENTS = [NotFoundComponent, NavComponent, ServerErrorComponent];
 
 @NgModule({
   declarations: [...COMPONENTS],

@@ -1,4 +1,6 @@
 {
+  "notFound": "We couldn't find the page you requested.",
+  "serverError": "Internal Server Error",
   "errorMessages": {
     "notMember": "You are not a member"
   },

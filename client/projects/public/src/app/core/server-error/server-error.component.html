@@ -1,0 +1,61 @@
+<ng-container *ngIf="!isProductionEnv; else productionTemplate">
+  <div class="container mx-auto full-screen-height">
+    <div class="text-center">
+      <h1 style="font-size: 100px" class="text-center">DEV ONLY</h1>
+      <h2 class="mt-0 text-center">
+        Internal server error - refreshing the page will make the error
+        disappear!
+      </h2>
+    </div>
+    <ng-container *ngIf="error">
+      <h5 class="text-danger text-center mb-4">Error: {{ error.message }}</h5>
+      <hr />
+      <h5 class="font-weight-bold">
+        Note: If you are seeing this, then Angular is probably not to blame.
+      </h5>
+      <h6 class="mb-3">What to do next?</h6>
+      <ol>
+        <li>Open the chrome dev tools</li>
+        <li>Inspect the network tab</li>
+        <li>Check the failing request</li>
+        <li>Examine request URL - make sure it is correct</li>
+        <li>
+          Reproduce the error in Swagger or Postman - if we see the same
+          response, then the issue is not with Angular.
+        </li>
+      </ol>
+      <p class="mb-3">
+        Following is the stack trace - this is where your investigation should
+        start!
+      </p>
+      <code
+        class="my-5 background-color-grey-1"
+        style="white-space: pre-wrap"
+        >{{ error.details }}</code
+      >
+    </ng-container>
+  </div>
+</ng-container>
+
+<ng-template #productionTemplate>
+  <div class="aui-layout server-error-bg" *transloco="let translationOutput">
+    <div class="aui-grid">
+      <div
+        class="
+          aui-cell aui-cell--12
+          p-0
+          full-screen-height
+          flex flex-col
+          items-center
+          justify-center
+          text-white
+        "
+      >
+        <h2 class="aui-headline-2 text-9xl text-center z-2">500</h2>
+        <h3 class="aui-headline-2 mt-8 text-center z-2">
+          {{ translationOutput('serverError') }}
+        </h3>
+      </div>
+    </div>
+  </div>
+</ng-template>
