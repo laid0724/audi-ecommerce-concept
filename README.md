@@ -119,19 +119,15 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 
 - RWD
 - Angular universal
-- fullpage angular
 - not found
 - server error
-- homepage with following sections: hero carousel, branding, latest news/events/promotions, featured product, latest product, misc
-- live chat
-- product list
-- user like product feature
-- articles, e.g., news, events, promotions
-- single product page using fullpage - first page has product info and carousel, second page custom wysiwyg content and product recommendations in same category
-- cart
-- like product
-- checkout / order
 - login / register / update user info
-- cancel / track order
 - member's area
-- footer
+- product list
+- single product page using fullpage - first page has product info and carousel, second page custom wysiwyg content and product recommendations in same category
+- user like product feature
+- cart
+- checkout / order
+- cancel / track order
+- articles, e.g., news, events, promotions
+- live chat

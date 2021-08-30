@@ -1,3 +1,4 @@
+@import url(~fullpage.js/dist/fullpage.min.css);
 @import '~swiper/swiper-bundle';
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
@@ -27,7 +28,8 @@ body {
 }
 
 .router-outlet-wrapper {
-  min-height: 100vh;
+  margin-top: 3.5rem;
+  min-height: $full-screen-minus-audi-header;
 }
 
 .clickable {

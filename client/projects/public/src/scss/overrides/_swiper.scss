@@ -1,3 +1,9 @@
+$full-screen-minus-audi-header: calc(100vh - #{unit(14)});
+
+.full-screen-height {
+  height: $full-screen-minus-audi-header
+}
+
 audi-multi-slides-per-view-slider {
   .swiper-slide {
     &-active > :first-child {
@@ -16,7 +22,7 @@ audi-multi-slides-per-view-slider {
 }
 
 .hero-slider-wrapper {
-  height: calc(100vh - #{unit(14)});
+  @extend .full-screen-height;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,7 +53,7 @@ audi-multi-slides-per-view-slider {
 }
 
 .featured-products-slider-wrapper {
-  height: calc(100vh - #{unit(14)});
+  @extend .full-screen-height;
   display: flex;
   justify-content: center;
   align-items: center;

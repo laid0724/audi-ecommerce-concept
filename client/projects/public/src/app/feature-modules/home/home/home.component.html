@@ -1,43 +1,249 @@
-<ng-container *ngIf="homepageData$ | async; let data">
-  <!-- TODO: replace this wrapper with fullpage.js -->
-  <div class="aui-layout background-color-white">
-    <div class="aui-grid">
-      <div class="aui-cell aui-cell--12 hero-slider-wrapper">
-        <div class="w-full">
-          <audi-hero-slider
-            [fadeEffect]="true"
-            [autoplay]="false"
-            [allowDrag]="!isDesktop"
-            [carouselItems]="data.carouselItems"
-          >
-          </audi-hero-slider>
+<ng-container *ngIf="data$ | async; let data; else: loading">
+  <ng-container *transloco="let translationOutput">
+    <div
+      fullpage
+      id="fullpage"
+      [options]="fullpageConfig"
+      (ref)="getFullpageRef($event)"
+      class="-mt-14"
+    >
+      <div class="section" *ngIf="data.homepageData.carouselItems.length > 0">
+        <div class="aui-layout background-color-white">
+          <div class="aui-grid">
+            <div class="aui-cell aui-cell--12 hero-slider-wrapper">
+              <div class="w-full">
+                <audi-hero-slider
+                  [fadeEffect]="true"
+                  [autoplay]="true"
+                  [allowDrag]="!isDesktop"
+                  [carouselItems]="data.homepageData.carouselItems"
+                >
+                </audi-hero-slider>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="isDesktop" class="scroll-indicator">
+          <audi-icon size="large" iconName="arrow-down"></audi-icon>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- TODO: some kind of branding space -->
-
-  <!-- TODO latest events & news in card grid -->
-
-  <div class="aui-layout background-color-white">
-    <div class="aui-grid">
-      <div class="aui-cell aui-cell--12 featured-products-slider-wrapper">
-        <div class="w-full">
-          <h2 class="aui-headline-2 text-black text-center mt-0 mb-8 md:mt-8">
-            <ng-container *transloco="let translationOutput; read: 'homepage'">
-              {{ translationOutput('featuredProduct') }}
-            </ng-container>
-          </h2>
-          <audi-featured-products-slider
-            [fadeEffect]="true"
-            [allowDrag]="!isDesktop"
-            [featuredProducts]="data.featuredProducts"
-          ></audi-featured-products-slider>
+      <div class="section branding-section-bg">
+        <div class="aui-layout">
+          <div class="aui-grid">
+            <div
+              class="
+                aui-cell aui-cell--12
+                full-screen-height
+                grid grid-rows-1 grid-cols-12
+              "
+            >
+              <div class="hidden md:inline-grid md:col-span-1"></div>
+              <div class="col-span-12 md:col-span-11 max-w-md">
+                <div class="w-full h-full flex items-center justify-center">
+                  <audi-card
+                    [headerSize]="4"
+                    [header]="translationOutput('homepage.branding')"
+                  >
+                    <p class="mt-4 mb-3">
+                      {{ translationOutput('homepage.brandingContent1') }}
+                    </p>
+                    <p class="my-3">
+                      {{ translationOutput('homepage.brandingContent2') }}
+                    </p>
+                    <p class="my-3">
+                      {{ translationOutput('homepage.brandingContent3') }}
+                    </p>
+                    <audi-button
+                      type="primary"
+                      class="block w-full mt-5"
+                      [routerLink]="['/', language$ | async, 'products']"
+                    >
+                      {{ translationOutput('buttons.exploreCTA') }}
+                    </audi-button>
+                  </audi-card>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <!-- TODO LATEST PRODUCTS IN MULTI VIEW SLIDER  -->
+      <div class="section" *ngIf="data.latestDocuments.length > 0">
+        <div class="full-screen-height flex items-center justify-center">
+          <div class="w-full">
+            <h3 class="aui-headline-3 text-black text-center mt-0 mb-8">
+              {{ translationOutput('homepage.latestDocuments') }}
+            </h3>
+            <audi-multi-slides-per-view-slider
+              [slidesPerView]="3"
+              [spaceBetween]="10"
+              [autoplay]="false"
+              [isLightTheme]="false"
+            >
+              <ng-container *ngFor="let document of data.latestDocuments">
+                <div *projectAsTemplate class="max-w-xs">
+                  <audi-card
+                    [headerSize]="4"
+                    [header]="document.title"
+                    [headerSmallCaption]="
+                      !isNullOrEmptyString(document.date?.toString())
+                        ? (document.date | date: 'yyyy-MM-dd')
+                        : (document.createdAt | date: 'yyyy-MM-dd')
+                    "
+                    [coverImageUrl]="
+                      !isNullOrEmptyString(document?.featuredImage?.url)
+                        ? document.featuredImage.url
+                        : 'assets/images/placeholder-black.png'
+                    "
+                    [isBordered]="true"
+                    textAlign="center"
+                  >
+                    <div class="flex flex-col items-center justify-center">
+                      <small
+                        class="
+                          document-description-wrapper
+                          text-grey-8
+                          text-center
+                          text-truncate-ellipses
+                          text-truncate-ellipses--3-lines
+                          mt-1
+                          mb-4
+                        "
+                      >
+                        {{ document.introduction }}
+                      </small>
+                    </div>
+
+                    <audi-button
+                      type="primary"
+                      class="block w-full"
+                      [routerLink]="[
+                        '/',
+                        language$ | async,
+                        document.type,
+                        document.id
+                      ]"
+                    >
+                      {{ translationOutput('buttons.learnMore') }}
+                    </audi-button>
+                  </audi-card>
+                </div>
+              </ng-container>
+            </audi-multi-slides-per-view-slider>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="section"
+        *ngIf="data.homepageData.featuredProducts.length > 0"
+      >
+        <div class="aui-layout">
+          <div class="aui-grid">
+            <div class="aui-cell aui-cell--12 featured-products-slider-wrapper">
+              <div class="w-full">
+                <h3 class="aui-headline-3 text-black text-center mt-0 mb-8">
+                  {{ translationOutput('homepage.featuredProduct') }}
+                </h3>
+                <audi-featured-products-slider
+                  [fadeEffect]="true"
+                  [allowDrag]="!isDesktop"
+                  [featuredProducts]="data.homepageData.featuredProducts"
+                ></audi-featured-products-slider>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" *ngIf="data.newestProducts.length > 0">
+        <div class="aui-layout background-color-white">
+          <div class="aui-grid">
+            <div
+              class="
+                aui-cell aui-cell--12
+                full-screen-height
+                flex
+                items-center
+                justify-center
+              "
+            >
+              <div class="w-full">
+                <h3 class="aui-headline-3 text-black text-center mt-0 mb-8">
+                  {{ translationOutput('homepage.newestProducts') }}
+                </h3>
+                <audi-multi-slides-per-view-slider
+                  [slidesPerView]="3"
+                  [spaceBetween]="10"
+                  [autoplay]="false"
+                  [isLightTheme]="false"
+                >
+                  <ng-container *ngFor="let product of data.newestProducts">
+                    <div *projectAsTemplate class="max-w-xs">
+                      <audi-card
+                        [headerSize]="4"
+                        [header]="product.name"
+                        [coverImageUrl]="
+                          getProductMainPhoto(product.photos)!.url
+                        "
+                        textAlign="center"
+                      >
+                        <div class="flex flex-col items-center justify-center">
+                          <small
+                            class="
+                              text-grey-8
+                              text-truncate-ellipses
+                              text-truncate-ellipses--3-lines
+                              mt-1
+                              mb-4
+                            "
+                          >
+                            {{ product.description }}
+                          </small>
+                        </div>
+
+                        <audi-button
+                          type="primary"
+                          class="block w-full"
+                          [routerLink]="[
+                            '/',
+                            language$ | async,
+                            'products',
+                            product.productCategoryId,
+                            product.id
+                          ]"
+                        >
+                          {{ translationOutput('buttons.productsCTA') }}
+                        </audi-button>
+                      </audi-card>
+                    </div>
+                  </ng-container>
+                </audi-multi-slides-per-view-slider>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section fp-auto-height pt-0">
+        <audi-footer></audi-footer>
+      </div>
+    </div>
+  </ng-container>
 </ng-container>
+
+<ng-template #loading>
+  <div
+    class="
+      full-screen-height
+      mt-14
+      flex
+      items-center
+      justify-center
+      background-color-grey-2
+    "
+  >
+    <audi-spinner class="block" [isContinuous]="true"></audi-spinner>
+  </div>
+</ng-template>

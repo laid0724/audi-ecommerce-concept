@@ -105,9 +105,9 @@
         >
           <div class="mt-8 md:mt-0 md:mb-auto">
             <ng-container *ngIf="!isNullOrEmptyString(product.name)">
-              <h3
+              <h4
                 class="
-                  aui-headline-3
+                  aui-headline-4
                   mb-3
                   text-center
                   md:text-left
@@ -115,7 +115,7 @@
                 "
               >
                 {{ product.name }}
-              </h3>
+              </h4>
             </ng-container>
             <ng-container *ngIf="!isNullOrEmptyString(product.description)">
               <p
@@ -151,20 +151,20 @@
                     {{
                       translationOutput('discountedPriceLabel')
                     }} </ng-container
-                  >NT {{
+                  >${{
                     (product.price - product.discountAmount).toLocaleString()
                   }}
                 </h6>
-                <small class="line-through text-grey-8"
+                <small class="aui-small line-through text-grey-8"
                   >(<ng-container
                     *transloco="let translationOutput; read: 'pricing'"
                     >{{ translationOutput('originalPriceLabel') }}</ng-container
-                  >NT {{ product.price.toLocaleString() }})</small
+                  >${{ product.price.toLocaleString() }})</small
                 >
               </div>
             </ng-container>
             <audi-button type="primary" class="block w-full mt-5 md:mt-10">
-              <ng-container *transloco="let translationOutput">
+              <ng-container *transloco="let translationOutput; read: 'buttons'">
                 {{ translationOutput('learnMore') }}
               </ng-container>
             </audi-button>

@@ -3,6 +3,13 @@ body {
   @include audi-transition-effect;
 }
 
+.aui-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
 .aui-modal-dialog__close {
   svg {
     * {

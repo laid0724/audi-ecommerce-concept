@@ -179,7 +179,11 @@
               "node_modules/@audi/audi-ui/dist/audi-ui.min.css",
               "projects/public/src/styles.scss"
             ],
-            "scripts": ["node_modules/fslightbox/index.js"]
+            "scripts": [
+              "node_modules/fslightbox/index.js",
+              "node_modules/fullpage.js/vendors/scrolloverflow.min.js",
+              "node_modules/fullpage.js/dist/fullpage.extensions.min.js"
+            ]
           },
           "configurations": {
             "production": {
