@@ -1,20 +1,22 @@
 <ng-container *ngIf="!isProductionEnv; else productionTemplate">
-  <div class="container mx-auto full-screen-height">
+  <div class="container mx-auto min-full-screen-height pb-10">
     <div class="text-center">
       <h1 style="font-size: 100px" class="text-center">DEV ONLY</h1>
-      <h2 class="mt-0 text-center">
+      <h5 class="aui-headline-5 text-center mb-3">
         Internal server error - refreshing the page will make the error
         disappear!
-      </h2>
+      </h5>
     </div>
     <ng-container *ngIf="error">
-      <h5 class="text-danger text-center mb-4">Error: {{ error.message }}</h5>
+      <h5 class="aui-headline-5 text-danger text-center mb-4">
+        Error: {{ error.message }}
+      </h5>
       <hr />
-      <h5 class="font-weight-bold">
+      <h5 class="aui-headline-5 font-weight-bold my-3">
         Note: If you are seeing this, then Angular is probably not to blame.
       </h5>
-      <h6 class="mb-3">What to do next?</h6>
-      <ol>
+      <h6 class="aui-headline-6 mb-3">What to do next?</h6>
+      <ol class="list-inside list-disc">
         <li>Open the chrome dev tools</li>
         <li>Inspect the network tab</li>
         <li>Check the failing request</li>
@@ -24,12 +26,12 @@
           response, then the issue is not with Angular.
         </li>
       </ol>
-      <p class="mb-3">
+      <h6 class="aui-headline-6 my-3">
         Following is the stack trace - this is where your investigation should
         start!
-      </p>
+      </h6>
       <code
-        class="my-5 background-color-grey-1"
+        class="block my-6 background-color-grey-1"
         style="white-space: pre-wrap"
         >{{ error.details }}</code
       >
