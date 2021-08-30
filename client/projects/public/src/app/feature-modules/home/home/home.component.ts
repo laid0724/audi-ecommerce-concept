@@ -5,6 +5,7 @@ import {
   Event,
   Homepage,
   HomepageService,
+  isNullOrEmptyString,
   LanguageStateService,
   News,
   PaginatedResult,
@@ -28,8 +29,6 @@ interface HomepageData {
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  data$: Observable<HomepageData>;
-
   homepageData$: Observable<Homepage> = this.homepageService
     .getHomepage()
     .pipe(take(1));
@@ -79,6 +78,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     })
   );
 
+  data$: Observable<HomepageData> = forkJoin({
+    homepageData: this.homepageData$,
+    newestProducts: this.newestProducts$,
+    latestDocuments: this.latestDocuments$,
+  }).pipe(take(1));
+
   language$ = this.languageService.language$;
 
   fullpageConfig: any;
@@ -86,6 +91,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   isDesktop: boolean;
   _breakpointObserverSubscription: Subscription;
+
+  public isNullOrEmptyString: (val: string | null | undefined) => boolean = isNullOrEmptyString;
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -104,7 +111,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     // see: https://github.com/alvarotrigo/fullPage.js
     this.fullpageConfig = {
       // fullpage options
-      licenseKey: 'OPEN-SOURCE-GPLV3-LICENSE',
+      licenseKey: 'YOUR_KEY_HERE',
       verticalCentered: false,
       fitToSection: true,
       scrollOverflow: true,
@@ -119,12 +126,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((state: BreakpointState) => {
         this.isDesktop = state.matches;
       });
-
-    this.data$ = forkJoin({
-      homepageData: this.homepageData$,
-      newestProducts: this.newestProducts$,
-      latestDocuments: this.latestDocuments$,
-    }).pipe(take(1));
   }
 
   getFullpageRef(fullpageRef: any) {

@@ -11,16 +11,28 @@
   }"
 >
   <div class="aui-card__cover" *ngIf="!isNullOrEmptyString(coverImageUrl)">
-    <div class="aui-card__cover-image">
+    <div
+      class="aui-card__cover-image border-color-{{ borderColor }}"
+      [ngClass]="{
+        'border-t border-l border-r': isBordered
+      }"
+    >
       <img [src]="coverImageUrl" />
     </div>
   </div>
-  <div class="aui-card__body">
+  <div
+    class="aui-card__body border-color-{{ borderColor }}"
+    [ngClass]="{
+      border: isBordered
+    }"
+  >
     <div class="aui-card__content text-{{ textAlign }} pb-0">
       <p class="aui-small" *ngIf="!isNullOrEmptyString(headerSmallCaption)">
         {{ headerSmallCaption }}
       </p>
-      <h2 class="aui-headline-{{ headerSize }}">{{ header }}</h2>
+      <h2 class="aui-headline-{{ headerSize }} text-truncate-ellipses">
+        {{ header }}
+      </h2>
       <p
         class="aui-shortread"
         *ngIf="!isNullOrEmptyString(headerPreviewCaption)"

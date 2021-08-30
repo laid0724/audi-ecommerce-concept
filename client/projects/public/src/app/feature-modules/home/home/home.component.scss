@@ -1,10 +1,16 @@
-
 .branding-section-bg {
   // background-image: url('/assets/images/homepage-parallax-bg-1.jpeg');
   background-image: url('/assets/images/homepage-parallax-bg-2.webp');
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+.document-description-wrapper {
+  // makes sure that all cards have same height
+  // see: https://stackoverflow.com/questions/18120988/css-height-in-terms-of-line-height
+  line-height: 2 !important; // this will be twice the value of the font-size
+  height: 6em !important; // equivalent to 3 lines high
 }
 
 .scroll-indicator {

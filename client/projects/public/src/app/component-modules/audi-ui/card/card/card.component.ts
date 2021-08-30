@@ -13,11 +13,13 @@ export class CardComponent {
   @Input() textAlign: 'left' | 'center' | 'right' = 'left';
   @Input() headerSize: number = 5;
   @Input() header: string = '';
-  @Input() headerSmallCaption: string = '';
-  @Input() headerPreviewCaption: string = '';
+  @Input() headerSmallCaption: string | null = '';
+  @Input() headerPreviewCaption: string | null = '';
   @Input() isClickable: boolean = false;
   @Input() backgroundImageUrl: string = '';
   @Input() coverImageUrl: string = '';
+  @Input() isBordered: boolean = false;
+  @Input() borderColor: AudiColor | string = AudiColor.Grey1;
 
   public isNullOrEmptyString: (val: string | null | undefined) => boolean =
     isNullOrEmptyString;
