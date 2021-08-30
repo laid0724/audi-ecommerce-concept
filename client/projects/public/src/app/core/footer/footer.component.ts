@@ -43,6 +43,8 @@ export class FooterComponent implements OnInit {
 
     this.notificationService.info(
       this.transloco.translate('emailSubscriptionSuccess'),
+      // TODO: transloco title
+      null,
       3000
     );
   }

@@ -92,6 +92,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
     if (!isRightRole) {
       this.notificationService.error(
         this.transloco.translate('errorMessages.notMember'),
+        // TODO: transloco title
+        null,
         3000
       );
       this.accountService.logout();

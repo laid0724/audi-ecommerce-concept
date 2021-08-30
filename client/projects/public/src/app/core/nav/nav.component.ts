@@ -7,6 +7,7 @@ import {
   ViewChild,
   Renderer2,
 } from '@angular/core';
+import {  Router } from '@angular/router';
 import { LanguageCode, LanguageStateService } from '@audi/data';
 import { Observable } from 'rxjs';
 
@@ -26,7 +27,8 @@ export class NavComponent implements OnInit {
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
-    private languageService: LanguageStateService
+    private languageService: LanguageStateService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -41,5 +43,14 @@ export class NavComponent implements OnInit {
     this.menuIsOpen
       ? this.renderer.addClass(this.document.body, 'scroll-disabled')
       : this.renderer.removeClass(this.document.body, 'scroll-disabled');
+  }
+
+  directToLogin(): void {
+    this.router.navigate(
+      ['/', this.languageService.getCurrentLanguage(), 'login'],
+      {
+        queryParams: { redirectTo: this.router.routerState.snapshot.url },
+      }
+    );
   }
 }

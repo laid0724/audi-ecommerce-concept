@@ -1,115 +1,143 @@
-<audi-header>
-  <div class="w-screen flex items-center justify-between">
-    <audi-button type="icon-large" (click)="toggleMenuState(true)">
-      <audi-icon size="large" [iconName]="'off-canvas'"></audi-icon>
-    </audi-button>
-    <audi-button type="icon">
-      <a
-        [routerLink]="['/', language$ | async, 'home']"
-        class="w-20 flex items-center justify-center"
-      >
-        <img src="assets/audi-logo-black.svg" class="w-full" />
-      </a>
-    </audi-button>
-    <div class="w-12 flex items-center justify-center">
-      <audi-language-selector></audi-language-selector>
-    </div>
-  </div>
-</audi-header>
-
-<div
-  #menu
-  class="audi-side-nav"
-  [ngClass]="{
-    active: menuIsOpen
-  }"
->
-  <div
-    class="audi-side-nav__overlay"
-    (click)="!isPristine ? toggleMenuState(false) : null"
-  ></div>
-  <div class="audi-side-nav__menu-container">
-    <div class="audi-side-nav__menu-close-btn-wrapper">
+<ng-container *ngIf="language$ | async; let language">
+  <audi-header>
+    <div class="w-screen flex items-center justify-between relative">
+      <audi-button type="icon-large" (click)="toggleMenuState(true)">
+        <audi-icon size="large" [iconName]="'off-canvas'"></audi-icon>
+      </audi-button>
       <div
-        class="audi-side-nav__menu-close-btn"
-        [ngClass]="{ 'inactive-animation': !isPristine && !menuIsOpen }"
+        class="
+          absolute
+          top-0
+          bottom-0
+          left-0
+          right-0
+          flex
+          items-center
+          justify-center
+        "
       >
-        <audi-button type="icon-large" (click)="toggleMenuState(false)">
-          <audi-icon size="large" [iconName]="'cancel'"></audi-icon>
+        <audi-button type="icon">
+          <a
+            [routerLink]="['/', language, 'home']"
+            class="w-20 flex items-center justify-center"
+          >
+            <img src="assets/audi-logo-black.svg" class="w-full" />
+          </a>
         </audi-button>
       </div>
+      <div class="flex items-center justify-between">
+        <!-- TODO:
+          isLoggedIn state
+            if logged in: flyout with members area & logout option
+            if not logged call directToLogin()
+        -->
+        <audi-button type="icon" (click)="directToLogin()">
+          <audi-icon size="small" [iconName]="'user'"></audi-icon>
+        </audi-button>
+        <div class="w-12 flex items-center justify-center">
+          <audi-language-selector></audi-language-selector>
+        </div>
+      </div>
     </div>
+  </audi-header>
+
+  <div
+    #menu
+    class="audi-side-nav"
+    [ngClass]="{
+      active: menuIsOpen
+    }"
+  >
     <div
-      class="audi-side-nav__menu"
-      [ngClass]="{ 'inactive-animation': !isPristine && !menuIsOpen }"
-    >
-      <!-- TODO: transloco -->
-      <h3
-        class="aui-headline-3 clickable mb-4 mt-auto"
-        (click)="toggleMenuState(false)"
-      >
-        Nav Item 1
-      </h3>
-      <h3
-        class="aui-headline-3 clickable my-4"
-        (click)="toggleMenuState(false)"
-      >
-        Nav Item 2
-      </h3>
-      <h3
-        class="aui-headline-3 clickable my-4"
-        (click)="toggleMenuState(false)"
-      >
-        Nav Item 3
-      </h3>
-      <h3
-        class="aui-headline-3 clickable my-4"
-        (click)="toggleMenuState(false)"
-      >
-        Nav Item 4
-      </h3>
-      <h3
-        class="aui-headline-3 clickable my-4"
-        (click)="toggleMenuState(false)"
-      >
-        Nav Item 5
-      </h3>
-      <div class="flex mt-auto">
-        <audi-button-group type="icon">
-          <audi-button type="icon-large">
-            <a href="https://www.facebook.com/AudiTaiwan" target="_blank">
-              <audi-icon
-                size="large"
-                [iconName]="'system-facebook'"
-              ></audi-icon>
-            </a>
+      class="audi-side-nav__overlay"
+      (click)="!isPristine ? toggleMenuState(false) : null"
+    ></div>
+    <div class="audi-side-nav__menu-container">
+      <div class="audi-side-nav__menu-close-btn-wrapper">
+        <div
+          class="audi-side-nav__menu-close-btn"
+          [ngClass]="{ 'inactive-animation': !isPristine && !menuIsOpen }"
+        >
+          <audi-button type="icon-large" (click)="toggleMenuState(false)">
+            <audi-icon size="large" [iconName]="'cancel'"></audi-icon>
           </audi-button>
-          <audi-button type="icon-large">
-            <a href="https://www.instagram.com/audi_tw" target="_blank">
-              <audi-icon
-                size="large"
-                [iconName]="'system-instagram'"
-              ></audi-icon>
-            </a>
-          </audi-button>
-          <audi-button type="icon-large">
-            <a href="https://www.youtube.com/user/auditaiwan" target="_blank">
-              <audi-icon size="large" [iconName]="'system-youtube'"></audi-icon>
-            </a>
-          </audi-button>
-          <audi-button type="icon-large">
-            <a
-              href="https://gh.linkedin.com/company/audi-taiwan"
-              target="_blank"
-            >
-              <audi-icon
-                size="large"
-                [iconName]="'system-linkedin'"
-              ></audi-icon>
-            </a>
-          </audi-button>
-        </audi-button-group>
+        </div>
+      </div>
+      <div
+        class="audi-side-nav__menu"
+        [ngClass]="{ 'inactive-animation': !isPristine && !menuIsOpen }"
+      >
+        <!-- TODO: transloco -->
+        <h3
+          class="aui-headline-3 clickable mb-4 mt-auto"
+          (click)="toggleMenuState(false)"
+        >
+          Nav Item 1
+        </h3>
+        <h3
+          class="aui-headline-3 clickable my-4"
+          (click)="toggleMenuState(false)"
+        >
+          Nav Item 2
+        </h3>
+        <h3
+          class="aui-headline-3 clickable my-4"
+          (click)="toggleMenuState(false)"
+        >
+          Nav Item 3
+        </h3>
+        <h3
+          class="aui-headline-3 clickable my-4"
+          (click)="toggleMenuState(false)"
+        >
+          Nav Item 4
+        </h3>
+        <h3
+          class="aui-headline-3 clickable my-4"
+          (click)="toggleMenuState(false)"
+        >
+          Nav Item 5
+        </h3>
+        <div class="flex mt-auto">
+          <audi-button-group type="icon">
+            <audi-button type="icon-large">
+              <a href="https://www.facebook.com/AudiTaiwan" target="_blank">
+                <audi-icon
+                  size="large"
+                  [iconName]="'system-facebook'"
+                ></audi-icon>
+              </a>
+            </audi-button>
+            <audi-button type="icon-large">
+              <a href="https://www.instagram.com/audi_tw" target="_blank">
+                <audi-icon
+                  size="large"
+                  [iconName]="'system-instagram'"
+                ></audi-icon>
+              </a>
+            </audi-button>
+            <audi-button type="icon-large">
+              <a href="https://www.youtube.com/user/auditaiwan" target="_blank">
+                <audi-icon
+                  size="large"
+                  [iconName]="'system-youtube'"
+                ></audi-icon>
+              </a>
+            </audi-button>
+            <audi-button type="icon-large">
+              <a
+                href="https://gh.linkedin.com/company/audi-taiwan"
+                target="_blank"
+              >
+                <audi-icon
+                  size="large"
+                  [iconName]="'system-linkedin'"
+                ></audi-icon>
+              </a>
+            </audi-button>
+          </audi-button-group>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>

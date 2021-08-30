@@ -22,6 +22,10 @@ module.exports = {
         '7': 7,
         '8': 8,
         '9': 9,
+        '99': 99, // right before
+        '101': 101, // right above header
+        '102': 102, // right above header
+        '103': 103 // right above header
       }
     },
   },

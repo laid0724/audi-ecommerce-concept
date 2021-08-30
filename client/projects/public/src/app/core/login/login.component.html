@@ -1,0 +1,88 @@
+<!-- TODO: transloco -->
+
+<div class="login-wrapper" *transloco="let translationOutput">
+  <div
+    class="grid grid-rows-1 grid-cols-12 h-full overflow-y-auto relative z-103"
+  >
+    <div
+      class="
+        col-span-12
+        sm:col-span-6
+        md:col-span-5
+        xl:col-span-4
+        background-color-white
+        h-full
+        flex flex-col
+        p-10
+      "
+    >
+      <audi-button type="icon" class="block">
+        <a
+          [routerLink]="['/', currentLanguage, 'home']"
+          class="w-28 flex items-center justify-center"
+        >
+          <img src="assets/audi-logo-black.svg" class="w-full" />
+        </a>
+      </audi-button>
+
+      <div class="my-auto">
+        <div class="block w-full">
+          <audi-nav-bar class="block my-4" [isSmall]="false">
+            <audi-nav-item
+              [isActive]="currentMode === 'login'"
+              (click)="currentMode = 'login'"
+              >Login</audi-nav-item
+            >
+            <audi-nav-item
+              [isActive]="currentMode === 'register'"
+              (click)="currentMode = 'register'"
+              >Register</audi-nav-item
+            >
+          </audi-nav-bar>
+        </div>
+
+        <div class="block w-full">
+          <form *ngIf="currentMode === 'login'" [formGroup]="loginForm">
+            <audi-input-container
+              formControlName="userName"
+              [label]="'Email address'"
+              [isLightTheme]="false"
+              [floatingLabel]="true"
+            >
+              <audi-control-description
+                >Please enter your username or email.</audi-control-description
+              >
+              <audi-control-valid></audi-control-valid>
+              <audi-control-error>{{
+                translationOutput('formErrors.required')
+              }}</audi-control-error>
+            </audi-input-container>
+            <audi-input-container
+              formControlName="password"
+              type="password"
+              [label]="'Password'"
+              [isLightTheme]="false"
+              [floatingLabel]="true"
+            >
+              <audi-control-description
+                >Please enter your password</audi-control-description
+              >
+              <audi-control-valid></audi-control-valid>
+              <audi-control-error>{{
+                translationOutput('formErrors.required')
+              }}</audi-control-error>
+            </audi-input-container>
+
+            <div class="block w-full mt-10">
+              <audi-button class="block w-full" (click)="login()"
+                >Login</audi-button
+              >
+            </div>
+          </form>
+          <form *ngIf="currentMode === 'register'">Register</form>
+        </div>
+      </div>
+    </div>
+    <div class="col-span-full sm:col-span-6 md:col-span-7 xl:col-span-8"></div>
+  </div>
+</div>

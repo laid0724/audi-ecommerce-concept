@@ -119,8 +119,6 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 
 - RWD
 - Angular universal
-- not found
-- server error
 - login / register / update user info
 - member's area
 - product list
