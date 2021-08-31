@@ -9,6 +9,8 @@
     "next": "Next"
   },
   "buttons": {
+    "submit": "Submit",
+    "cancel": "Cancel",
     "learnMore": "Learn More",
     "exploreCTA": "Explore Now",
     "productsCTA": "Shop Now"

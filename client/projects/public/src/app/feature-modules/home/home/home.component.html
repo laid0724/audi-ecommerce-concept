@@ -187,6 +187,7 @@
                   <ng-container *ngFor="let product of data.newestProducts">
                     <div *projectAsTemplate class="max-w-xs">
                       <audi-card
+                        [isClickable]="true"
                         [headerSize]="4"
                         [header]="product.name"
                         [coverImageUrl]="

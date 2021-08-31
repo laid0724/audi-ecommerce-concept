@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initLoginForm();
     this.initResetPwForm();
+
     initAudiModules(AudiModuleName.Response).forEach((module) =>
       module.components?.upgradeElements()
     );

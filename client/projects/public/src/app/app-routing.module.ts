@@ -30,15 +30,49 @@ let routes: Routes = [
       import('./feature-modules/home/home.module').then((m) => m.HomeModule),
   },
   {
+    path: 'login',
+    redirectTo: `${lastSelectedLanguage}/login`,
+  },
+  {
     path: ':languageCode/login',
     component: LoginComponent,
   },
   {
+    path: 'confirm-email',
+    redirectTo: `${lastSelectedLanguage}/confirm-email`,
+  },
+  {
+    path: ':languageCode/confirm-email',
+    data: {
+      confirmEmail: true,
+    },
+    component: LoginComponent,
+  },
+  {
+    path: 'reset-password',
+    redirectTo: `${lastSelectedLanguage}/reset-password`,
+  },
+  {
+    path: ':languageCode/reset-password',
+    data: {
+      resetPassword: true,
+    },
+    component: LoginComponent,
+  },
+  {
     path: 'not-found',
+    redirectTo: `${lastSelectedLanguage}/not-found`,
+  },
+  {
+    path: ':languageCode/not-found',
     component: NotFoundComponent,
   },
   {
     path: 'server-error',
+    redirectTo: `${lastSelectedLanguage}/server-error`,
+  },
+  {
+    path: ':languageCode/server-error',
     component: ServerErrorComponent,
   },
   {

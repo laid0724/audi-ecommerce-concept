@@ -9,6 +9,8 @@
     "next": "下一頁"
   },
   "buttons": {
+    "submit": "送出",
+    "cancel": "取消",
     "learnMore": "了解更多",
     "exploreCTA": "即刻探索",
     "productsCTA": "立即鑑賞"

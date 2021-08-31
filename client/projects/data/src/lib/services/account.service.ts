@@ -92,13 +92,14 @@ export class AccountService {
   }
 
   register(request: RegisterRequest): Observable<User> {
-    return this.http.post<User>(`${this.endpoint}/register`, request).pipe(
-      tap((user: User) => {
-        if (user) {
-          this.setCurrentUser(user);
-        }
-      })
-    );
+    return this.http.post<User>(`${this.endpoint}/register`, request);
+    // .pipe(
+    //   tap((user: User) => {
+    //     if (user) {
+    //       this.setCurrentUser(user);
+    //     }
+    //   })
+    // );
   }
 
   createModeratorAccount(request: RegisterRequest): Observable<User> {

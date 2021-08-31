@@ -1,28 +1,40 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import {
   AccountService,
+  hasSameValueValidator,
   LanguageCode,
   LanguageStateService,
   Roles,
   User,
 } from '@audi/data';
 import { TranslocoService } from '@ngneat/transloco';
-import { Subject } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
-import { ModalService } from '../../component-modules/audi-ui/services/modal-service/modal.service';
+import { of, Subject } from 'rxjs';
+import { filter, switchMap, take, tap } from 'rxjs/operators';
 import { NotificationService } from '../../component-modules/audi-ui/services/notification-service/notification.service';
+
+// todo: transloco translations
+// todo: hostbinding for esc/enter btn
 
 @Component({
   selector: 'audi-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   currentMode: 'login' | 'register' = 'login';
 
   loginForm: FormGroup;
+  registerForm: FormGroup;
+  resetPwForm: FormGroup;
+  forgotPwForm: FormGroup;
+
+  resetPwModalOpen: boolean = false;
+  forgotPwModalOpen: boolean = false;
+
+  emailNotFoundError: boolean = false;
 
   currentLanguage: LanguageCode = this.languageService.getCurrentLanguage();
 
@@ -36,21 +48,118 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private languageService: LanguageStateService,
     private accountService: AccountService,
-    private modalService: ModalService,
     private notificationService: NotificationService,
     private transloco: TranslocoService
   ) {}
 
   ngOnInit(): void {
     this.initLoginForm();
+    this.initRegisterForm();
+    this.initResetPwForm();
+    this.initForgotPwForm();
 
     this.urlToRedirectAfterLogin = this.route.snapshot.queryParams?.redirectTo;
+  }
+
+  ngAfterViewInit(): void {
+    this.route.data
+      .pipe(
+        filter((data: Data) => data.confirmEmail || data.resetPassword),
+        switchMap((data: Data) => {
+          if (data.confirmEmail) {
+            return this.route.queryParamMap.pipe(
+              filter(
+                (params: ParamMap) =>
+                  params.has('userId') && params.has('token')
+              ),
+              switchMap((params: ParamMap) =>
+                this.accountService
+                  .confirmUserEmail({
+                    userId: parseInt(params.get('userId') as string),
+                    token: params.get('token') as string,
+                  })
+                  .pipe(
+                    take(1),
+                    tap((user: User) => {
+                      this.notificationService.success(
+                        'Email verified',
+                        '信箱認證成功'
+                      );
+
+                      if (user != null) {
+                        this.accountService.setCurrentUser(user);
+                        this.directUserBasedOnRole(this.userHasRightRole(user));
+                      }
+                    })
+                  )
+              )
+            );
+          }
+          if (data.resetPassword) {
+            return this.route.queryParamMap.pipe(
+              filter(
+                (params: ParamMap) =>
+                  params.has('userId') && params.has('token')
+              ),
+              tap((params: ParamMap) => {
+                this.resetPwForm.patchValue({
+                  userId: parseInt(params.get('userId') as string),
+                  token: params.get('token') as string,
+                });
+                this.resetPwModalOpen = true;
+              })
+            );
+          }
+          return of(null);
+        })
+      )
+      .subscribe();
   }
 
   initLoginForm(): void {
     this.loginForm = this.fb.group({
       userName: [null, [Validators.required]],
       password: [null, [Validators.required]],
+    });
+  }
+
+  initRegisterForm(): void {
+    this.registerForm = this.fb.group({
+      firstName: [null, [Validators.required]],
+      lastName: [null, [Validators.required]],
+      userName: [null, [Validators.required]],
+      email: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.minLength(8)]],
+      confirmPassword: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(8),
+          hasSameValueValidator('password'),
+        ],
+      ],
+    });
+  }
+
+  initResetPwForm(): void {
+    this.resetPwForm = this.fb.group({
+      userId: [null, [Validators.required]],
+      token: [null, [Validators.required]],
+      newPassword: [null, [Validators.required, Validators.minLength(8)]],
+      confirmNewPassword: [
+        null,
+        [
+          Validators.required,
+          Validators.minLength(8),
+          hasSameValueValidator('newPassword'),
+        ],
+      ],
+    });
+  }
+
+  initForgotPwForm(): void {
+    this.forgotPwForm = this.fb.group({
+      email: [null, [Validators.required, Validators.email]],
     });
   }
 
@@ -94,12 +203,95 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.accountService
       .login(this.loginForm.value)
-      .pipe(switchMap((user: User) => this.accountService.currentUser$))
+      .pipe(
+        switchMap((user: User) => this.accountService.currentUser$),
+        take(1)
+      )
       .subscribe((user: User | null) => {
         if (user != null) {
           this.directUserBasedOnRole(this.userHasRightRole(user));
         }
       });
+  }
+
+  register(): void {
+    if (this.registerForm.invalid) {
+      this.registerForm.markAllAsTouched();
+      return;
+    }
+
+    this.accountService
+      .register(this.registerForm.value)
+      .pipe(take(1))
+      .subscribe((user: User) => {
+        if (user) {
+          this.registerForm.reset();
+          this.notificationService.success(
+            '請前往您的信箱認證您的Email',
+            '註冊成功'
+          );
+        }
+      });
+  }
+
+  submitResetPw(): void {
+    if (this.resetPwForm.invalid) {
+      this.resetPwForm.markAllAsTouched();
+      return;
+    }
+
+    this.accountService
+      .resetUserPassword(this.resetPwForm.value)
+      .pipe(take(1))
+      .subscribe((user: User | null) => {
+        this.resetPwModalOpen = false;
+        this.resetPwForm.reset();
+        this.notificationService.success(
+          'Password reset successfully',
+          '密碼重置成功',
+          3000
+        );
+      });
+  }
+
+  submitForgotPw(): void {
+    this.emailNotFoundError = false;
+
+    if (this.forgotPwForm.invalid) {
+      this.forgotPwForm.markAllAsTouched();
+      return;
+    }
+
+    this.accountService
+      .forgotPassword(this.forgotPwForm.value)
+      .pipe(take(1))
+      .subscribe(
+        (res: null) => {
+          this.forgotPwModalOpen = false;
+          this.forgotPwForm.reset();
+          this.notificationService.success(
+            '已發送重置密碼的信件至您所輸入的信箱 An email with instructions to reset your password has been sent to the email you entered',
+            '成功',
+            3000
+          );
+        },
+        (error: HttpErrorResponse) => {
+          if (error.status === 404) {
+            this.emailNotFoundError = true;
+          }
+        }
+      );
+  }
+
+  closeResetPwModal(): void {
+    this.resetPwForm.reset();
+    this.resetPwModalOpen = false;
+  }
+
+  closeForgotPwModal(): void {
+    this.forgotPwForm.reset();
+    this.forgotPwModalOpen = false;
+    this.emailNotFoundError = false;
   }
 
   ngOnDestroy(): void {

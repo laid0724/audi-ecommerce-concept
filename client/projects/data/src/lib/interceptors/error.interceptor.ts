@@ -98,7 +98,12 @@ export class ErrorInterceptor implements HttpInterceptor {
             break;
           case 404: // Not Found
             // NOTE: be careful with this - your APIs cannot throw 404 unless it really is a case of 404.
-            this.router.navigateByUrl('/not-found');
+            // this.router.navigateByUrl('/not-found');
+            this.toastr?.error(
+              error.error,
+              `${error.status} ${error.statusText}`
+            );
+            // handle 404 manually in public site
             break;
           case 500: // Internal Server Error
             // here we redirect as well but we add on NavigationExtras as a message to be passed to the page
