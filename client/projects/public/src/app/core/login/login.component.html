@@ -230,61 +230,6 @@
   </div>
 
   <audi-modal
-    *ngIf="forgotPwForm"
-    [(isOpen)]="forgotPwModalOpen"
-    [header]="'忘記密碼 Forgot Password'"
-    [headerSize]="4"
-    [bgColor]="'white'"
-    [textColor]="'black'"
-    [type]="'default'"
-    [isClosable]="false"
-  >
-    <form [formGroup]="forgotPwForm">
-      <div class="max-w-xs block mb-3">
-        <audi-input-container
-          formControlName="email"
-          [label]="'Email address'"
-          [isLightTheme]="false"
-          [floatingLabel]="true"
-        >
-          <audi-control-description
-            >Please enter your email.</audi-control-description
-          >
-          <audi-control-valid></audi-control-valid>
-          <audi-control-error
-            *ngIf="forgotPwForm.get('email')?.hasError('required')"
-            >{{ translationOutput('formErrors.required') }}</audi-control-error
-          >
-          <audi-control-error
-            *ngIf="forgotPwForm.get('email')?.hasError('email')"
-            >{{ translationOutput('formErrors.email') }}</audi-control-error
-          >
-        </audi-input-container>
-      </div>
-
-      <audi-alert-container
-        *ngIf="emailNotFoundError"
-        alertStyle="danger"
-        class="block"
-      >
-        <p>Email not found</p>
-      </audi-alert-container>
-
-      <div class="block mt-6">
-        <audi-button-group>
-          <audi-button type="primary" (click)="submitForgotPw()">{{
-            translationOutput('buttons.submit')
-          }}</audi-button>
-          <audi-button type="secondary" (click)="closeForgotPwModal()">{{
-            translationOutput('buttons.cancel')
-          }}</audi-button>
-        </audi-button-group>
-      </div>
-    </form>
-  </audi-modal>
-
-  <audi-modal
-    *ngIf="resetPwForm"
     [(isOpen)]="resetPwModalOpen"
     [header]="'更改密碼 Change Password'"
     [headerSize]="4"
@@ -354,6 +299,59 @@
             translationOutput('buttons.submit')
           }}</audi-button>
           <audi-button type="secondary" (click)="closeResetPwModal()">{{
+            translationOutput('buttons.cancel')
+          }}</audi-button>
+        </audi-button-group>
+      </div>
+    </form>
+  </audi-modal>
+
+  <audi-modal
+    [(isOpen)]="forgotPwModalOpen"
+    [header]="'忘記密碼 Forgot Password'"
+    [headerSize]="4"
+    [bgColor]="'white'"
+    [textColor]="'black'"
+    [type]="'default'"
+    [isClosable]="false"
+  >
+    <form [formGroup]="forgotPwForm">
+      <div class="max-w-xs block mb-3">
+        <audi-input-container
+          formControlName="email"
+          [label]="'Email address'"
+          [isLightTheme]="false"
+          [floatingLabel]="true"
+        >
+          <audi-control-description
+            >Please enter your email.</audi-control-description
+          >
+          <audi-control-valid></audi-control-valid>
+          <audi-control-error
+            *ngIf="forgotPwForm.get('email')?.hasError('required')"
+            >{{ translationOutput('formErrors.required') }}</audi-control-error
+          >
+          <audi-control-error
+            *ngIf="forgotPwForm.get('email')?.hasError('email')"
+            >{{ translationOutput('formErrors.email') }}</audi-control-error
+          >
+        </audi-input-container>
+      </div>
+
+      <audi-alert-container
+        *ngIf="emailNotFoundError"
+        alertStyle="danger"
+        class="block"
+      >
+        <p>Email not found</p>
+      </audi-alert-container>
+
+      <div class="block mt-6">
+        <audi-button-group>
+          <audi-button type="primary" (click)="submitForgotPw()">{{
+            translationOutput('buttons.submit')
+          }}</audi-button>
+          <audi-button type="secondary" (click)="closeForgotPwModal()">{{
             translationOutput('buttons.cancel')
           }}</audi-button>
         </audi-button-group>

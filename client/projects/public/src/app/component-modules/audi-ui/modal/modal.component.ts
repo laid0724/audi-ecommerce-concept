@@ -19,6 +19,8 @@ import {
 import { v4 as uuid } from 'uuid';
 
 /*
+  DO NOT USE *ngIf DIRECTIVE ON THE COMPONENT
+
   USAGE:
   <audi-modal
     [(isOpen)]="modalOpen"
