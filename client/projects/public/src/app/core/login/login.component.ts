@@ -1,5 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Data, ParamMap, Router } from '@angular/router';
 import {
@@ -15,7 +21,7 @@ import { of, Subject } from 'rxjs';
 import { filter, switchMap, take, tap } from 'rxjs/operators';
 import { NotificationService } from '../../component-modules/audi-ui/services/notification-service/notification.service';
 
-// todo: hostbinding for esc/enter btn
+// TODO: RFX this and break apart into smaller component with single responsibility
 
 @Component({
   selector: 'audi-login',
@@ -23,6 +29,40 @@ import { NotificationService } from '../../component-modules/audi-ui/services/no
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
+  @HostListener('document:keydown.escape', ['$event']) onEscapeHandler(
+    event: KeyboardEvent
+  ) {
+    if (this.resetPwModalOpen) {
+      this.closeResetPwModal();
+    }
+
+    if (this.forgotPwModalOpen) {
+      this.closeForgotPwModal();
+    }
+  }
+
+  @HostListener('document:keydown.enter', ['$event']) onEnterHandler(
+    event: KeyboardEvent
+  ) {
+    if (this.resetPwModalOpen) {
+      this.submitResetPw();
+    }
+
+    if (this.forgotPwModalOpen) {
+      this.submitForgotPw();
+    }
+
+    if (!this.resetPwModalOpen && !this.forgotPwModalOpen) {
+      if (this.currentMode === 'login') {
+        this.login();
+      }
+
+      if (this.currentMode === 'register') {
+        this.register();
+      }
+    }
+  }
+
   currentMode: 'login' | 'register' = 'login';
 
   loginForm: FormGroup;
