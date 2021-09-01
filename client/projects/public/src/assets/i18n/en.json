@@ -1,9 +1,6 @@
 {
   "notFound": "We couldn't find the page you requested.",
   "serverError": "Internal Server Error",
-  "errorMessages": {
-    "notMember": "You are not a member"
-  },
   "pagination": {
     "previous": "Previous",
     "next": "Next"
@@ -13,7 +10,10 @@
     "cancel": "Cancel",
     "learnMore": "Learn More",
     "exploreCTA": "Explore Now",
-    "productsCTA": "Shop Now"
+    "productsCTA": "Shop Now",
+    "login": "Login",
+    "register": "Register",
+    "forgotPassword": "Forgot Password?"
   },
   "pricing": {
     "originalPriceLabel": "",
@@ -36,13 +36,54 @@
     "acceptBtn": "Accept",
     "declineBtn": "Decline"
   },
-  "emailSubscriptionSuccess": "You have successfully subscribed to our newsletter.",
   "formErrors": {
     "required": "Required",
-    "email": "Please enter a valid email address"
+    "email": "Please enter a valid email address",
+    "passwordMinLength": "Password must be at least 8 characters",
+    "confirmPassword": "Passwords do not match."
   },
   "formLabels": {
-    "email": "Email"
+    "email": "Email",
+    "username": "Username",
+    "usernameOrEmail": "Username / Email",
+    "password": "Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "confirmNewPassword": "Confirm New Password",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "gender": "Gender",
+    "phoneNumber": "Phone Number"
+  },
+  "formDescriptions": {
+    "email": "Please enter your email.",
+    "username": "Please enter your username.",
+    "usernameOrEmail": "Please enter your username or email.",
+    "password": "Please enter your password.",
+    "newPassword": "Please enter your new password.",
+    "confirmPassword": "Please confirm your password.",
+    "confirmNewPassword": "Please confirm your new password.",
+    "firstName": "Please enter your first name.",
+    "lastName": "Please enter your last name."
+  },
+  "notifications": {
+    "success": "Success",
+    "error": "Error",
+    "emailVerified": "Email Verified",
+    "emailSubscriptionSuccess": "You have successfully subscribed to our newsletter.",
+    "notMemberError": "You are not a member",
+    "registerSuccess": "Successfully Registered",
+    "registerSuccessMessage": "An email has been sent to your inbox. Please verify your email.",
+    "passwordResetSuccess": "Password reset successfully",
+    "forgotPasswordSuccess": "An email with instructions to reset your password has been sent to the email you entered",
+    "error401": "錯誤的帳戶或密碼"
+  },
+  "alerts": {
+    "emailNotFound": "Email not found."
+  },
+  "modals": {
+    "changePassword": "Change Password",
+    "forgotPassword": "Forgot Password"
   },
   "homepage": {
     "featuredProduct": "Featured Products",
@@ -55,5 +96,8 @@
     "news": "News",
     "events": "Events"
   },
-  "login": {}
+  "login": {
+    "login": "Login",
+    "register": "Register"
+  }
 }

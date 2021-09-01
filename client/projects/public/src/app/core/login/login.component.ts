@@ -15,7 +15,6 @@ import { of, Subject } from 'rxjs';
 import { filter, switchMap, take, tap } from 'rxjs/operators';
 import { NotificationService } from '../../component-modules/audi-ui/services/notification-service/notification.service';
 
-// todo: transloco translations
 // todo: hostbinding for esc/enter btn
 
 @Component({
@@ -81,10 +80,17 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
                   .pipe(
                     take(1),
                     tap((user: User) => {
-                      this.notificationService.success(
-                        'Email verified',
-                        '信箱認證成功'
-                      );
+                      this.transloco
+                        .selectTranslate(this.transloco.getActiveLang())
+                        .pipe(take(1))
+                        .subscribe(() => {
+                          this.notificationService.success(
+                            this.transloco.translate(
+                              'notifications.emailVerified'
+                            ),
+                            this.transloco.translate('notifications.success')
+                          );
+                        });
 
                       if (user != null) {
                         this.accountService.setCurrentUser(user);
@@ -170,12 +176,16 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 
   directUserBasedOnRole(isRightRole: boolean): void {
     if (!isRightRole) {
-      this.notificationService.error(
-        this.transloco.translate('errorMessages.notMember'),
-        // TODO: transloco title
-        'Error',
-        3000
-      );
+      this.transloco
+        .selectTranslate(this.transloco.getActiveLang())
+        .pipe(take(1))
+        .subscribe(() => {
+          this.notificationService.error(
+            this.transloco.translate('notifications.notMemberError'),
+            this.transloco.translate('notifications.error'),
+            3000
+          );
+        });
       this.accountService.logoutWithoutRedirect();
       return;
     }
@@ -227,8 +237,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
         if (user) {
           this.registerForm.reset();
           this.notificationService.success(
-            '請前往您的信箱認證您的Email',
-            '註冊成功'
+            this.transloco.translate('notifications.registerSuccessMessage'),
+            this.transloco.translate('notifications.registerSuccess')
           );
         }
       });
@@ -247,8 +257,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
         this.resetPwModalOpen = false;
         this.resetPwForm.reset();
         this.notificationService.success(
-          'Password reset successfully',
-          '密碼重置成功',
+          this.transloco.translate('notifications.passwordResetSuccess'),
+          this.transloco.translate('notifications.success'),
           3000
         );
       });
@@ -270,8 +280,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
           this.forgotPwModalOpen = false;
           this.forgotPwForm.reset();
           this.notificationService.success(
-            '已發送重置密碼的信件至您所輸入的信箱 An email with instructions to reset your password has been sent to the email you entered',
-            '成功',
+            this.transloco.translate('notifications.forgotPasswordSuccess'),
+            this.transloco.translate('notifications.success'),
             3000
           );
         },

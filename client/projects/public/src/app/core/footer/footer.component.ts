@@ -41,10 +41,9 @@ export class FooterComponent implements OnInit {
 
     this.emailSubscriptionForm.reset();
 
-    this.notificationService.info(
-      this.transloco.translate('emailSubscriptionSuccess'),
-      // TODO: transloco title
-      null,
+    this.notificationService.success(
+      this.transloco.translate('notifications.emailSubscriptionSuccess'),
+      this.transloco.translate('notifications.success'),
       3000
     );
   }

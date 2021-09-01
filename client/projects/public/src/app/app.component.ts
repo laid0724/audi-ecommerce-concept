@@ -14,7 +14,7 @@ import {
   User,
 } from '@audi/data';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { TranslocoService } from '@ngneat/transloco';
 import { AlertService } from './component-modules/audi-ui/services/alert-service/alert.service';
 import { NotificationService } from './component-modules/audi-ui/services/notification-service/notification.service';
@@ -90,12 +90,16 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   directUserBasedOnRole(isRightRole: boolean): void {
     if (!isRightRole) {
-      this.notificationService.error(
-        this.transloco.translate('errorMessages.notMember'),
-        // TODO: transloco title
-        null,
-        3000
-      );
+      this.transloco
+        .selectTranslate(this.transloco.getActiveLang())
+        .pipe(take(1))
+        .subscribe(() => {
+          this.notificationService.error(
+            this.transloco.translate('notifications.notMemberError'),
+            this.transloco.translate('notifications.error'),
+            3000
+          );
+        });
       this.accountService.logout();
     }
   }

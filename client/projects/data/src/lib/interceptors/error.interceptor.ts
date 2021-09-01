@@ -12,14 +12,17 @@ import { NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { catchError } from 'rxjs/operators';
 import { NotificationService } from 'projects/public/src/app/component-modules/audi-ui/services/notification-service/notification.service';
-import { INJECT_TOASTR } from '../tokens';
+import { INJECT_TOASTR, INJECT_TRANSLOCO } from '../tokens';
+import { TranslocoService } from '@ngneat/transloco';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   toastr: ToastrService | null;
+  transloco: TranslocoService | null;
 
   constructor(
     @Inject(INJECT_TOASTR) private injectToastr: boolean,
+    @Inject(INJECT_TRANSLOCO) private injectTransloco: boolean,
     @Optional() private audiNotificationService: NotificationService,
     private injector: Injector,
     private router: Router
@@ -30,6 +33,9 @@ export class ErrorInterceptor implements HttpInterceptor {
     // and see: https://stackoverflow.com/questions/52110168/angular-6-is-it-possible-to-inject-service-by-condition
     if (injectToastr) {
       this.toastr = injector.get<ToastrService>(ToastrService);
+    }
+    if (injectTransloco) {
+      this.transloco = injector.get<TranslocoService>(TranslocoService);
     }
   }
 
@@ -76,12 +82,16 @@ export class ErrorInterceptor implements HttpInterceptor {
               'Wrong username or password',
               '錯誤的帳戶或密碼'
             );
-            // TODO: transloco
-            this.audiNotificationService?.error(
-              'Wrong username or password',
-              '錯誤的帳戶或密碼',
-              3000
-            );
+            if (
+              this.audiNotificationService != null &&
+              this.transloco != null
+            ) {
+              this.audiNotificationService.error(
+                this.transloco.translate('notifications.error401'),
+                this.transloco.translate('notifications.error'),
+                3000
+              );
+            }
             break;
           case 403: // Forbidden
             // TODO: aggregate all cases and show display messages accordingly, e.g., email_not_confirmed, locked_out, etc

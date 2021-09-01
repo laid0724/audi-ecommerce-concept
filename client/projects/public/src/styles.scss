@@ -18,6 +18,12 @@ select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
 }
 
+// hide scroll bar in chrome
+// see: https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar
+.invisible-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 .debug {
   border: 1px solid red !important;
 }
@@ -34,6 +40,7 @@ a {
 }
 
 body {
+  overflow-x: hidden;
   &.scroll-disabled {
     height: 100%;
     overflow-y: hidden;

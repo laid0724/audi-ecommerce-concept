@@ -1,9 +1,6 @@
 {
   "notFound": "查無資訊",
   "serverError": "系統錯誤",
-  "errorMessages": {
-    "notMember": "你不是會員"
-  },
   "pagination": {
     "previous": "上一頁",
     "next": "下一頁"
@@ -13,7 +10,10 @@
     "cancel": "取消",
     "learnMore": "了解更多",
     "exploreCTA": "即刻探索",
-    "productsCTA": "立即鑑賞"
+    "productsCTA": "立即鑑賞",
+    "login": "登入",
+    "register": "註冊",
+    "forgotPassword": "忘記密碼"
   },
   "pricing": {
     "originalPriceLabel": "原價 ",
@@ -36,13 +36,54 @@
     "acceptBtn": "接受",
     "declineBtn": "不接受"
   },
-  "emailSubscriptionSuccess": "訂閱成功",
   "formErrors": {
     "required": "必填",
-    "email": "請輸入正確的電子信箱格式"
+    "email": "請輸入正確的電子信箱格式",
+    "passwordMinLength": "密碼需至少8位數",
+    "confirmPassword": "密碼不符"
   },
   "formLabels": {
-    "email": "電子信箱"
+    "email": "電子信箱",
+    "username": "帳號",
+    "usernameOrEmail": "帳號 / 電子信箱",
+    "password": "密碼",
+    "newPassword": "新密碼",
+    "confirmPassword": "確認密碼",
+    "confirmNewPassword": "確認新密碼",
+    "firstName": "名字",
+    "lastName": "姓氏",
+    "gender": "性別",
+    "phoneNumber": "電話"
+  },
+  "formDescriptions": {
+    "email": "請輸入您的電子信箱",
+    "username": "請輸入您的帳號",
+    "usernameOrEmail": "請輸入您的帳號或電子信箱",
+    "password": "請輸入您的密碼",
+    "newPassword": "請輸入您的新密碼",
+    "confirmPassword": "請確認您的密碼",
+    "confirmNewPassword": "請確認您的新密碼",
+    "firstName": "請輸入您的名字",
+    "lastName": "請輸入您的姓氏"
+  },
+  "notifications": {
+    "success": "成功",
+    "error": "錯誤",
+    "emailVerified": "信箱認證成功",
+    "emailSubscriptionSuccess": "訂閱成功",
+    "notMemberError": "你不是會員",
+    "registerSuccess": "註冊成功",
+    "registerSuccessMessage": "請前往您的信箱認證您的Email",
+    "passwordResetSuccess": "密碼重置成功",
+    "forgotPasswordSuccess": "已發送重置密碼的信件至您所輸入的信箱",
+    "error401": "錯誤的帳戶或密碼"
+  },
+  "alerts": {
+    "emailNotFound": "Email 不存在"
+  },
+  "modals": {
+    "changePassword": "更改密碼",
+    "forgotPassword": "忘記密碼"
   },
   "homepage": {
     "featuredProduct": "精選商品",
@@ -55,5 +96,8 @@
     "news": "新聞",
     "events": "活動"
   },
-  "login": {}
+  "login": {
+    "login": "登入",
+    "register": "註冊"
+  }
 }
