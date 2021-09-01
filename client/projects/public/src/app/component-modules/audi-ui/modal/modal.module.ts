@@ -8,6 +8,6 @@ const COMPONENTS = [ModalComponent];
 @NgModule({
   declarations: [...COMPONENTS],
   imports: [CommonModule, ModalServiceModule],
-  exports: [...COMPONENTS, ModalServiceModule],
+  exports: [...COMPONENTS],
 })
 export class ModalModule {}

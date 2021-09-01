@@ -8,6 +8,6 @@ const COMPONENTS = [TooltipComponent];
 @NgModule({
   declarations: [...COMPONENTS],
   imports: [CommonModule, TooltipServiceModule],
-  exports: [...COMPONENTS, TooltipServiceModule],
+  exports: [...COMPONENTS],
 })
 export class TooltipModule {}
