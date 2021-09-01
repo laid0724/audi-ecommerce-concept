@@ -8,6 +8,7 @@
       >
         <audi-icon size="large" [iconName]="'off-canvas'"></audi-icon>
       </audi-button>
+
       <div
         class="
           absolute
@@ -24,11 +25,13 @@
           <a
             [routerLink]="['/', language, 'home']"
             class="w-20 flex items-center justify-center"
+            (click)="!menuIsPristine ? toggleMenuState(false) : null"
           >
             <img src="assets/audi-logo-black.svg" class="w-full" />
           </a>
         </audi-button>
       </div>
+
       <div class="flex items-center justify-between">
         <ng-container *ngIf="isLoggedIn$ | async; else notLoggedIn">
           <audi-flyout position="center">
@@ -37,6 +40,7 @@
               #triggeringElement
               flyoutTriggerSetter
               [applyToInnerElement]="true"
+              (click)="!menuIsPristine ? toggleMenuState(false) : null"
             >
               <audi-icon size="small" iconName="user"></audi-icon>
             </audi-button>
@@ -62,14 +66,22 @@
             </div>
           </audi-flyout>
         </ng-container>
+
         <ng-template #notLoggedIn>
-          <audi-button type="icon" (click)="directToLogin()">
+          <audi-button
+            type="icon"
+            (click)="
+              directToLogin(); !menuIsPristine ? toggleMenuState(false) : null
+            "
+          >
             <audi-icon size="small" iconName="user"></audi-icon>
           </audi-button>
         </ng-template>
 
         <div class="w-12 flex items-center justify-center">
-          <audi-language-selector></audi-language-selector>
+          <audi-language-selector
+            (click)="!menuIsPristine ? toggleMenuState(false) : null"
+          ></audi-language-selector>
         </div>
       </div>
     </div>
@@ -84,13 +96,13 @@
   >
     <div
       class="audi-side-nav__overlay"
-      (click)="!isPristine ? toggleMenuState(false) : null"
+      (click)="!menuIsPristine ? toggleMenuState(false) : null"
     ></div>
     <div class="audi-side-nav__menu-container">
       <div class="audi-side-nav__menu-close-btn-wrapper">
         <div
           class="audi-side-nav__menu-close-btn"
-          [ngClass]="{ 'inactive-animation': !isPristine && !menuIsOpen }"
+          [ngClass]="{ 'inactive-animation': !menuIsPristine && !menuIsOpen }"
         >
           <audi-button type="icon-large" (click)="toggleMenuState(false)">
             <audi-icon size="large" [iconName]="'cancel'"></audi-icon>
@@ -99,7 +111,7 @@
       </div>
       <div
         class="audi-side-nav__menu"
-        [ngClass]="{ 'inactive-animation': !isPristine && !menuIsOpen }"
+        [ngClass]="{ 'inactive-animation': !menuIsPristine && !menuIsOpen }"
       >
         <!-- TODO: transloco -->
         <h3

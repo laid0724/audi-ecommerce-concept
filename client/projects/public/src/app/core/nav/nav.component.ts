@@ -24,7 +24,7 @@ import { map } from 'rxjs/operators';
 export class NavComponent {
   @ViewChild('expandedMenu') menu: ElementRef<HTMLDivElement>;
 
-  isPristine = true;
+  menuIsPristine = true;
   menuIsOpen = false;
 
   language$: Observable<LanguageCode> = this.languageService.language$;
@@ -42,8 +42,8 @@ export class NavComponent {
   ) {}
 
   toggleMenuState(isOpen?: boolean): void {
-    if (this.isPristine) {
-      this.isPristine = false;
+    if (this.menuIsPristine) {
+      this.menuIsPristine = false;
     }
 
     this.menuIsOpen = isOpen ?? !this.menuIsOpen;
