@@ -1,7 +1,11 @@
 <ng-container *ngIf="language$ | async; let language">
-  <audi-header>
+  <audi-header *transloco="let translationOutput">
     <div class="w-screen flex items-center justify-between relative">
-      <audi-button type="icon-large" (click)="toggleMenuState(true)" class="z-1">
+      <audi-button
+        type="icon-large"
+        (click)="toggleMenuState(true)"
+        class="z-1"
+      >
         <audi-icon size="large" [iconName]="'off-canvas'"></audi-icon>
       </audi-button>
       <div
@@ -26,14 +30,44 @@
         </audi-button>
       </div>
       <div class="flex items-center justify-between">
-        <!-- TODO:
-          isLoggedIn state
-            if logged in: flyout with members area & logout option
-            if not logged call directToLogin()
-        -->
-        <audi-button type="icon" (click)="directToLogin()">
-          <audi-icon size="small" [iconName]="'user'"></audi-icon>
-        </audi-button>
+        <ng-container *ngIf="isLoggedIn$ | async; else notLoggedIn">
+          <audi-flyout position="center">
+            <audi-button
+              type="icon"
+              #triggeringElement
+              flyoutTriggerSetter
+              [applyToInnerElement]="true"
+            >
+              <audi-icon size="small" iconName="user"></audi-icon>
+            </audi-button>
+            <div class="flyout-content">
+              <audi-nav-list>
+                <audi-nav-item
+                  iconName="private-customer"
+                  iconSize="small"
+                  routerLinkActive
+                  #rla="routerLinkActive"
+                  [isActive]="rla.isActive"
+                  [routerLink]="['/', language, 'members-area']"
+                >
+                  {{ translationOutput('membersArea') }}
+                </audi-nav-item>
+                <audi-nav-item
+                  iconName="parking-out-right"
+                  iconSize="small"
+                  (click)="logout()"
+                  >{{ translationOutput('logout') }}
+                </audi-nav-item>
+              </audi-nav-list>
+            </div>
+          </audi-flyout>
+        </ng-container>
+        <ng-template #notLoggedIn>
+          <audi-button type="icon" (click)="directToLogin()">
+            <audi-icon size="small" iconName="user"></audi-icon>
+          </audi-button>
+        </ng-template>
+
         <div class="w-12 flex items-center justify-center">
           <audi-language-selector></audi-language-selector>
         </div>

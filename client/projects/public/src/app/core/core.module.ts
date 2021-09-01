@@ -17,6 +17,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ServerErrorComponent } from './server-error/server-error.component';
 import { LoginComponent } from './login/login.component';
 import { AlertModule } from '../component-modules/audi-ui/alert/alert.module';
+import { FlyoutModule } from '../component-modules/audi-ui/flyout/flyout.module';
 
 const COMPONENTS = [
   NotFoundComponent,
@@ -38,6 +39,7 @@ const IMPORT_MODULES = [
   IconModule,
   ModalModule,
   TranslocoModule,
+  FlyoutModule,
 ];
 
 @NgModule({

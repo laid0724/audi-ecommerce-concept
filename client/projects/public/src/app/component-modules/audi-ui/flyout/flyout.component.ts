@@ -7,6 +7,8 @@ import {
 } from '@angular/core';
 import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
 
+// TODO: implement close on click optional input
+
 /*
   USAGE:
 

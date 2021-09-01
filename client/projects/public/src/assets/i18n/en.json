@@ -1,6 +1,8 @@
 {
   "notFound": "We couldn't find the page you requested.",
   "serverError": "Internal Server Error",
+  "logout": "Logout",
+  "membersArea": "Member's Area",
   "pagination": {
     "previous": "Previous",
     "next": "Next"

@@ -3,20 +3,25 @@ import {
   Component,
   ElementRef,
   Inject,
-  OnInit,
   ViewChild,
   Renderer2,
 } from '@angular/core';
-import {  Router } from '@angular/router';
-import { LanguageCode, LanguageStateService } from '@audi/data';
+import { Router } from '@angular/router';
+import {
+  AccountService,
+  LanguageCode,
+  LanguageStateService,
+  User,
+} from '@audi/data';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'audi-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.scss'],
 })
-export class NavComponent implements OnInit {
+export class NavComponent {
   @ViewChild('expandedMenu') menu: ElementRef<HTMLDivElement>;
 
   isPristine = true;
@@ -24,14 +29,17 @@ export class NavComponent implements OnInit {
 
   language$: Observable<LanguageCode> = this.languageService.language$;
 
+  isLoggedIn$: Observable<boolean> = this.accountService.currentUser$.pipe(
+    map((user: User | null) => !!user)
+  );
+
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private renderer: Renderer2,
     private languageService: LanguageStateService,
-    private router: Router
+    private accountService: AccountService,
+    private router: Router,
+    private renderer: Renderer2
   ) {}
-
-  ngOnInit(): void {}
 
   toggleMenuState(isOpen?: boolean): void {
     if (this.isPristine) {
@@ -52,5 +60,9 @@ export class NavComponent implements OnInit {
         queryParams: { redirectTo: this.router.routerState.snapshot.url },
       }
     );
+  }
+
+  logout(): void {
+    this.accountService.logout();
   }
 }
