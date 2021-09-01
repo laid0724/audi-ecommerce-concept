@@ -1,0 +1,13 @@
+@import '../variables/variables';
+
+.full-screen-height {
+  height: $full-screen-height-minus-audi-header;
+}
+
+.min-full-screen-height {
+  min-height: $full-screen-height-minus-audi-header;
+}
+
+.max-full-screen-height {
+  max-height: $full-screen-height-minus-audi-header;
+}

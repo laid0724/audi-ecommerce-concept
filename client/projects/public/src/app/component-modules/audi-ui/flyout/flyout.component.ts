@@ -4,8 +4,17 @@ import {
   Input,
   ContentChild,
   ElementRef,
+  Renderer2,
+  OnInit,
+  OnDestroy,
 } from '@angular/core';
 import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
+import {
+  AudiFlyoutComponent,
+  FlyoutService,
+} from '../services/flyout-service/flyout.service';
+
+import { v4 as uuid } from 'uuid';
 
 /*
   USAGE:
@@ -80,12 +89,34 @@ import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
   templateUrl: './flyout.component.html',
   styleUrls: ['./flyout.component.scss'],
 })
-export class FlyoutComponent implements AfterViewInit {
-  @Input() isLightTheme: boolean = false;
-  @Input() position: 'center' | 'right';
-
+export class FlyoutComponent implements OnInit, AfterViewInit, OnDestroy {
   @ContentChild('triggeringElement', { static: true, read: ElementRef })
   triggeringElement: ElementRef;
+
+  @Input() isLightTheme: boolean = false;
+  @Input() position: 'center' | 'right';
+  @Input() closeOnClick: boolean = true;
+
+  flyoutId: string;
+  flyout: AudiFlyoutComponent | undefined = undefined;
+
+  constructor(
+    private flyoutService: FlyoutService,
+    private renderer: Renderer2
+  ) {}
+
+  ngOnInit(): void {
+    if (this.triggeringElement != undefined) {
+      const flyoutId = uuid();
+      this.flyoutId = flyoutId;
+
+      this.renderer.setAttribute(
+        this.triggeringElement.nativeElement,
+        'id',
+        uuid()
+      );
+    }
+  }
 
   ngAfterViewInit(): void {
     if (this.triggeringElement != undefined) {
@@ -93,9 +124,38 @@ export class FlyoutComponent implements AfterViewInit {
 
       audiFlyoutModules.forEach((flyoutModule: AudiComponents) => {
         setTimeout(() => {
-          flyoutModule.components.upgradeElements();
+          const flyouts = flyoutModule.components.upgradeElements();
+
+          if (flyouts.length > 0) {
+            this.flyoutService.addFlyouts(flyouts);
+          }
+
+          this.flyout = this.flyoutService.getFlyoutById(this.flyoutId);
+
+          if (this.flyout && this.closeOnClick) {
+            const flyoutContent =
+              this.flyout._element.querySelector('.flyout-content');
+
+            const navItems = flyoutContent?.querySelectorAll('audi-nav-item');
+
+            if (navItems && navItems?.length > 0) {
+              navItems?.forEach((item) => {
+                this.renderer.listen(item, 'click', (event: Event) => {
+                  this.closeFlyout();
+                });
+              });
+            }
+          }
         }, 0);
       });
     }
+  }
+
+  closeFlyout(): void {
+    this.flyout?.close();
+  }
+
+  ngOnDestroy(): void {
+    this.flyoutService.deleteFlyout(this.flyoutId);
   }
 }

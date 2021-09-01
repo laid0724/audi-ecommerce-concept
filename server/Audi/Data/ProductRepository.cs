@@ -480,6 +480,7 @@ namespace Audi.Data
         {
             var user = await _context.Users
                 .Include(u => u.AppUserProducts)
+                    .ThenInclude(aup => aup.Product)
                 .Where(u => u.Id == userId)
                 .SingleOrDefaultAsync();
 

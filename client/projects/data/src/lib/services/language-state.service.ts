@@ -2,13 +2,7 @@ import { Inject, Injectable, Injector, OnDestroy } from '@angular/core';
 import { LanguageCode } from '../enums';
 import { INJECT_TRANSLOCO } from '../tokens';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import {
-  distinctUntilChanged,
-  filter,
-  map,
-  startWith,
-  takeUntil,
-} from 'rxjs/operators';
+import { distinctUntilChanged, filter, map, takeUntil } from 'rxjs/operators';
 import {
   Router,
   ActivatedRoute,
@@ -47,6 +41,25 @@ export class LanguageStateService implements OnDestroy {
       this.transloco = injector.get<TranslocoService>(TranslocoService);
     }
 
+    this.setLanguageByRoute();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+
+  selectLanguage(language: LanguageCode): void {
+    localStorage.setItem('language', language);
+    this._language$.next(language);
+    this.transloco?.setActiveLang(language);
+  }
+
+  getCurrentLanguage(): LanguageCode {
+    return this._language$.value;
+  }
+
+  setLanguageByRoute(): void {
     /*
       doing the following to get router params in a service
       (because cannot get any params by injecting and using ActivatedRoute in a service's constructor)
@@ -69,7 +82,7 @@ export class LanguageStateService implements OnDestroy {
       return route;
     };
 
-    const languageCode$: Observable<LanguageCode> = router.events.pipe(
+    const languageCode$: Observable<LanguageCode> = this.router.events.pipe(
       filter((event: Event) => event instanceof NavigationEnd),
       map(
         (event: Event) =>
@@ -89,23 +102,10 @@ export class LanguageStateService implements OnDestroy {
     );
 
     languageCode$.subscribe((lang: LanguageCode) => {
+      localStorage.setItem('language', lang);
       if (this.getCurrentLanguage() !== lang) {
         this.selectLanguage(lang);
       }
     });
-  }
-
-  ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
-  }
-
-  selectLanguage(language: LanguageCode): void {
-    this._language$.next(language);
-    this.transloco?.setActiveLang(language);
-  }
-
-  getCurrentLanguage(): LanguageCode {
-    return this._language$.value;
   }
 }

@@ -5,6 +5,25 @@
 @import 'tailwindcss/utilities';
 @import 'scss/index.scss';
 
+// disables blue background on auto-filled forms
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+}
+
+// hide scroll bar in chrome
+// see: https://developer.mozilla.org/en-US/docs/Web/CSS/::-webkit-scrollbar
+.invisible-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
 .debug {
   border: 1px solid red !important;
 }
@@ -21,6 +40,7 @@ a {
 }
 
 body {
+  overflow-x: hidden;
   &.scroll-disabled {
     height: 100%;
     overflow-y: hidden;
@@ -29,7 +49,7 @@ body {
 
 .router-outlet-wrapper {
   margin-top: 3.5rem;
-  min-height: $full-screen-minus-audi-header;
+  min-height: $full-screen-height-minus-audi-header;
 }
 
 .clickable {

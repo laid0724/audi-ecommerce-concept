@@ -9,11 +9,12 @@ import {
   AccountService,
   BusyService,
   isNullOrEmptyString,
+  LanguageStateService,
   Roles,
   User,
 } from '@audi/data';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { take, takeUntil } from 'rxjs/operators';
 import { TranslocoService } from '@ngneat/transloco';
 import { AlertService } from './component-modules/audi-ui/services/alert-service/alert.service';
 import { NotificationService } from './component-modules/audi-ui/services/notification-service/notification.service';
@@ -37,11 +38,13 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
     private notificationService: NotificationService,
     private alertService: AlertService,
     private transloco: TranslocoService,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private languageService: LanguageStateService
   ) {}
 
   ngOnInit(): void {
     this.setUserFromLocalStorage();
+    this.languageService.setLanguageByRoute();
 
     this.isLoadingApiRequests$ = this.busyService.isBusy$.pipe(
       takeUntil(this.destroy$)
@@ -73,7 +76,8 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
           if (user != null) {
             this.directUserBasedOnRole(this.userHasRightRole(user));
           }
-        });
+        })
+        .unsubscribe();
     } else {
       this.accountService.setCurrentUser(null);
     }
@@ -86,9 +90,16 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewChecked {
 
   directUserBasedOnRole(isRightRole: boolean): void {
     if (!isRightRole) {
-      this.notificationService.error(
-        this.transloco.translate('errorMessages.notMember')
-      );
+      this.transloco
+        .selectTranslate(this.transloco.getActiveLang())
+        .pipe(take(1))
+        .subscribe(() => {
+          this.notificationService.error(
+            this.transloco.translate('notifications.notMemberError'),
+            this.transloco.translate('notifications.error'),
+            3000
+          );
+        });
       this.accountService.logout();
     }
   }

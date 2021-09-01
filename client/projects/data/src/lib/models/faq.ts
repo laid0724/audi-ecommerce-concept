@@ -1,4 +1,4 @@
-import { DynamicDocumentType } from '@audi/data';
+import { DynamicDocumentType } from '../enums';
 import { DynamicDocumentPhoto } from './dynamic-document-photo';
 
 export interface Faq {

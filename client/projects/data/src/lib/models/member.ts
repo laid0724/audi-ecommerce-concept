@@ -1,4 +1,4 @@
-import { Roles } from '@audi/data';
+import { Roles } from '../enums';
 import { Order } from './order';
 import { Product } from './product';
 import { UserPhoto } from './user-photo';

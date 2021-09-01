@@ -11,6 +11,7 @@
     <a
       [attr.href]="!isNullOrEmptyString(externalLink) ? externalLink : null"
       [attr.target]="!isNullOrEmptyString(externalLink) ? '_target' : null"
+      class="flex items-center"
     >
       <audi-icon
         *ngIf="!isNullOrEmptyString(iconName)"

@@ -1,0 +1,361 @@
+<ng-container *transloco="let translationOutput">
+  <div class="login-wrapper">
+    <div class="grid grid-rows-1 grid-cols-12 h-full relative z-103">
+      <div
+        class="
+          col-span-12
+          sm:col-span-6
+          md:col-span-5
+          xl:col-span-4
+          background-color-white
+          h-full
+          flex flex-col
+          p-10
+          overflow-y-auto
+        "
+      >
+        <audi-button type="icon" class="block">
+          <a
+            [routerLink]="['/', currentLanguage, 'home']"
+            class="w-28 flex items-center justify-center"
+          >
+            <img src="assets/audi-logo-black.svg" class="w-full" />
+          </a>
+        </audi-button>
+
+        <div class="my-auto">
+          <div class="block w-full">
+            <audi-nav-bar class="block my-4" [isSmall]="false">
+              <audi-nav-item
+                [isActive]="currentMode === 'login'"
+                (click)="currentMode = 'login'"
+              >
+                {{ translationOutput('login.login') }}</audi-nav-item
+              >
+              <audi-nav-item
+                [isActive]="currentMode === 'register'"
+                (click)="currentMode = 'register'"
+              >
+                {{ translationOutput('login.register') }}</audi-nav-item
+              >
+            </audi-nav-bar>
+          </div>
+
+          <div class="block w-full">
+            <!-- LOGIN FORM -->
+            <form *ngIf="currentMode === 'login'" [formGroup]="loginForm">
+              <audi-input-container
+                formControlName="userName"
+                [label]="translationOutput('formLabels.usernameOrEmail')"
+                [isLightTheme]="false"
+                [floatingLabel]="true"
+              >
+                <audi-control-description>{{
+                  translationOutput('formDescriptions.usernameOrEmail')
+                }}</audi-control-description>
+                <audi-control-valid></audi-control-valid>
+                <audi-control-error>{{
+                  translationOutput('formErrors.required')
+                }}</audi-control-error>
+              </audi-input-container>
+              <audi-input-container
+                formControlName="password"
+                type="password"
+                [label]="translationOutput('formLabels.password')"
+                [isLightTheme]="false"
+                [floatingLabel]="true"
+              >
+                <audi-control-description>{{
+                  translationOutput('formDescriptions.password')
+                }}</audi-control-description>
+                <audi-control-valid></audi-control-valid>
+                <audi-control-error>{{
+                  translationOutput('formErrors.required')
+                }}</audi-control-error>
+              </audi-input-container>
+
+              <div class="block w-full mt-10">
+                <audi-button class="block w-full" (click)="login()">{{
+                  translationOutput('buttons.login')
+                }}</audi-button>
+
+                <a
+                  class="aui-small aui-textlink inline-block mt-10"
+                  (click)="forgotPwModalOpen = true"
+                  >{{ translationOutput('buttons.forgotPassword') }}</a
+                >
+              </div>
+            </form>
+
+            <!-- REGISTER FORM -->
+            <form *ngIf="currentMode === 'register'" [formGroup]="registerForm">
+              <audi-input-container
+                formControlName="lastName"
+                [label]="translationOutput('formLabels.lastName')"
+                [isLightTheme]="false"
+                [floatingLabel]="true"
+              >
+                <audi-control-description>{{
+                  translationOutput('formDescriptions.lastName')
+                }}</audi-control-description>
+                <audi-control-valid></audi-control-valid>
+                <audi-control-error>{{
+                  translationOutput('formErrors.required')
+                }}</audi-control-error>
+              </audi-input-container>
+              <audi-input-container
+                formControlName="firstName"
+                [label]="translationOutput('formLabels.firstName')"
+                [isLightTheme]="false"
+                [floatingLabel]="true"
+              >
+                <audi-control-description>{{
+                  translationOutput('formDescriptions.firstName')
+                }}</audi-control-description>
+                <audi-control-valid></audi-control-valid>
+                <audi-control-error>{{
+                  translationOutput('formErrors.required')
+                }}</audi-control-error>
+              </audi-input-container>
+              <audi-input-container
+                formControlName="userName"
+                [label]="translationOutput('formLabels.username')"
+                [isLightTheme]="false"
+                [floatingLabel]="true"
+              >
+                <audi-control-description>{{
+                  translationOutput('formDescriptions.username')
+                }}</audi-control-description>
+                <audi-control-valid></audi-control-valid>
+                <audi-control-error>{{
+                  translationOutput('formErrors.required')
+                }}</audi-control-error>
+              </audi-input-container>
+              <audi-input-container
+                formControlName="email"
+                [label]="translationOutput('formLabels.email')"
+                [isLightTheme]="false"
+                [floatingLabel]="true"
+              >
+                <audi-control-description>{{
+                  translationOutput('formDescriptions.email')
+                }}</audi-control-description>
+                <audi-control-valid></audi-control-valid>
+                <audi-control-error
+                  *ngIf="registerForm.get('email')?.hasError('required')"
+                  >{{
+                    translationOutput('formErrors.required')
+                  }}</audi-control-error
+                >
+                <audi-control-error
+                  *ngIf="registerForm.get('email')?.hasError('email')"
+                  >{{
+                    translationOutput('formErrors.email')
+                  }}</audi-control-error
+                >
+              </audi-input-container>
+              <audi-input-container
+                formControlName="password"
+                type="password"
+                [label]="translationOutput('formLabels.password')"
+                [isLightTheme]="false"
+                [floatingLabel]="true"
+              >
+                <audi-control-description>{{
+                  translationOutput('formDescriptions.password')
+                }}</audi-control-description>
+                <audi-control-valid></audi-control-valid>
+                <audi-control-error
+                  *ngIf="registerForm.get('password')?.hasError('required')"
+                >
+                  {{ translationOutput('formErrors.required') }}
+                </audi-control-error>
+                <audi-control-error
+                  *ngIf="registerForm.get('password')?.hasError('minlength')"
+                >
+                  {{ translationOutput('formErrors.passwordMinLength') }}
+                </audi-control-error>
+              </audi-input-container>
+              <audi-input-container
+                formControlName="confirmPassword"
+                type="password"
+                [label]="translationOutput('formLabels.confirmPassword')"
+                [isLightTheme]="false"
+                [floatingLabel]="true"
+              >
+                <audi-control-description>{{
+                  translationOutput('formDescriptions.confirmPassword')
+                }}</audi-control-description>
+                <audi-control-valid></audi-control-valid>
+                <audi-control-error
+                  *ngIf="
+                    registerForm.get('confirmPassword')?.hasError('required')
+                  "
+                >
+                  {{ translationOutput('formErrors.required') }}
+                </audi-control-error>
+                <audi-control-error
+                  *ngIf="
+                    registerForm.get('confirmPassword')?.hasError('minlength')
+                  "
+                >
+                  {{ translationOutput('formErrors.passwordMinLength') }}
+                </audi-control-error>
+                <audi-control-error
+                  *ngIf="
+                    registerForm
+                      .get('confirmPassword')
+                      ?.hasError('isNotSameValue')
+                  "
+                >
+                  {{ translationOutput('formErrors.confirmPassword') }}
+                </audi-control-error>
+              </audi-input-container>
+
+              <div class="block w-full mt-10">
+                <audi-button class="block w-full" (click)="register()">{{
+                  translationOutput('buttons.register')
+                }}</audi-button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div
+        class="col-span-full sm:col-span-6 md:col-span-7 xl:col-span-8"
+      ></div>
+    </div>
+  </div>
+
+  <audi-modal
+    [(isOpen)]="resetPwModalOpen"
+    [header]="translationOutput('modals.changePassword')"
+    [headerSize]="4"
+    [bgColor]="'white'"
+    [textColor]="'black'"
+    [type]="'default'"
+    [isClosable]="false"
+  >
+    <form [formGroup]="resetPwForm">
+      <div class="max-w-xs block mb-3">
+        <audi-input-container
+          formControlName="newPassword"
+          type="password"
+          [label]="translationOutput('formLabels.newPassword')"
+          [isLightTheme]="false"
+          [floatingLabel]="true"
+        >
+          <audi-control-description>{{
+            translationOutput('formDescriptions.newPassword')
+          }}</audi-control-description>
+          <audi-control-valid></audi-control-valid>
+          <audi-control-error
+            *ngIf="resetPwForm.get('newPassword')?.hasError('required')"
+          >
+            {{ translationOutput('formErrors.required') }}
+          </audi-control-error>
+          <audi-control-error
+            *ngIf="resetPwForm.get('newPassword')?.hasError('minlength')"
+          >
+            {{ translationOutput('formErrors.passwordMinLength') }}
+          </audi-control-error>
+        </audi-input-container>
+        <audi-input-container
+          formControlName="confirmNewPassword"
+          type="password"
+          [label]="translationOutput('formLabels.confirmNewPassword')"
+          [isLightTheme]="false"
+          [floatingLabel]="true"
+        >
+          <audi-control-description>{{
+            translationOutput('formDescriptions.confirmNewPassword')
+          }}</audi-control-description>
+          <audi-control-valid></audi-control-valid>
+          <audi-control-error
+            *ngIf="resetPwForm.get('confirmNewPassword')?.hasError('required')"
+          >
+            {{ translationOutput('formErrors.required') }}
+          </audi-control-error>
+          <audi-control-error
+            *ngIf="resetPwForm.get('confirmNewPassword')?.hasError('minlength')"
+          >
+            {{ translationOutput('formErrors.passwordMinLength') }}
+          </audi-control-error>
+          <audi-control-error
+            *ngIf="
+              resetPwForm.get('confirmNewPassword')?.hasError('isNotSameValue')
+            "
+          >
+            {{ translationOutput('formErrors.confirmPassword') }}
+          </audi-control-error>
+        </audi-input-container>
+      </div>
+
+      <div class="block mt-6">
+        <audi-button-group>
+          <audi-button type="primary" (click)="submitResetPw()">{{
+            translationOutput('buttons.submit')
+          }}</audi-button>
+          <audi-button type="secondary" (click)="closeResetPwModal()">{{
+            translationOutput('buttons.cancel')
+          }}</audi-button>
+        </audi-button-group>
+      </div>
+    </form>
+  </audi-modal>
+
+  <audi-modal
+    [(isOpen)]="forgotPwModalOpen"
+    [header]="translationOutput('modals.forgotPassword')"
+    [headerSize]="4"
+    [bgColor]="'white'"
+    [textColor]="'black'"
+    [type]="'default'"
+    [isClosable]="false"
+  >
+    <form [formGroup]="forgotPwForm">
+      <div class="max-w-xs block mb-3">
+        <audi-input-container
+          formControlName="email"
+          [label]="translationOutput('formLabels.email')"
+          [isLightTheme]="false"
+          [floatingLabel]="true"
+        >
+          <audi-control-description>{{
+            translationOutput('formDescriptions.email')
+          }}</audi-control-description>
+          <audi-control-valid></audi-control-valid>
+          <audi-control-error
+            *ngIf="forgotPwForm.get('email')?.hasError('required')"
+          >
+            {{ translationOutput('formErrors.required') }}</audi-control-error
+          >
+          <audi-control-error
+            *ngIf="forgotPwForm.get('email')?.hasError('email')"
+          >
+            {{ translationOutput('formErrors.email') }}</audi-control-error
+          >
+        </audi-input-container>
+      </div>
+
+      <audi-alert-container
+        *ngIf="emailNotFoundError"
+        alertStyle="danger"
+        class="block"
+      >
+        <p>{{ translationOutput('alerts.emailNotFound') }}</p>
+      </audi-alert-container>
+
+      <div class="block mt-6">
+        <audi-button-group>
+          <audi-button type="primary" (click)="submitForgotPw()">{{
+            translationOutput('buttons.submit')
+          }}</audi-button>
+          <audi-button type="secondary" (click)="closeForgotPwModal()">{{
+            translationOutput('buttons.cancel')
+          }}</audi-button>
+        </audi-button-group>
+      </div>
+    </form>
+  </audi-modal>
+</ng-container>

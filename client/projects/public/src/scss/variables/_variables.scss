@@ -6,7 +6,10 @@ $audi-base-unit: 4px !default; // in px
 $audi-transition-time: 0.25s;
 $audi-transition-timing-function: cubic-bezier(0.75, 0.02, 0.5, 1);
 
+$full-screen-height-minus-audi-header: calc(100vh - #{unit(14)});
+
 :root {
   --audi-transition-time: #{$audi-transition-time};
   --audi-transition-timing-function: #{$audi-transition-timing-function};
+  --full-screen-height-minus-audi-header: #{$full-screen-height-minus-audi-header};
 }

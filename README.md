@@ -119,9 +119,7 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 
 - RWD
 - Angular universal
-- not found
-- server error
-- login / register / update user info
+- update user info
 - member's area
 - product list
 - single product page using fullpage - first page has product info and carousel, second page custom wysiwyg content and product recommendations in same category

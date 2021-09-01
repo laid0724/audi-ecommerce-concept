@@ -49,26 +49,26 @@ export class NotificationContainerComponent implements OnInit, OnDestroy {
       this.notificationService.notificationTrigger$.subscribe(
         (notification: AudiNotification | null) => {
           if (notification) {
-            const { message, type, timeout } = notification;
+            const { message, title, type, timeout } = notification;
 
             switch (type) {
               case AudiNotificationType.Default:
-                this.showNotification(message, timeout);
+                this.showNotification(message, title, timeout);
                 break;
               case AudiNotificationType.Info:
-                this.showInfoNotification(message, timeout);
+                this.showInfoNotification(message, title, timeout);
                 break;
               case AudiNotificationType.Warning:
-                this.showWarningNotification(message, timeout);
+                this.showWarningNotification(message, title, timeout);
                 break;
               case AudiNotificationType.Success:
-                this.showSuccessNotification(message, timeout);
+                this.showSuccessNotification(message, title, timeout);
                 break;
               case AudiNotificationType.Danger:
-                this.showDangerNotification(message, timeout);
+                this.showDangerNotification(message, title, timeout);
                 break;
               default:
-                this.showNotification(message, timeout);
+                this.showNotification(message, title, timeout);
                 break;
             }
           }
@@ -78,6 +78,7 @@ export class NotificationContainerComponent implements OnInit, OnDestroy {
 
   private showNotificationBase(
     message: string,
+    title: string | null = null,
     settings?: NotificationConfig
   ): void {
     const componentFactory =
@@ -103,20 +104,32 @@ export class NotificationContainerComponent implements OnInit, OnDestroy {
       componentRef.instance.notificationTimeout = settings.timeout;
     }
 
+    if (!isNullOrEmptyString(title)) {
+      componentRef.instance.toastTitle = title!;
+    }
+
     componentRef.instance.toastMessage = message;
 
     this.componentRefs.push(componentRef);
   }
 
-  private showNotification(message: string, timeout: number | null): void {
-    this.showNotificationBase(message, {
+  private showNotification(
+    message: string,
+    title: string | null,
+    timeout: number | null
+  ): void {
+    this.showNotificationBase(message, title, {
       audiStyle: 'light',
       timeout,
     });
   }
 
-  private showInfoNotification(message: string, timeout: number | null): void {
-    this.showNotificationBase(message, {
+  private showInfoNotification(
+    message: string,
+    title: string | null,
+    timeout: number | null
+  ): void {
+    this.showNotificationBase(message, title, {
       audiStyle: 'dark',
       timeout,
     });
@@ -124,9 +137,10 @@ export class NotificationContainerComponent implements OnInit, OnDestroy {
 
   private showSuccessNotification(
     message: string,
+    title: string | null,
     timeout: number | null
   ): void {
-    this.showNotificationBase(message, {
+    this.showNotificationBase(message, title, {
       audiStyle: 'dark',
       bgColor: AudiColor.Success,
       textColor: AudiColor.White,
@@ -136,9 +150,10 @@ export class NotificationContainerComponent implements OnInit, OnDestroy {
 
   private showDangerNotification(
     message: string,
+    title: string | null,
     timeout: number | null
   ): void {
-    this.showNotificationBase(message, {
+    this.showNotificationBase(message, title, {
       audiStyle: 'dark',
       bgColor: AudiColor.Error,
       textColor: AudiColor.White,
@@ -148,9 +163,10 @@ export class NotificationContainerComponent implements OnInit, OnDestroy {
 
   private showWarningNotification(
     message: string,
+    title: string | null,
     timeout: number | null
   ): void {
-    this.showNotificationBase(message, {
+    this.showNotificationBase(message, title, {
       audiStyle: 'dark',
       bgColor: AudiColor.Warning,
       textColor: AudiColor.White,

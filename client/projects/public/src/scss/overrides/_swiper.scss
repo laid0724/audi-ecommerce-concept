@@ -1,9 +1,3 @@
-$full-screen-minus-audi-header: calc(100vh - #{unit(14)});
-
-.full-screen-height {
-  height: $full-screen-minus-audi-header
-}
-
 audi-multi-slides-per-view-slider {
   .swiper-slide {
     &-active > :first-child {

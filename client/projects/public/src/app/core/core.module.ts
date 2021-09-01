@@ -9,27 +9,42 @@ import { LanguageSelectorModule } from './language-selector/language-selector.mo
 import { NotificationServiceModule } from '../component-modules/audi-ui/services/notification-service/notification-service.module';
 import { TranslocoModule } from '@ngneat/transloco';
 import { FooterModule } from './footer/footer.module';
+import { FormComponentsModule } from '../component-modules/form-components/form-components.module';
+import { ModalModule } from '../component-modules/audi-ui/modal/modal.module';
 
 import { NavComponent } from './nav/nav.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ServerErrorComponent } from './server-error/server-error.component';
+import { LoginComponent } from './login/login.component';
+import { AlertModule } from '../component-modules/audi-ui/alert/alert.module';
+import { FlyoutModule } from '../component-modules/audi-ui/flyout/flyout.module';
 
-const COMPONENTS = [NotFoundComponent, NavComponent, ServerErrorComponent];
+const COMPONENTS = [
+  NotFoundComponent,
+  NavComponent,
+  ServerErrorComponent,
+  LoginComponent,
+];
+
+const IMPORT_MODULES = [
+  CommonModule,
+  RouterModule,
+  HeaderModule,
+  FormComponentsModule,
+  LanguageSelectorModule,
+  NotificationServiceModule,
+  NavModule,
+  AlertModule,
+  ButtonModule,
+  IconModule,
+  ModalModule,
+  TranslocoModule,
+  FlyoutModule,
+];
 
 @NgModule({
   declarations: [...COMPONENTS],
-  imports: [
-    CommonModule,
-    RouterModule,
-    HeaderModule,
-    ButtonModule,
-    IconModule,
-    NavModule,
-    LanguageSelectorModule,
-    NotificationServiceModule,
-    TranslocoModule,
-    FooterModule,
-  ],
+  imports: [...IMPORT_MODULES, FooterModule],
   exports: [...COMPONENTS, FooterModule],
 })
 export class CoreModule {}
