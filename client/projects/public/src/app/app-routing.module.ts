@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LanguageCode } from '@audi/data';
+import { AuthGuard, LanguageCode, MemberGuard } from '@audi/data';
 
 import { LoginComponent } from './core/login/login.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
@@ -60,12 +60,13 @@ let routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'not-found',
-    redirectTo: `${lastSelectedLanguage}/not-found`,
-  },
-  {
-    path: ':languageCode/not-found',
-    component: NotFoundComponent,
+    path: ':languageCode/members-area',
+    runGuardsAndResolvers: 'always',
+    canActivate: [AuthGuard, MemberGuard],
+    loadChildren: () =>
+      import('./feature-modules/members-area/members-area.module').then(
+        (m) => m.MembersAreaModule
+      ),
   },
   {
     path: 'server-error',
@@ -74,6 +75,14 @@ let routes: Routes = [
   {
     path: ':languageCode/server-error',
     component: ServerErrorComponent,
+  },
+  {
+    path: 'not-found',
+    redirectTo: `${lastSelectedLanguage}/not-found`,
+  },
+  {
+    path: ':languageCode/not-found',
+    component: NotFoundComponent,
   },
   {
     path: '**',
