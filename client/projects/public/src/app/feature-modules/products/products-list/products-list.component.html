@@ -3,28 +3,47 @@
 <div class="header">
   <div class="header-bg" #headerBg></div>
   <h1 class="aui-headline-2 z-2 text-white">Audi Collections</h1>
-  <h4 class="aui-headline-4 z-2 text-white mt-2">Category Name</h4>
-  <small class="aui-small z-2 text-white mt-3">99 results</small>
+  <h4
+    class="aui-headline-4 z-2 text-white mt-2"
+    *ngIf="productParams.productCategoryId"
+  >
+    Category Name
+  </h4>
+  <small class="aui-small z-2 text-white mt-3" *ngIf="pagination"
+    >{{ pagination.totalItems }} results</small
+  >
 </div>
 
 <div class="aui-layout mb-10">
   <div class="aui-grid">
     <div class="aui-cell aui-cell--12">
-      <div class="w-full flex items-center justify-between">
-        <audi-button
-          [isLightTheme]="true"
-          type="primary"
-          class="flex"
-          (click)="filterModalIsOpen = true"
-        >
-          <audi-icon size="small" iconName="filter"></audi-icon>
-          <span class="ml-2">Filter</span>
-        </audi-button>
+      <div class="w-full flex items-center justify-between debug">
+        <audi-button-group>
+          <audi-button
+            [isLightTheme]="isParamsEmpty"
+            type="primary"
+            class="flex"
+            (click)="filterModalIsOpen = true"
+          >
+            <audi-icon size="small" iconName="filter"></audi-icon>
+            <span class="ml-2">Filter</span>
+          </audi-button>
+          <audi-button
+            *ngIf="!isParamsEmpty"
+            [isLightTheme]="true"
+            type="primary"
+            class="flex"
+            (click)="onResetFilters()"
+          >
+            <audi-icon size="small" iconName="replay"></audi-icon>
+            <span class="ml-2">Clear Filters</span>
+          </audi-button>
+        </audi-button-group>
         <audi-flyout position="center">
           <audi-button
+            [isLightTheme]="true"
             type="primary"
             class="flex flex-row-reverse items-center"
-            [isLightTheme]="true"
             #triggeringElement
             flyoutTriggerSetter
             [applyToInnerElement]="true"
@@ -34,28 +53,49 @@
           </audi-button>
           <div class="flyout-content">
             <audi-nav-list>
-              <audi-nav-item (click)="sortProductBy(productSort.Price)"
+              <audi-nav-item
+                [isActive]="productParams.sort === productSort.Price"
+                (click)="onSortProduct(productSort.Price)"
                 >Price, low to high</audi-nav-item
               >
-              <audi-nav-item (click)="sortProductBy(productSort.PriceDesc)"
+              <audi-nav-item
+                [isActive]="productParams.sort === productSort.PriceDesc"
+                (click)="onSortProduct(productSort.PriceDesc)"
                 >Price, high to low</audi-nav-item
               >
-              <audi-nav-item (click)="sortProductBy(productSort.CreatedAt)"
+              <audi-nav-item
+                [isActive]="productParams.sort === productSort.CreatedAt"
+                (click)="onSortProduct(productSort.CreatedAt)"
                 >Date, old to new</audi-nav-item
               >
-              <audi-nav-item (click)="sortProductBy(productSort.CreatedAtDesc)"
+              <audi-nav-item
+                [isActive]="productParams.sort === productSort.CreatedAtDesc"
+                (click)="onSortProduct(productSort.CreatedAtDesc)"
                 >Date, new to old</audi-nav-item
               >
             </audi-nav-list>
           </div>
         </audi-flyout>
       </div>
-      <div class="w-full flex flex-col items-center justify-center py-10">
-        <audi-product-card></audi-product-card>
-        <p>out of stock</p>
-        <p>favorite</p>
-        <p>on hover change photo</p>
-        <p>pagination</p>
+      <div class="w-full my-2 grid grid-rows-none grid-cols-12 debug">
+        <div
+          *ngFor="let product of products"
+          class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3 m-2"
+        >
+          <audi-product-card [product]="product"></audi-product-card>
+        </div>
+      </div>
+      <div
+        class="w-full flex items-center justify-center my-2 debug"
+        *ngIf="pagination"
+      >
+        <!-- FIXME: buggy active state on click -->
+        <audi-pagination
+          [type]="'desktop'"
+          [pagination]="pagination"
+          (pageChange)="onPageChange($event)"
+        >
+        </audi-pagination>
       </div>
     </div>
   </div>

@@ -49,10 +49,12 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
   filterModalIsOpen: boolean = false;
 
   productParams: ProductParams = {
-    pageSize: 12,
+    pageSize: 1,
     pageNumber: 1,
   };
   pagination: Pagination;
+  isParamsEmpty: boolean = true;
+
   productSort = ProductSort;
 
   refresher$ = new Subject<ProductParams>();
@@ -84,12 +86,22 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
             'sort',
           ];
 
+          this.isParamsEmpty = true;
+
           productParamKeys.forEach((param: string) => {
             if (qp.has(param)) {
               this.productParams = {
                 ...this.productParams,
                 [param]: qp.get(param),
               };
+
+              if (
+                this.isParamsEmpty &&
+                param !== 'sort' &&
+                param !== 'pageNumber'
+              ) {
+                this.isParamsEmpty = false;
+              }
             }
           });
         }),
@@ -143,16 +155,35 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.filterForm = this.fb.group({});
   }
 
-  onSubmitFilter(): void {}
+  onSubmitFilter(): void {
+    // TODO: form & modal
+  }
 
-  sortProductBy(sort: ProductSort): void {
+  onResetFilters(): void {
+    this.productParams = {
+      pageSize: 12,
+      pageNumber: 1,
+    };
+
+    this.setQueryParams();
+  }
+
+  onPageChange(page: number): void {
+    this.productParams = {
+      ...this.productParams,
+      pageNumber: page,
+    };
+
+    this.setQueryParams(this.productParams);
+  }
+
+  onSortProduct(sort: ProductSort): void {
     this.productParams = {
       ...this.productParams,
       sort,
       pageNumber: 1,
     };
 
-    // this.refresher$.next(this.productParams);
     this.setQueryParams(this.productParams);
   }
 

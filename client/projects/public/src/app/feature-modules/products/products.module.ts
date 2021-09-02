@@ -12,6 +12,7 @@ import { NavModule } from '../../component-modules/audi-ui/nav/nav.module';
 import { FlyoutModule } from '../../component-modules/audi-ui/flyout/flyout.module';
 import { ModalModule } from '../../component-modules/audi-ui/modal/modal.module';
 import { FormComponentsModule } from '../../component-modules/form-components/form-components.module';
+import { CardModule } from '../../component-modules/audi-ui/card/card.module';
 
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsSingleComponent } from './products-single/products-single.component';
@@ -26,6 +27,7 @@ const AUDI_MODULES = [
   FlyoutModule,
   ModalModule,
   FormComponentsModule,
+  CardModule,
 ];
 
 const COMPONENTS = [
