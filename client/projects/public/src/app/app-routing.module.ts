@@ -68,6 +68,13 @@ let routes: Routes = [
       ),
   },
   {
+    path: ':languageCode/products',
+    loadChildren: () =>
+      import('./feature-modules/products/products.module').then(
+        (m) => m.ProductsModule
+      ),
+  },
+  {
     path: 'server-error',
     redirectTo: `${lastSelectedLanguage}/server-error`,
   },
