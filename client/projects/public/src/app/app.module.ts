@@ -15,10 +15,14 @@ import { CookieService } from 'ngx-cookie-service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AlertsModule } from './component-modules/alerts/alerts.module';
-import { AudiUiModule } from './component-modules/audi-ui/audi-ui.module';
+import { AlertModule } from './component-modules/audi-ui/alert/alert.module';
+import { NotificationModule } from './component-modules/audi-ui/notification/notification.module';
+import { ProgressBarModule } from './component-modules/audi-ui/progress-bar/progress-bar.module';
 import { CoreModule } from './core/core.module';
 import { SplashScreenModule } from './feature-modules/splash-screen/splash-screen.module';
 import { TranslocoRootModule } from './transloco/transloco-root.module';
+
+const AUDI_MODULES = [NotificationModule, AlertModule, ProgressBarModule];
 
 @NgModule({
   declarations: [AppComponent],
@@ -27,11 +31,11 @@ import { TranslocoRootModule } from './transloco/transloco-root.module';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    AudiUiModule,
     SplashScreenModule,
     CoreModule,
     TranslocoRootModule,
     AlertsModule,
+    ...AUDI_MODULES,
   ],
   providers: [
     ErrorInterceptorProvider,

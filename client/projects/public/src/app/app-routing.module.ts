@@ -20,7 +20,6 @@ let routes: Routes = [
   ...Object.keys(LanguageCode).map((key) => ({
     // @ts-ignore
     path: LanguageCode[key],
-    pathMatch: 'full',
     // @ts-ignore
     redirectTo: `${LanguageCode[key]}/home`,
   })),
@@ -86,7 +85,12 @@ let routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'not-found',
+    /*
+      not redirecting to 'not-found' directly because redirectTo can only be
+      triggered once (no further redirects are evaluated after an absolute redirect)
+      see: https://angular.io/api/router/Route
+    */
+    redirectTo: `${lastSelectedLanguage}/not-found`,
   },
 ];
 
