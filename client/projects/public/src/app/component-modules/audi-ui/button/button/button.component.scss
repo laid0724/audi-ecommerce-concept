@@ -4,6 +4,18 @@
   }
 }
 
+:host(.items-center) {
+  button.aui-button {
+    align-items: center;
+  }
+}
+
+:host(.flex-row-reverse) {
+  button.aui-button {
+    flex-direction: row-reverse;
+  }
+}
+
 :host(.block) {
   button.aui-button {
     display: block;

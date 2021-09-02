@@ -10,7 +10,26 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { BusyService, ProductsService } from '@audi/data';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import {
+  ActivatedRoute,
+  ParamMap,
+  QueryParamsHandling,
+  Router,
+} from '@angular/router';
+import {
+  BusyService,
+  PaginatedResult,
+  Pagination,
+  Product,
+  ProductCategoryWithoutProducts,
+  ProductParams,
+  ProductSort,
+  ProductsService,
+  setQueryParams,
+} from '@audi/data';
+import { Observable, Subject } from 'rxjs';
+import { startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'audi-products-list',
@@ -20,21 +39,76 @@ import { BusyService, ProductsService } from '@audi/data';
 export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('headerBg') headerBg: ElementRef<HTMLDivElement>;
 
+  _productCategories$: Observable<ProductCategoryWithoutProducts[]> =
+    this.productsService.getAllProductCategories();
+
+  productCategories: ProductCategoryWithoutProducts[] = [];
+  products: Product[] = [];
+
+  filterForm: FormGroup;
+  filterModalIsOpen: boolean = false;
+
+  productParams: ProductParams = {
+    pageSize: 12,
+    pageNumber: 1,
+  };
+  pagination: Pagination;
+  productSort = ProductSort;
+
+  refresher$ = new Subject<ProductParams>();
+  destroy$ = new Subject<boolean>();
+
   windowScrollListenerFn: () => void;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
+    private route: ActivatedRoute,
+    private router: Router,
+    private fb: FormBuilder,
     private productsService: ProductsService,
     private busyService: BusyService
   ) {}
 
   ngOnInit(): void {
-    this.productsService.getAllProductCategories().subscribe((res) => {
-      console.log(res);
-      this.busyService.idle();
-    });
+    this.route.queryParamMap
+      .pipe(
+        tap((qp: ParamMap) => {
+          const productParamKeys = [
+            'pageNumber',
+            'productCategoryId',
+            'name',
+            'priceMin',
+            'priceMax',
+            'sort',
+          ];
+
+          productParamKeys.forEach((param: string) => {
+            if (qp.has(param)) {
+              this.productParams = {
+                ...this.productParams,
+                [param]: qp.get(param),
+              };
+            }
+          });
+        }),
+        switchMap((_) =>
+          this.refresher$.pipe(
+            startWith(this.productParams),
+            switchMap((productParams: ProductParams) => {
+              return this.productsService.getIsVisibleProducts(productParams);
+            }),
+            takeUntil(this.destroy$)
+          )
+        )
+      )
+      .subscribe((productsPaged: PaginatedResult<Product[]>) => {
+        this.products = productsPaged.result;
+        this.pagination = productsPaged.pagination;
+
+        this.busyService.idle();
+      });
   }
 
   ngAfterViewInit(): void {
@@ -65,9 +139,38 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  initFilterForm(): void {
+    this.filterForm = this.fb.group({});
+  }
+
+  onSubmitFilter(): void {}
+
+  sortProductBy(sort: ProductSort): void {
+    this.productParams = {
+      ...this.productParams,
+      sort,
+      pageNumber: 1,
+    };
+
+    // this.refresher$.next(this.productParams);
+    this.setQueryParams(this.productParams);
+  }
+
+  setQueryParams(queryParams = {}, queryParamsHandling = ''): void {
+    setQueryParams(
+      this.router,
+      this.route,
+      queryParams,
+      queryParamsHandling as QueryParamsHandling
+    );
+  }
+
   ngOnDestroy(): void {
     if (isPlatformBrowser(this.platformId) && this.windowScrollListenerFn) {
       this.windowScrollListenerFn();
     }
+
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

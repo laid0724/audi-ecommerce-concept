@@ -251,6 +251,25 @@ export class ProductsService {
     return getPaginatedResult<Product[]>(this.http, this.endpoint, params);
   }
 
+  getIsVisibleProducts(
+    productParams: ProductParams
+  ): Observable<PaginatedResult<Product[]>> {
+    const { pageNumber, pageSize, isVisible, ...restOfProductParams } =
+      productParams;
+    let params = getPaginationHeaders(pageNumber, pageSize);
+
+    Object.keys(restOfProductParams).forEach((key) => {
+      const property = (restOfProductParams as unknown as any)[key];
+      if (property != null) {
+        params = params.append(key, property.toString());
+      }
+    });
+
+    params = params.append('isVisible', true);
+
+    return getPaginatedResult<Product[]>(this.http, this.endpoint, params);
+  }
+
   getProduct(productId: number): Observable<Product> {
     return this.http.get<Product>(`${this.endpoint}/${productId}`);
   }

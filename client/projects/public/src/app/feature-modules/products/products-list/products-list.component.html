@@ -2,55 +2,82 @@
 
 <div class="header">
   <div class="header-bg" #headerBg></div>
-  <h1 class="aui-headline-2 z-2 text-white">Products</h1>
-  <small class="aui-small z-2 text-white mt-2">99 results</small>
+  <h1 class="aui-headline-2 z-2 text-white">Audi Collections</h1>
+  <h4 class="aui-headline-4 z-2 text-white mt-2">Category Name</h4>
+  <small class="aui-small z-2 text-white mt-3">99 results</small>
 </div>
 
-<div class="aui-layout">
+<div class="aui-layout mb-10">
   <div class="aui-grid">
     <div class="aui-cell aui-cell--12">
-      <div class="grid grid-rows-1 grid-cols-12 w-full">
-        <div
-          class="
-            col-span-3
-            flex flex-col
-            items-center
-            justify-center
-            p-10
-            debug
-          "
+      <div class="w-full flex items-center justify-between">
+        <audi-button
+          [isLightTheme]="true"
+          type="primary"
+          class="flex"
+          (click)="filterModalIsOpen = true"
         >
-          Filter here
-          <ul>
-            <li>parent category</li>
-            <li>sub category</li>
-            <li>price min max</li>
-          </ul>
-        </div>
-        <div
-          class="
-            col-span-9
-            flex flex-col
-            items-center
-            justify-center
-            p-10
-            debug
-          "
-        >
-          Product lists
-          <ul>
-            <li>sort by</li>
-            <li>price low to high</li>
-            <li>price high to low</li>
-            <li>newest to oldest</li>
-            <li>oldest to newest</li>
-          </ul>
-          <p>out of stock</p>
-          <p>favorite</p>
-          <p>pagination</p>
-          <p>on hover change photo</p>
-        </div>
+          <audi-icon size="small" iconName="filter"></audi-icon>
+          <span class="ml-2">Filter</span>
+        </audi-button>
+        <audi-flyout position="center">
+          <audi-button
+            type="primary"
+            class="flex flex-row-reverse items-center"
+            [isLightTheme]="true"
+            #triggeringElement
+            flyoutTriggerSetter
+            [applyToInnerElement]="true"
+          >
+            <audi-icon size="small" iconName="arrow-down"></audi-icon>
+            <span style="padding-bottom: 1px; margin-right: 2px">Sort</span>
+          </audi-button>
+          <div class="flyout-content">
+            <audi-nav-list>
+              <audi-nav-item (click)="sortProductBy(productSort.Price)"
+                >Price, low to high</audi-nav-item
+              >
+              <audi-nav-item (click)="sortProductBy(productSort.PriceDesc)"
+                >Price, high to low</audi-nav-item
+              >
+              <audi-nav-item (click)="sortProductBy(productSort.CreatedAt)"
+                >Date, old to new</audi-nav-item
+              >
+              <audi-nav-item (click)="sortProductBy(productSort.CreatedAtDesc)"
+                >Date, new to old</audi-nav-item
+              >
+            </audi-nav-list>
+          </div>
+        </audi-flyout>
+      </div>
+      <div class="w-full flex flex-col items-center justify-center py-10">
+        <audi-product-card></audi-product-card>
+        <p>out of stock</p>
+        <p>favorite</p>
+        <p>on hover change photo</p>
+        <p>pagination</p>
       </div>
     </div>
   </div>
 </div>
+
+<audi-modal
+  [(isOpen)]="filterModalIsOpen"
+  [header]="'Filters'"
+  [headerSize]="3"
+  [bgColor]="'white'"
+  [textColor]="'black'"
+  [type]="'full-page'"
+  [isClosable]="true"
+>
+  <ng-container *ngIf="productCategories.length > 1">
+    <!-- 搜尋條件 Filter
+<ul>
+  <li>parent category</li>
+  <li>sub category</li>
+  <li>price min max</li>
+</ul> -->
+    <pre>{{ productCategories | json }}</pre>
+  </ng-container>
+  CONTENT HERE
+</audi-modal>
