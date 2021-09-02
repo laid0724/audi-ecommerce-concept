@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -292,7 +293,54 @@ namespace Audi.Data
                 );
             }
 
-            query = query.OrderByDescending(e => e.CreatedAt);
+            if (productParams.Sort.HasValue)
+            {
+                switch (productParams.Sort.Value)
+                {
+                    case ProductSort.CreatedAt:
+                        query = query.OrderBy(e => e.CreatedAt)
+                                        .ThenByDescending(e => e.Id);
+                        break;
+                    case ProductSort.CreatedAtDesc:
+                        query = query.OrderByDescending(e => e.CreatedAt)
+                                        .ThenByDescending(e => e.Id);
+                        break;
+                    case ProductSort.Price:
+                        query = query.OrderBy(product =>
+                                            product.IsDiscounted && product.DiscountDeadline.HasValue
+                                                ? product.IsDiscounted && product.DiscountDeadline.Value >= DateTime.UtcNow
+                                                    ? product.Price - product.DiscountAmount
+                                                    : product.Price
+                                                : product.IsDiscounted
+                                                    ? product.Price - product.DiscountAmount
+                                                    : product.Price
+                                        )
+                                    .ThenByDescending(e => e.CreatedAt)
+                                    .ThenByDescending(e => e.Id);
+                        break;
+                    case ProductSort.PriceDesc:
+                        query = query.OrderByDescending(product =>
+                                            product.IsDiscounted && product.DiscountDeadline.HasValue
+                                                ? product.IsDiscounted && product.DiscountDeadline.Value >= DateTime.UtcNow
+                                                    ? product.Price - product.DiscountAmount
+                                                    : product.Price
+                                                : product.IsDiscounted
+                                                    ? product.Price - product.DiscountAmount
+                                                    : product.Price
+                                        )
+                                    .ThenByDescending(e => e.CreatedAt)
+                                    .ThenByDescending(e => e.Id);
+                        break;
+                    default:
+                        query = query.OrderByDescending(e => e.CreatedAt);
+                        break;
+                }
+            }
+            else
+            {
+                query = query.OrderByDescending(e => e.CreatedAt);
+            }
+
 
             return await PagedList<ProductDto>.CreateAsync(
                 query.ProjectTo<ProductDto>(_mapper.ConfigurationProvider),
