@@ -103,6 +103,20 @@ namespace Audi.Data
             _context.ProductCategories.Update(productCategoryWithLinkedEntities);
         }
 
+
+        public async Task<ICollection<ProductCategoryWithoutProductsDto>> GetProductCategoriesWithoutProductsAsync(string language)
+        {
+            var allCategories = await _context.ProductCategories
+                .Include(pc => pc.Children)
+                .Where(pc =>
+                    !pc.ParentId.HasValue &&
+                    pc.Language.ToLower().Trim() == language.ToLower().Trim()
+                )
+                .ProjectTo<ProductCategoryWithoutProductsDto>(_mapper.ConfigurationProvider).ToListAsync();
+
+            return allCategories;
+        }
+
         public async Task<PagedList<ProductCategoryDto>> GetChildrenProductCategoriesAsync(ProductCategoryParams productCategoryParams)
         {
             var query = _context.ProductCategories

@@ -1,4 +1,4 @@
-import { Product } from "./product";
+import { Product } from './product';
 
 export interface ProductCategory {
   id: number;
@@ -6,6 +6,8 @@ export interface ProductCategory {
   description: string;
   parentId?: number;
   children: ProductCategory[];
-  products: Product[]
+  products: Product[];
   isTopLevel: boolean;
 }
+
+export type ProductCategoryWithoutProducts = Omit<ProductCategory, 'products'>;

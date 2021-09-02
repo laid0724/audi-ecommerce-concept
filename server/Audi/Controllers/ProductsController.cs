@@ -33,6 +33,17 @@ namespace Audi.Controllers
         }
 
         [SwaggerOperation(Summary = "add a product category")]
+        [HttpGet("categories")]
+        public async Task<ActionResult<ICollection<ProductCategoryWithoutProductsDto>>> GetAllProductCategories([FromHeader(Name = "X-LANGUAGE")] string language)
+        {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+
+            var allProductCategories = await _unitOfWork.ProductRepository.GetProductCategoriesWithoutProductsAsync(language);
+
+            return Ok(allProductCategories);
+        }
+
+        [SwaggerOperation(Summary = "add a product category")]
         [Authorize(Policy = "RequireModerateRole")]
         [HttpPost("categories")]
         public async Task<ActionResult<ProductCategoryDto>> AddProductCategory([FromBody] ProductCategoryUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language)

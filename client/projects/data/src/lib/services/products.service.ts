@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ProductCategory } from '../models/product-category';
+import {
+  ProductCategory,
+  ProductCategoryWithoutProducts,
+} from '../models/product-category';
 import { Product } from '../models/product';
 import { Observable, throwError } from 'rxjs';
 import { ProductCategoryParams } from '../models/product-category-params';
@@ -138,6 +141,12 @@ export class ProductsService {
   );
 
   constructor(private http: HttpClient) {}
+
+  getAllProductCategories(): Observable<ProductCategoryWithoutProducts[]> {
+    return this.http.get<ProductCategoryWithoutProducts[]>(
+      `${this.endpoint}/categories`
+    );
+  }
 
   addProductCategory(
     request: ProductCategoryUpsertRequest

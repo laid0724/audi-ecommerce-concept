@@ -32,6 +32,7 @@ namespace Audi.Helpers
 
             CreateMap<AppUser, SensitiveUserDataDto>();
 
+            CreateMap<ProductCategory, ProductCategoryWithoutProductsDto>();
             CreateMap<ProductCategory, ProductCategoryDto>();
 
             CreateMap<ProductPhoto, ProductPhotoDto>()

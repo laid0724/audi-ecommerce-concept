@@ -10,7 +10,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { ProductsService } from '@audi/data';
+import { BusyService, ProductsService } from '@audi/data';
 
 @Component({
   selector: 'audi-products-list',
@@ -26,11 +26,15 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
     @Inject(PLATFORM_ID) private platformId: Object,
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private busyService: BusyService
   ) {}
 
   ngOnInit(): void {
-
+    this.productsService.getAllProductCategories().subscribe((res) => {
+      console.log(res);
+      this.busyService.idle();
+    });
   }
 
   ngAfterViewInit(): void {

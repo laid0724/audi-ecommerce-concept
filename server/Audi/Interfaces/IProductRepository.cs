@@ -9,6 +9,7 @@ namespace Audi.Interfaces
     public interface IProductRepository
     {
         // product category
+        Task<ICollection<ProductCategoryWithoutProductsDto>> GetProductCategoriesWithoutProductsAsync(string language);
         Task<ProductCategory> GetProductCategoryByIdAsync(int productCategoryId);
         Task<PagedList<ProductCategoryDto>> GetParentProductCategoriesAsync(ProductCategoryParams productCategoryParams);
         Task<PagedList<ProductCategoryDto>> GetChildrenProductCategoriesAsync(ProductCategoryParams productCategoryParams);
