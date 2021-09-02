@@ -82,6 +82,31 @@ import { v4 as uuid } from 'uuid';
       </audi-nav-list>
     </div>
   </audi-flyout>
+
+  when you want only a specific element to close the flyout on click,
+  add the 'close-flyout-trigger' class to the element projected inside 'flyout-content'
+
+  if it is an angular element, you need to use the [classSetter] directive to set the class of the inner element
+
+  <audi-flyout position="center" [isLightTheme]="true">
+    <audi-button
+      type="icon-large"
+      #triggeringElement
+      flyoutTriggerSetter
+      [applyToInnerElement]="true"
+    >
+      <audi-icon size="large" iconName="system-download"></audi-icon>
+    </audi-button>
+    <div class="flyout-content">
+      <button class="close-flyout-trigger">Click Me To Close!</button>
+      <audi-button
+        type="primary"
+        classSetter
+        className="close-flyout-trigger"
+        >Click Me To Close!</audi-button
+      >
+    </div>
+  </audi-flyout>
 */
 
 @Component({
@@ -144,6 +169,20 @@ export class FlyoutComponent implements OnInit, AfterViewInit, OnDestroy {
                   this.closeFlyout();
                 });
               });
+            }
+
+            const customCloseTrigger = flyoutContent?.querySelector(
+              '.close-flyout-trigger'
+            );
+
+            if (customCloseTrigger) {
+              this.renderer.listen(
+                customCloseTrigger,
+                'click',
+                (event: Event) => {
+                  this.closeFlyout();
+                }
+              );
             }
           }
         }, 0);
