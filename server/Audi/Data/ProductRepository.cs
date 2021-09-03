@@ -256,6 +256,10 @@ namespace Audi.Data
 
                         query = query.Where(p => childrenCategoryIds.Contains(p.ProductCategoryId) || p.ProductCategoryId == categoryId);
                     }
+                    else
+                    {
+                        query = query.Where(p => p.ProductCategoryId == categoryId);
+                    }
                 }
                 else
                 {
