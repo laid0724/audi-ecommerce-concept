@@ -26,5 +26,6 @@ namespace Audi.Helpers
         public decimal? StockMin { get; set; }
         public decimal? StockMax { get; set; }
         public ProductSort? Sort { get; set; }
+        public bool? IncludeChildrenProducts { get; set; }
     }
 }

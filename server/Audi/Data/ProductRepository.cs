@@ -241,7 +241,26 @@ namespace Audi.Data
 
             if (productParams.ProductCategoryId.HasValue)
             {
-                query = query.Where(p => p.ProductCategoryId == productParams.ProductCategoryId.Value);
+                var categoryId = productParams.ProductCategoryId.Value;
+
+                if (productParams.IncludeChildrenProducts.HasValue && productParams.IncludeChildrenProducts.Value)
+                {
+                    // if the product category id being queried is a parent category, 
+                    // include products from its children categories as well
+
+                    var productCategory = await GetProductCategoryByIdAsync(categoryId);
+
+                    if (productCategory != null && !productCategory.ParentId.HasValue)
+                    {
+                        var childrenCategoryIds = productCategory.Children.Select(pc => pc.Id).ToList();
+
+                        query = query.Where(p => childrenCategoryIds.Contains(p.ProductCategoryId) || p.ProductCategoryId == categoryId);
+                    }
+                }
+                else
+                {
+                    query = query.Where(p => p.ProductCategoryId == categoryId);
+                }
             }
 
             if (!string.IsNullOrWhiteSpace(productParams.Name))

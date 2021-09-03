@@ -17,4 +17,5 @@ export interface ProductParams extends PagedRequest {
   stockMin?: number;
   stockMax?: number;
   sort?: ProductSort;
+  includeChildrenProducts?: boolean;
 }
