@@ -19,6 +19,7 @@ export class CardComponent {
   @Input() backgroundImageUrl: string = '';
   @Input() coverImageUrl: string = '';
   @Input() isBordered: boolean = false;
+  @Input() imageBordered: boolean = false;
   @Input() borderColor: AudiColor | string = AudiColor.Grey1;
 
   public isNullOrEmptyString: (val: string | null | undefined) => boolean =

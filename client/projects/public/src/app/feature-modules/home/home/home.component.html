@@ -187,7 +187,6 @@
                   <ng-container *ngFor="let product of data.newestProducts">
                     <div *projectAsTemplate class="max-w-xs">
                       <audi-card
-                        [isClickable]="true"
                         [headerSize]="4"
                         [header]="product.name"
                         [coverImageUrl]="
@@ -201,7 +200,7 @@
                               text-grey-8
                               text-truncate-ellipses
                               text-truncate-ellipses--3-lines
-                              mt-1
+                              mt-2
                               mb-4
                             "
                           >

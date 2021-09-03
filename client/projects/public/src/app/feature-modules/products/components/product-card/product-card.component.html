@@ -1,6 +1,27 @@
-<div class="w-full debug">
-  TODO:
-  <p>out of stock</p>
-  <p>favorite</p>
-  <p>on hover change photo</p>
+<div class="w-full mb-4">
+  <audi-card
+    #card
+    class="clickable"
+    [routerLink]="['/', language, 'products', product.id]"
+    [coverImageUrl]="mainProductPhoto!.url"
+    [isClickable]="false"
+    textAlign="center"
+  >
+    <div class="flex flex-col items-center justify-center">
+      <h5 class="aui-headline-5 product-name mb-1">{{ product.name }}</h5>
+      <small class="aui-small product-price">{{ product.price.toLocaleString() }}</small>
+    </div>
+  </audi-card>
 </div>
+
+<!--
+  HACK: preload background images being used on hover
+  for reference, see: https://stackoverflow.com/questions/39656370/angular-2-preload-background-image
+-->
+<img
+  *ngFor="let preloadImg of productPhotos.slice(1, productPhotos.length)"
+  [src]="preloadImg.url"
+  (load)="preloadedImageUrls.push(preloadImg.url)"
+  class="absolute"
+  hidden
+/>

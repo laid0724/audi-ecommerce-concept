@@ -14,8 +14,10 @@
     <div
       class="aui-card__cover-image border-color-{{ borderColor }}"
       [ngClass]="{
-        'border-t border-l border-r': isBordered
+        'border-t border-l border-r': isBordered,
+        border: imageBordered
       }"
+      [ngStyle]="{ 'background-image': 'url(' + coverImageUrl + ')' }"
     >
       <img [src]="coverImageUrl" />
     </div>

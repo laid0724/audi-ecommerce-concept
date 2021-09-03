@@ -24,3 +24,12 @@
 .aui-card__content:empty {
   display: none;
 }
+
+.aui-card__cover-image {
+  background-image: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: all 1s var(--audi-transition-timing-function);
+  opacity: 1;
+}

@@ -82,10 +82,14 @@
           </div>
         </audi-flyout>
       </div>
+      <!-- TODO:
+      <p>out of stock</p>
+      <p>favorite</p>
+      <p>on hover change photo</p> -->
       <div class="w-full my-2 grid grid-rows-none grid-cols-12">
         <div
           *ngFor="let product of products"
-          class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3 m-2"
+          class="col-span-12 sm:col-span-6 md:col-span-4 2xl:col-span-3 mx-2 mb-4"
         >
           <audi-product-card [product]="product"></audi-product-card>
         </div>
