@@ -6,7 +6,18 @@ import { ProductsSingleComponent } from './products-single/products-single.compo
 const routes: Routes = [
   {
     path: '',
-    component: ProductsListComponent,
+    pathMatch: 'full',
+    redirectTo: 'lists',
+  },
+  {
+    path: 'lists',
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        component: ProductsListComponent,
+      },
+    ],
   },
   {
     path: ':productId',

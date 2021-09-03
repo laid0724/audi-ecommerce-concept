@@ -77,15 +77,22 @@ export class SelectContainerComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(value: any): void {
+    if (value === undefined) {
+      value = null;
+    }
+
     this.formControlDirective.valueAccessor!.writeValue(value);
 
-    this.selectComponents.forEach((select) => {
-      // HACK
-      select._element.disabled = null;
-      setTimeout(() => {
-        select.updateClasses();
-      }, 0);
-    });
+    // HACK
+    if (this.selectComponents) {
+      this.selectComponents.forEach((select) => {
+        if (!!this.control.value) {
+          setTimeout(() => {
+            select.updateClasses();
+          }, 0);
+        }
+      });
+    }
   }
 
   registerOnChange(fn: any): void {

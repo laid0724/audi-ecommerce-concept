@@ -17,6 +17,7 @@ import {
   QueryParamsHandling,
   Router,
 } from '@angular/router';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import {
   BusyService,
   NUMBER_REGEX,
@@ -29,7 +30,7 @@ import {
   ProductsService,
   setQueryParams,
 } from '@audi/data';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { startWith, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
@@ -46,6 +47,8 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
   filterForm: FormGroup;
   filterModalIsOpen: boolean = false;
 
+  productSortEnum: typeof ProductSort = ProductSort;
+
   productParams: ProductParams = {
     pageSize: 12,
     pageNumber: 1,
@@ -54,7 +57,8 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
   pagination: Pagination;
   isParamsEmpty: boolean = true;
 
-  productSortEnum: typeof ProductSort = ProductSort;
+  isDesktop: boolean;
+  _breakpointObserverSubscription: Subscription;
 
   refresher$ = new Subject<ProductParams>();
   destroy$ = new Subject<boolean>();
@@ -78,12 +82,32 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
+    private breakpointObserver: BreakpointObserver,
     private productsService: ProductsService,
     private busyService: BusyService
-  ) {}
+  ) {
+    /*
+      HACK
+      PROBLEM: modal component was being destroyed whenever i set the query params
+      via the router.
+
+      when this strategy is set to true, this does not trigger the onDestroy methods on the components in the template
+      when you navigate to the same route
+
+      see: https://angular.io/api/router/BaseRouteReuseStrategy#shouldReuseRoute
+      see: https://stackoverflow.com/questions/41280471/how-to-implement-routereusestrategy-shoulddetach-for-specific-routes-in-angular
+    */
+    router.routeReuseStrategy.shouldReuseRoute = () => true;
+  }
 
   ngOnInit(): void {
     this.initFilterForm();
+
+    this._breakpointObserverSubscription = this.breakpointObserver
+      .observe(['(min-width: 640px)'])
+      .subscribe((state: BreakpointState) => {
+        this.isDesktop = state.matches;
+      });
 
     this.productsService
       .getAllProductCategories()
@@ -127,8 +151,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
                   }
                 }
               });
-
-              console.log(this.productParams);
 
               this.filterForm.patchValue(this.productParams);
             }),
@@ -228,8 +250,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
       );
     }
 
-    console.log(filterValues);
-
     this.productParams = {
       ...this.productParams,
       ...filterValues,
@@ -249,6 +269,10 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.filterForm.reset();
     this.setQueryParams();
+
+    if (!this.isDesktop) {
+      this.filterModalIsOpen = false;
+    }
   }
 
   onPageChange(page: number): void {
@@ -282,6 +306,10 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (isPlatformBrowser(this.platformId) && this.windowScrollListenerFn) {
       this.windowScrollListenerFn();
+    }
+
+    if (this._breakpointObserverSubscription) {
+      this._breakpointObserverSubscription.unsubscribe();
     }
 
     this.destroy$.next(true);

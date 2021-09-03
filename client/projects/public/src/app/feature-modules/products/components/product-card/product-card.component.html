@@ -1,3 +1,6 @@
+<!-- TODO: user like product -->
+<!-- TODO: transloco -->
+
 <div class="w-full mb-4">
   <audi-card
     #card
@@ -22,7 +25,9 @@
         </div>
       </ng-container>
 
-      <small class="aui-small mt-1 text-danger" *ngIf="product.stock === 0">OUT OF STOCK</small>
+      <small class="aui-small mt-1 text-danger" *ngIf="product.stock === 0"
+        >OUT OF STOCK</small
+      >
 
       <ng-template #regularPrice>
         <small class="aui-small">${{ product.price.toLocaleString() }}</small>

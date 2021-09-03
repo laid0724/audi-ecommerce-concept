@@ -32,7 +32,7 @@
             <span class="ml-2">Filter</span>
           </audi-button>
           <audi-button
-            *ngIf="!isParamsEmpty"
+            *ngIf="!isParamsEmpty && isDesktop"
             [isLightTheme]="true"
             type="primary"
             class="flex"
@@ -82,26 +82,43 @@
           </div>
         </audi-flyout>
       </div>
-      <!-- TODO:
-      <p>favorite</p> -->
       <div class="w-full my-6 grid grid-rows-none grid-cols-12">
-        <div
-          *ngFor="let product of products"
-          class="
-            col-span-12
-            sm:col-span-6
-            md:col-span-4
-            2xl:col-span-3
-            mx-2
-            my-4
-          "
-        >
-          <audi-product-card [product]="product"></audi-product-card>
-        </div>
+        <ng-container *ngIf="products.length > 0; else noProducts">
+          <div
+            *ngFor="let product of products"
+            class="
+              col-span-12
+              sm:col-span-6
+              md:col-span-4
+              2xl:col-span-3
+              mx-2
+              my-4
+            "
+          >
+            <audi-product-card [product]="product"></audi-product-card>
+          </div>
+        </ng-container>
+        <ng-template #noProducts>
+          <h1
+            class="
+              col-span-12
+              aui-headline-3
+              w-full
+              my-24
+              flex
+              items-center
+              justify-center
+            "
+          >
+            No Products Available
+          </h1>
+        </ng-template>
       </div>
       <div
         class="w-full flex items-center justify-center mb-12"
-        *ngIf="pagination"
+        *ngIf="
+          pagination && pagination.totalItems > 0 && pagination.totalPages > 1
+        "
       >
         <audi-pagination
           [type]="'desktop'"
@@ -176,7 +193,9 @@
           type="number"
         >
         </audi-input-container>
-        <audi-control-error [type]="'grid'">required</audi-control-error>
+        <audi-control-error [type]="'grid'">
+          <!-- TODO: validators and error message -->
+        </audi-control-error>
       </audi-control-grid>
     </div>
     <div class="block mb-4">
@@ -190,7 +209,18 @@
     </div>
     <div class="mt-20 w-full flex justify-end">
       <audi-button-group>
-        <audi-button type="secondary" (click)="filterModalIsOpen = false"
+        <audi-button
+          *ngIf="!isParamsEmpty && !isDesktop"
+          [isLightTheme]="false"
+          type="secondary"
+          (click)="onResetFilters()"
+        >
+          Clear Filters
+        </audi-button>
+        <audi-button
+          *ngIf="isDesktop || (!isDesktop && isParamsEmpty)"
+          type="secondary"
+          (click)="filterModalIsOpen = false"
           >Cancel</audi-button
         >
         <audi-button type="primary" (click)="onSubmitFilter()"
