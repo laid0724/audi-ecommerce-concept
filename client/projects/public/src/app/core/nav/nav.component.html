@@ -21,15 +21,15 @@
           justify-center
         "
       >
-        <audi-button type="icon">
-          <a
-            [routerLink]="['/', language, 'home']"
-            class="w-20 flex items-center justify-center"
-            (click)="!menuIsPristine ? toggleMenuState(false) : null"
-          >
+        <a
+          [routerLink]="['/', language, 'home']"
+          class="w-20 flex items-center justify-center"
+          (click)="!menuIsPristine ? toggleMenuState(false) : null"
+        >
+          <audi-button type="icon">
             <img src="assets/audi-logo-black.svg" class="w-full" />
-          </a>
-        </audi-button>
+          </audi-button>
+        </a>
       </div>
 
       <div class="flex items-center justify-between">
