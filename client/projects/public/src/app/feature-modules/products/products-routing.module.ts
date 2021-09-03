@@ -7,17 +7,7 @@ const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'lists',
-  },
-  {
-    path: 'lists',
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        component: ProductsListComponent,
-      },
-    ],
+    component: ProductsListComponent,
   },
   {
     path: ':productId',
