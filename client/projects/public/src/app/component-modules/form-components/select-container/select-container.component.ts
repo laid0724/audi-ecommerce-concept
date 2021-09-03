@@ -46,6 +46,8 @@ export class SelectContainerComponent implements OnInit, ControlValueAccessor {
   @ViewChild(FormControlDirective, { static: true })
   formControlDirective: FormControlDirective;
 
+  selectComponents: any[];
+
   @Input() floatingLabel: boolean = true;
   @Input() isLightTheme: boolean = false;
   @Input() label: string;
@@ -70,12 +72,20 @@ export class SelectContainerComponent implements OnInit, ControlValueAccessor {
     const audiSelectModules = initAudiModules(AudiModuleName.Select);
 
     audiSelectModules.forEach((selectModule: AudiComponents) => {
-      const selects = selectModule.components.upgradeElements();
+      this.selectComponents = selectModule.components.upgradeElements();
     });
   }
 
   writeValue(value: any): void {
     this.formControlDirective.valueAccessor!.writeValue(value);
+
+    this.selectComponents.forEach((select) => {
+      // HACK
+      select._element.disabled = null;
+      setTimeout(() => {
+        select.updateClasses();
+      }, 0);
+    });
   }
 
   registerOnChange(fn: any): void {

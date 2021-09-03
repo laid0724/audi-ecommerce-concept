@@ -48,6 +48,8 @@ export class InputContainerComponent implements OnInit, ControlValueAccessor {
   @ViewChild(FormControlDirective, { static: true })
   formControlDirective: FormControlDirective;
 
+  textfieldComponents: any[];
+
   @Input() floatingLabel: boolean = true;
   @Input() isLightTheme: boolean = false;
   @Input() type: 'text' | 'number' | 'password' = 'text';
@@ -77,12 +79,18 @@ export class InputContainerComponent implements OnInit, ControlValueAccessor {
     const audiTextfieldModules = initAudiModules(AudiModuleName.Textfield);
 
     audiTextfieldModules.forEach((textfieldModule: AudiComponents) => {
-      const textfields = textfieldModule.components.upgradeElements();
+      this.textfieldComponents = textfieldModule.components.upgradeElements();
     });
   }
 
   writeValue(value: any): void {
     this.formControlDirective.valueAccessor!.writeValue(value);
+
+    this.textfieldComponents.forEach((textfield) => {
+      setTimeout(() => {
+        textfield.update();
+      }, 0);
+    });
   }
 
   registerOnChange(fn: any): void {
