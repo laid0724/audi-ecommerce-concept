@@ -105,6 +105,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
                 'priceMax',
                 'sort',
                 'includeChildrenProducts',
+                'isDiscounted',
               ];
 
               this.isParamsEmpty = true;
@@ -126,6 +127,8 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
                   }
                 }
               });
+
+              console.log(this.productParams);
 
               this.filterForm.patchValue(this.productParams);
             }),
@@ -224,6 +227,8 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
         filterValues.productCategoryId.toString()
       );
     }
+
+    console.log(filterValues);
 
     this.productParams = {
       ...this.productParams,
