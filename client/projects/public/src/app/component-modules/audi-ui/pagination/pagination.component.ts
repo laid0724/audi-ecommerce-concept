@@ -45,7 +45,7 @@ export class PaginationComponent implements OnInit, OnChanges, AfterViewInit, On
   @Input() isLightTheme: boolean = false;
   @Input() type: AudiPaginationType | string = AudiPaginationType.Desktop;
   @Input() pagination: Pagination;
-  @Input() pageRange: number = 1;
+  @Input() pageRange: number = 2;
 
   @Output()
   pageChange = new EventEmitter<number>();

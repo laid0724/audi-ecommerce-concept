@@ -15,6 +15,12 @@
   width: 100%;
 }
 
+.aui-card {
+  &.disabled {
+    opacity: 0.5;
+  }
+}
+
 .aui-card--action {
   cursor: pointer;
 }

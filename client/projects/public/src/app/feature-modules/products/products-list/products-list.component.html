@@ -17,7 +17,7 @@
   >
 </div>
 
-<div class="aui-layout mb-10">
+<div class="aui-layout">
   <div class="aui-grid">
     <div class="aui-cell aui-cell--12">
       <div class="w-full flex items-center justify-between">
@@ -83,19 +83,24 @@
         </audi-flyout>
       </div>
       <!-- TODO:
-      <p>out of stock</p>
-      <p>favorite</p>
-      <p>on hover change photo</p> -->
-      <div class="w-full my-2 grid grid-rows-none grid-cols-12">
+      <p>favorite</p> -->
+      <div class="w-full my-6 grid grid-rows-none grid-cols-12">
         <div
           *ngFor="let product of products"
-          class="col-span-12 sm:col-span-6 md:col-span-4 2xl:col-span-3 mx-2 mb-4"
+          class="
+            col-span-12
+            sm:col-span-6
+            md:col-span-4
+            2xl:col-span-3
+            mx-2
+            my-4
+          "
         >
           <audi-product-card [product]="product"></audi-product-card>
         </div>
       </div>
       <div
-        class="w-full flex items-center justify-center my-2"
+        class="w-full flex items-center justify-center mb-12"
         *ngIf="pagination"
       >
         <audi-pagination

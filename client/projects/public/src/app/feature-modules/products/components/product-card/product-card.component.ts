@@ -69,11 +69,17 @@ export class ProductCardComponent implements OnInit, AfterViewInit, OnDestroy {
       '.aui-card__cover-image img'
     );
 
+    const isDisabled = this.cardComponent.isDisabled;
+
     this.cardMouseOverFn = this.renderer.listen(
       this.cardElRef.nativeElement,
       'mouseover',
       (e: Event) => {
-        if (this.preloadedImageUrls.length >= 1 && !this.mouseOverTriggered) {
+        if (
+          !isDisabled &&
+          this.preloadedImageUrls.length >= 1 &&
+          !this.mouseOverTriggered
+        ) {
           this.mouseOverTriggered = true;
 
           this.renderer.addClass(coverImage, 'opacity-0');
@@ -107,7 +113,11 @@ export class ProductCardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.cardElRef.nativeElement,
       'mouseout',
       (e: Event) => {
-        if (this.preloadedImageUrls.length >= 1 && this.mouseOverTriggered) {
+        if (
+          !isDisabled &&
+          this.preloadedImageUrls.length >= 1 &&
+          this.mouseOverTriggered
+        ) {
           this.mouseOverTriggered = false;
 
           this.renderer.removeClass(coverImage, 'opacity-0');

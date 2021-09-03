@@ -4,12 +4,29 @@
     class="clickable"
     [routerLink]="['/', language, 'products', product.id]"
     [coverImageUrl]="mainProductPhoto!.url"
-    [isClickable]="false"
+    [isDisabled]="product.stock === 0"
     textAlign="center"
   >
     <div class="flex flex-col items-center justify-center">
-      <h5 class="aui-headline-5 product-name mb-1">{{ product.name }}</h5>
-      <small class="aui-small product-price">{{ product.price.toLocaleString() }}</small>
+      <h5 class="aui-headline-5 mb-1">{{ product.name }}</h5>
+
+      <ng-container *ngIf="product.isDiscounted; else regularPrice">
+        <div class="grid grid-rows-1 grid-cols-3">
+          <span>&nbsp;</span>
+          <small class="product-price aui-small font-bold text-red text-center"
+            >${{ (product.price - product.discountAmount).toLocaleString() }}
+          </small>
+          <small class="product-price aui-small line-through text-grey-8">
+            ${{ product.price.toLocaleString() }}
+          </small>
+        </div>
+      </ng-container>
+
+      <small class="aui-small mt-1 text-danger" *ngIf="product.stock === 0">OUT OF STOCK</small>
+
+      <ng-template #regularPrice>
+        <small class="aui-small">${{ product.price.toLocaleString() }}</small>
+      </ng-template>
     </div>
   </audi-card>
 </div>

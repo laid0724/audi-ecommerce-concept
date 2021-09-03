@@ -2,7 +2,8 @@
   class="aui-card background-color-{{ bgColor }} text-{{ textColor }}"
   [ngClass]="{
     'aui-card--action': isClickable,
-    'aui-card--image': !isNullOrEmptyString(backgroundImageUrl)
+    'aui-card--image': !isNullOrEmptyString(backgroundImageUrl),
+    disabled: isDisabled
   }"
   [ngStyle]="{
     backgroundImage: !isNullOrEmptyString(backgroundImageUrl)
