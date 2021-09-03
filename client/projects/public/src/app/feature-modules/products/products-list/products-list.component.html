@@ -5,9 +5,12 @@
   <h1 class="aui-headline-2 z-2 text-white">Audi Collections</h1>
   <h4
     class="aui-headline-4 z-2 text-white mt-2"
-    *ngIf="productParams.productCategoryId"
+    *ngIf="
+      getProductCategoryName(productParams.productCategoryId);
+      let categoryName
+    "
   >
-    Category Name
+    {{ categoryName }}
   </h4>
   <small class="aui-small z-2 text-white mt-3" *ngIf="pagination"
     >{{ pagination.totalItems }} results</small
@@ -17,7 +20,7 @@
 <div class="aui-layout mb-10">
   <div class="aui-grid">
     <div class="aui-cell aui-cell--12">
-      <div class="w-full flex items-center justify-between debug">
+      <div class="w-full flex items-center justify-between">
         <audi-button-group>
           <audi-button
             [isLightTheme]="isParamsEmpty"
@@ -49,35 +52,37 @@
             [applyToInnerElement]="true"
           >
             <audi-icon size="small" iconName="arrow-down"></audi-icon>
-            <span style="padding-bottom: 1px; margin-right: 2px">Sort</span>
+            <span style="padding-bottom: 1px; margin-right: 2px">Sort By</span>
           </audi-button>
           <div class="flyout-content">
             <audi-nav-list>
               <audi-nav-item
-                [isActive]="productParams.sort === productSort.Price"
-                (click)="onSortProduct(productSort.Price)"
+                [isActive]="productParams.sort === productSortEnum.Price"
+                (click)="onSortProduct(productSortEnum.Price)"
                 >Price, low to high</audi-nav-item
               >
               <audi-nav-item
-                [isActive]="productParams.sort === productSort.PriceDesc"
-                (click)="onSortProduct(productSort.PriceDesc)"
+                [isActive]="productParams.sort === productSortEnum.PriceDesc"
+                (click)="onSortProduct(productSortEnum.PriceDesc)"
                 >Price, high to low</audi-nav-item
               >
               <audi-nav-item
-                [isActive]="productParams.sort === productSort.CreatedAt"
-                (click)="onSortProduct(productSort.CreatedAt)"
+                [isActive]="productParams.sort === productSortEnum.CreatedAt"
+                (click)="onSortProduct(productSortEnum.CreatedAt)"
                 >Date, old to new</audi-nav-item
               >
               <audi-nav-item
-                [isActive]="productParams.sort === productSort.CreatedAtDesc"
-                (click)="onSortProduct(productSort.CreatedAtDesc)"
+                [isActive]="
+                  productParams.sort === productSortEnum.CreatedAtDesc
+                "
+                (click)="onSortProduct(productSortEnum.CreatedAtDesc)"
                 >Date, new to old</audi-nav-item
               >
             </audi-nav-list>
           </div>
         </audi-flyout>
       </div>
-      <div class="w-full my-2 grid grid-rows-none grid-cols-12 debug">
+      <div class="w-full my-2 grid grid-rows-none grid-cols-12">
         <div
           *ngFor="let product of products"
           class="col-span-12 sm:col-span-6 md:col-span-4 xl:col-span-3 m-2"
@@ -86,10 +91,9 @@
         </div>
       </div>
       <div
-        class="w-full flex items-center justify-center my-2 debug"
+        class="w-full flex items-center justify-center my-2"
         *ngIf="pagination"
       >
-        <!-- FIXME: buggy active state on click -->
         <audi-pagination
           [type]="'desktop'"
           [pagination]="pagination"
@@ -110,14 +114,80 @@
   [type]="'full-page'"
   [isClosable]="true"
 >
-  <ng-container *ngIf="productCategories.length > 1">
-    <!-- 搜尋條件 Filter
-<ul>
-  <li>parent category</li>
-  <li>sub category</li>
-  <li>price min max</li>
-</ul> -->
-    <pre>{{ productCategories | json }}</pre>
-  </ng-container>
-  CONTENT HERE
+  <form [formGroup]="filterForm" class="mt-8">
+    <div class="block mb-4">
+      <audi-control-grid [label]="'Product Name'" type="input">
+        <audi-input-container
+          *projectAsField
+          formControlName="name"
+          [label]="'Product Name'"
+          type="text"
+        >
+        </audi-input-container>
+      </audi-control-grid>
+    </div>
+    <div class="block mb-4">
+      <audi-control-grid [label]="'Product Category'" type="input">
+        <audi-select-container
+          *projectAsField
+          formControlName="productCategoryId"
+          [label]="'Product Category'"
+        >
+          <option
+            *ngFor="let category of productCategories"
+            [value]="category.id"
+          >
+            {{ category.name }}
+          </option>
+        </audi-select-container>
+      </audi-control-grid>
+    </div>
+    <div class="block mb-4">
+      <audi-control-grid
+        [label]="'Price'"
+        type="input"
+        [isInvalid]="
+          (filterForm.get('priceMin')!.touched &&
+            filterForm.get('priceMin')!.invalid) ||
+          (filterForm.get('priceMax')!.touched &&
+            filterForm.get('priceMax')!.invalid)
+        "
+      >
+        <audi-input-container
+          *projectAsField
+          formControlName="priceMin"
+          [label]="'Minimum Price'"
+          type="number"
+        >
+        </audi-input-container>
+        <audi-input-container
+          *projectAsField
+          formControlName="priceMax"
+          [label]="'Max Price'"
+          type="number"
+        >
+        </audi-input-container>
+        <audi-control-error [type]="'grid'">required</audi-control-error>
+      </audi-control-grid>
+    </div>
+    <div class="block mb-4">
+      <audi-control-grid [label]="'Discounted'" type="input">
+        <div class="mt-6" *projectAsField>
+          <audi-toggle-container
+            formControlName="isDiscounted"
+          ></audi-toggle-container>
+        </div>
+      </audi-control-grid>
+    </div>
+    <div class="mt-20 w-full flex justify-end">
+      <audi-button-group>
+        <audi-button type="secondary" (click)="filterModalIsOpen = false"
+          >Cancel</audi-button
+        >
+        <audi-button type="primary" (click)="onSubmitFilter()"
+          >Submit</audi-button
+        >
+      </audi-button-group>
+    </div>
+  </form>
 </audi-modal>

@@ -73,7 +73,12 @@ export function setQueryParams(
 }
 
 export function isNullOrEmptyString(val: string | null | undefined): boolean {
-  return val == null || (val && val.trim() === '') || val.length === 0;
+  return (
+    val === null ||
+    val === undefined ||
+    (val && val.trim() === '') ||
+    val.length === 0
+  );
 }
 
 export function hasDuplicates(array: any[]): boolean {

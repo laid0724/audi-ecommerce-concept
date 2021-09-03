@@ -10,7 +10,7 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   ActivatedRoute,
   ParamMap,
@@ -19,6 +19,7 @@ import {
 } from '@angular/router';
 import {
   BusyService,
+  NUMBER_REGEX,
   PaginatedResult,
   Pagination,
   Product,
@@ -28,8 +29,8 @@ import {
   ProductsService,
   setQueryParams,
 } from '@audi/data';
-import { Observable, Subject } from 'rxjs';
-import { startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { startWith, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'audi-products-list',
@@ -39,9 +40,6 @@ import { startWith, switchMap, takeUntil, tap } from 'rxjs/operators';
 export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('headerBg') headerBg: ElementRef<HTMLDivElement>;
 
-  _productCategories$: Observable<ProductCategoryWithoutProducts[]> =
-    this.productsService.getAllProductCategories();
-
   productCategories: ProductCategoryWithoutProducts[] = [];
   products: Product[] = [];
 
@@ -49,18 +47,29 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
   filterModalIsOpen: boolean = false;
 
   productParams: ProductParams = {
-    pageSize: 1,
+    pageSize: 12,
     pageNumber: 1,
+    includeChildrenProducts: true,
   };
   pagination: Pagination;
   isParamsEmpty: boolean = true;
 
-  productSort = ProductSort;
+  productSortEnum: typeof ProductSort = ProductSort;
 
   refresher$ = new Subject<ProductParams>();
   destroy$ = new Subject<boolean>();
 
   windowScrollListenerFn: () => void;
+
+  getProductCategoryName(
+    productCategoryId: number | undefined
+  ): string | undefined {
+    if (productCategoryId == undefined) {
+      return undefined;
+    }
+    return this.productCategories.find(({ id }) => id === +productCategoryId)
+      ?.name;
+  }
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -74,44 +83,63 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParamMap
+    this.initFilterForm();
+
+    this.productsService
+      .getAllProductCategories()
       .pipe(
-        tap((qp: ParamMap) => {
-          const productParamKeys = [
-            'pageNumber',
-            'productCategoryId',
-            'name',
-            'priceMin',
-            'priceMax',
-            'sort',
-          ];
-
-          this.isParamsEmpty = true;
-
-          productParamKeys.forEach((param: string) => {
-            if (qp.has(param)) {
-              this.productParams = {
-                ...this.productParams,
-                [param]: qp.get(param),
-              };
-
-              if (
-                this.isParamsEmpty &&
-                param !== 'sort' &&
-                param !== 'pageNumber'
-              ) {
-                this.isParamsEmpty = false;
-              }
-            }
-          });
+        take(1),
+        tap((categories: ProductCategoryWithoutProducts[]) => {
+          this.productCategories = categories.flatMap(
+            (pc: ProductCategoryWithoutProducts) => [pc, ...pc.children]
+          );
         }),
         switchMap((_) =>
-          this.refresher$.pipe(
-            startWith(this.productParams),
-            switchMap((productParams: ProductParams) => {
-              return this.productsService.getIsVisibleProducts(productParams);
+          this.route.queryParamMap.pipe(
+            tap((qp: ParamMap) => {
+              const productParamKeys = [
+                'pageNumber',
+                'productCategoryId',
+                'name',
+                'priceMin',
+                'priceMax',
+                'sort',
+                'includeChildrenProducts',
+              ];
+
+              this.isParamsEmpty = true;
+
+              productParamKeys.forEach((param: string) => {
+                if (qp.has(param)) {
+                  this.productParams = {
+                    ...this.productParams,
+                    [param]: qp.get(param),
+                  };
+
+                  if (
+                    this.isParamsEmpty &&
+                    param !== 'sort' &&
+                    param !== 'pageNumber' &&
+                    param !== 'includeChildrenProducts'
+                  ) {
+                    this.isParamsEmpty = false;
+                  }
+                }
+              });
+
+              this.filterForm.patchValue(this.productParams);
             }),
-            takeUntil(this.destroy$)
+            switchMap((_) =>
+              this.refresher$.pipe(
+                startWith(this.productParams),
+                switchMap((productParams: ProductParams) => {
+                  return this.productsService.getIsVisibleProducts(
+                    productParams
+                  );
+                }),
+                takeUntil(this.destroy$)
+              )
+            )
           )
         )
       )
@@ -152,19 +180,69 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   initFilterForm(): void {
-    this.filterForm = this.fb.group({});
+    this.filterForm = this.fb.group({
+      name: [undefined],
+      productCategoryId: [undefined],
+      isDiscounted: [undefined],
+      priceMin: [undefined, [Validators.pattern(NUMBER_REGEX)]],
+      priceMax: [undefined, [Validators.pattern(NUMBER_REGEX)]],
+    });
   }
 
   onSubmitFilter(): void {
-    // TODO: form & modal
+    if (this.filterForm.invalid) {
+      this.filterForm.markAllAsTouched();
+      return;
+    }
+
+    // reset previous params
+    this.productParams = {
+      ...this.productParams,
+      pageNumber: 1,
+      name: undefined,
+      productCategoryId: undefined,
+      isDiscounted: undefined,
+      priceMin: undefined,
+      priceMax: undefined,
+    };
+
+    const filterValues: Partial<ProductParams> = Object.keys(
+      this.filterForm.value
+    )
+      .filter((key) => !!this.filterForm.value[key])
+      .map((key) => ({ [key]: this.filterForm.value[key] }))
+      .reduce(
+        (obj: Partial<ProductParams>, param: { [key: string]: any }) => ({
+          ...obj,
+          ...param,
+        }),
+        {}
+      );
+
+    if (filterValues.productCategoryId) {
+      filterValues.productCategoryId = parseInt(
+        filterValues.productCategoryId.toString()
+      );
+    }
+
+    this.productParams = {
+      ...this.productParams,
+      ...filterValues,
+    };
+
+    this.setQueryParams(this.productParams);
+
+    this.filterModalIsOpen = false;
   }
 
   onResetFilters(): void {
     this.productParams = {
       pageSize: 12,
       pageNumber: 1,
+      includeChildrenProducts: true,
     };
 
+    this.filterForm.reset();
     this.setQueryParams();
   }
 
