@@ -1,0 +1,27 @@
+<ng-container
+  *ngIf="wysiwygGrid && wysiwygGrid?.rows && wysiwygGrid?.rows?.length! > 0"
+>
+  <div class="aui-layout">
+    <div class="aui-grid">
+      <div class="aui-cell aui-cell--12">
+        <div
+          class="grid grid-rows-none grid-cols-12"
+          *ngFor="let row of wysiwygGrid?.rows"
+        >
+          <div
+            *ngFor="let column of row?.columns"
+            class="col-span-12"
+            [ngClass]="{
+              'md:col-span--4': column?.width === 4,
+              'md:col-span--6': column?.width === 6,
+              'md:col-span--8': column?.width === 8,
+              'md:col-span--12': column?.width === 12
+            }"
+          >
+            <div [innerHtml]="column?.content! | safeHtml: 'html'"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
