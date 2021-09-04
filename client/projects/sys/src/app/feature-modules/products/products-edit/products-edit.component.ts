@@ -19,6 +19,7 @@ import {
   GREATER_THAN_ZERO_REGEX,
   isEarlierThanTodayValidator,
   isEqualOrGreaterThanValidator,
+  isLessThanValidator,
   Product,
   ProductPhoto,
   ProductsService,
@@ -211,7 +212,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
         [
           Validators.required,
           Validators.pattern(GREATER_THAN_ZERO_REGEX),
-          isEqualOrGreaterThanValidator('price'),
+          isLessThanValidator('price'),
         ],
       ],
       discountDeadline: [

@@ -46,9 +46,9 @@ export function isEqualOrGreaterThanValidator(
       // @ts-ignore
       control.parent?.controls[benchmarkingControlName]?.value;
 
-    return controlValue >= controlValueBeingCompared
-      ? { isEqualOrGreaterThanAnotherControlValue: true }
-      : null;
+    return +controlValue >= +controlValueBeingCompared
+      ? null
+      : { isEqualOrGreaterThanAnotherControlValue: true };
   };
 }
 
@@ -61,9 +61,24 @@ export function isGreaterThanValidator(
       // @ts-ignore
       control.parent?.controls[benchmarkingControlName]?.value;
 
-    return controlValue > controlValueBeingCompared
-      ? { isGreaterThanAnotherControlValue: true }
-      : null;
+    return +controlValue > +controlValueBeingCompared
+      ? null
+      : { isGreaterThanAnotherControlValue: true };
+  };
+}
+
+export function isEqualOrLessThanValidator(
+  benchmarkingControlName: string
+): ValidatorFn {
+  return (control: AbstractControl) => {
+    const controlValue = control.value;
+    const controlValueBeingCompared =
+      // @ts-ignore
+      control.parent?.controls[benchmarkingControlName]?.value;
+
+    return +controlValue <= +controlValueBeingCompared
+      ? null
+      : { isEqualOrLessThanAnotherControlValue: true };
   };
 }
 
@@ -76,9 +91,9 @@ export function isLessThanValidator(
       // @ts-ignore
       control.parent?.controls[benchmarkingControlName]?.value;
 
-    return controlValue < controlValueBeingCompared
-      ? { isLessThanAnotherControlValue: true }
-      : null;
+    return +controlValue < +controlValueBeingCompared
+      ? null
+      : { isLessThanAnotherControlValue: true };
   };
 }
 
@@ -93,7 +108,7 @@ export function clrDatagridRangeFilterValidator(
     const { value: maxValue } = maxControl;
 
     const hasRangeError =
-      minValue != null && maxValue != null && minValue > maxValue;
+      minValue != null && maxValue != null && +minValue > +maxValue;
 
     return hasRangeError ? { hasRangeError } : null;
   }
