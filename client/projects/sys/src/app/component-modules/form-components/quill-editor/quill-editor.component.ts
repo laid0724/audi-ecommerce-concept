@@ -26,6 +26,14 @@ import { addCustomQuillImageHandler } from 'projects/sys/src/helpers';
 import { ToastrService } from 'ngx-toastr';
 import { PhotoService } from '@audi/data';
 
+// FIXME:
+/*
+  styling does not get applied inside the editor when you click edit
+  unless you swap over to the html tab and back.
+
+  this only occurs when the quill editor is wrapped inside a clr-modal
+*/
+
 @Component({
   selector: 'audi-sys-quill-editor',
   templateUrl: './quill-editor.component.html',
@@ -123,6 +131,17 @@ export class QuillEditorComponent
     this.modalOpen = true;
     this.onTouchedFn();
     this.quillEditor?.onModelTouched();
+
+    // HACK
+    // solves the issue above (styling not applied when wrapped inside a clr modal)
+    setTimeout(() => {
+      this.htmlTabActive = true;
+      this.wysiwygTabActive = false;
+    }, 0);
+    setTimeout(() => {
+      this.htmlTabActive = false;
+      this.wysiwygTabActive = true;
+    }, 0);
   }
 
   onCancel(): void {
