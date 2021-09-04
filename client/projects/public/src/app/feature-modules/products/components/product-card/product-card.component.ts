@@ -1,4 +1,3 @@
-import { ElementRef } from '@angular/core';
 import {
   AfterViewInit,
   Component,
@@ -7,6 +6,7 @@ import {
   OnInit,
   Renderer2,
   ViewChild,
+  ElementRef,
 } from '@angular/core';
 import { Router } from '@angular/router';
 import {
@@ -18,8 +18,8 @@ import {
   ProductsService,
   User,
 } from '@audi/data';
-import { CardComponent } from 'projects/public/src/app/component-modules/audi-ui/card/card/card.component';
 import { take } from 'rxjs/operators';
+import { CardComponent } from 'projects/public/src/app/component-modules/audi-ui/card/card/card.component';
 
 @Component({
   selector: 'audi-product-card',

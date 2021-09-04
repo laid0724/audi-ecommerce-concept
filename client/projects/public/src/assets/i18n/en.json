@@ -101,5 +101,8 @@
   "login": {
     "login": "Login",
     "register": "Register"
+  },
+  "products": {
+    "outOfStock": "OUT OF STOCK"
   }
 }

@@ -101,5 +101,8 @@
   "login": {
     "login": "登入",
     "register": "註冊"
+  },
+  "products": {
+    "outOfStock": "缺貨"
   }
 }
