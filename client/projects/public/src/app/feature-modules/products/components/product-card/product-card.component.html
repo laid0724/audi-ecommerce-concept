@@ -1,7 +1,6 @@
-<!-- TODO: user like product -->
 <!-- TODO: transloco -->
 
-<div class="w-full mb-4">
+<div class="product-card w-full mb-4">
   <audi-card
     #card
     class="clickable"
@@ -10,6 +9,18 @@
     [isDisabled]="product.stock === 0"
     textAlign="center"
   >
+    <a
+      class="product-card__like-icon absolute top-0 right-10 z-1"
+      (click)="onLikeClicked($event, product.id)"
+    >
+      <audi-icon
+        [customIconPath]="
+          productIsLikedByUser(product.id)
+            ? 'assets/icons/audi/favorited-small.svg'
+            : 'assets/icons/audi/favorite-small.svg'
+        "
+      ></audi-icon>
+    </a>
     <div class="flex flex-col items-center justify-center">
       <h5 class="aui-headline-5 mb-1">{{ product.name }}</h5>
 

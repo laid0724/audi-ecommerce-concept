@@ -235,7 +235,9 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 
   routeToPreviousPage(): void {
     if (this.urlToRedirectAfterLogin != undefined) {
-      this.router.navigate([this.urlToRedirectAfterLogin]);
+      // this way you dont need to break the url apart when there are query params
+      // see: https://stackoverflow.com/questions/52980345/router-navigate-with-query-params-angular-5
+      this.router.navigateByUrl(this.urlToRedirectAfterLogin);
     } else {
       this.router.navigate([
         '/',

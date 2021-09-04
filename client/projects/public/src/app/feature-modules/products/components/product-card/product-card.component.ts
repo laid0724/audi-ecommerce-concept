@@ -8,13 +8,18 @@ import {
   Renderer2,
   ViewChild,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import {
+  AccountService,
   LanguageCode,
   LanguageStateService,
   Product,
   ProductPhoto,
+  ProductsService,
+  User,
 } from '@audi/data';
 import { CardComponent } from 'projects/public/src/app/component-modules/audi-ui/card/card/card.component';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'audi-product-card',
@@ -26,6 +31,15 @@ export class ProductCardComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('card', { read: ElementRef }) cardElRef: ElementRef;
 
   @Input() product: Product;
+
+  user: User | null = null;
+
+  preloadedImageUrls: string[] = [];
+
+  mouseOverTriggered: boolean = false;
+
+  // see: https://stackoverflow.com/questions/51040703/what-return-type-should-be-used-for-settimeout-in-typescript
+  imageTransitionTimeouts: ReturnType<typeof setTimeout>[] = [];
 
   get language(): LanguageCode {
     return this.languageService.getCurrentLanguage();
@@ -43,22 +57,22 @@ export class ProductCardComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.product.photos.sort((a, b) => +b.isMain - +a.isMain);
   }
 
-  preloadedImageUrls: string[] = [];
-
-  mouseOverTriggered: boolean = false;
-
-  // see: https://stackoverflow.com/questions/51040703/what-return-type-should-be-used-for-settimeout-in-typescript
-  imageTransitionTimeouts: ReturnType<typeof setTimeout>[] = [];
-
   cardMouseOverFn: () => void;
   cardMouseOutFn: () => void;
 
   constructor(
-    private languageService: LanguageStateService,
-    private renderer: Renderer2
+    private router: Router,
+    private renderer: Renderer2,
+    private accountService: AccountService,
+    private productService: ProductsService,
+    private languageService: LanguageStateService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.accountService.currentUser$.subscribe((user: User | null) => {
+      this.user = user;
+    });
+  }
 
   ngAfterViewInit(): void {
     const coverImageWrapper = this.cardElRef.nativeElement.querySelector(
@@ -100,9 +114,9 @@ export class ProductCardComponent implements OnInit, AfterViewInit, OnDestroy {
                       'background-image',
                       'url(' + this.mainProductPhoto?.url + ')'
                     );
-                  }, 1000);
+                  }, 1500);
                 }
-              }, i * 1000)
+              }, i * 1500)
             );
           });
         }
@@ -137,6 +151,59 @@ export class ProductCardComponent implements OnInit, AfterViewInit, OnDestroy {
   clearImageTransitionTimeouts(): void {
     this.imageTransitionTimeouts.forEach((timeout) => {
       clearTimeout(timeout);
+    });
+  }
+
+  productIsLikedByUser(productId: number): boolean {
+    if (this.user) {
+      return this.user.likedProductIds.some((id) => id === productId);
+    }
+
+    return false;
+  }
+
+  onLikeClicked(e: Event, productId: number): void {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (this.user !== null) {
+      this.productIsLikedByUser(productId)
+        ? this.unlikeProduct(productId)
+        : this.likeProduct(productId);
+    }
+
+    if (this.user === null) {
+      this.directToLogin();
+    }
+  }
+
+  likeProduct(productId: number): void {
+    this.productService
+      .likeProduct(productId)
+      .pipe(take(1))
+      .subscribe((likedProducts: Product[]) => {
+        this.accountService.setCurrentUser({
+          ...(this.user as User),
+          likedProductIds: likedProducts.map((p: Product) => p.id) as number[],
+        });
+      });
+  }
+
+  unlikeProduct(productId: number): void {
+    this.productService
+      .unlikeProduct(productId)
+      .pipe(take(1))
+      .subscribe((likedProducts: Product[]) => {
+        this.accountService.setCurrentUser({
+          ...(this.user as User),
+          likedProductIds: likedProducts.map((p: Product) => p.id) as number[],
+        });
+      });
+  }
+
+  directToLogin(): void {
+    this.router.navigate(['/', this.language, 'login'], {
+      queryParams: { redirectTo: this.router.routerState.snapshot.url },
     });
   }
 

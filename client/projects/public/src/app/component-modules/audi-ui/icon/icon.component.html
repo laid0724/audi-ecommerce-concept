@@ -1,14 +1,29 @@
-<svg
-  class="audi-icon"
-  [ngClass]="{
-    'audi-icon--small': size === 'small',
-    'audi-icon--large': size === 'large'
-  }"
->
-  <!-- see: https://coderoad.ru/35082657/Angular2-SVG-xlink-href -->
-  <use
-    attr.xlink:href="assets/icons/audi/sprite.svg#aui-icon-{{ iconName }}-{{
-      size
-    }}"
-  ></use>
-</svg>
+<ng-template #audiIcon>
+  <svg
+    class="audi-icon"
+    [ngClass]="{
+      'audi-icon--small': size === 'small',
+      'audi-icon--large': size === 'large'
+    }"
+  >
+    <!-- see: https://coderoad.ru/35082657/Angular2-SVG-xlink-href -->
+    <use
+      attr.xlink:href="assets/icons/audi/sprite.svg#aui-icon-{{ iconName }}-{{
+        size
+      }}"
+    ></use>
+  </svg>
+</ng-template>
+
+<ng-container *ngIf="!!customIconPath; else audiIcon">
+  <img
+    [src]="customIconPath"
+    class="audi-icon"
+    [ngClass]="{
+      'audi-icon--small': size === 'small',
+      'audi-icon--large': size === 'large'
+    }"
+  />
+</ng-container>
+
+<!-- FFCC00 -->

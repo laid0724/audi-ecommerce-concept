@@ -33,6 +33,9 @@ import {
 import { Subject, Subscription } from 'rxjs';
 import { startWith, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 
+// TODO: transloco
+// TODO: validators for filter min max price
+// TODO: error message for filter min max price
 @Component({
   selector: 'audi-products-list',
   templateUrl: './products-list.component.html',
@@ -247,16 +250,18 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
     // HACK
     /*
       Angular's router navigate event will trigger onDestroy on all the components that
-      are on the template event if you navigate to the same page. So, when I set the query
-      parameter while the modal is open, the modal's onDestroy event will remove the modal
-      from modal service, and then the component loses reference to the DOM element.
-      the modal then breaks and then you cannot close it.
+      are on this component's template if you navigate to the same page via router.navigate([]).
+      So, when I set the query parameter while the modal is open,
+      the modal's onDestroy event will remove the modal from modal service,
+      causing the component to lose id reference to the DOM element.
+
+      The modal then breaks and then you cannot close it.
 
       this seems to be the only article that i can find on the issue,
       which has to do with messing with the routing strategies.
       see: https://stackoverflow.com/questions/41280471/how-to-implement-routereusestrategy-shoulddetach-for-specific-routes-in-angular/41515648#41515648
 
-      too complex, dont have time for now.
+      Too complex, dont have time for now.
 
       right now, use set timeout to hard push the router navigate event to the back of the
       event loop, allowing the modal to close first.
