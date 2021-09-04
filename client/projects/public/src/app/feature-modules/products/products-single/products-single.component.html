@@ -1,1 +1,55 @@
-<p>products-single works!</p>
+<ng-container *ngIf="product; else loading">
+  <ng-container *transloco="let translationOutput">
+    <!-- TODO: transloco output -->
+    <div
+      fullpage
+      id="fullpage"
+      [options]="fullpageConfig"
+      (ref)="getFullpageRef($event)"
+      class="-mt-14"
+    >
+      <section class="section">
+        <div class="aui-layout">
+          <div class="aui-grid">
+            <div class="aui-cell aui-cell--12">
+              product info here
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section fp-auto-height" *ngIf="product.wysiwyg">
+        <audi-wysiwyg-grid-display
+          [wysiwygGrid]="product.wysiwyg"
+        ></audi-wysiwyg-grid-display>
+      </section>
+      <section class="section">
+        <!-- TODO: ng if similar products exists -->
+        <div class="aui-layout">
+          <div class="aui-grid">
+            <div class="aui-cell aui-cell--12">
+              similar products here
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section fp-auto-height pt-0">
+        <audi-footer></audi-footer>
+      </section>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-template #loading>
+  <div
+    class="
+      full-screen-height
+      mt-14
+      flex
+      items-center
+      justify-center
+      background-color-grey-2
+    "
+  >
+    <audi-spinner class="block" [isContinuous]="true"></audi-spinner>
+  </div>
+</ng-template>

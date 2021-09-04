@@ -7,7 +7,7 @@
       (ref)="getFullpageRef($event)"
       class="-mt-14"
     >
-      <div class="section" *ngIf="data.homepageData.carouselItems.length > 0">
+      <section class="section" *ngIf="data.homepageData.carouselItems.length > 0">
         <div class="aui-layout background-color-white">
           <div class="aui-grid">
             <div class="aui-cell aui-cell--12 hero-slider-wrapper">
@@ -30,9 +30,9 @@
         <div *ngIf="isDesktop" class="scroll-indicator">
           <audi-icon size="large" iconName="arrow-down"></audi-icon>
         </div>
-      </div>
+      </section>
 
-      <div class="section branding-section-bg">
+      <section class="section branding-section-bg">
         <div class="aui-layout">
           <div class="aui-grid">
             <div
@@ -71,9 +71,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="section" *ngIf="data.latestDocuments.length > 0">
+      <section class="section" *ngIf="data.latestDocuments.length > 0">
         <div class="full-screen-height flex items-center justify-center">
           <div class="w-full">
             <h3 class="aui-headline-3 text-black text-center mt-0 mb-8">
@@ -138,9 +138,9 @@
             </audi-multi-slides-per-view-slider>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div
+      <section
         class="section"
         *ngIf="data.homepageData.featuredProducts.length > 0"
       >
@@ -160,9 +160,9 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="section" *ngIf="data.newestProducts.length > 0">
+      <section class="section" *ngIf="data.newestProducts.length > 0">
         <div class="aui-layout background-color-white">
           <div class="aui-grid">
             <div
@@ -228,11 +228,11 @@
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      <div class="section fp-auto-height pt-0">
+      <section class="section fp-auto-height pt-0">
         <audi-footer></audi-footer>
-      </div>
+      </section>
     </div>
   </ng-container>
 </ng-container>

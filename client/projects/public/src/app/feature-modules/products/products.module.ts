@@ -13,6 +13,8 @@ import { FlyoutModule } from '../../component-modules/audi-ui/flyout/flyout.modu
 import { ModalModule } from '../../component-modules/audi-ui/modal/modal.module';
 import { FormComponentsModule } from '../../component-modules/form-components/form-components.module';
 import { CardModule } from '../../component-modules/audi-ui/card/card.module';
+import { WysiwygGridDisplayModule } from '../../component-modules/wysiwyg-grid-display/wysiwyg-grid-display.module';
+import { SpinnerModule } from '../../component-modules/audi-ui/spinner/spinner.module';
 
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsSingleComponent } from './products-single/products-single.component';
@@ -28,6 +30,7 @@ const AUDI_MODULES = [
   ModalModule,
   FormComponentsModule,
   CardModule,
+  SpinnerModule
 ];
 
 const COMPONENTS = [
@@ -44,6 +47,7 @@ const COMPONENTS = [
     FooterModule,
     TranslocoModule,
     AngularFullpageModule,
+    WysiwygGridDisplayModule,
     ...AUDI_MODULES,
   ],
   exports: [...COMPONENTS],
