@@ -42,7 +42,9 @@
     "required": "必填",
     "email": "請輸入正確的電子信箱格式",
     "passwordMinLength": "密碼需至少8位數",
-    "confirmPassword": "密碼不符"
+    "confirmPassword": "密碼不符",
+    "number": "需大於零",
+    "priceMaxNotGreaterThanPriceMin": "最大價格需高於最低價格"
   },
   "formLabels": {
     "email": "電子信箱",

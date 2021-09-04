@@ -20,6 +20,7 @@ import {
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import {
   BusyService,
+  isEqualOrGreaterThanValidator,
   NUMBER_REGEX,
   PaginatedResult,
   Pagination,
@@ -33,9 +34,6 @@ import {
 import { Subject, Subscription } from 'rxjs';
 import { startWith, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 
-// TODO: transloco
-// TODO: validators for filter min max price
-// TODO: error message for filter min max price
 @Component({
   selector: 'audi-products-list',
   templateUrl: './products-list.component.html',
@@ -92,6 +90,15 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.initFilterForm();
+
+    this.filterForm
+      .get('priceMin')
+      ?.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe((value) => {
+        this.filterForm
+          ?.get('priceMax')
+          ?.updateValueAndValidity({ onlySelf: true });
+      });
 
     this._breakpointObserverSubscription = this.breakpointObserver
       .observe(['(min-width: 640px)'])
@@ -200,7 +207,13 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
       productCategoryId: [undefined],
       isDiscounted: [undefined],
       priceMin: [undefined, [Validators.pattern(NUMBER_REGEX)]],
-      priceMax: [undefined, [Validators.pattern(NUMBER_REGEX)]],
+      priceMax: [
+        undefined,
+        [
+          Validators.pattern(NUMBER_REGEX),
+          isEqualOrGreaterThanValidator('priceMin'),
+        ],
+      ],
     });
   }
 
@@ -281,11 +294,14 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
     };
 
     this.filterForm.reset();
-    this.setQueryParams();
 
     if (!this.isDesktop) {
       this.filterModalIsOpen = false;
     }
+
+    setTimeout(() => {
+      this.setQueryParams();
+    }, 0);
   }
 
   onPageChange(page: number): void {

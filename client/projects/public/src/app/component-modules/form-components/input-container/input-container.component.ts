@@ -1,4 +1,11 @@
-import { Component, forwardRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  forwardRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {
   ControlContainer,
   ControlValueAccessor,
@@ -12,6 +19,8 @@ import {
   initAudiModules,
   isNullOrEmptyString,
 } from '@audi/data';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 /*
   USAGE
@@ -44,7 +53,9 @@ import {
     },
   ],
 })
-export class InputContainerComponent implements OnInit, ControlValueAccessor {
+export class InputContainerComponent
+  implements OnInit, OnDestroy, ControlValueAccessor
+{
   @ViewChild(FormControlDirective, { static: true })
   formControlDirective: FormControlDirective;
 
@@ -70,6 +81,8 @@ export class InputContainerComponent implements OnInit, ControlValueAccessor {
 
   isDisabled: boolean = false;
 
+  destroy$ = new Subject<boolean>();
+
   public isNullOrEmptyString: (val: string | null | undefined) => boolean =
     isNullOrEmptyString;
 
@@ -81,6 +94,16 @@ export class InputContainerComponent implements OnInit, ControlValueAccessor {
     audiTextfieldModules.forEach((textfieldModule: AudiComponents) => {
       this.textfieldComponents = textfieldModule.components.upgradeElements();
     });
+
+    this.controlContainer.statusChanges
+      ?.pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.textfieldComponents.forEach((textfield) => {
+          setTimeout(() => {
+            textfield.update();
+          }, 0);
+        });
+      });
   }
 
   writeValue(value: any): void {
@@ -104,5 +127,10 @@ export class InputContainerComponent implements OnInit, ControlValueAccessor {
   setDisabledState(isDisabled: boolean): void {
     this.formControlDirective.valueAccessor!.setDisabledState!(isDisabled);
     this.isDisabled = isDisabled;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

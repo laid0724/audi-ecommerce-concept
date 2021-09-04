@@ -42,7 +42,9 @@
     "required": "Required",
     "email": "Please enter a valid email address",
     "passwordMinLength": "Password must be at least 8 characters",
-    "confirmPassword": "Passwords do not match."
+    "confirmPassword": "Passwords do not match.",
+    "number": "Must be greater than 0",
+    "priceMaxNotGreaterThanPriceMin": "Maximum price must be greater than minimum price"
   },
   "formLabels": {
     "email": "Email",

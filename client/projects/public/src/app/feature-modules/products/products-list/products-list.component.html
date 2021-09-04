@@ -1,137 +1,140 @@
-<!-- TODO: transloco -->
+<ng-container *transloco="let translationOutput">
+  <div class="header">
+    <div class="header-bg" #headerBg></div>
+    <h1 class="aui-headline-2 z-2 text-white">Audi Collections</h1>
+    <h4
+      class="aui-headline-4 z-2 text-white mt-2"
+      *ngIf="
+        getProductCategoryName(productParams.productCategoryId);
+        let categoryName
+      "
+    >
+      {{ categoryName }}
+    </h4>
+    <small class="aui-small z-2 text-white mt-3" *ngIf="pagination"
+      >{{ pagination.totalItems }} results</small
+    >
+  </div>
 
-<div class="header">
-  <div class="header-bg" #headerBg></div>
-  <h1 class="aui-headline-2 z-2 text-white">Audi Collections</h1>
-  <h4
-    class="aui-headline-4 z-2 text-white mt-2"
-    *ngIf="
-      getProductCategoryName(productParams.productCategoryId);
-      let categoryName
-    "
-  >
-    {{ categoryName }}
-  </h4>
-  <small class="aui-small z-2 text-white mt-3" *ngIf="pagination"
-    >{{ pagination.totalItems }} results</small
-  >
-</div>
-
-<div class="aui-layout">
-  <div class="aui-grid">
-    <div class="aui-cell aui-cell--12">
-      <div class="w-full flex items-center justify-between">
-        <audi-button-group>
-          <audi-button
-            [isLightTheme]="isParamsEmpty"
-            type="primary"
-            class="flex"
-            (click)="filterModalIsOpen = true"
-          >
-            <audi-icon size="small" iconName="filter"></audi-icon>
-            <span class="ml-2">Filter</span>
-          </audi-button>
-          <audi-button
-            *ngIf="!isParamsEmpty && isDesktop"
-            [isLightTheme]="true"
-            type="primary"
-            class="flex"
-            (click)="onResetFilters()"
-          >
-            <audi-icon size="small" iconName="replay"></audi-icon>
-            <span class="ml-2">Clear Filters</span>
-          </audi-button>
-        </audi-button-group>
-        <audi-flyout position="center">
-          <audi-button
-            [isLightTheme]="true"
-            type="primary"
-            class="flex flex-row-reverse items-center"
-            #triggeringElement
-            flyoutTriggerSetter
-            [applyToInnerElement]="true"
-          >
-            <audi-icon size="small" iconName="arrow-down"></audi-icon>
-            <span style="padding-bottom: 1px; margin-right: 2px">Sort By</span>
-          </audi-button>
-          <div class="flyout-content">
-            <audi-nav-list>
-              <audi-nav-item
-                [isActive]="productParams.sort === productSortEnum.Price"
-                (click)="onSortProduct(productSortEnum.Price)"
-                >Price, low to high</audi-nav-item
+  <div class="aui-layout">
+    <div class="aui-grid">
+      <div class="aui-cell aui-cell--12">
+        <div class="w-full flex items-center justify-between">
+          <audi-button-group>
+            <audi-button
+              [isLightTheme]="isParamsEmpty"
+              type="primary"
+              class="flex"
+              (click)="filterModalIsOpen = true"
+            >
+              <audi-icon size="small" iconName="filter"></audi-icon>
+              <span class="ml-2">Filter</span>
+            </audi-button>
+            <audi-button
+              *ngIf="!isParamsEmpty && isDesktop"
+              [isLightTheme]="true"
+              type="primary"
+              class="flex"
+              (click)="onResetFilters()"
+            >
+              <audi-icon size="small" iconName="replay"></audi-icon>
+              <span class="ml-2">Clear Filters</span>
+            </audi-button>
+          </audi-button-group>
+          <audi-flyout position="center">
+            <audi-button
+              [isLightTheme]="true"
+              type="primary"
+              class="flex flex-row-reverse items-center"
+              #triggeringElement
+              flyoutTriggerSetter
+              [applyToInnerElement]="true"
+            >
+              <audi-icon size="small" iconName="arrow-down"></audi-icon>
+              <span style="padding-bottom: 1px; margin-right: 2px"
+                >Sort By</span
               >
-              <audi-nav-item
-                [isActive]="productParams.sort === productSortEnum.PriceDesc"
-                (click)="onSortProduct(productSortEnum.PriceDesc)"
-                >Price, high to low</audi-nav-item
-              >
-              <audi-nav-item
-                [isActive]="productParams.sort === productSortEnum.CreatedAt"
-                (click)="onSortProduct(productSortEnum.CreatedAt)"
-                >Date, old to new</audi-nav-item
-              >
-              <audi-nav-item
-                [isActive]="
-                  productParams.sort === productSortEnum.CreatedAtDesc
-                "
-                (click)="onSortProduct(productSortEnum.CreatedAtDesc)"
-                >Date, new to old</audi-nav-item
-              >
-            </audi-nav-list>
-          </div>
-        </audi-flyout>
-      </div>
-      <div class="w-full my-6 grid grid-rows-none grid-cols-12">
-        <ng-container *ngIf="products.length > 0; else noProducts">
-          <div
-            *ngFor="let product of products"
-            class="
-              col-span-12
-              sm:col-span-6
-              md:col-span-4
-              2xl:col-span-3
-              mx-2
-              my-4
-            "
-          >
-            <audi-product-card [product]="product"></audi-product-card>
-          </div>
-        </ng-container>
-        <ng-template #noProducts>
-          <h1
-            class="
-              col-span-12
-              aui-headline-3
-              w-full
-              flex
-              items-center
-              justify-center
-              no-products
-            "
-          >
-            No Products Available
-          </h1>
-        </ng-template>
-      </div>
-      <div
-        class="w-full flex items-center justify-center mb-12"
-        *ngIf="
-          pagination && pagination.totalItems > 0 && pagination.totalPages > 1
-        "
-      >
-        <audi-pagination
-          [type]="'desktop'"
-          [pagination]="pagination"
-          (pageChange)="onPageChange($event)"
+            </audi-button>
+            <div class="flyout-content">
+              <audi-nav-list>
+                <audi-nav-item
+                  [isActive]="productParams.sort === productSortEnum.Price"
+                  (click)="onSortProduct(productSortEnum.Price)"
+                  >Price, low to high</audi-nav-item
+                >
+                <audi-nav-item
+                  [isActive]="productParams.sort === productSortEnum.PriceDesc"
+                  (click)="onSortProduct(productSortEnum.PriceDesc)"
+                  >Price, high to low</audi-nav-item
+                >
+                <audi-nav-item
+                  [isActive]="productParams.sort === productSortEnum.CreatedAt"
+                  (click)="onSortProduct(productSortEnum.CreatedAt)"
+                  >Date, old to new</audi-nav-item
+                >
+                <audi-nav-item
+                  [isActive]="
+                    productParams.sort === productSortEnum.CreatedAtDesc
+                  "
+                  (click)="onSortProduct(productSortEnum.CreatedAtDesc)"
+                  >Date, new to old</audi-nav-item
+                >
+              </audi-nav-list>
+            </div>
+          </audi-flyout>
+        </div>
+        <div class="w-full my-6 grid grid-rows-none grid-cols-12">
+          <ng-container *ngIf="products.length > 0; else noProducts">
+            <div
+              *ngFor="let product of products"
+              class="
+                col-span-12
+                sm:col-span-6
+                md:col-span-4
+                2xl:col-span-3
+                mx-2
+                my-4
+              "
+            >
+              <audi-product-card [product]="product"></audi-product-card>
+            </div>
+          </ng-container>
+          <ng-template #noProducts>
+            <h1
+              class="
+                col-span-12
+                aui-headline-3
+                w-full
+                flex
+                items-center
+                justify-center
+                no-products
+              "
+            >
+              No Products Available
+            </h1>
+          </ng-template>
+        </div>
+        <div
+          class="w-full flex items-center justify-center mb-12"
+          *ngIf="
+            pagination && pagination.totalItems > 0 && pagination.totalPages > 1
+          "
         >
-        </audi-pagination>
+          <audi-pagination
+            [type]="'desktop'"
+            [pagination]="pagination"
+            (pageChange)="onPageChange($event)"
+          >
+          </audi-pagination>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>
 
 <audi-modal
+  *transloco="let translationOutput"
   [(isOpen)]="filterModalIsOpen"
   [header]="'Filters'"
   [headerSize]="3"
@@ -185,6 +188,10 @@
           [label]="'Minimum Price'"
           type="number"
         >
+          <audi-control-error
+            *ngIf="filterForm.get('priceMin')?.hasError('pattern')"
+            >{{ translationOutput('formErrors.number') }}</audi-control-error
+          >
         </audi-input-container>
         <audi-input-container
           *projectAsField
@@ -192,9 +199,20 @@
           [label]="'Max Price'"
           type="number"
         >
+          <audi-control-error
+            *ngIf="filterForm.get('priceMax')?.hasError('pattern')"
+            >{{ translationOutput('formErrors.number') }}</audi-control-error
+          >
         </audi-input-container>
-        <audi-control-error [type]="'grid'">
-          <!-- TODO: validators and error message -->
+        <audi-control-error
+          type="grid"
+          *ngIf="
+            filterForm
+              .get('priceMax')
+              ?.hasError('isEqualOrGreaterThanAnotherControlValue')
+          "
+        >
+          {{ translationOutput('formErrors.priceMaxNotGreaterThanPriceMin') }}
         </audi-control-error>
       </audi-control-grid>
     </div>
