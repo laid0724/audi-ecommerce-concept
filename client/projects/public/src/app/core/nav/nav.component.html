@@ -93,6 +93,7 @@
     [ngClass]="{
       active: menuIsOpen
     }"
+    *transloco="let translationOutput"
   >
     <div
       class="audi-side-nav__overlay"
@@ -119,7 +120,7 @@
           [routerLink]="['/', language, 'products']"
           (click)="toggleMenuState(false)"
         >
-          Products
+          {{ translationOutput('products.audiCollections') }}
         </h3>
         <h3
           class="aui-headline-3 clickable my-4"

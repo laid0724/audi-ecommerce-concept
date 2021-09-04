@@ -15,7 +15,10 @@
     "productsCTA": "立即鑑賞",
     "login": "登入",
     "register": "註冊",
-    "forgotPassword": "忘記密碼"
+    "forgotPassword": "忘記密碼",
+    "filter": "篩選",
+    "clearFilters": "清除篩選",
+    "sortBy": "排序"
   },
   "pricing": {
     "originalPriceLabel": "原價 ",
@@ -44,7 +47,7 @@
     "passwordMinLength": "密碼需至少8位數",
     "confirmPassword": "密碼不符",
     "number": "需大於零",
-    "priceMaxNotGreaterThanPriceMin": "最大價格需高於最低價格"
+    "priceMaxNotGreaterThanPriceMin": "最高價格需高於最低價格"
   },
   "formLabels": {
     "email": "電子信箱",
@@ -57,7 +60,13 @@
     "firstName": "名字",
     "lastName": "姓氏",
     "gender": "性別",
-    "phoneNumber": "電話"
+    "phoneNumber": "電話",
+    "productName": "產品名稱",
+    "productCategory": "產品類別",
+    "price": "價格",
+    "priceMin": "最低價格",
+    "priceMax": "最高價格",
+    "discounted": "優惠中"
   },
   "formDescriptions": {
     "email": "請輸入您的電子信箱",
@@ -87,7 +96,8 @@
   },
   "modals": {
     "changePassword": "更改密碼",
-    "forgotPassword": "忘記密碼"
+    "forgotPassword": "忘記密碼",
+    "filters": "篩選條件"
   },
   "homepage": {
     "featuredProduct": "精選商品",
@@ -105,6 +115,13 @@
     "register": "註冊"
   },
   "products": {
+    "audiCollections": "Audi 精品與配件",
+    "results": "件商品",
+    "priceLowToHigh": "價格, 低至高",
+    "priceHighToLow": "價格, 高至低",
+    "dateOldToNew": "日期, 舊至新",
+    "dateNewToOld": "日期, 新至舊",
+    "noProductsAvailable": "無商品符合您的篩選條件",
     "outOfStock": "缺貨"
   }
 }

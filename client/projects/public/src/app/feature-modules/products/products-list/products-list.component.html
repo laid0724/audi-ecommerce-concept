@@ -1,7 +1,9 @@
 <ng-container *transloco="let translationOutput">
   <div class="header">
     <div class="header-bg" #headerBg></div>
-    <h1 class="aui-headline-2 z-2 text-white">Audi Collections</h1>
+    <h1 class="aui-headline-2 z-2 text-white">
+      {{ translationOutput('products.audiCollections') }}
+    </h1>
     <h4
       class="aui-headline-4 z-2 text-white mt-2"
       *ngIf="
@@ -12,7 +14,8 @@
       {{ categoryName }}
     </h4>
     <small class="aui-small z-2 text-white mt-3" *ngIf="pagination"
-      >{{ pagination.totalItems }} results</small
+      >{{ pagination.totalItems }}
+      {{ translationOutput('products.results') }}</small
     >
   </div>
 
@@ -28,7 +31,9 @@
               (click)="filterModalIsOpen = true"
             >
               <audi-icon size="small" iconName="filter"></audi-icon>
-              <span class="ml-2">Filter</span>
+              <span class="ml-2">{{
+                translationOutput('buttons.filter')
+              }}</span>
             </audi-button>
             <audi-button
               *ngIf="!isParamsEmpty && isDesktop"
@@ -38,7 +43,9 @@
               (click)="onResetFilters()"
             >
               <audi-icon size="small" iconName="replay"></audi-icon>
-              <span class="ml-2">Clear Filters</span>
+              <span class="ml-2">{{
+                translationOutput('buttons.clearFilters')
+              }}</span>
             </audi-button>
           </audi-button-group>
           <audi-flyout position="center">
@@ -51,33 +58,41 @@
               [applyToInnerElement]="true"
             >
               <audi-icon size="small" iconName="arrow-down"></audi-icon>
-              <span style="padding-bottom: 1px; margin-right: 2px"
-                >Sort By</span
-              >
+              <span style="padding-bottom: 1px; margin-right: 2px">{{
+                translationOutput('buttons.sortBy')
+              }}</span>
             </audi-button>
             <div class="flyout-content">
               <audi-nav-list>
                 <audi-nav-item
                   [isActive]="productParams.sort === productSortEnum.Price"
                   (click)="onSortProduct(productSortEnum.Price)"
-                  >Price, low to high</audi-nav-item
+                  >{{
+                    translationOutput('products.priceLowToHigh')
+                  }}</audi-nav-item
                 >
                 <audi-nav-item
                   [isActive]="productParams.sort === productSortEnum.PriceDesc"
                   (click)="onSortProduct(productSortEnum.PriceDesc)"
-                  >Price, high to low</audi-nav-item
+                  >{{
+                    translationOutput('products.priceHighToLow')
+                  }}</audi-nav-item
                 >
                 <audi-nav-item
                   [isActive]="productParams.sort === productSortEnum.CreatedAt"
                   (click)="onSortProduct(productSortEnum.CreatedAt)"
-                  >Date, old to new</audi-nav-item
+                  >{{
+                    translationOutput('products.dateOldToNew')
+                  }}</audi-nav-item
                 >
                 <audi-nav-item
                   [isActive]="
                     productParams.sort === productSortEnum.CreatedAtDesc
                   "
                   (click)="onSortProduct(productSortEnum.CreatedAtDesc)"
-                  >Date, new to old</audi-nav-item
+                  >{{
+                    translationOutput('products.dateNewToOld')
+                  }}</audi-nav-item
                 >
               </audi-nav-list>
             </div>
@@ -111,7 +126,7 @@
                 no-products
               "
             >
-              No Products Available
+              {{ translationOutput('products.noProductsAvailable') }}
             </h1>
           </ng-template>
         </div>
@@ -136,7 +151,7 @@
 <audi-modal
   *transloco="let translationOutput"
   [(isOpen)]="filterModalIsOpen"
-  [header]="'Filters'"
+  [header]="translationOutput('modals.filters')"
   [headerSize]="3"
   [bgColor]="'white'"
   [textColor]="'black'"
@@ -145,22 +160,28 @@
 >
   <form [formGroup]="filterForm" class="mt-8">
     <div class="block mb-4">
-      <audi-control-grid [label]="'Product Name'" type="input">
+      <audi-control-grid
+        [label]="translationOutput('formLabels.productName')"
+        type="input"
+      >
         <audi-input-container
           *projectAsField
           formControlName="name"
-          [label]="'Product Name'"
+          [label]="translationOutput('formLabels.productName')"
           type="text"
         >
         </audi-input-container>
       </audi-control-grid>
     </div>
     <div class="block mb-4">
-      <audi-control-grid [label]="'Product Category'" type="input">
+      <audi-control-grid
+        [label]="translationOutput('formLabels.productCategory')"
+        type="input"
+      >
         <audi-select-container
           *projectAsField
           formControlName="productCategoryId"
-          [label]="'Product Category'"
+          [label]="translationOutput('formLabels.productCategory')"
         >
           <option
             *ngFor="let category of productCategories"
@@ -173,7 +194,7 @@
     </div>
     <div class="block mb-4">
       <audi-control-grid
-        [label]="'Price'"
+        [label]="translationOutput('formLabels.price')"
         type="input"
         [isInvalid]="
           (filterForm.get('priceMin')!.touched &&
@@ -185,7 +206,7 @@
         <audi-input-container
           *projectAsField
           formControlName="priceMin"
-          [label]="'Minimum Price'"
+          [label]="translationOutput('formLabels.priceMin')"
           type="number"
         >
           <audi-control-error
@@ -196,7 +217,7 @@
         <audi-input-container
           *projectAsField
           formControlName="priceMax"
-          [label]="'Max Price'"
+          [label]="translationOutput('formLabels.priceMax')"
           type="number"
         >
           <audi-control-error
@@ -217,7 +238,10 @@
       </audi-control-grid>
     </div>
     <div class="block mb-4">
-      <audi-control-grid [label]="'Discounted'" type="input">
+      <audi-control-grid
+        [label]="translationOutput('formLabels.discounted')"
+        type="input"
+      >
         <div class="mt-6" *projectAsField>
           <audi-toggle-container
             formControlName="isDiscounted"
@@ -233,17 +257,17 @@
           type="secondary"
           (click)="onResetFilters()"
         >
-          Clear Filters
+          {{ translationOutput('buttons.clearFilters') }}
         </audi-button>
         <audi-button
           *ngIf="isDesktop || (!isDesktop && isParamsEmpty)"
           type="secondary"
           (click)="filterModalIsOpen = false"
-          >Cancel</audi-button
+          >{{ translationOutput('buttons.cancel') }}</audi-button
         >
-        <audi-button type="primary" (click)="onSubmitFilter()"
-          >Submit</audi-button
-        >
+        <audi-button type="primary" (click)="onSubmitFilter()">{{
+          translationOutput('buttons.submit')
+        }}</audi-button>
       </audi-button-group>
     </div>
   </form>
