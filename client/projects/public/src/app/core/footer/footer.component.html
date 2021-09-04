@@ -1,4 +1,7 @@
-<footer class="footer block w-screen background-color-grey-11 py-4">
+<footer
+  class="footer block w-screen background-color-grey-11 py-4"
+  *transloco="let translationOutput"
+>
   <div class="aui-layout w-100">
     <div class="aui-grid w-100">
       <div
@@ -30,53 +33,41 @@
           [formGroup]="emailSubscriptionForm"
           class="flex flex-col justify-center items-center"
         >
-          <ng-container *transloco="let translationOutput; read: 'formLabels'">
-            <div class="-mt-4">
-              <audi-input-container
-                class="w-56"
-                formControlName="email"
-                [smallLabel]="translationOutput('email')"
-                [iconName]="'direct-mail'"
-                [isLightTheme]="true"
-                [floatingLabel]="true"
-              >
-                <audi-control-error>
-                  <ng-container
-                    *ngIf="
-                      emailSubscriptionForm.get('email')?.hasError('email')
-                    "
-                  >
-                    <ng-container
-                      *transloco="let translationOutput; read: 'formErrors'"
-                    >
-                      {{ translationOutput('email') }}
-                    </ng-container>
-                  </ng-container>
-                </audi-control-error>
-              </audi-input-container>
-            </div>
-
-            <div class="w-56">
-              <audi-button
-                [isLightTheme]="true"
-                [type]="'secondary'"
-                (click)="onSubmitEmailSubscription()"
-                class="block mt-3 w-full"
-              >
+          <div class="-mt-4">
+            <audi-input-container
+              class="w-56"
+              formControlName="email"
+              [smallLabel]="translationOutput('formLabels.email')"
+              [iconName]="'direct-mail'"
+              [isLightTheme]="true"
+              [floatingLabel]="true"
+            >
+              <audi-control-error>
                 <ng-container
-                  *transloco="let translationOutput; read: 'footer'"
+                  *ngIf="emailSubscriptionForm.get('email')?.hasError('email')"
                 >
-                  {{ translationOutput('emailSubscriptionBtn') }}
+                  {{ translationOutput('formErrors.email') }}
                 </ng-container>
-              </audi-button>
-            </div>
+              </audi-control-error>
+            </audi-input-container>
+          </div>
 
-            <small class="aui-small text-grey-2 text-center leading-6 mt-2 max-w-xs">
-              <ng-container *transloco="let translationOutput; read: 'footer'">
-                {{ translationOutput('emailSubscriptionMessage') }}
-              </ng-container>
-            </small>
-          </ng-container>
+          <div class="w-56">
+            <audi-button
+              [isLightTheme]="true"
+              [type]="'secondary'"
+              (click)="onSubmitEmailSubscription()"
+              class="block mt-3 w-full"
+            >
+              {{ translationOutput('footer.emailSubscriptionBtn') }}
+            </audi-button>
+          </div>
+
+          <small
+            class="aui-small text-grey-2 text-center leading-6 mt-2 max-w-xs"
+          >
+            {{ translationOutput('footer.emailSubscriptionMessage') }}
+          </small>
         </form>
       </div>
     </div>
@@ -186,46 +177,34 @@
                   href="https://www.audi.com.tw/tw/web/zh/legal_website.html"
                   target="_blank"
                   class="aui-textlink"
-                  ><ng-container
-                    *transloco="let translationOutput; read: 'footer'"
-                  >
-                    {{ translationOutput('termsAndConditions') }}
-                  </ng-container></a
                 >
+                  {{ translationOutput('footer.termsAndConditions') }}
+                </a>
               </p>
               <p class="aui-color-text-light mx-2 md:mx-0 md:mr-4">
                 <a
                   href="https://www.audi.com.tw/tw/web/zh/privacy-policy.html"
                   target="_blank"
                   class="aui-textlink"
-                  ><ng-container
-                    *transloco="let translationOutput; read: 'footer'"
-                  >
-                    {{ translationOutput('privacyPolicy') }}
-                  </ng-container></a
                 >
+                  {{ translationOutput('footer.privacyPolicy') }}
+                </a>
               </p>
               <p class="aui-color-text-light mx-2 md:mx-0 md:mr-4">
                 <a
                   href="https://www.audi-service.com.tw/contact"
                   target="_blank"
                   class="aui-textlink"
-                  ><ng-container
-                    *transloco="let translationOutput; read: 'footer'"
-                  >
-                    {{ translationOutput('contactUs') }}
-                  </ng-container></a
                 >
+                  {{ translationOutput('footer.contactUs') }}
+                </a>
               </p>
               <p class="aui-color-text-light mx-2 md:mx-0">
                 <a
                   [routerLink]="['/', language$ | async, 'faq']"
                   class="aui-textlink"
-                  ><ng-container
-                    *transloco="let translationOutput; read: 'footer'"
-                  >
-                    {{ translationOutput('faq') }}
-                  </ng-container></a
+                >
+                  {{ translationOutput('footer.faq') }}</a
                 >
               </p>
             </div>

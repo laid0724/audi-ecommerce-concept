@@ -20,10 +20,6 @@
     "clearFilters": "Clear Filters",
     "sortBy": "Sort By"
   },
-  "pricing": {
-    "originalPriceLabel": "",
-    "discountedPriceLabel": ""
-  },
   "menu": {},
   "footer": {
     "privacyPolicy": "Privacy and Cookie Policy",

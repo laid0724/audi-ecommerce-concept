@@ -17,8 +17,8 @@
         </i>
         <!-- Previous Text -->
         <span class="aui-pager__prev-text ml-4" *ngIf="type === 'prev-next'">
-          <ng-container *transloco="let translationOutput; read: 'pagination'">
-            {{ translationOutput('previous') }}
+          <ng-container *transloco="let translationOutput">
+            {{ translationOutput('pagination.previous') }}
           </ng-container>
         </span>
       </a>
@@ -45,8 +45,8 @@
       >
         <!-- Next Text -->
         <span class="aui-pager__next-text mr-4" *ngIf="type === 'prev-next'">
-          <ng-container *transloco="let translationOutput; read: 'pagination'">
-            {{ translationOutput('next') }}
+          <ng-container *transloco="let translationOutput">
+            {{ translationOutput('pagination.next') }}
           </ng-container>
         </span>
         <i class="aui-pager__next-icon">

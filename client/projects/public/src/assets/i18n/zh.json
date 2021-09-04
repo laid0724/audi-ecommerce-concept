@@ -20,10 +20,6 @@
     "clearFilters": "清除篩選",
     "sortBy": "排序"
   },
-  "pricing": {
-    "originalPriceLabel": "原價 ",
-    "discountedPriceLabel": "優惠價 "
-  },
   "menu": {},
   "footer": {
     "privacyPolicy": "隱私權政策",
