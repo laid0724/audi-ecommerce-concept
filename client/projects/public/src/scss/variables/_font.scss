@@ -1,3 +1,7 @@
+// Importing noto sans tc via google fonts
+// see: https://www.cloudhadoop.com/angular-google-font-library/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
+
 /* Audi Type Font */
 
 @font-face {
@@ -44,45 +48,7 @@
   font-stretch: expanded;
 }
 
-/* Noto Sans Chinese Font */
-
-@font-face {
-  font-family: 'Noto Sans CJK TC';
-  src: url('~/assets/fonts/noto-sans-zh/NotoSansCJKtc-Regular.otf');
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'Noto Sans CJK TC';
-  src: url('~/assets/fonts/noto-sans-zh/NotoSansCJKtc-Light.otf');
-  font-weight: 100;
-}
-@font-face {
-  font-family: 'Noto Sans CJK TC';
-  src: url('~/assets/fonts/noto-sans-zh/NotoSansCJKtc-DemiLight.otf');
-  font-weight: 200;
-}
-@font-face {
-  font-family: 'Noto Sans CJK TC';
-  src: url('~/assets/fonts/noto-sans-zh/NotoSansCJKtc-Thin.otf');
-  font-weight: 300;
-}
-@font-face {
-  font-family: 'Noto Sans CJK TC';
-  src: url('~/assets/fonts/noto-sans-zh/NotoSansCJKtc-Medium.otf');
-  font-weight: 500;
-}
-@font-face {
-  font-family: 'Noto Sans CJK TC';
-  src: url('~/assets/fonts/noto-sans-zh/NotoSansCJKtc-Bold.otf');
-  font-weight: 700;
-}
-@font-face {
-  font-family: 'Noto Sans CJK TC';
-  src: url('~/assets/fonts/noto-sans-zh/NotoSansCJKtc-Black.otf');
-  font-weight: 900;
-}
-
-$font-family-sans-serif: 'AudiTypeScreen', 'Noto Sans CJK TC', -apple-system,
+$font-family-sans-serif: 'AudiTypeScreen', 'Noto Sans TC', -apple-system,
   BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif,
   'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' !default;
 
