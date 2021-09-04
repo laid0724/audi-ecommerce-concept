@@ -87,7 +87,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   splashScreenIsOff$ = this.splashscreenService._splashScreenIsOff$;
 
-  language$ = this.languageService.language$;
+  language = this.languageService.getCurrentLanguage();
 
   fullpageConfig: any;
   fullpageRef: any;

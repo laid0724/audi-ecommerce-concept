@@ -61,7 +61,7 @@
                     <audi-button
                       type="primary"
                       class="block w-full mt-5"
-                      [routerLink]="['/', language$ | async, 'products']"
+                      [routerLink]="['/', language, 'products']"
                     >
                       {{ translationOutput('buttons.exploreCTA') }}
                     </audi-button>
@@ -125,7 +125,7 @@
                       class="block w-full"
                       [routerLink]="[
                         '/',
-                        language$ | async,
+                        language,
                         document.type,
                         document.id
                       ]"
@@ -213,9 +213,8 @@
                           class="block w-full"
                           [routerLink]="[
                             '/',
-                            language$ | async,
+                            language,
                             'products',
-                            product.productCategoryId,
                             product.id
                           ]"
                         >

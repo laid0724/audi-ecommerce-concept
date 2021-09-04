@@ -14,7 +14,7 @@ export class FooterComponent implements OnInit {
 
   currentYear: number = new Date().getFullYear();
 
-  language$ = this.languageService.language$;
+  language = this.languageService.getCurrentLanguage();
 
   constructor(
     private fb: FormBuilder,

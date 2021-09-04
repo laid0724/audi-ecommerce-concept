@@ -156,7 +156,11 @@
                   >
                 </div>
               </ng-container>
-              <audi-button type="primary" class="block w-full mt-5 md:mt-10">
+              <audi-button
+                type="primary"
+                class="block w-full mt-5 md:mt-10"
+                [routerLink]="['/', language, 'products', product.id]"
+              >
                 {{ translationOutput('buttons.learnMore') }}
               </audi-button>
             </div>

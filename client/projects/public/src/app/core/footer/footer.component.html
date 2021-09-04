@@ -16,7 +16,7 @@
       >
         <audi-button type="icon">
           <a
-            [routerLink]="['/', language$ | async, 'home']"
+            [routerLink]="['/', language, 'home']"
             class="w-16 flex items-center justify-center"
           >
             <img src="assets/audi-logo-white.svg" class="w-full" />
@@ -201,7 +201,7 @@
               </p>
               <p class="aui-color-text-light mx-2 md:mx-0">
                 <a
-                  [routerLink]="['/', language$ | async, 'faq']"
+                  [routerLink]="['/', language, 'faq']"
                   class="aui-textlink"
                 >
                   {{ translationOutput('footer.faq') }}</a
