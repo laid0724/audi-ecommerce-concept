@@ -18,7 +18,6 @@ import {
   getAllErrors,
   GREATER_THAN_ZERO_REGEX,
   isEarlierThanTodayValidator,
-  isEqualOrGreaterThanValidator,
   isLessThanValidator,
   Product,
   ProductPhoto,

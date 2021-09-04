@@ -35,7 +35,7 @@ namespace Audi.Services
 
         public async Task<ImageUploadResult> AddPhotoAsync(IFormFile file, string croppingMode = "cover")
         {
-            var validCroppingModes = new List<string>() { "cover", "fill_pad" };
+            var validCroppingModes = new List<string>() { "none", "cover", "fill_pad" };
 
             var uploadResult = new ImageUploadResult();
 

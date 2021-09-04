@@ -43,3 +43,9 @@ export enum CarouselColor {
   Black = 'black',
   White = 'white',
 }
+
+export enum CloudinaryPhotoCroppingMode {
+  None = 'none',
+  Cover = 'cover',
+  Fill = 'fill_pad',
+}
