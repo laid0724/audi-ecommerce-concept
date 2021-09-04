@@ -3,6 +3,7 @@ import { QuillModule } from 'ngx-quill';
 export const QUILL_STANDARD_MODULES: QuillModule = {
   toolbar: [
     ['bold', 'italic', 'underline'], // toggled buttons
+    [{ align: ['justify', 'center', 'right'] }],
     [{ list: 'ordered' }, { list: 'bullet' }],
     [{ header: [1, 2, 3, false] }],
     ['clean'], // remove formatting button
@@ -13,6 +14,7 @@ export const QUILL_STANDARD_MODULES: QuillModule = {
 export const QUILL_STANDARD_MODULES_WITH_IMAGE: QuillModule = {
   toolbar: [
     ['bold', 'italic', 'underline'], // toggled buttons
+    [{ align: ['justify', 'center', 'right'] }],
     [{ list: 'ordered' }, { list: 'bullet' }],
     [{ header: [1, 2, 3, false] }],
     ['clean'], // remove formatting button
