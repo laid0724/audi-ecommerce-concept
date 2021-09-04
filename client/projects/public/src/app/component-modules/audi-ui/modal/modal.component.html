@@ -43,7 +43,8 @@
     class="aui-modal-dialog__close"
     [ngClass]="{
       'aui-modal-dialog__close--black': textColor === 'black',
-      'aui-modal-dialog__close--white': textColor === 'white'
+      'aui-modal-dialog__close--white': textColor === 'white',
+      'hidden': !isOpen
     }"
     data-dismiss="modal"
     (click)="this.toggleAndEmitIsOpen()"
