@@ -74,6 +74,7 @@ $audi-header-height: 56px;
       bottom: 0;
       left: 0;
       z-index: 101;
+      overflow-x: hidden;
     }
 
     &-close-btn {
@@ -81,8 +82,8 @@ $audi-header-height: 56px;
       display: none;
 
       &.inactive-animation {
-        animation: disappear-close-btn 0.8s var(--audi-transition-timing-function)
-          forwards;
+        animation: disappear-close-btn 0.8s
+          var(--audi-transition-timing-function) forwards;
         display: inline-flex;
       }
 
