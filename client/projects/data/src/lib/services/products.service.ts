@@ -51,7 +51,6 @@ export interface ProductVariantUpsertRequest {
   id?: number;
   name: string;
   productId: number;
-  variantValueLabel: string;
 }
 export interface ProductVariantValueUpsertRequest {
   id?: number;

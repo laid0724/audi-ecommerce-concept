@@ -11,6 +11,5 @@ namespace Audi.Entities
         public bool IsDeleted { get; set; } = false;
         public ICollection<ProductSkuValue> ProductSkuValues { get; set; }
         public ICollection<ProductVariantValue> ProductVariantValues { get; set; }
-        public string VariantValueLabel { get; set; }
     }
 }

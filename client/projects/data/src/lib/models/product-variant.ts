@@ -5,5 +5,4 @@ export interface ProductVariant {
   productId: number;
   name: string;
   variantValues: ProductVariantValue[];
-  variantValueLabel: string;
 }
