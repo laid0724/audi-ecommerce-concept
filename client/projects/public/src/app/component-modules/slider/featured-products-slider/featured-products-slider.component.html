@@ -43,8 +43,7 @@
         >
           <!-- MOBILE -->
           <img
-            class="slide-image object-cover w-full"
-            style="border: 1px solid var(--audi-grey-1)"
+            class="slide-image object-cover w-full border-0 md:border"
             [src]="getMainPhoto(product)?.url"
           />
           <div
@@ -57,11 +56,10 @@
               items-center
               z-auto
               absolute
-              bottom-0
+              -bottom-8
             "
           >
             <audi-indicator
-              [isImageBackground]="true"
               [totalItems]="validProducts.length"
               [(currentItem)]="activeSlide"
               (currentItemChange)="slideTo($event)"
@@ -93,7 +91,7 @@
             </div>
           </div>
         </div>
-        <div class="md:col-span-3 lg:col-span-2 background-color-grey-1">
+        <div class="md:col-span-3 lg:col-span-2 responsive-bg-color">
           <div
             class="
               slide-content
@@ -106,7 +104,7 @@
               md:p-8
             "
           >
-            <div class="mt-8 md:mt-0 md:mb-auto">
+            <div class="mt-10 md:mt-0 md:mb-auto">
               <ng-container *ngIf="!isNullOrEmptyString(product.name)">
                 <h4
                   class="
@@ -136,7 +134,7 @@
             </div>
 
             <div class="md:mt-auto">
-              <ng-container *ngIf="product.isDiscounted">
+              <!-- <ng-container *ngIf="product.isDiscounted">
                 <div
                   class="
                     my-3
@@ -155,7 +153,7 @@
                     >(${{ product.price.toLocaleString() }})</small
                   >
                 </div>
-              </ng-container>
+              </ng-container> -->
               <audi-button
                 type="primary"
                 class="block w-full mt-5 md:mt-10"

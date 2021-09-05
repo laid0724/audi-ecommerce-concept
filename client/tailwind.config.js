@@ -26,6 +26,18 @@ module.exports = {
         '101': 101, // right above header
         '102': 102, // right above header
         '103': 103 // right above header
+      },
+      height: {
+        '50vh': '50vh',
+      },
+      maxHeight: {
+        '50vh': '50vh',
+      },
+      width: {
+        '50vw': '50vw',
+      },
+      maxWidth: {
+        '50vw': '50vw',
       }
     },
   },

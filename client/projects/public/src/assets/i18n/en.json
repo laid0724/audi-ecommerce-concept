@@ -118,6 +118,7 @@
     "dateOldToNew": "Date, old to new",
     "dateNewToOld": "Date, new to old",
     "noProductsAvailable": "No Products Available",
-    "outOfStock": "OUT OF STOCK"
+    "outOfStock": "OUT OF STOCK",
+    "similarProducts": "Similar Products"
   }
 }

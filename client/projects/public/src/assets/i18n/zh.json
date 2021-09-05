@@ -118,6 +118,7 @@
     "dateOldToNew": "日期, 舊至新",
     "dateNewToOld": "日期, 新至舊",
     "noProductsAvailable": "無商品符合您的篩選條件",
-    "outOfStock": "缺貨"
+    "outOfStock": "缺貨",
+    "similarProducts": "相似商品"
   }
 }

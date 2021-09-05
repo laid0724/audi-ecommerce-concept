@@ -1,4 +1,4 @@
-<ng-container *ngIf="product; else loading">
+<ng-container *ngIf="!isLoading; else loadingTemplate">
   <ng-container *transloco="let translationOutput">
     <!-- TODO: transloco output -->
     <div
@@ -6,32 +6,112 @@
       id="fullpage"
       [options]="fullpageConfig"
       (ref)="getFullpageRef($event)"
-      class="-mt-14"
+      class="-mt-12"
     >
       <section class="section">
         <div class="aui-layout">
           <div class="aui-grid">
-            <div class="aui-cell aui-cell--12">
-              product info here
+            <div
+              class="
+                aui-cell aui-cell--12
+                grid grid-rows-none grid-cols-12
+                hero-slide
+              "
+            >
+              <div class="col-span-12 flex justify-center items-center">
+                <h1 class="aui-headline-3">{{ product.name }}</h1>
+              </div>
+              <div class="col-span-12 md:col-span-6 hero-slide__gallery">
+                <div class="w-full">
+                  <audi-product-slider
+                    [imgUrls]="imgUrls"
+                  ></audi-product-slider>
+                </div>
+              </div>
+              <div class="col-span-12 md:col-span-6 hero-slide__product-info">
+                product info here
+              </div>
             </div>
           </div>
         </div>
       </section>
-      <section class="section fp-auto-height" *ngIf="product.wysiwyg">
-        <audi-wysiwyg-grid-display
-          [wysiwygGrid]="product.wysiwyg"
-        ></audi-wysiwyg-grid-display>
-      </section>
-      <section class="section">
-        <!-- TODO: ng if similar products exists -->
-        <div class="aui-layout">
-          <div class="aui-grid">
-            <div class="aui-cell aui-cell--12">
-              similar products here
+
+      <ng-container *ngIf="hasWysiwygContent">
+        <section class="section fp-auto-height">
+          <audi-wysiwyg-grid-display
+            [wysiwygGrid]="product.wysiwyg"
+          ></audi-wysiwyg-grid-display>
+        </section>
+      </ng-container>
+
+      <ng-container *ngIf="similarProducts.length > 0">
+        <section class="section">
+          <div
+            class="
+              aui-cell aui-cell--12
+              full-screen-height
+              flex
+              items-center
+              justify-center
+            "
+          >
+            <div class="w-full relative">
+              <h3
+                class="
+                  aui-headline-3
+                  text-black text-center
+                  absolute
+                  -top-16
+                  left-0
+                  right-0
+                "
+              >
+                {{ translationOutput('products.similarProducts') }}
+              </h3>
+              <audi-multi-slides-per-view-slider
+                [slidesPerView]="3"
+                [spaceBetween]="10"
+                [autoplay]="false"
+                [isLightTheme]="false"
+              >
+                <ng-container *ngFor="let product of similarProducts">
+                  <div *projectAsTemplate class="max-w-xs">
+                    <audi-card
+                      [headerSize]="4"
+                      [header]="product.name"
+                      [coverImageUrl]="getProductMainPhoto(product.photos)!.url"
+                      textAlign="center"
+                    >
+                      <div class="flex flex-col items-center justify-center">
+                        <small
+                          class="
+                            text-grey-8
+                            text-truncate-ellipses
+                            text-truncate-ellipses--3-lines
+                            mt-2
+                            mb-4
+                          "
+                        >
+                          {{ product.description }}
+                        </small>
+                      </div>
+
+                      <audi-button
+                        type="primary"
+                        class="block w-full"
+                        [routerLink]="['/', language, 'products', product.id]"
+                      >
+                        {{ translationOutput('buttons.productsCTA') }}
+                      </audi-button>
+                    </audi-card>
+                  </div>
+                </ng-container>
+              </audi-multi-slides-per-view-slider>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </ng-container>
+
       <section class="section fp-auto-height pt-0">
         <audi-footer></audi-footer>
       </section>
@@ -39,7 +119,7 @@
   </ng-container>
 </ng-container>
 
-<ng-template #loading>
+<ng-template #loadingTemplate>
   <div
     class="
       full-screen-height

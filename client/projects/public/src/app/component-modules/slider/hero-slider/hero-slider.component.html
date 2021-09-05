@@ -84,7 +84,7 @@
           <ng-container *ngIf="!isNullOrEmptyString(item.title)">
             <h2
               class="
-                aui-headline-2
+                aui-headline-3
                 mb-3
                 text-center
                 md:text-left
@@ -101,13 +101,13 @@
           <ng-container *ngIf="!isNullOrEmptyString(item.subTitle)">
             <h3
               class="
-                aui-headline-3
+                aui-headline-4
                 my-3
                 text-center
                 md:text-left
                 text-truncate-ellipses text-truncate-ellipses--2-lines
               "
-              [ngClass]="{ 
+              [ngClass]="{
                 'text-white': item.color === 'white',
                 'text-black': item.color === 'black'
               }"
