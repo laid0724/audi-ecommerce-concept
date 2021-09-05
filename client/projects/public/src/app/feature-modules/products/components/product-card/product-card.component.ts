@@ -71,6 +71,7 @@ export class ProductCardComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.accountService.currentUser$.subscribe((user: User | null) => {
       this.user = user;
+      console.log(user);
     });
   }
 
@@ -167,13 +168,13 @@ export class ProductCardComponent implements OnInit, AfterViewInit, OnDestroy {
     e.preventDefault();
     e.stopPropagation();
 
-    if (this.user !== null) {
+    if (this.user != null) {
       this.productIsLikedByUser(productId)
         ? this.unlikeProduct(productId)
         : this.likeProduct(productId);
     }
 
-    if (this.user === null) {
+    if (this.user == null) {
       this.directToLogin();
     }
   }
