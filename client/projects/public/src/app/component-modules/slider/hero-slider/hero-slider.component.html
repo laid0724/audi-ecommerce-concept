@@ -88,7 +88,7 @@
                 mb-3
                 text-center
                 md:text-left
-                text-truncate-ellipses
+                line-clamp-1
               "
               [ngClass]="{
                 'text-white': item.color === 'white',
@@ -105,7 +105,7 @@
                 my-3
                 text-center
                 md:text-left
-                text-truncate-ellipses text-truncate-ellipses--2-lines
+                line-clamp-2
               "
               [ngClass]="{
                 'text-white': item.color === 'white',
@@ -121,7 +121,8 @@
                 my-3
                 text-center
                 md:text-left
-                text-truncate-ellipses text-truncate-ellipses--3-lines
+                line-clamp-3
+                md:line-clamp-5
               "
               [ngClass]="{
                 'text-white': item.color === 'white',

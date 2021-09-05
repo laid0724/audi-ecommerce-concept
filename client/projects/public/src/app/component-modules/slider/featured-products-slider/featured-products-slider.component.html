@@ -112,7 +112,8 @@
                     mb-3
                     text-center
                     md:text-left
-                    text-truncate-ellipses text-black
+                    text-black
+                    line-clamp-1
                   "
                 >
                   {{ product.name }}
@@ -124,8 +125,9 @@
                     my-3
                     text-center
                     md:text-left
-                    text-truncate-ellipses text-truncate-ellipses--5-lines
                     text-grey-8
+                    line-clamp-3
+                    md:line-clamp-6
                   "
                 >
                   {{ product.description }}
