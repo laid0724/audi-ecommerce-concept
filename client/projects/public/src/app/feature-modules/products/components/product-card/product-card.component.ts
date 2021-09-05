@@ -106,18 +106,19 @@ export class ProductCardComponent implements OnInit, AfterViewInit, OnDestroy {
                   'background-image',
                   'url(' + url + ')'
                 );
-
-                if (i === this.preloadedImageUrls.length - 1) {
-                  setTimeout(() => {
-                    this.renderer.setStyle(
-                      coverImageWrapper,
-                      'background-image',
-                      'url(' + this.mainProductPhoto?.url + ')'
-                    );
-                  }, 1500);
-                }
               }, i * 1500)
             );
+            if (i === this.preloadedImageUrls.length - 1) {
+              this.imageTransitionTimeouts.push(
+                setTimeout(() => {
+                  this.renderer.setStyle(
+                    coverImageWrapper,
+                    'background-image',
+                    'url(' + this.mainProductPhoto?.url + ')'
+                  );
+                }, this.preloadedImageUrls.length * 1500)
+              );
+            }
           });
         }
       }
