@@ -36,12 +36,14 @@ namespace Audi.Interfaces
         // product variant value
         Task<ProductVariantValue> GetProductVariantValueByIdAsync(int variantValueId);
         Task<ICollection<ProductVariantValue>> GetProductVariantValuesByVariantIdAsync(int variantId);
+        Task<ICollection<ProductVariantValue>> GetProductVariantValuesByProductIdAsync(int productId);
         void AddProductVariantValue(ProductVariantValue productVariantValue);
         void UpdateProductVariantValue(ProductVariantValue productVariantValue);
-        void DeleteProductVariantValue(ProductVariantValue productVariantValue);
+        Task DeleteProductVariantValueAsync(ProductVariantValue productVariantValue);
 
         // product sku
         Task<ProductSku> GetProductSkuByIdAsync(int skuId);
+        Task<ICollection<ProductSkuDto>> GetProductSkuDtosByProductIdAsync(int productId);
         Task<ICollection<ProductSku>> GetProductSkusByProductIdAsync(int productId);
         void AddProductSku(ProductSku productSku);
         void UpdateProductSku(ProductSku productSku);
@@ -50,9 +52,10 @@ namespace Audi.Interfaces
         // product sku value
         Task<ProductSkuValue> GetProductSkuValueByVariantValueIdAsync(int variantValueId);
         Task<ICollection<ProductSkuValue>> GetProductSkuValuesByProductIdAsync(int productId);
+        Task<ICollection<ProductSkuValue>> GetProductSkuValuesByVariantIdAsync(int variantId);
         void AddProductSkuValue(ProductSkuValue productSkuValue);
         void UpdateProductSkuValue(ProductSkuValue productSkuValue);
-        void DeleteProductSkuValue(ProductSkuValue productSkuValue);
+        Task DeleteProductSkuValueAsync(ProductSkuValue productSkuValue);
 
         // app user products (products liked by user feature)
         Task<ICollection<int>> GetProductIdsLikedByUserAsync(int userId);

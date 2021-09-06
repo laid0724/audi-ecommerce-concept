@@ -9,10 +9,12 @@ using Audi.Extensions;
 using Audi.Helpers;
 using Audi.Interfaces;
 using AutoMapper;
+using Gapotchenko.FX.Math.Combinatorics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Audi.Controllers
@@ -224,21 +226,6 @@ namespace Audi.Controllers
 
             _unitOfWork.ProductRepository.UpdateProduct(product);
 
-            if (product.ProductSkus.Count > 0)
-            {
-                foreach (var productSku in product.ProductSkus)
-                {
-                    if (productSku != null)
-                    {
-                        string[] skuValues = productSku.Sku.Split('/');
-                        skuValues[0] = request.Name.ToKebabCase();
-                        var newSku = string.Join("/", skuValues);
-                        productSku.Sku = newSku;
-                        _unitOfWork.ProductRepository.UpdateProductSku(productSku);
-                    }
-                }
-            }
-
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete()) return Ok(_mapper.Map<ProductDto>(product));
 
             return BadRequest("Failed to update product");
@@ -312,23 +299,6 @@ namespace Audi.Controllers
 
             _unitOfWork.ProductRepository.UpdateProductVariant(productVariant);
 
-            if (productVariant.ProductSkuValues.Count > 0)
-            {
-                foreach (var skuValue in productVariant.ProductSkuValues)
-                {
-                    var productSku = await _unitOfWork.ProductRepository.GetProductSkuByIdAsync(skuValue.SkuId);
-
-                    if (productSku != null)
-                    {
-                        string[] skuValues = productSku.Sku.Split('/');
-                        skuValues[1] = request.Name.ToKebabCase();
-                        var newSku = string.Join("/", skuValues);
-                        productSku.Sku = newSku;
-                        _unitOfWork.ProductRepository.UpdateProductSku(productSku);
-                    }
-                }
-            }
-
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
             {
                 return Ok(_mapper.Map<ProductVariantDto>(productVariant));
@@ -382,38 +352,13 @@ namespace Audi.Controllers
 
             if (productVariant == null) return NotFound("product variant not found");
 
-            var productVariantValue = _mapper.Map<ProductVariantValue>(request);
+            var newProductVariantValue = _mapper.Map<ProductVariantValue>(request);
 
-            _unitOfWork.ProductRepository.AddProductVariantValue(productVariantValue);
+            _unitOfWork.ProductRepository.AddProductVariantValue(newProductVariantValue);
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
             {
-                var productSku = new ProductSku
-                {
-                    Sku = $"{productVariant.Product.Name.ToKebabCase()}/{productVariant.Name.ToKebabCase()}/{productVariantValue.Name.ToKebabCase()}",
-                    ProductId = productVariantValue.ProductId
-                };
-
-                _unitOfWork.ProductRepository.AddProductSku(productSku);
-
-                if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
-                {
-                    var productSKUValue = new ProductSkuValue
-                    {
-                        ProductId = productSku.ProductId,
-                        VariantId = productVariantValue.VariantId,
-                        VariantValueId = productVariantValue.VariantValueId,
-                        SkuId = productSku.SkuId,
-                        Stock = request.Stock.HasValue ? request.Stock.Value : 0
-                    };
-
-                    _unitOfWork.ProductRepository.AddProductSkuValue(productSKUValue);
-
-                    if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
-                    {
-                        return Ok(_mapper.Map<ProductVariantValueDto>(productVariantValue));
-                    }
-                }
+                return Ok(_mapper.Map<ProductVariantValueDto>(newProductVariantValue));
             }
 
             return BadRequest("Failed to add product variant value");
@@ -430,26 +375,8 @@ namespace Audi.Controllers
 
             if (productVariantValue == null) return NotFound("product variant value not found");
 
-            var productSkuValue = productVariantValue.ProductSkuValues.First();
-
-            // this is NOT supposed to happen, if it happens then something went wrong in creation.
-            if (productSkuValue == null) return StatusCode(500, "product_sku_value missing!");
-
-            var productSku = await _unitOfWork.ProductRepository.GetProductSkuByIdAsync(productSkuValue.SkuId);
-
-            // this is NOT supposed to happen, if it happens then something went wrong in creation.
-            if (productSku == null) return StatusCode(500, "product_sku missing!");
-
-            string[] skuValues = productSku.Sku.Split('/');
-            skuValues[2] = request.Name.ToKebabCase();
-            var newSku = string.Join("/", skuValues);
-
             productVariantValue.Name = request.Name;
-            productSkuValue.Stock = request.Stock.HasValue ? request.Stock.Value : productSkuValue.Stock;
-            productSku.Sku = newSku;
 
-            _unitOfWork.ProductRepository.UpdateProductSku(productSku);
-            _unitOfWork.ProductRepository.UpdateProductSkuValue(productSkuValue);
             _unitOfWork.ProductRepository.UpdateProductVariantValue(productVariantValue);
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
@@ -469,11 +396,148 @@ namespace Audi.Controllers
 
             if (productVariantValue == null) return NotFound();
 
-            _unitOfWork.ProductRepository.DeleteProductVariantValue(productVariantValue);
+            await _unitOfWork.ProductRepository.DeleteProductVariantValueAsync(productVariantValue);
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete()) return NoContent();
 
             return BadRequest("Failed to delete product variant value");
+        }
+
+        [SwaggerOperation(Summary = "Generate a product's sku")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPost("skus/{productId}")]
+        public async Task<ActionResult<ICollection<ProductSkuDto>>> GenerateProductSkus(int productId)
+        {
+            async Task purgeProductSkusAsync()
+            {
+                var existingSkus = await _unitOfWork.ProductRepository.GetProductSkusByProductIdAsync(productId);
+
+                foreach (var sku in existingSkus)
+                {
+                    foreach (var skuValue in sku.ProductSkuValues)
+                    {
+                        await _unitOfWork.ProductRepository.DeleteProductSkuValueAsync(skuValue);
+                    }
+                    await _unitOfWork.ProductRepository.DeleteProductSkuAsync(sku);
+                }
+
+                await _unitOfWork.Complete();
+            };
+
+            await purgeProductSkusAsync();
+
+            // every variantValue created should create a new sku (at least 1)
+            // each existing variant should add another dimension to the skus
+            // variants.length * variantValues.length = total amount of skus
+            // for implementation, see CartesianProduct algorithm:
+            // https://stackoverflow.com/questions/3093622/generating-all-possible-combinations
+
+            var existingVariants = await _unitOfWork.ProductRepository.GetProductVariantsByProductIdAsync(productId);
+
+            if (existingVariants.Count() < 1)
+            {
+                return Ok(new List<ProductSkuDto>());
+            }
+
+            if (existingVariants.Count() == 1)
+            {
+                foreach (var variant in existingVariants)
+                {
+                    foreach (var variantValue in variant.ProductVariantValues)
+                    {
+                        var productSku = new ProductSku
+                        {
+                            Sku = variantValue.Name,
+                            ProductId = productId,
+                            Stock = 0,
+                        };
+                        _unitOfWork.ProductRepository.AddProductSku(productSku);
+
+                        if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
+                        {
+                            var productSkuValue = new ProductSkuValue
+                            {
+                                ProductId = productId,
+                                VariantId = variant.VariantId,
+                                VariantValueId = variantValue.VariantValueId,
+                                SkuId = productSku.SkuId,
+                            };
+
+                            _unitOfWork.ProductRepository.AddProductSkuValue(productSkuValue);
+                        }
+                    }
+                }
+
+                if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
+                {
+                    var productSkuDtos = await _unitOfWork.ProductRepository.GetProductSkuDtosByProductIdAsync(productId);
+                    return Ok(productSkuDtos);
+                }
+            }
+
+            var possibleProductSkuCombinations = existingVariants.Select(v => v.ProductVariantValues.Select(pvv => new
+            {
+                ProductId = pvv.ProductId,
+                VariantId = pvv.VariantId,
+                VariantValueId = pvv.VariantValueId,
+                VariantValueName = pvv.Name
+            })).ToArray();
+
+            foreach (var combinations in CartesianProduct.Of(possibleProductSkuCombinations))
+            {
+                var skuName = string.Join("/", combinations.Select(c => c.VariantValueName));
+
+                var productSku = new ProductSku
+                {
+                    Sku = skuName,
+                    ProductId = productId,
+                    Stock = 0,
+                };
+
+                _unitOfWork.ProductRepository.AddProductSku(productSku);
+
+                if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
+                {
+                    foreach (var combination in combinations)
+                    {
+                        var productSkuValue = new ProductSkuValue
+                        {
+                            ProductId = productId,
+                            VariantId = combination.VariantId,
+                            VariantValueId = combination.VariantValueId,
+                            SkuId = productSku.SkuId,
+                        };
+
+                        _unitOfWork.ProductRepository.AddProductSkuValue(productSkuValue);
+                    }
+                }
+            }
+
+            if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
+            {
+                var productSkuDtos = await _unitOfWork.ProductRepository.GetProductSkuDtosByProductIdAsync(productId);
+                return Ok(productSkuDtos);
+            }
+
+            return BadRequest("failed to generate product skus");
+        }
+
+        [SwaggerOperation(Summary = "Update a product sku's stock")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPut("skus/stock")]
+        public async Task<ActionResult<ProductSkuDto>> UpdateProductSkuStock(int skuId, [FromBody] ProductSkuStockPutDto request)
+        {
+            var productSku = await _unitOfWork.ProductRepository.GetProductSkuByIdAsync(request.SkuId);
+
+            if (productSku == null) return NotFound();
+
+            productSku.Stock = request.Stock;
+
+            _unitOfWork.ProductRepository.UpdateProductSku(productSku);
+
+            if (_unitOfWork.HasChanges() && await _unitOfWork.Complete()) return Ok(_mapper.Map<ProductSkuDto>(productSku));
+
+            return BadRequest("Failed to update product sku stock");
         }
 
         [SwaggerOperation(Summary = "Upload photo")]

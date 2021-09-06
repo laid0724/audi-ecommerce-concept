@@ -86,11 +86,11 @@ namespace Audi.Controllers
 
             foreach (var orderItem in request.OrderItems)
             {
-                var productSkuValue = await _unitOfWork.ProductRepository.GetProductSkuValueByVariantValueIdAsync(orderItem.VariantValueId);
+                var productSku = await _unitOfWork.ProductRepository.GetProductSkuByIdAsync(orderItem.SkuId);
 
-                if (productSkuValue == null) return StatusCode(500, "product_sku_value_is_null");
+                if (productSku == null) return StatusCode(500, "product_sku_is_null");
 
-                if (productSkuValue.Stock - orderItem.Quantity < 0) return BadRequest($"stock insufficient: {productSkuValue.ProductSku.Sku}");
+                if (productSku.Stock - orderItem.Quantity < 0) return BadRequest($"stock insufficient: {productSku.SkuId}");
             }
 
             var order = new Order
@@ -116,7 +116,7 @@ namespace Audi.Controllers
             foreach (var orderItem in request.OrderItems)
             {
                 var product = await _unitOfWork.ProductRepository.GetProductByIdAsync(orderItem.ProductId);
-                var productSkuValue = await _unitOfWork.ProductRepository.GetProductSkuValueByVariantValueIdAsync(orderItem.VariantValueId);
+                var productSku = await _unitOfWork.ProductRepository.GetProductSkuByIdAsync(orderItem.SkuId);
 
                 var isDiscounted = product.IsDiscounted && product.DiscountDeadline.HasValue
                     ? product.IsDiscounted && product.DiscountDeadline.Value >= DateTime.UtcNow
@@ -130,10 +130,10 @@ namespace Audi.Controllers
 
                 item.OrderId = order.Id;
                 item.Price = price * orderItem.Quantity;
-                productSkuValue.Stock = productSkuValue.Stock - orderItem.Quantity;
+                productSku.Stock = productSku.Stock - orderItem.Quantity;
 
                 _unitOfWork.OrderRepository.CreateOrderItem(item);
-                _unitOfWork.ProductRepository.UpdateProductSkuValue(productSkuValue);
+                _unitOfWork.ProductRepository.UpdateProductSku(productSku);
 
                 order.TotalPrice = order.TotalPrice + item.Price;
             }
