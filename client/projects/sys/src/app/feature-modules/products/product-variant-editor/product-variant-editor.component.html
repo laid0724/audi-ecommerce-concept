@@ -54,13 +54,11 @@
               <table class="table table-compact mt-2 mb-3">
                 <thead>
                   <th>選擇名稱</th>
-                  <th>庫存</th>
                   <th></th>
                 </thead>
                 <tbody>
                   <tr *ngFor="let variantValue of variant.variantValues">
                     <td>{{ variantValue.name }}</td>
-                    <td>{{ variantValue.stock }}</td>
                     <td class="d-flex justify-content-end">
                       <clr-button-group class="me-0">
                         <clr-button
@@ -202,21 +200,6 @@
         />
         <clr-control-error *clrIfError="'required'"
           >必填 Required</clr-control-error
-        >
-      </clr-input-container>
-      <clr-input-container class="d-flex flex-column w-100">
-        <label>庫存 Stock</label>
-        <input
-          type="number"
-          clrInput
-          formControlName="stock"
-          class="clr-input-width"
-        />
-        <clr-control-error *clrIfError="'required'"
-          >必填 Required</clr-control-error
-        >
-        <clr-control-error *clrIfError="'pattern'"
-          >不可填寫負數 No negative numbers</clr-control-error
         >
       </clr-input-container>
     </form>

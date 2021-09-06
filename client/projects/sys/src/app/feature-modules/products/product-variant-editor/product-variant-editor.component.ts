@@ -130,10 +130,6 @@ export class ProductVariantEditorComponent implements OnInit {
       productId: [this.productId, Validators.required],
       variantId: [null, Validators.required],
       name: [null, Validators.required],
-      stock: [
-        0,
-        [Validators.required, Validators.pattern(NON_NEGATIVE_NUMBER_REGEX)],
-      ],
     });
   }
 
@@ -326,7 +322,6 @@ export class ProductVariantEditorComponent implements OnInit {
     const variantIdControl = this.variantValueForm.get('variantId');
     const variantValueIdControl = this.variantValueForm.get('id');
     const variantValueNameControl = this.variantValueForm.get('name');
-    const variantValueStockControl = this.variantValueForm.get('stock');
 
     if (variantId) {
       variantIdControl?.patchValue(variantId);
@@ -339,7 +334,6 @@ export class ProductVariantEditorComponent implements OnInit {
 
         if (matchingVariantValue != null) {
           variantValueNameControl?.patchValue(matchingVariantValue.name);
-          variantValueStockControl?.patchValue(matchingVariantValue.stock);
         }
       }
     } else {
