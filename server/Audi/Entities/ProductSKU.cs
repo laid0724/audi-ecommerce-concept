@@ -12,5 +12,7 @@ namespace Audi.Entities
         public Product Product { get; set; }
         public bool IsDeleted { get; set; } = false;
         public ICollection<ProductSkuValue> ProductSkuValues { get; set; }
+        public ICollection<OrderItem> OrderItems { get; set; }
+        public int Stock { get; set; } = 0;
     }
 }

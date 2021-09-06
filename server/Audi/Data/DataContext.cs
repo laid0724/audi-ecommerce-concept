@@ -289,16 +289,16 @@ namespace Audi.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<OrderItem>()
-                .HasOne(e => e.ProductVariantValue)
+                .HasOne(e => e.ProductSku)
                 .WithMany(e => e.OrderItems)
-                .HasForeignKey(e => new { e.ProductId, e.VariantId, e.VariantValueId })
+                .HasForeignKey(e => new { e.ProductId, e.SkuId })
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<ProductVariantValue>()
+            builder.Entity<ProductSku>()
                 .HasMany(e => e.OrderItems)
-                .WithOne(e => e.ProductVariantValue)
-                .HasForeignKey(e => new { e.ProductId, e.VariantId, e.VariantValueId })
+                .WithOne(e => e.ProductSku)
+                .HasForeignKey(e => new { e.ProductId, e.SkuId })
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
 

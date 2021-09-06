@@ -11,6 +11,5 @@ namespace Audi.Entities
         public int VariantValueId { get; set; }
         public ProductVariantValue ProductVariantValue { get; set; }
         public bool IsDeleted { get; set; } = false;
-        public int Stock { get; set; }
     }
 }
