@@ -26,6 +26,7 @@ import {
   switchMap,
   takeWhile,
 } from 'rxjs/operators';
+import { ProductSku } from '@audi/data';
 
 export interface ProductCategoryUpsertRequest {
   id?: number;
@@ -44,7 +45,6 @@ export interface ProductUpsertRequest {
   discountAmount: number;
   discountDeadline: Date;
   price: number;
-  stock: number;
 }
 
 export interface ProductVariantUpsertRequest {
@@ -57,7 +57,11 @@ export interface ProductVariantValueUpsertRequest {
   name: string;
   variantId: number;
   productId: number;
-  stock?: number;
+}
+
+export interface ProductSkuStockUpsertRequest {
+  skuId: number;
+  stock: number;
 }
 
 @Injectable({
@@ -354,6 +358,19 @@ export class ProductsService {
     return this.http.delete<null>(
       `${this.endpoint}/variants/values/${variantValueId}`
     );
+  }
+
+  generateProductSkus(productId: number): Observable<ProductSku[]> {
+    return this.http.post<ProductSku[]>(
+      `${this.endpoint}/skus/${productId}`,
+      {}
+    );
+  }
+
+  updateProductSkuStock(
+    request: ProductSkuStockUpsertRequest
+  ): Observable<ProductSku> {
+    return this.http.put<ProductSku>(`${this.endpoint}/skus/stock`, request);
   }
 
   setMainProductPhoto(photoId: number): Observable<null> {

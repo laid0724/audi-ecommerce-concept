@@ -16,6 +16,7 @@ export * from './lib/models/product-photo';
 export * from './lib/models/product-params';
 export * from './lib/models/product-variant';
 export * from './lib/models/product-variant-value';
+export * from './lib/models/product-sku';
 export * from './lib/models/product';
 export * from './lib/models/order';
 export * from './lib/models/order-item';
