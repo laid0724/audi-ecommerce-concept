@@ -49,19 +49,6 @@ export class OrdersSingleComponent implements OnInit {
     return productPhotos.find((p) => p.isMain);
   }
 
-  public productSkuMapperFn(
-    productVariants: ProductVariant[]
-  ): (variantValueId: number) => string | undefined {
-    return (variantValueId: number) =>
-      productVariants
-        .find(
-          (pv) =>
-            pv.variantValues.find((vv) => vv.id === variantValueId) !==
-            undefined
-        )
-        ?.variantValues.find((vv) => vv.id === variantValueId)?.sku;
-  }
-
   ngOnInit(): void {
     this.initOrderStatusUpdateForm();
 
