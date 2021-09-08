@@ -8,6 +8,14 @@ body {
   top: 0;
   left: 0;
   right: 0;
+  &__content-wrapper {
+    max-height: unit(14);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
 }
 
 .aui-modal-dialog__close {
