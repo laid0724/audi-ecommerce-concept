@@ -497,7 +497,10 @@ namespace Audi.Data
             foreach (var productSkuValues in productVariantValuesWithLinkedEntities.ProductSkuValues)
             {
                 productSkuValues.IsDeleted = true;
-                productSkuValues.ProductSku.IsDeleted = true;
+                if (productSkuValues.ProductSku != null)
+                {
+                    productSkuValues.ProductSku.IsDeleted = true;
+                }
             }
 
             productVariantValue.IsDeleted = true;
@@ -541,8 +544,6 @@ namespace Audi.Data
 
         public void UpdateProductSku(ProductSku productSku)
         {
-            productSku.Sku = productSku.Sku.ToLower().Trim();
-
             _context.ProductSkus.Update(productSku);
         }
 

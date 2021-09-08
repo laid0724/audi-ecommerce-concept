@@ -292,6 +292,10 @@ export class ProductsService {
     return this.http.delete<null>(`${this.endpoint}/${productId}`);
   }
 
+  hideProduct(productId: number): Observable<null> {
+    return this.http.delete<null>(`${this.endpoint}/${productId}/hide`);
+  }
+
   getProductVariant(variantId: number): Observable<ProductVariant> {
     return this.http.get<ProductVariant>(
       `${this.endpoint}/variants/${variantId}`

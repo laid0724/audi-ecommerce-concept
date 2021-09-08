@@ -78,8 +78,15 @@
                 <audi-sys-product-variant-editor
                   *ngIf="product != null"
                   [product]="product"
-                  [hasError]="noValidVariantsError"
+                  [hasError]="invalidVariantsAndSkusError"
+                  (variantUpdate)="onVariantUpdate($event)"
                 ></audi-sys-product-variant-editor>
+
+                <audi-sys-product-sku-editor
+                  *ngIf="product != null && product.variants.length > 0"
+                  [product]="product"
+                  (generateSkus)="onSkusGeneration($event)"
+                ></audi-sys-product-sku-editor>
 
                 <audi-sys-wysiwyg-grid
                   formGroupName="wysiwyg"
@@ -102,12 +109,14 @@
                     }}</label>
                   </clr-toggle-wrapper>
                   <clr-control-helper
-                    >產品需要建立選項之後才可公佈 Product options are required
-                    before product can be visible to public</clr-control-helper
+                    >產品需要建立有選擇的選項及庫存之後才可公佈 Product options
+                    with available selections and Skus are required before
+                    product can be visible to public</clr-control-helper
                   >
-                  <clr-control-error *clrIfError="'noValidVariantsError'"
-                    >產品需要建立選項之後才可公佈 Product options are required
-                    before product can be visible to public</clr-control-error
+                  <clr-control-error *clrIfError="'invalidVariantsAndSkusError'"
+                    >產品需要建立選項及庫存之後才可公佈 Product options and SKUs
+                    are required before product can be visible to
+                    public</clr-control-error
                   >
                   <clr-control-error *clrIfError="'required'"
                     >必填 Required</clr-control-error

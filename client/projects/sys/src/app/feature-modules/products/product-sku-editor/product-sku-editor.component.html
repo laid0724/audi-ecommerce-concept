@@ -1,0 +1,96 @@
+<clr-control-container class="clr-control-container--no-max-height">
+  <label>
+    {{ label }}
+  </label>
+  <div class="mt-1 mt-md-0">
+    <div class="row" *ngIf="product.skus.length > 0">
+      <div class="col-12">
+        <table class="table table-compact mt-0 mb-2">
+          <thead>
+            <th>SKU</th>
+            <th>庫存 Stock</th>
+            <th></th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let productSku of product.skus">
+              <td style="vertical-align: middle">{{ productSku.sku }}</td>
+              <td style="vertical-align: middle">{{ productSku.stock }}</td>
+              <td class="d-flex justify-content-end align-items-center">
+                <button
+                  type="button"
+                  class="btn btn-icon btn-sm btn-primary"
+                  (click)="onOpenModal(productSku)"
+                >
+                  <clr-icon shape="edit"></clr-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <button
+      class="btn btn-primary mb-2"
+      type="button"
+      [disabled]="!everyVariantHasValue"
+      (click)="onGenerateSku()"
+    >
+      建立商品SKU Generate Product SKU
+    </button>
+    <clr-alert
+      [clrAlertIcon]="'exclamation-triangle'"
+      [clrAlertType]="'warning'"
+      [clrAlertClosable]="false"
+    >
+      <clr-alert-item>
+        注意：所有產品選項內需包含至少一個選擇才能建立庫存
+        <br />
+        Note: All product options must have at least one selection available for
+        SKUs to be generate-able
+      </clr-alert-item>
+      <clr-alert-item>
+        當商品選項有任何更新時，請重新建立商品SKU（注意：所有庫存都會歸零）
+        <br />
+        When changes are made to the product options, please regenerate the
+        product SKUs (note: all stocks will be set back to 0)
+      </clr-alert-item>
+    </clr-alert>
+  </div>
+</clr-control-container>
+
+<clr-modal [(clrModalOpen)]="editStockModalOpen" [clrModalClosable]="false">
+  <h3 class="modal-title">
+    {{ skuToEdit?.sku }}
+  </h3>
+  <div class="modal-body">
+    <form clrForm [formGroup]="form" clrLayout="vertical" #variantValueClrForm>
+      <clr-input-container class="d-flex flex-column w-100 mt-0">
+        <label>庫存 Stock</label>
+        <input
+          type="number"
+          clrInput
+          formControlName="stock"
+          class="clr-input-width"
+        />
+        <clr-control-error *clrIfError="'required'"
+          >必填 Required</clr-control-error
+        >
+        <clr-control-error *clrIfError="'pattern'"
+          >不可為負數 Cannot be negative</clr-control-error
+        >
+      </clr-input-container>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-primary-outline"
+      (click)="onCloseModal()"
+    >
+      取消 Cancel
+    </button>
+    <button type="button" class="btn btn-primary" (click)="onUpdateStock()">
+      確認 Ok
+    </button>
+  </div>
+</clr-modal>

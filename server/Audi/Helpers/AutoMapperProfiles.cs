@@ -106,6 +106,10 @@ namespace Audi.Helpers
                             .Select(sku => sku.Stock)
                             .Sum()
                         )
+                )
+                .ForMember(
+                    dest => dest.Skus,
+                    opt => opt.MapFrom(src => src.ProductSkus)
                 );
 
             CreateMap<ProductSku, ProductSkuDto>()
@@ -116,7 +120,7 @@ namespace Audi.Helpers
                 .ForMember(
                     dest => dest.VariantValueIds,
                     opt => opt
-                        .MapFrom(src => 
+                        .MapFrom(src =>
                             src.ProductSkuValues
                                 .Select(psv => psv.VariantValueId)
                                 .ToArray()

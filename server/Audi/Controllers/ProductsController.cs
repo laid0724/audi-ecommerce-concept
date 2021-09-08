@@ -247,6 +247,24 @@ namespace Audi.Controllers
             return BadRequest("Failed to delete product");
         }
 
+        [SwaggerOperation(Summary = "hide a product")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpDelete("{productId}/hide")]
+        public async Task<ActionResult> HideProduct(int productId)
+        {
+            var product = await _unitOfWork.ProductRepository.GetProductByIdAsync(productId);
+
+            if (product == null) return NotFound();
+
+            product.IsVisible = false;
+
+            _unitOfWork.ProductRepository.UpdateProduct(product);
+
+            if (_unitOfWork.HasChanges() && await _unitOfWork.Complete()) return NoContent();
+
+            return BadRequest("Failed to hide product");
+        }
+
         [SwaggerOperation(Summary = "Get product variant by id")]
         [HttpGet("variants/{variantId}")]
         public async Task<ActionResult<ProductVariantDto>> GetProductVariant(int variantId)
@@ -274,6 +292,8 @@ namespace Audi.Controllers
         {
             var productVariant = _mapper.Map<ProductVariant>(request);
 
+            productVariant.Name = productVariant.Name.Trim();
+
             _unitOfWork.ProductRepository.AddProductVariant(productVariant);
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
@@ -295,7 +315,7 @@ namespace Audi.Controllers
 
             if (productVariant == null) return NotFound();
 
-            productVariant.Name = request.Name;
+            productVariant.Name = request.Name.Trim();
 
             _unitOfWork.ProductRepository.UpdateProductVariant(productVariant);
 
@@ -354,6 +374,8 @@ namespace Audi.Controllers
 
             var newProductVariantValue = _mapper.Map<ProductVariantValue>(request);
 
+            newProductVariantValue.Name = newProductVariantValue.Name.Trim();
+
             _unitOfWork.ProductRepository.AddProductVariantValue(newProductVariantValue);
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
@@ -375,7 +397,7 @@ namespace Audi.Controllers
 
             if (productVariantValue == null) return NotFound("product variant value not found");
 
-            productVariantValue.Name = request.Name;
+            productVariantValue.Name = request.Name.Trim();
 
             _unitOfWork.ProductRepository.UpdateProductVariantValue(productVariantValue);
 
@@ -447,7 +469,7 @@ namespace Audi.Controllers
                     {
                         var productSku = new ProductSku
                         {
-                            Sku = variantValue.Name,
+                            Sku = variantValue.Name.Trim(),
                             ProductId = productId,
                             Stock = 0,
                         };
@@ -480,12 +502,12 @@ namespace Audi.Controllers
                 ProductId = pvv.ProductId,
                 VariantId = pvv.VariantId,
                 VariantValueId = pvv.VariantValueId,
-                VariantValueName = pvv.Name
+                VariantValueName = pvv.Name.Trim()
             })).ToArray();
 
             foreach (var combinations in CartesianProduct.Of(possibleProductSkuCombinations))
             {
-                var skuName = string.Join("/", combinations.Select(c => c.VariantValueName));
+                var skuName = string.Join("/", combinations.Select(c => c.VariantValueName.Trim()));
 
                 var productSku = new ProductSku
                 {

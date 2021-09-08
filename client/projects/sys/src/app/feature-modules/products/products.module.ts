@@ -13,6 +13,7 @@ import { ClrDatagridUtilitiesModule } from '../../component-modules/clr-datagrid
 import { ProductPhotoUploaderComponent } from './product-photo-uploader/product-photo-uploader.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ProductVariantEditorComponent } from './product-variant-editor/product-variant-editor.component';
+import { ProductSkuEditorComponent } from './product-sku-editor/product-sku-editor.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ProductVariantEditorComponent } from './product-variant-editor/product-
     ProductsListComponent,
     ProductPhotoUploaderComponent,
     ProductVariantEditorComponent,
+    ProductSkuEditorComponent,
   ],
   imports: [
     CommonModule,

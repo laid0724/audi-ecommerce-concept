@@ -1,13 +1,14 @@
 import {
   Component,
+  EventEmitter,
   HostListener,
   Input,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
-  NON_NEGATIVE_NUMBER_REGEX,
   Product,
   ProductsService,
   ProductVariant,
@@ -71,6 +72,11 @@ export class ProductVariantEditorComponent implements OnInit {
   label = '產品選項 Product Options';
   @Input()
   hasError: boolean | null = false;
+
+  @Output()
+  variantUpdate: EventEmitter<ProductVariant[]> = new EventEmitter<
+    ProductVariant[]
+  >();
 
   variantForm: FormGroup;
   variantValueForm: FormGroup;
@@ -146,6 +152,8 @@ export class ProductVariantEditorComponent implements OnInit {
       .subscribe((productVariant: ProductVariant) => {
         this.productVariants = [...this.productVariants, productVariant];
 
+        this.variantUpdate.emit(this.productVariants);
+
         this.checkValidityForErrorState();
         this.toggleEditVariantModal();
       });
@@ -175,6 +183,8 @@ export class ProductVariantEditorComponent implements OnInit {
 
         this.productVariants[previousStateIndex] = updatedProductVariant;
 
+        this.variantUpdate.emit(this.productVariants);
+
         this.toggleEditVariantModal();
       });
   }
@@ -187,6 +197,8 @@ export class ProductVariantEditorComponent implements OnInit {
         this.productVariants = this.productVariants.filter(
           (pv) => pv.id !== variantId
         );
+
+        this.variantUpdate.emit(this.productVariants);
 
         this.checkValidityForErrorState();
         this.toggleDeleteVariantModal();
@@ -243,6 +255,8 @@ export class ProductVariantEditorComponent implements OnInit {
           ];
         }
 
+        this.variantUpdate.emit(this.productVariants);
+
         this.checkValidityForErrorState();
         this.toggleEditVariantValueModal();
       });
@@ -286,6 +300,8 @@ export class ProductVariantEditorComponent implements OnInit {
           }
         }
 
+        this.variantUpdate.emit(this.productVariants);
+
         this.toggleEditVariantValueModal();
       });
   }
@@ -309,6 +325,8 @@ export class ProductVariantEditorComponent implements OnInit {
               (vv) => vv.id !== variantValueId
             );
         }
+
+        this.variantUpdate.emit(this.productVariants);
 
         this.checkValidityForErrorState();
         this.toggleDeleteVariantValueModal();

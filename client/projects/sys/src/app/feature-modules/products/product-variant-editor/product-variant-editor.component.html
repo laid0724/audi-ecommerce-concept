@@ -1,6 +1,3 @@
-<!-- TODO: rfx this to use wizard for adding new variants, chaining variant value creation together with observables-->
-<!-- see https://clarity.design/angular-components/wizard/ -->
-
 <clr-control-container class="clr-control-container--no-max-height">
   <label>
     {{ label }}
@@ -91,11 +88,12 @@
             <div class="row">
               <div class="col-12">
                 <p class="p5 mt-0">
-                  注意：該產品選項需要至少有一筆選擇才會在前台顯示。
+                  注意：該產品選項需要至少有一筆選擇才能儲存及建立SKU。
                 </p>
                 <p class="p5 mt-1 mb-3">
-                  Note: This product option will only show in the public site
-                  when it has at least one selection created.
+                  Note: This product form can only be saved - and its SKUs
+                  generated - when it has at least one selection created for
+                  this option.
                 </p>
               </div>
             </div>

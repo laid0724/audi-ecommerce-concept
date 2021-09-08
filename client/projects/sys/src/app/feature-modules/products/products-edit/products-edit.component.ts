@@ -21,8 +21,10 @@ import {
   isLessThanValidator,
   Product,
   ProductPhoto,
+  ProductSku,
   ProductsService,
   ProductVariant,
+  ProductVariantValue,
   WysiwygRowType,
 } from '@audi/data';
 import { ClrForm } from '@clr/angular';
@@ -54,24 +56,31 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
 
   destroy$ = new Subject<boolean>();
 
-  noValidVariantsError = false;
+  invalidVariantsAndSkusError = false;
 
-  get noValidVariantsAvailable$(): Observable<boolean> {
+  get invalidVariantsAndSkus$(): Observable<boolean> {
     if (this.productId) {
-      const noValidVariantsAvailable: Observable<boolean> = this.productService
+      const invalidVariantsAndSkus$: Observable<boolean> = this.productService
         .getProductVariants(this.productId)
         .pipe(
           take(1),
           map((variants: ProductVariant[]) => {
-            const someVariantHasValue: boolean = variants.some(
+            const everyVariantHasValue: boolean = variants.every(
               (v) => v.variantValues.length > 0
             );
-            return !someVariantHasValue;
+            return !everyVariantHasValue || !this.productHasSkus;
           })
         );
-      return noValidVariantsAvailable;
+      return invalidVariantsAndSkus$;
     }
     return of(false);
+  }
+
+  get productHasSkus(): boolean {
+    if (this.productId && this.product) {
+      return this.product.skus.length > 0;
+    }
+    return false;
   }
 
   constructor(
@@ -202,8 +211,8 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
       ),
       isVisible: [
         { value: false, disabled: true },
-        Validators.required,
-        this.noValidVariantsAvailableAsyncValidator(),
+        [Validators.required],
+        this.invalidVariantsAndSkusAsyncValidator(),
       ],
       isDiscounted: [false, Validators.required],
       discountAmount: [
@@ -221,18 +230,50 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  noValidVariantsAvailableAsyncValidator(): AsyncValidatorFn {
+  invalidVariantsAndSkusAsyncValidator(): AsyncValidatorFn {
     return (control: AbstractControl): Observable<ValidationErrors | null> => {
-      return this.noValidVariantsAvailable$.pipe(
+      return this.invalidVariantsAndSkus$.pipe(
         map((isInvalid) => {
           if (control.value === true) {
-            return isInvalid ? { noValidVariantsError: true } : null;
+            return isInvalid ? { invalidVariantsAndSkusError: true } : null;
           } else {
             return null;
           }
         })
       );
     };
+  }
+
+  onVariantUpdate(variants: any): void {
+    if (this.product !== null) {
+      this.product.variants = variants;
+
+      const everyVariantHasValue: boolean = variants.every(
+        (v: ProductVariant) => v.variantValues.length > 0
+      );
+      if (variants.length < 1 || !everyVariantHasValue) {
+        this.productService
+          .hideProduct(this.product.id)
+          .pipe(take(1))
+          .subscribe((_) => {
+            this.productForm.get('isVisible')?.setValue(false);
+          });
+      }
+
+      const allVariantValueIds = variants
+        .flatMap((variant: ProductVariant) => variant.variantValues)
+        .map((variantValue: ProductVariantValue) => variantValue.id);
+
+      this.product.skus = this.product.skus.filter((sku: ProductSku) =>
+        sku.variantValueIds.every((id) => allVariantValueIds.includes(id))
+      );
+    }
+  }
+
+  onSkusGeneration(skus: any): void {
+    if (this.product !== null) {
+      this.product.skus = skus;
+    }
   }
 
   onPhotoChanges(photos: ProductPhoto[]): void {
@@ -269,11 +310,11 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
   }
 
   onSave(): void {
-    this.noValidVariantsAvailable$.subscribe(
-      (noValidVariantsError: boolean) => {
-        if (this.productForm.invalid || noValidVariantsError) {
-          if (noValidVariantsError) {
-            this.noValidVariantsError = true;
+    this.invalidVariantsAndSkus$.subscribe(
+      (invalidVariantsAndSkusError: boolean) => {
+        if (this.productForm.invalid || invalidVariantsAndSkusError) {
+          if (invalidVariantsAndSkusError) {
+            this.invalidVariantsAndSkusError = true;
           }
 
           this.clrForm.markAsTouched();
@@ -281,10 +322,10 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
 
           let errors = getAllErrors(this.productForm);
 
-          if (noValidVariantsError) {
+          if (invalidVariantsAndSkusError) {
             errors = {
               ...errors,
-              productForm: { noValidVariantsError },
+              productForm: { invalidVariantsAndSkusError },
             };
           }
 
@@ -292,7 +333,7 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
 
           this.toastr.error('Saving failed', '儲存失敗');
         } else {
-          this.noValidVariantsError = false;
+          this.invalidVariantsAndSkusError = false;
 
           const { discountDeadline } = this.productForm.value;
 
