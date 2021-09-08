@@ -23,11 +23,15 @@
         [ngClass]="{ 'inactive-animation': !menuIsOpen }"
       >
         <!-- TODO: transloco -->
-        <h1 class="aui-headline-4">Cart</h1>
+        <div class="py-6 px-8 w-full">
+          <h1 class="aui-headline-4">Cart</h1>
+        </div>
         <div class="audi-cart__menu__cart-items">
           <pre>{{ cart | json }}</pre>
         </div>
-        <audi-button class="block w-full">Checkout</audi-button>
+        <div class="py-6 px-8 w-full">
+          <audi-button class="block w-full">Checkout</audi-button>
+        </div>
       </div>
     </div>
   </div>
