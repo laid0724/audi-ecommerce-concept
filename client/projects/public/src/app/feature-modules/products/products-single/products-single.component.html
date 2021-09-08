@@ -1,6 +1,5 @@
 <ng-container *ngIf="!isLoading; else loadingTemplate">
   <ng-container *transloco="let translationOutput">
-    <!-- TODO: transloco output -->
     <div
       fullpage
       id="fullpage"
@@ -58,14 +57,7 @@
                   </small>
                 </ng-template>
 
-                <p
-                  class="
-                    line-clamp-6
-                    text-center
-                    text-sm
-                    md:text-base
-                  "
-                >
+                <p class="line-clamp-6 text-center text-sm md:text-base">
                   {{ product.description }}
                 </p>
 
@@ -97,10 +89,12 @@
                   </div>
                 </form>
 
-                <div class="w-full grid grid-rows-none grid-cols-12 gap-2 mb-10">
+                <div
+                  class="w-full grid grid-rows-none grid-cols-12 gap-2 mb-10"
+                >
                   <audi-button
                     type="primary"
-                    [isDisabled]="!hasStock"
+                    [isDisabled]="!selectionHasStock"
                     class="
                       col-span-12
                       lg:col-span-6
@@ -112,9 +106,13 @@
                   >
                     <audi-icon iconName="shopping-basket"></audi-icon>
                     <span class="ml-3">{{
-                      !hasStock
+                      outOfStock
                         ? translationOutput('products.outOfStock')
-                        : 'Add to Cart'
+                        : selectionIsEmpty
+                        ? translationOutput('buttons.addToCart')
+                        : selectionHasStock
+                        ? translationOutput('buttons.addToCart')
+                        : translationOutput('products.outOfStock')
                     }}</span>
                   </audi-button>
                   <audi-button
@@ -138,8 +136,8 @@
                     ></audi-icon>
                     <span class="ml-3 line-clamp-1">{{
                       productIsLikedByUser(product.id)
-                        ? 'Unfavorite'
-                        : 'Favorite'
+                        ? translationOutput('buttons.unfavorite')
+                        : translationOutput('buttons.favorite')
                     }}</span>
                   </audi-button>
                 </div>

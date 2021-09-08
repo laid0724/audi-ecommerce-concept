@@ -18,7 +18,10 @@
     "forgotPassword": "Forgot Password?",
     "filter": "Filter",
     "clearFilters": "Clear Filters",
-    "sortBy": "Sort By"
+    "sortBy": "Sort By",
+    "addToCart": "Add To Cart",
+    "favorite": "Favorite",
+    "unfavorite": "Unfavorite"
   },
   "menu": {},
   "footer": {

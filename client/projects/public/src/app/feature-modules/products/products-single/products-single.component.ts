@@ -22,7 +22,6 @@ import {
   FormGroup,
 } from '@angular/forms';
 
-// TODO: transloco
 // TODO: product add to cart
 
 @Component({
@@ -66,15 +65,23 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
     );
   }
 
-  get hasStock(): boolean {
-    if (this.product.stock < 1) {
-      return false;
-    }
+  get outOfStock(): boolean {
+    return this.product.stock === 0;
+  }
 
-    const selectedValues = this.selections.value.map((v: string) => +v);
+  get selectedValueIds(): number[] {
+    const selectedValueIds = this.selections.value.map((v: string) => +v);
 
+    return selectedValueIds;
+  }
+
+  get selectionIsEmpty(): boolean {
+    return this.selectedValueIds.some((v: number) => v === 0);
+  }
+
+  get selectionHasStock(): boolean {
     const matchingSku = this.product.skus.find((sku: ProductSku) =>
-      sku.variantValueIds.every((id) => selectedValues.includes(id))
+      sku.variantValueIds.every((id) => this.selectedValueIds.includes(id))
     );
 
     if (matchingSku !== undefined && matchingSku.stock > 0) return true;

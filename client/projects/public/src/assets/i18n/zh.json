@@ -18,7 +18,10 @@
     "forgotPassword": "忘記密碼",
     "filter": "篩選",
     "clearFilters": "清除篩選",
-    "sortBy": "排序"
+    "sortBy": "排序",
+    "addToCart": "加入購物車",
+    "favorite": "加入追蹤清單",
+    "unfavorite": "移除追蹤清單"
   },
   "menu": {},
   "footer": {
