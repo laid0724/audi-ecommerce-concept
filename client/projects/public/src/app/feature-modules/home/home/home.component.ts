@@ -17,6 +17,7 @@ import { map, take } from 'rxjs/operators';
 import { combineLatest, Observable, Subscription, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
 import { SplashScreenStateService } from '../../splash-screen/services/splash-screen-state-service/splash-screen-state.service';
+import { FULLPAGE_JS_NORMAL_SCROLL_ELEMENTS } from '../../../constants';
 
 interface HomepageData {
   homepageData: Homepage;
@@ -122,6 +123,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       scrollOverflow: true,
       resetSlider: true,
       paddingTop: '56px', // fixed header height
+      normalScrollElements: FULLPAGE_JS_NORMAL_SCROLL_ELEMENTS,
     };
   }
 

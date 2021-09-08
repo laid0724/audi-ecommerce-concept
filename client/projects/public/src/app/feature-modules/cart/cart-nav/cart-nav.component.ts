@@ -12,8 +12,6 @@ import { CartItem } from '@audi/data';
 import { Observable } from 'rxjs';
 import { CartService } from '../services/cart.service';
 
-// FIXME: on pages with fullpage js, scrolling cart item scrolls page too
-
 @Component({
   selector: 'audi-cart-nav',
   templateUrl: './cart-nav.component.html',

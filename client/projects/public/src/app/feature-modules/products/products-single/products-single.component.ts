@@ -24,8 +24,7 @@ import {
 } from '@angular/forms';
 import { CartService } from '../../cart/services/cart.service';
 import { Subject } from 'rxjs';
-
-// TODO: product add to cart
+import { FULLPAGE_JS_NORMAL_SCROLL_ELEMENTS } from '../../../constants';
 
 @Component({
   selector: 'audi-products-single',
@@ -134,6 +133,7 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
       scrollOverflow: true,
       resetSlider: true,
       paddingTop: '56px', // fixed header height
+      normalScrollElements: FULLPAGE_JS_NORMAL_SCROLL_ELEMENTS,
     };
   }
 
