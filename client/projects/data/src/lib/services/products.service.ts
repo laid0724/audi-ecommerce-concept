@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ProductCategory } from '../models/product-category';
+import {
+  ProductCategory,
+  ProductCategoryWithoutProducts,
+} from '../models/product-category';
 import { Product } from '../models/product';
 import { Observable, throwError } from 'rxjs';
 import { ProductCategoryParams } from '../models/product-category-params';
@@ -23,6 +26,7 @@ import {
   switchMap,
   takeWhile,
 } from 'rxjs/operators';
+import { ProductSku } from '@audi/data';
 
 export interface ProductCategoryUpsertRequest {
   id?: number;
@@ -41,21 +45,23 @@ export interface ProductUpsertRequest {
   discountAmount: number;
   discountDeadline: Date;
   price: number;
-  stock: number;
 }
 
 export interface ProductVariantUpsertRequest {
   id?: number;
   name: string;
   productId: number;
-  variantValueLabel: string;
 }
 export interface ProductVariantValueUpsertRequest {
   id?: number;
   name: string;
   variantId: number;
   productId: number;
-  stock?: number;
+}
+
+export interface ProductSkuStockUpsertRequest {
+  skuId: number;
+  stock: number;
 }
 
 @Injectable({
@@ -138,6 +144,12 @@ export class ProductsService {
   );
 
   constructor(private http: HttpClient) {}
+
+  getAllProductCategories(): Observable<ProductCategoryWithoutProducts[]> {
+    return this.http.get<ProductCategoryWithoutProducts[]>(
+      `${this.endpoint}/categories`
+    );
+  }
 
   addProductCategory(
     request: ProductCategoryUpsertRequest
@@ -242,6 +254,25 @@ export class ProductsService {
     return getPaginatedResult<Product[]>(this.http, this.endpoint, params);
   }
 
+  getIsVisibleProducts(
+    productParams: ProductParams
+  ): Observable<PaginatedResult<Product[]>> {
+    const { pageNumber, pageSize, isVisible, ...restOfProductParams } =
+      productParams;
+    let params = getPaginationHeaders(pageNumber, pageSize);
+
+    Object.keys(restOfProductParams).forEach((key) => {
+      const property = (restOfProductParams as unknown as any)[key];
+      if (property != null) {
+        params = params.append(key, property.toString());
+      }
+    });
+
+    params = params.append('isVisible', true);
+
+    return getPaginatedResult<Product[]>(this.http, this.endpoint, params);
+  }
+
   getProduct(productId: number): Observable<Product> {
     return this.http.get<Product>(`${this.endpoint}/${productId}`);
   }
@@ -259,6 +290,10 @@ export class ProductsService {
 
   deleteProduct(productId: number): Observable<null> {
     return this.http.delete<null>(`${this.endpoint}/${productId}`);
+  }
+
+  hideProduct(productId: number): Observable<null> {
+    return this.http.delete<null>(`${this.endpoint}/${productId}/hide`);
   }
 
   getProductVariant(variantId: number): Observable<ProductVariant> {
@@ -327,6 +362,19 @@ export class ProductsService {
     return this.http.delete<null>(
       `${this.endpoint}/variants/values/${variantValueId}`
     );
+  }
+
+  generateProductSkus(productId: number): Observable<ProductSku[]> {
+    return this.http.post<ProductSku[]>(
+      `${this.endpoint}/skus/${productId}`,
+      {}
+    );
+  }
+
+  updateProductSkuStock(
+    request: ProductSkuStockUpsertRequest
+  ): Observable<ProductSku> {
+    return this.http.put<ProductSku>(`${this.endpoint}/skus/stock`, request);
   }
 
   setMainProductPhoto(photoId: number): Observable<null> {

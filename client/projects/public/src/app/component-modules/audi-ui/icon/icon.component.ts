@@ -9,4 +9,6 @@ export class IconComponent {
   @Input() size: 'small' | 'large' = 'small';
   // for audi icon names, see, e.g.,: https://www.audi.com/ci/en/guides/user-interface/icon-library.html
   @Input() iconName: string;
+
+  @Input() customIconPath: string;
 }

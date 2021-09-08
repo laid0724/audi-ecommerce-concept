@@ -1,0 +1,58 @@
+// Importing noto sans tc via google fonts
+// see: https://www.cloudhadoop.com/angular-google-font-library/
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
+
+/* Audi Type Font */
+
+@font-face {
+  font-family: 'AudiTypeScreen';
+  src: url('~/assets/fonts/audi-type-en/AudiTypeScreen-Light.ttf');
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: 'AudiTypeScreen';
+  src: url('~/assets/fonts/audi-type-en/AudiTypeScreen-Normal.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'AudiTypeScreen';
+  src: url('~/assets/fonts/audi-type-en/AudiTypeScreen-Bold.ttf');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'AudiTypeExtended';
+  src: url('~/assets/fonts/audi-type-en/AudiType-ExtendedNormal.ttf');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'AudiTypeExtended';
+  src: url('~/assets/fonts/audi-type-en/AudiType-ExtendedBold.ttf');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'AudiTypeScreen';
+  src: url('~/assets/fonts/audi-type-en/AudiType-ExtendedNormal.ttf');
+  font-weight: 400;
+  font-stretch: expanded;
+}
+
+@font-face {
+  font-family: 'AudiTypeScreen';
+  src: url('~/assets/fonts/audi-type-en/AudiType-ExtendedBold.ttf');
+  font-weight: 700;
+  font-stretch: expanded;
+}
+
+$font-family-sans-serif: 'AudiTypeScreen', 'Noto Sans TC', -apple-system,
+  BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif,
+  'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' !default;
+
+$font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
+  'Liberation Mono', 'Courier New', monospace !default;
+
+$font-family-base: $font-family-sans-serif !default;

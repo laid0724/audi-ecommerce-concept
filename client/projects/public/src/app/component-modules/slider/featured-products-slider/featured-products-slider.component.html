@@ -35,142 +35,138 @@
 </swiper>
 
 <ng-template #slide let-product>
-  <div class="w-full">
-    <div class="w-full flex flex-col md:grid md:grid-rows-1 md:grid-cols-6">
-      <div class="md:col-span-3 lg:col-span-4 background-color-white relative">
-        <!-- MOBILE -->
-        <img
-          class="slide-image object-cover w-full"
-          style="border: 1px solid var(--audi-grey-1)"
-          [src]="getMainPhoto(product)?.url"
-        />
+  <ng-container *transloco="let translationOutput">
+    <div class="w-full">
+      <div class="w-full flex flex-col md:grid md:grid-rows-1 md:grid-cols-6">
         <div
-          class="
-            pagination
-            w-full
-            flex
-            md:hidden
-            justify-center
-            items-center
-            z-auto
-            absolute
-            bottom-0
-          "
+          class="md:col-span-3 lg:col-span-4 background-color-white relative"
         >
-          <audi-indicator
-            [isImageBackground]="true"
-            [totalItems]="validProducts.length"
-            [(currentItem)]="activeSlide"
-            (currentItemChange)="slideTo($event)"
-          ></audi-indicator>
+          <!-- MOBILE -->
+          <img
+            class="slide-image object-cover w-full border-0 md:border"
+            [src]="getMainPhoto(product)?.url"
+          />
+          <div
+            class="
+              pagination
+              w-full
+              flex
+              md:hidden
+              justify-center
+              items-center
+              z-auto
+              absolute
+              -bottom-8
+            "
+          >
+            <audi-indicator
+              [totalItems]="validProducts.length"
+              [(currentItem)]="activeSlide"
+              (currentItemChange)="slideTo($event)"
+            ></audi-indicator>
+          </div>
+          <div
+            *ngIf="validProducts.length > 1"
+            class="arrows-wrapper hidden md:flex flex-row"
+          >
+            <div #prevArrow class="previous-arrow background-color-grey-2">
+              <audi-button
+                type="icon-large"
+                [isDisabled]="
+                  prevArrow.classList.contains('swiper-button-disabled')
+                "
+              >
+                <audi-icon size="large" iconName="back"></audi-icon>
+              </audi-button>
+            </div>
+            <div #nextArrow class="next-arrow background-color-warm-silver">
+              <audi-button
+                type="icon-large"
+                [isDisabled]="
+                  nextArrow.classList.contains('swiper-button-disabled')
+                "
+              >
+                <audi-icon size="large" iconName="forward"></audi-icon>
+              </audi-button>
+            </div>
+          </div>
         </div>
-        <div
-          *ngIf="validProducts.length > 1"
-          class="arrows-wrapper hidden md:flex flex-row"
-        >
-          <div #prevArrow class="previous-arrow background-color-grey-2">
-            <audi-button
-              type="icon-large"
-              [isDisabled]="
-                prevArrow.classList.contains('swiper-button-disabled')
-              "
-            >
-              <audi-icon size="large" iconName="back"></audi-icon>
-            </audi-button>
-          </div>
-          <div #nextArrow class="next-arrow background-color-warm-silver">
-            <audi-button
-              type="icon-large"
-              [isDisabled]="
-                nextArrow.classList.contains('swiper-button-disabled')
-              "
-            >
-              <audi-icon size="large" iconName="forward"></audi-icon>
-            </audi-button>
-          </div>
-        </div>
-      </div>
-      <div class="md:col-span-3 lg:col-span-2 background-color-grey-1">
-        <div
-          class="
-            slide-content
-            flex flex-col
-            justify-center
-            md:justify-between
-            w-full
-            h-full
-            p06
-            md:p-8
-          "
-        >
-          <div class="mt-8 md:mt-0 md:mb-auto">
-            <ng-container *ngIf="!isNullOrEmptyString(product.name)">
-              <h4
-                class="
-                  aui-headline-4
-                  mb-3
-                  text-center
-                  md:text-left
-                  text-truncate-ellipses text-black
-                "
-              >
-                {{ product.name }}
-              </h4>
-            </ng-container>
-            <ng-container *ngIf="!isNullOrEmptyString(product.description)">
-              <p
-                class="
-                  my-3
-                  text-center
-                  md:text-left
-                  text-truncate-ellipses text-truncate-ellipses--5-lines
-                  text-grey-8
-                "
-              >
-                {{ product.description }}
-              </p>
-            </ng-container>
-          </div>
-
-          <div class="md:mt-auto">
-            <ng-container *ngIf="product.isDiscounted">
-              <div
-                class="
-                  my-3
-                  flex flex-row
-                  items-center
-                  justify-center
-                  md:justify-start
-                "
-              >
-                <h6 class="aui-headline-6 mr-1 text-red">
-                  >
-                  <ng-container
-                    *transloco="let translationOutput; read: 'pricing'"
-                  >
-                    {{
-                      translationOutput('discountedPriceLabel')
-                    }} </ng-container
-                  >${{
-                    (product.price - product.discountAmount).toLocaleString()
-                  }}
-                </h6>
-                <small class="aui-small line-through text-grey-8"
-                  >(<ng-container
-                    *transloco="let translationOutput; read: 'pricing'"
-                    >{{ translationOutput('originalPriceLabel') }}</ng-container
-                  >${{ product.price.toLocaleString() }})</small
+        <div class="md:col-span-3 lg:col-span-2 responsive-bg-color">
+          <div
+            class="
+              slide-content
+              flex flex-col
+              justify-center
+              md:justify-between
+              w-full
+              h-full
+              p06
+              md:p-8
+            "
+          >
+            <div class="mt-10 md:mt-0 md:mb-auto">
+              <ng-container *ngIf="!isNullOrEmptyString(product.name)">
+                <h4
+                  class="
+                    aui-headline-4
+                    mb-3
+                    text-center
+                    md:text-left
+                    text-black
+                    line-clamp-1
+                  "
                 >
-              </div>
-            </ng-container>
-            <audi-button type="primary" class="block w-full mt-5 md:mt-10">
-              <ng-container *transloco="let translationOutput; read: 'buttons'">
-                {{ translationOutput('learnMore') }}
+                  {{ product.name }}
+                </h4>
               </ng-container>
-            </audi-button>
+              <ng-container *ngIf="!isNullOrEmptyString(product.description)">
+                <p
+                  class="
+                    my-3
+                    text-center
+                    md:text-left
+                    text-grey-8
+                    line-clamp-3
+                    md:line-clamp-6
+                  "
+                >
+                  {{ product.description }}
+                </p>
+              </ng-container>
+            </div>
+
+            <div class="md:mt-auto">
+              <!-- <ng-container *ngIf="product.isDiscounted">
+                <div
+                  class="
+                    my-3
+                    flex flex-row
+                    items-center
+                    justify-center
+                    md:justify-start
+                  "
+                >
+                  <h6 class="aui-headline-6 mr-1 text-red">
+                    > ${{
+                      (product.price - product.discountAmount).toLocaleString()
+                    }}
+                  </h6>
+                  <small class="aui-small line-through text-grey-8"
+                    >(${{ product.price.toLocaleString() }})</small
+                  >
+                </div>
+              </ng-container> -->
+              <audi-button
+                type="primary"
+                class="block w-full mt-5 md:mt-10"
+                [routerLink]="['/', language, 'products', product.id]"
+              >
+                {{ translationOutput('buttons.learnMore') }}
+              </audi-button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </ng-container>
 </ng-template>

@@ -32,6 +32,7 @@ namespace Audi.Helpers
 
             CreateMap<AppUser, SensitiveUserDataDto>();
 
+            CreateMap<ProductCategory, ProductCategoryWithoutProductsDto>();
             CreateMap<ProductCategory, ProductCategoryDto>();
 
             CreateMap<ProductPhoto, ProductPhotoDto>()
@@ -101,13 +102,14 @@ namespace Audi.Helpers
                 )
                 .ForMember(
                     dest => dest.Stock,
-                    opt => opt.MapFrom(src => src.ProductVariants
-                            .Select(pv =>
-                                pv.ProductSkuValues.Select(psv => psv.Stock)
-                            )
-                            .SelectMany(i => i)
+                    opt => opt.MapFrom(src => src.ProductSkus
+                            .Select(sku => sku.Stock)
                             .Sum()
                         )
+                )
+                .ForMember(
+                    dest => dest.Skus,
+                    opt => opt.MapFrom(src => src.ProductSkus)
                 );
 
             CreateMap<ProductSku, ProductSkuDto>()
@@ -116,34 +118,19 @@ namespace Audi.Helpers
                     opt => opt.MapFrom(src => src.SkuId)
                 )
                 .ForMember(
-                    dest => dest.Stock,
-                    opt => opt.MapFrom(src => src.ProductSkuValues
-                        .Select(skuVal => skuVal.Stock)
-                        .Sum()
-                    // EF Core cannot query with aggregate, use Sum instead
-                    // .Aggregate(0, (sum, val) => sum + val)
-                    )
+                    dest => dest.VariantValueIds,
+                    opt => opt
+                        .MapFrom(src =>
+                            src.ProductSkuValues
+                                .Select(psv => psv.VariantValueId)
+                                .ToArray()
+                        )
                 );
 
             CreateMap<ProductVariantValue, ProductVariantValueDto>()
                 .ForMember(
                     dest => dest.Id,
                     opt => opt.MapFrom(src => src.VariantValueId)
-                )
-                .ForMember(
-                    dest => dest.Stock,
-                    opt => opt.MapFrom(src => src.ProductSkuValues
-                        .Select(skuValue => skuValue.Stock)
-                        .Sum()
-                    // EF Core cannot query with aggregate, use Sum instead
-                    // .Aggregate(0, (sum, val) => sum + val)
-                    )
-                )
-                .ForMember(
-                    dest => dest.Sku,
-                    opt => opt.MapFrom(src => src.ProductSkuValues
-                        .FirstOrDefault().ProductSku.Sku
-                    )
                 );
 
             CreateMap<ProductVariant, ProductVariantDto>()

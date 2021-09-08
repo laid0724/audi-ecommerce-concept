@@ -4,10 +4,14 @@ import {
   ChangeDetectorRef,
   Component,
   Input,
-  Renderer2,
   ViewChild,
 } from '@angular/core';
-import { Product, isNullOrEmptyString, ProductPhoto } from '@audi/data';
+import {
+  Product,
+  isNullOrEmptyString,
+  ProductPhoto,
+  LanguageStateService,
+} from '@audi/data';
 
 // FIXME: desktop/mobile indicators active pin are not in sync
 // FIXME: aui buttons in nav do not have click response when swiper navigation element is assigned via css class instead of template ref
@@ -47,6 +51,8 @@ export class FeaturedProductsSliderComponent
 
   @Input() featuredProducts: Product[] = [];
 
+  language = this.languageService.getCurrentLanguage();
+
   swiperInstance: Swiper;
 
   public isNullOrEmptyString: (val: string | null | undefined) => boolean =
@@ -71,7 +77,10 @@ export class FeaturedProductsSliderComponent
     return product.photos.find((photo) => photo.isMain);
   }
 
-  constructor(private cdr: ChangeDetectorRef, private renderer: Renderer2) {}
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private languageService: LanguageStateService
+  ) {}
 
   ngAfterViewInit(): void {
     this.swiperInstance = this.swiper.swiperRef as Swiper;

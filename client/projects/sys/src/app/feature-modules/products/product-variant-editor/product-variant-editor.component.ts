@@ -1,13 +1,14 @@
 import {
   Component,
+  EventEmitter,
   HostListener,
   Input,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
-  NON_NEGATIVE_NUMBER_REGEX,
   Product,
   ProductsService,
   ProductVariant,
@@ -72,6 +73,11 @@ export class ProductVariantEditorComponent implements OnInit {
   @Input()
   hasError: boolean | null = false;
 
+  @Output()
+  variantUpdate: EventEmitter<ProductVariant[]> = new EventEmitter<
+    ProductVariant[]
+  >();
+
   variantForm: FormGroup;
   variantValueForm: FormGroup;
 
@@ -123,7 +129,6 @@ export class ProductVariantEditorComponent implements OnInit {
       id: [null],
       productId: [this.productId, Validators.required],
       name: [null, Validators.required],
-      variantValueLabel: [null, Validators.required],
     });
 
     this.variantValueForm = this.fb.group({
@@ -131,10 +136,6 @@ export class ProductVariantEditorComponent implements OnInit {
       productId: [this.productId, Validators.required],
       variantId: [null, Validators.required],
       name: [null, Validators.required],
-      stock: [
-        0,
-        [Validators.required, Validators.pattern(NON_NEGATIVE_NUMBER_REGEX)],
-      ],
     });
   }
 
@@ -150,6 +151,8 @@ export class ProductVariantEditorComponent implements OnInit {
       .pipe(take(1))
       .subscribe((productVariant: ProductVariant) => {
         this.productVariants = [...this.productVariants, productVariant];
+
+        this.variantUpdate.emit(this.productVariants);
 
         this.checkValidityForErrorState();
         this.toggleEditVariantModal();
@@ -180,6 +183,8 @@ export class ProductVariantEditorComponent implements OnInit {
 
         this.productVariants[previousStateIndex] = updatedProductVariant;
 
+        this.variantUpdate.emit(this.productVariants);
+
         this.toggleEditVariantModal();
       });
   }
@@ -193,6 +198,8 @@ export class ProductVariantEditorComponent implements OnInit {
           (pv) => pv.id !== variantId
         );
 
+        this.variantUpdate.emit(this.productVariants);
+
         this.checkValidityForErrorState();
         this.toggleDeleteVariantModal();
       });
@@ -201,16 +208,11 @@ export class ProductVariantEditorComponent implements OnInit {
   toggleEditVariantModal(variantId?: number): void {
     const variantIdControl = this.variantForm.get('id');
     const variantNameControl = this.variantForm.get('name');
-    const variantValueLabelControl = this.variantForm.get('variantValueLabel');
 
     if (variantId) {
       variantIdControl?.patchValue(variantId);
       variantNameControl?.patchValue(
         this.productVariants.find((pv) => pv.id === variantId)?.name
-      );
-      variantValueLabelControl?.patchValue(
-        this.productVariants.find((pv) => pv.id === variantId)
-          ?.variantValueLabel
       );
     } else {
       this.variantForm.reset({
@@ -252,6 +254,8 @@ export class ProductVariantEditorComponent implements OnInit {
             variantValue,
           ];
         }
+
+        this.variantUpdate.emit(this.productVariants);
 
         this.checkValidityForErrorState();
         this.toggleEditVariantValueModal();
@@ -296,6 +300,8 @@ export class ProductVariantEditorComponent implements OnInit {
           }
         }
 
+        this.variantUpdate.emit(this.productVariants);
+
         this.toggleEditVariantValueModal();
       });
   }
@@ -320,6 +326,8 @@ export class ProductVariantEditorComponent implements OnInit {
             );
         }
 
+        this.variantUpdate.emit(this.productVariants);
+
         this.checkValidityForErrorState();
         this.toggleDeleteVariantValueModal();
       });
@@ -332,7 +340,6 @@ export class ProductVariantEditorComponent implements OnInit {
     const variantIdControl = this.variantValueForm.get('variantId');
     const variantValueIdControl = this.variantValueForm.get('id');
     const variantValueNameControl = this.variantValueForm.get('name');
-    const variantValueStockControl = this.variantValueForm.get('stock');
 
     if (variantId) {
       variantIdControl?.patchValue(variantId);
@@ -345,7 +352,6 @@ export class ProductVariantEditorComponent implements OnInit {
 
         if (matchingVariantValue != null) {
           variantValueNameControl?.patchValue(matchingVariantValue.name);
-          variantValueStockControl?.patchValue(matchingVariantValue.stock);
         }
       }
     } else {

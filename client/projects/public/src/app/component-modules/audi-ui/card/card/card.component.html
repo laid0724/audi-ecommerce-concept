@@ -2,7 +2,8 @@
   class="aui-card background-color-{{ bgColor }} text-{{ textColor }}"
   [ngClass]="{
     'aui-card--action': isClickable,
-    'aui-card--image': !isNullOrEmptyString(backgroundImageUrl)
+    'aui-card--image': !isNullOrEmptyString(backgroundImageUrl),
+    disabled: isDisabled
   }"
   [ngStyle]="{
     backgroundImage: !isNullOrEmptyString(backgroundImageUrl)
@@ -14,8 +15,10 @@
     <div
       class="aui-card__cover-image border-color-{{ borderColor }}"
       [ngClass]="{
-        'border-t border-l border-r': isBordered
+        'border-t border-l border-r': isBordered,
+        border: imageBordered
       }"
+      [ngStyle]="{ 'background-image': 'url(' + coverImageUrl + ')' }"
     >
       <img [src]="coverImageUrl" />
     </div>
@@ -30,7 +33,7 @@
       <p class="aui-small" *ngIf="!isNullOrEmptyString(headerSmallCaption)">
         {{ headerSmallCaption }}
       </p>
-      <h2 class="aui-headline-{{ headerSize }} text-truncate-ellipses">
+      <h2 class="aui-headline-{{ headerSize }} line-clamp-1">
         {{ header }}
       </h2>
       <p

@@ -1,0 +1,76 @@
+audi-wysiwyg-grid-display {
+  font-family: $aui-font-default;
+  font-weight: $aui-font-weight-light;
+  color: $aui-color-body;
+
+  strong {
+    font-weight: bold;
+  }
+
+  ul,
+  ol {
+    padding-left: 1.5em;
+    list-style-position: inside;
+  }
+
+  ul {
+    list-style-type: disc;
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  img {
+    object-fit: cover;
+    width: 100%;
+  }
+
+  h1 {
+    @extend .aui-headline-1;
+  }
+
+  h2 {
+    @extend .aui-headline-2;
+  }
+
+  h3 {
+    @extend .aui-headline-3;
+  }
+
+  h4 {
+    @extend .aui-headline-4;
+  }
+
+  h5 {
+    @extend .aui-headline-5;
+  }
+
+  h6 {
+    @extend .aui-headline-6;
+  }
+
+  a {
+    @extend .aui-textlink;
+  }
+
+  .ql {
+    &-align {
+      &-justify {
+        display: flex;
+        justify-content: flex-start;
+        text-align: left;
+      }
+      &-center {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+      }
+      &-right {
+        display: flex;
+        justify-content: flex-end;
+        text-align: right;
+      }
+    }
+  }
+}

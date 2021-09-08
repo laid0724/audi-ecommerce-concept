@@ -1,4 +1,4 @@
-import { PhotoService } from '@audi/data';
+import { CloudinaryPhotoCroppingMode, PhotoService } from '@audi/data';
 import { ToastrService } from 'ngx-toastr';
 import Quill, { Delta } from 'quill';
 
@@ -46,7 +46,7 @@ export function addCustomQuillImageHandler(
    */
   function saveToServer(file: File) {
     photoService
-      .uploadPhoto(file)
+      .uploadPhoto(file, CloudinaryPhotoCroppingMode.None)
       .subscribe((photoUrl: string) => insertToEditor(photoUrl));
   }
 

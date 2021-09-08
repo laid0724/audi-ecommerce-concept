@@ -13,8 +13,7 @@ export interface OrderItemUpsert {
   orderId?: number;
   userId: number;
   productId: number;
-  variantId: number;
-  variantValueId: number;
+  skuId: number;
   quantity: number;
 }
 

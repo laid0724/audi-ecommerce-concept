@@ -1,0 +1,6 @@
+.responsive-bg-color {
+  background-color: var(--audi-white);
+  @media (min-width: 768px) {
+    background-color: var(--audi-grey-1);
+  }
+}

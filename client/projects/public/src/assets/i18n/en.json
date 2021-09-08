@@ -15,11 +15,13 @@
     "productsCTA": "Shop Now",
     "login": "Login",
     "register": "Register",
-    "forgotPassword": "Forgot Password?"
-  },
-  "pricing": {
-    "originalPriceLabel": "",
-    "discountedPriceLabel": ""
+    "forgotPassword": "Forgot Password?",
+    "filter": "Filter",
+    "clearFilters": "Clear Filters",
+    "sortBy": "Sort By",
+    "addToCart": "Add To Cart",
+    "favorite": "Favorite",
+    "unfavorite": "Unfavorite"
   },
   "menu": {},
   "footer": {
@@ -42,7 +44,9 @@
     "required": "Required",
     "email": "Please enter a valid email address",
     "passwordMinLength": "Password must be at least 8 characters",
-    "confirmPassword": "Passwords do not match."
+    "confirmPassword": "Passwords do not match.",
+    "number": "Must be greater than 0",
+    "priceMaxNotGreaterThanPriceMin": "Maximum price must be greater than minimum price"
   },
   "formLabels": {
     "email": "Email",
@@ -55,7 +59,13 @@
     "firstName": "First Name",
     "lastName": "Last Name",
     "gender": "Gender",
-    "phoneNumber": "Phone Number"
+    "phoneNumber": "Phone Number",
+    "productName": "Product Name",
+    "productCategory": "Product Category",
+    "price": "Price",
+    "priceMin": "Minimum Price",
+    "priceMax": "Maximum Price",
+    "discounted": "Discounted"
   },
   "formDescriptions": {
     "email": "Please enter your email.",
@@ -85,7 +95,8 @@
   },
   "modals": {
     "changePassword": "Change Password",
-    "forgotPassword": "Forgot Password"
+    "forgotPassword": "Forgot Password",
+    "filters": "Filters"
   },
   "homepage": {
     "featuredProduct": "Featured Products",
@@ -101,5 +112,16 @@
   "login": {
     "login": "Login",
     "register": "Register"
+  },
+  "products": {
+    "audiCollections": "Audi Collections",
+    "results": "results",
+    "priceLowToHigh": "Price, low to high",
+    "priceHighToLow": "Price, high to low",
+    "dateOldToNew": "Date, old to new",
+    "dateNewToOld": "Date, new to old",
+    "noProductsAvailable": "No Products Available",
+    "outOfStock": "OUT OF STOCK",
+    "similarProducts": "Similar Products"
   }
 }

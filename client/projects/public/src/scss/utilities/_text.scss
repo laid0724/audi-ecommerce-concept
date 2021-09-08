@@ -109,29 +109,4 @@
     stroke: $audi-red !important;
     fill: $audi-red !important;
   }
-
-  &-truncate-ellipses {
-    // see: https://stackoverflow.com/questions/3922739/limit-text-length-to-n-lines-using-css
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-wrap: break-word;
-    white-space: wrap;
-    display: inline-block;
-    display: -webkit-box;
-    -webkit-line-clamp: 1; /* number of lines to show */
-    -webkit-box-orient: vertical;
-
-    &--2-lines {
-      -webkit-line-clamp: 2; /* number of lines to show */
-    }
-    &--3-lines {
-      -webkit-line-clamp: 3; /* number of lines to show */
-    }
-    &--4-lines {
-      -webkit-line-clamp: 3; /* number of lines to show */
-    }
-    &--5-lines {
-      -webkit-line-clamp: 3; /* number of lines to show */
-    }
-  }
 }

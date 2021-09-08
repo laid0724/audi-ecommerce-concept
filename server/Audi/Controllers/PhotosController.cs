@@ -26,9 +26,9 @@ namespace Audi.Controllers
 
         [SwaggerOperation(Summary = "upload photo and return its url")]
         [HttpPost]
-        public async Task<ActionResult<string>> UploadPhoto(IFormFile file)
+        public async Task<ActionResult<string>> UploadPhoto(IFormFile file, [FromHeader(Name = "X-CROPPING-MODE")] string croppingMode = "cover")
         {
-            var uploadResult = await _photoService.AddPhotoAsync(file, "cover");
+            var uploadResult = await _photoService.AddPhotoAsync(file, croppingMode);
 
             if (uploadResult.Error != null)
             {

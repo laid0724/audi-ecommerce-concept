@@ -1,4 +1,11 @@
-import { PagedRequest } from "./pagination";
+import { PagedRequest } from './pagination';
+
+export enum ProductSort {
+  CreatedAt = 'createdAt',
+  CreatedAtDesc = 'createdAtDesc',
+  Price = 'price',
+  PriceDesc = 'priceDesc',
+}
 
 export interface ProductParams extends PagedRequest {
   productCategoryId?: number;
@@ -9,4 +16,6 @@ export interface ProductParams extends PagedRequest {
   priceMax?: number;
   stockMin?: number;
   stockMax?: number;
+  sort?: ProductSort;
+  includeChildrenProducts?: boolean;
 }

@@ -139,10 +139,7 @@
                       </td>
                       <td class="align-middle">{{ item.product.name }}</td>
                       <td class="align-middle">
-                        {{
-                          item.variantValueId
-                            | map: productSkuMapperFn(item.product.variants)
-                        }}
+                        {{ item.productSku.sku }}
                       </td>
                       <td class="align-middle">{{ item.quantity }}</td>
                       <td class="align-middle">${{ item.price }}</td>

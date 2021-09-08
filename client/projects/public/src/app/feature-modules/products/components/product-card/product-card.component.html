@@ -1,0 +1,58 @@
+<div class="product-card w-full mb-4" *transloco="let translationOutput">
+  <audi-card
+    #card
+    class="clickable"
+    [routerLink]="['/', language, 'products', product.id]"
+    [coverImageUrl]="mainProductPhoto!.url"
+    [isDisabled]="product.stock === 0"
+    textAlign="center"
+  >
+    <a
+      class="product-card__like-icon absolute top-0 right-10 z-1"
+      (click)="onLikeClicked($event, product.id)"
+    >
+      <audi-icon
+        [customIconPath]="
+          productIsLikedByUser(product.id)
+            ? 'assets/icons/audi/favorited-small.svg'
+            : 'assets/icons/audi/favorite-small.svg'
+        "
+      ></audi-icon>
+    </a>
+    <div class="flex flex-col items-center justify-center">
+      <h5 class="aui-headline-5 mb-1">{{ product.name }}</h5>
+
+      <ng-container *ngIf="product.isDiscounted; else regularPrice">
+        <div class="grid grid-rows-1 grid-cols-3">
+          <span>&nbsp;</span>
+          <small class="product-price aui-small font-bold text-red text-center"
+            >${{ (product.price - product.discountAmount).toLocaleString() }}
+          </small>
+          <small class="product-price aui-small line-through text-grey-8">
+            ${{ product.price.toLocaleString() }}
+          </small>
+        </div>
+      </ng-container>
+
+      <small class="aui-small mt-1 text-danger" *ngIf="product.stock === 0">{{
+        translationOutput('products.outOfStock')
+      }}</small>
+
+      <ng-template #regularPrice>
+        <small class="aui-small">${{ product.price.toLocaleString() }}</small>
+      </ng-template>
+    </div>
+  </audi-card>
+</div>
+
+<!--
+  HACK: preload background images being used on hover
+  for reference, see: https://stackoverflow.com/questions/39656370/angular-2-preload-background-image
+-->
+<img
+  *ngFor="let preloadImg of productPhotos.slice(1, productPhotos.length)"
+  [src]="preloadImg.url"
+  (load)="preloadedImageUrls.push(preloadImg.url)"
+  class="absolute"
+  hidden
+/>

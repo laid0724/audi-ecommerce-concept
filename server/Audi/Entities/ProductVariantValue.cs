@@ -12,6 +12,5 @@ namespace Audi.Entities
         public bool IsDeleted { get; set; } = false;
         public ProductVariant ProductVariant { get; set; }
         public ICollection<ProductSkuValue> ProductSkuValues { get; set; }
-        public ICollection<OrderItem> OrderItems { get; set; }
     }
 }

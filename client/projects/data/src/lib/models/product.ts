@@ -1,4 +1,5 @@
 import { ProductPhoto } from './product-photo';
+import { ProductSku } from './product-sku';
 import { ProductVariant } from "./product-variant";
 import { WysiwygGrid } from './wysiwyg';
 
@@ -18,4 +19,5 @@ export interface Product {
   stock: number;
   photos: ProductPhoto[];
   variants: ProductVariant[];
+  skus: ProductSku[];
 }

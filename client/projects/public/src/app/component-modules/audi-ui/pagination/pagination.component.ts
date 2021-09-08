@@ -6,6 +6,8 @@ import {
   OnInit,
   Output,
   OnDestroy,
+  OnChanges,
+  SimpleChanges,
 } from '@angular/core';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import {
@@ -39,11 +41,11 @@ import { Subscription } from 'rxjs';
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
 })
-export class PaginationComponent implements OnInit, AfterViewInit, OnDestroy {
+export class PaginationComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
   @Input() isLightTheme: boolean = false;
   @Input() type: AudiPaginationType | string = AudiPaginationType.Desktop;
   @Input() pagination: Pagination;
-  @Input() pageRange: number = 1;
+  @Input() pageRange: number = 2;
 
   @Output()
   pageChange = new EventEmitter<number>();
@@ -87,6 +89,10 @@ export class PaginationComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.updatePaginationJsActiveIndicator();
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    this.updatePaginationJsActiveIndicator();
   }
 
   onPageChange(page: number): void {

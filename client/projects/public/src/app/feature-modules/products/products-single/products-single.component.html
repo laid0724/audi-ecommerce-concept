@@ -1,0 +1,245 @@
+<ng-container *ngIf="!isLoading; else loadingTemplate">
+  <ng-container *transloco="let translationOutput">
+    <div
+      fullpage
+      id="fullpage"
+      [options]="fullpageConfig"
+      (ref)="getFullpageRef($event)"
+      class="-mt-14"
+    >
+      <section class="section fp-auto-height">
+        <div class="aui-layout">
+          <div class="aui-grid">
+            <div
+              class="
+                aui-cell aui-cell--12
+                grid grid-rows-none grid-cols-12
+                hero-slide
+                p-0
+              "
+            >
+              <div class="col-span-12 md:col-span-6 hero-slide__gallery">
+                <div class="w-full">
+                  <audi-product-slider
+                    [imgUrls]="imgUrls"
+                  ></audi-product-slider>
+                </div>
+              </div>
+              <div class="col-span-12 md:col-span-6 hero-slide__product-info">
+                <h1 class="aui-headline-4">
+                  {{ product.name }}
+                </h1>
+                <ng-container *ngIf="product.isDiscounted; else price">
+                  <div
+                    class="
+                      flex flex-row
+                      items-center
+                      justify-center
+                      md:justify-start
+                      my-2
+                    "
+                  >
+                    <small class="mr-1 text-red">
+                      ${{
+                        (
+                          product.price - product.discountAmount
+                        ).toLocaleString()
+                      }}
+                    </small>
+                    <small class="aui-small line-through text-grey-8"
+                      >(${{ product.price.toLocaleString() }})</small
+                    >
+                  </div>
+                </ng-container>
+                <ng-template #price>
+                  <small class="text-grey-8 my-2">
+                    ${{ product.price.toLocaleString() }}
+                  </small>
+                </ng-template>
+
+                <p class="line-clamp-6 text-center text-sm md:text-base">
+                  {{ product.description }}
+                </p>
+
+                <form [formGroup]="variantSelectionForm" class="w-full mb-10">
+                  <div class="grid grid-rows-none grid-cols-12 gap-2">
+                    <div
+                      formArrayName="selections"
+                      *ngFor="let variant of product.variants; let i = index"
+                      [ngClass]="{
+                        'col-span-12': product.variants.length === 1,
+                        'col-span-6': product.variants.length > 1
+                      }"
+                    >
+                      <audi-select-container
+                        [formControl]="
+                          convertToFormControl(selections.controls[i])
+                        "
+                        [label]="variant.name"
+                        [floatingLabel]="true"
+                      >
+                        <option
+                          *ngFor="let value of variant.variantValues"
+                          [value]="value.id"
+                        >
+                          {{ value.name }}
+                        </option>
+                      </audi-select-container>
+                    </div>
+                  </div>
+                </form>
+
+                <div
+                  class="w-full grid grid-rows-none grid-cols-12 gap-2 mb-10"
+                >
+                  <audi-button
+                    type="primary"
+                    [isDisabled]="!selectionHasStock"
+                    class="
+                      col-span-12
+                      lg:col-span-6
+                      flex
+                      justify-center
+                      align-center
+                      w-full
+                    "
+                  >
+                    <audi-icon iconName="shopping-basket"></audi-icon>
+                    <span class="ml-3">{{
+                      outOfStock
+                        ? translationOutput('products.outOfStock')
+                        : selectionIsEmpty
+                        ? translationOutput('buttons.addToCart')
+                        : selectionHasStock
+                        ? translationOutput('buttons.addToCart')
+                        : translationOutput('products.outOfStock')
+                    }}</span>
+                  </audi-button>
+                  <audi-button
+                    type="secondary"
+                    class="
+                      col-span-12
+                      lg:col-span-6
+                      flex
+                      justify-center
+                      align-center
+                      w-full
+                    "
+                    (click)="onLikeClicked($event, product.id)"
+                  >
+                    <audi-icon
+                      [customIconPath]="
+                        productIsLikedByUser(product.id)
+                          ? 'assets/icons/audi/favorited-small-black.svg'
+                          : 'assets/icons/audi/favorite-small.svg'
+                      "
+                    ></audi-icon>
+                    <span class="ml-3 line-clamp-1">{{
+                      productIsLikedByUser(product.id)
+                        ? translationOutput('buttons.unfavorite')
+                        : translationOutput('buttons.favorite')
+                    }}</span>
+                  </audi-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <ng-container *ngIf="hasWysiwygContent">
+        <section class="section fp-auto-height">
+          <audi-wysiwyg-grid-display
+            [wysiwygGrid]="product.wysiwyg"
+          ></audi-wysiwyg-grid-display>
+        </section>
+      </ng-container>
+
+      <ng-container *ngIf="similarProducts.length > 0">
+        <section class="section">
+          <div
+            class="
+              aui-cell aui-cell--12
+              full-screen-height
+              flex
+              items-center
+              justify-center
+            "
+          >
+            <div class="w-full relative">
+              <h3
+                class="
+                  aui-headline-3
+                  text-black text-center
+                  absolute
+                  -top-16
+                  left-0
+                  right-0
+                "
+              >
+                {{ translationOutput('products.similarProducts') }}
+              </h3>
+              <audi-multi-slides-per-view-slider
+                [slidesPerView]="3"
+                [spaceBetween]="10"
+                [autoplay]="false"
+                [isLightTheme]="false"
+              >
+                <ng-container *ngFor="let product of similarProducts">
+                  <div *projectAsTemplate class="max-w-xs">
+                    <audi-card
+                      [headerSize]="4"
+                      [header]="product.name"
+                      [coverImageUrl]="getProductMainPhoto(product.photos)!.url"
+                      textAlign="center"
+                    >
+                      <small
+                        class="
+                          hidden
+                          md-block
+                          text-grey-8 text-center
+                          md:line-clamp-3
+                          mt-2
+                          mb-4
+                        "
+                      >
+                        {{ product.description }}
+                      </small>
+
+                      <audi-button
+                        type="primary"
+                        class="block w-full mt-6 md:mt-0"
+                        [routerLink]="['/', language, 'products', product.id]"
+                      >
+                        {{ translationOutput('buttons.productsCTA') }}
+                      </audi-button>
+                    </audi-card>
+                  </div>
+                </ng-container>
+              </audi-multi-slides-per-view-slider>
+            </div>
+          </div>
+        </section>
+      </ng-container>
+
+      <section class="section fp-auto-height pt-0">
+        <audi-footer></audi-footer>
+      </section>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-template #loadingTemplate>
+  <div
+    class="
+      full-screen-height
+      mt-14
+      flex
+      items-center
+      justify-center
+      background-color-grey-2
+    "
+  >
+    <audi-spinner class="block" [isContinuous]="true"></audi-spinner>
+  </div>
+</ng-template>

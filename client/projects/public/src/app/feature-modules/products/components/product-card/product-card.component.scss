@@ -1,0 +1,10 @@
+.product {
+  &-card {
+    &:hover &__like-icon {
+      display: block;
+    }
+    &__like-icon {
+      display: none;
+    }
+  }
+}

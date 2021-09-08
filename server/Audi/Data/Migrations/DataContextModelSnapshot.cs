@@ -553,29 +553,17 @@ namespace server.Data.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("product_id");
 
-                    b.Property<int?>("ProductVariantProductId")
-                        .HasColumnType("integer")
-                        .HasColumnName("product_variant_product_id");
-
-                    b.Property<int?>("ProductVariantVariantId")
-                        .HasColumnType("integer")
-                        .HasColumnName("product_variant_variant_id");
-
                     b.Property<int>("Quantity")
                         .HasColumnType("integer")
                         .HasColumnName("quantity");
 
+                    b.Property<int>("SkuId")
+                        .HasColumnType("integer")
+                        .HasColumnName("sku_id");
+
                     b.Property<int>("UserId")
                         .HasColumnType("integer")
                         .HasColumnName("user_id");
-
-                    b.Property<int>("VariantId")
-                        .HasColumnType("integer")
-                        .HasColumnName("variant_id");
-
-                    b.Property<int>("VariantValueId")
-                        .HasColumnType("integer")
-                        .HasColumnName("variant_value_id");
 
                     b.HasKey("Id")
                         .HasName("pk_order_items");
@@ -586,11 +574,8 @@ namespace server.Data.Migrations
                     b.HasIndex("UserId")
                         .HasDatabaseName("ix_order_items_user_id");
 
-                    b.HasIndex("ProductVariantProductId", "ProductVariantVariantId")
-                        .HasDatabaseName("ix_order_items_product_variant_product_id_product_variant_variant_id");
-
-                    b.HasIndex("ProductId", "VariantId", "VariantValueId")
-                        .HasDatabaseName("ix_order_items_product_id_variant_id_variant_value_id");
+                    b.HasIndex("ProductId", "SkuId")
+                        .HasDatabaseName("ix_order_items_product_id_sku_id");
 
                     b.ToTable("order_items");
                 });
@@ -773,6 +758,10 @@ namespace server.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("sku");
 
+                    b.Property<int>("Stock")
+                        .HasColumnType("integer")
+                        .HasColumnName("stock");
+
                     b.HasKey("ProductId", "SkuId")
                         .HasName("pk_product_skus");
 
@@ -799,10 +788,6 @@ namespace server.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("boolean")
                         .HasColumnName("is_deleted");
-
-                    b.Property<int>("Stock")
-                        .HasColumnType("integer")
-                        .HasColumnName("stock");
 
                     b.Property<int>("VariantValueId")
                         .HasColumnType("integer")
@@ -836,10 +821,6 @@ namespace server.Data.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("text")
                         .HasColumnName("name");
-
-                    b.Property<string>("VariantValueLabel")
-                        .HasColumnType("text")
-                        .HasColumnName("variant_value_label");
 
                     b.HasKey("ProductId", "VariantId")
                         .HasName("pk_product_variants");
@@ -1131,13 +1112,9 @@ namespace server.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Audi.Entities.ProductVariant", "ProductVariant")
-                        .WithMany()
-                        .HasForeignKey("ProductVariantProductId", "ProductVariantVariantId");
-
-                    b.HasOne("Audi.Entities.ProductVariantValue", "ProductVariantValue")
+                    b.HasOne("Audi.Entities.ProductSku", "ProductSku")
                         .WithMany("OrderItems")
-                        .HasForeignKey("ProductId", "VariantId", "VariantValueId")
+                        .HasForeignKey("ProductId", "SkuId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1145,9 +1122,7 @@ namespace server.Data.Migrations
 
                     b.Navigation("Product");
 
-                    b.Navigation("ProductVariant");
-
-                    b.Navigation("ProductVariantValue");
+                    b.Navigation("ProductSku");
 
                     b.Navigation("User");
                 });
@@ -1375,6 +1350,8 @@ namespace server.Data.Migrations
 
             modelBuilder.Entity("Audi.Entities.ProductSku", b =>
                 {
+                    b.Navigation("OrderItems");
+
                     b.Navigation("ProductSkuValues");
                 });
 
@@ -1387,8 +1364,6 @@ namespace server.Data.Migrations
 
             modelBuilder.Entity("Audi.Entities.ProductVariantValue", b =>
                 {
-                    b.Navigation("OrderItems");
-
                     b.Navigation("ProductSkuValues");
                 });
 #pragma warning restore 612, 618

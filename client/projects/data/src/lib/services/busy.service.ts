@@ -40,4 +40,8 @@ export class BusyService {
       this.spinner?.hide();
     }
   }
+
+  clear(): void {
+    this.busyRequestCount = 0;
+  }
 }
