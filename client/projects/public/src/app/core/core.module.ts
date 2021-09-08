@@ -11,13 +11,15 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { FooterModule } from './footer/footer.module';
 import { FormComponentsModule } from '../component-modules/form-components/form-components.module';
 import { ModalModule } from '../component-modules/audi-ui/modal/modal.module';
+import { AlertModule } from '../component-modules/audi-ui/alert/alert.module';
+import { FlyoutModule } from '../component-modules/audi-ui/flyout/flyout.module';
+import { IconWithBadgeModule } from '../component-modules/audi-ui/icon-with-badge/icon-with-badge.module';
+import { CartModule } from '../feature-modules/cart/cart.module';
 
 import { NavComponent } from './nav/nav.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ServerErrorComponent } from './server-error/server-error.component';
 import { LoginComponent } from './login/login.component';
-import { AlertModule } from '../component-modules/audi-ui/alert/alert.module';
-import { FlyoutModule } from '../component-modules/audi-ui/flyout/flyout.module';
 
 const COMPONENTS = [
   NotFoundComponent,
@@ -40,6 +42,8 @@ const IMPORT_MODULES = [
   ModalModule,
   TranslocoModule,
   FlyoutModule,
+  IconWithBadgeModule,
+  CartModule,
 ];
 
 @NgModule({

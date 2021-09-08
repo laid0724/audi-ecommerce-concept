@@ -4,7 +4,7 @@
       <div class="aui-header__content-wrapper">
         <audi-button
           type="icon-large"
-          (click)="toggleMenuState(true)"
+          (click)="toggleMenuState(true); cartMenuIsOpen = false"
           class="z-1"
         >
           <audi-icon size="large" [iconName]="'off-canvas'"></audi-icon>
@@ -25,7 +25,7 @@
           <a
             [routerLink]="['/', language, 'home']"
             class="w-20 flex items-center justify-center"
-            (click)="!menuIsPristine ? toggleMenuState(false) : null"
+            (click)="closeAllMenu()"
           >
             <audi-button type="icon">
               <img src="assets/audi-logo-black.svg" class="w-full" />
@@ -41,7 +41,7 @@
                 #triggeringElement
                 flyoutTriggerSetter
                 [applyToInnerElement]="true"
-                (click)="!menuIsPristine ? toggleMenuState(false) : null"
+                (click)="closeAllMenu()"
               >
                 <audi-icon size="small" iconName="user"></audi-icon>
               </audi-button>
@@ -69,19 +69,29 @@
           </ng-container>
 
           <ng-template #notLoggedIn>
-            <audi-button
-              type="icon"
-              (click)="
-                directToLogin(); !menuIsPristine ? toggleMenuState(false) : null
-              "
-            >
+            <audi-button type="icon" (click)="directToLogin(); closeAllMenu()">
               <audi-icon size="small" iconName="user"></audi-icon>
             </audi-button>
           </ng-template>
 
+          <ng-container *ngIf="cart$ | async; let cart">
+            <audi-button
+              type="icon"
+              class="ml-3 mr-2"
+              (click)="cartMenuIsOpen = true; toggleMenuState(false)"
+            >
+              <audi-icon-with-badge
+                iconName="shopping-basket"
+                size="small"
+                badgeBgColor="black"
+                [badgeIsHidden]="cart.length < 1"
+              ></audi-icon-with-badge>
+            </audi-button>
+          </ng-container>
+
           <div class="w-12 flex items-center justify-center">
             <audi-language-selector
-              (click)="!menuIsPristine ? toggleMenuState(false) : null"
+              (click)="closeAllMenu()"
             ></audi-language-selector>
           </div>
         </div>
@@ -89,22 +99,17 @@
     </audi-header>
 
     <div
-      #menu
       class="audi-side-nav"
       [ngClass]="{
         active: menuIsOpen
       }"
-      *transloco="let translationOutput"
     >
-      <div
-        class="audi-side-nav__overlay"
-        (click)="!menuIsPristine ? toggleMenuState(false) : null"
-      ></div>
+      <div class="audi-side-nav__overlay" (click)="closeAllMenu()"></div>
       <div class="audi-side-nav__menu-container">
         <div class="audi-side-nav__menu-close-btn-wrapper">
           <div
             class="audi-side-nav__menu-close-btn"
-            [ngClass]="{ 'inactive-animation': !menuIsPristine && !menuIsOpen }"
+            [ngClass]="{ 'inactive-animation': !menuIsOpen }"
           >
             <audi-button type="icon-large" (click)="toggleMenuState(false)">
               <audi-icon size="large" [iconName]="'cancel'"></audi-icon>
@@ -113,7 +118,7 @@
         </div>
         <div
           class="audi-side-nav__menu"
-          [ngClass]="{ 'inactive-animation': !menuIsPristine && !menuIsOpen }"
+          [ngClass]="{ 'inactive-animation': !menuIsOpen }"
         >
           <!-- TODO: transloco -->
           <h3
@@ -192,5 +197,7 @@
         </div>
       </div>
     </div>
+
+    <audi-cart-nav [(menuIsOpen)]="cartMenuIsOpen"></audi-cart-nav>
   </ng-container>
 </ng-container>

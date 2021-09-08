@@ -1,1 +1,25 @@
-<p>cart-nav works!</p>
+<div
+  class="audi-cart"
+  [ngClass]="{
+    active: menuIsOpen
+  }"
+  *transloco="let translationOutput"
+>
+  <div class="audi-cart__overlay" (click)="menuIsOpen = false"></div>
+  <div class="audi-cart__menu-container">
+    <div class="audi-cart__menu-close-btn-wrapper">
+      <div
+        class="audi-cart__menu-close-btn"
+        [ngClass]="{ 'inactive-animation': !menuIsOpen }"
+      >
+        <audi-button type="icon-large" (click)="menuIsOpen = false">
+          <audi-icon size="large" [iconName]="'cancel'"></audi-icon>
+        </audi-button>
+      </div>
+    </div>
+    <div
+      class="audi-cart__menu"
+      [ngClass]="{ 'inactive-animation': !menuIsOpen }"
+    ></div>
+  </div>
+</div>

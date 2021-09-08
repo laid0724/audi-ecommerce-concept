@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { CartItem } from '@audi/data';
+import { ReplaySubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  cart: CartItem[] = [];
+  private _cart$ = new ReplaySubject<CartItem[]>(1);
+  cart$ = this._cart$.asObservable();
 
   constructor() {
     this.loadCartFromLocalStorage();
@@ -17,7 +19,7 @@ export class CartService {
     if (localStorageCart === null) {
       localStorage.setItem('cart', JSON.stringify([]));
     } else {
-      this.cart = JSON.parse(localStorageCart);
+      this._cart$.next(JSON.parse(localStorageCart));
     }
   }
 

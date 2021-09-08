@@ -75,6 +75,13 @@ let routes: Routes = [
       ),
   },
   {
+    path: ':languageCode/cart',
+    loadChildren: () =>
+      import('./feature-modules/cart/cart.module').then(
+        (m) => m.CartModule
+      ),
+  },
+  {
     path: 'server-error',
     redirectTo: `${lastSelectedLanguage}/server-error`,
   },
