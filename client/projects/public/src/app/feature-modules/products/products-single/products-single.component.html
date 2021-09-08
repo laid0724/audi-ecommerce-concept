@@ -95,6 +95,7 @@
                   <audi-button
                     type="primary"
                     [isDisabled]="!selectionHasStock"
+                    (click)="selectionHasStock ? onAddToCart() : null"
                     class="
                       col-span-12
                       lg:col-span-6

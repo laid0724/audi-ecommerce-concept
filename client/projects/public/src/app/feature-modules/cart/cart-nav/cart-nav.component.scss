@@ -31,6 +31,11 @@ $audi-header-height: 56px;
       width: calc(50vw - #{$audi-logo-width});
       max-width: calc(50vw - #{$audi-logo-width});
     }
+
+    @media (min-width: 992px) {
+      width: 375px;
+      max-width: 375px;
+    }
   }
 
   &.active &__menu-close-btn {
@@ -55,9 +60,16 @@ $audi-header-height: 56px;
     width: 100%;
     display: none;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: $audi-header-height;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+
+    &__cart-items {
+      height: 100%;
+      width: 100%;
+      overflow-y: auto;
+      padding: 10px 0;
+    }
 
     &.inactive-animation {
       animation: disappear-menu 0.4s var(--audi-transition-timing-function)

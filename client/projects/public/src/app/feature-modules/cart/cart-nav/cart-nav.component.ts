@@ -8,7 +8,11 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
+import { CartItem } from '@audi/data';
+import { Observable } from 'rxjs';
 import { CartService } from '../services/cart.service';
+
+// FIXME: on pages with fullpage js, scrolling cart item scrolls page too
 
 @Component({
   selector: 'audi-cart-nav',
@@ -16,6 +20,9 @@ import { CartService } from '../services/cart.service';
   styleUrls: ['./cart-nav.component.scss'],
 })
 export class CartNavComponent implements OnInit {
+  cart$: Observable<CartItem[]> = this.cartService.cart$;
+  cartMenuIsOpen$: Observable<boolean> = this.cartService.cartMenuIsOpen$;
+
   _menuIsOpen: boolean = false;
 
   get menuIsOpen(): boolean {
@@ -38,7 +45,11 @@ export class CartNavComponent implements OnInit {
     private cartService: CartService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.cartMenuIsOpen$.subscribe(
+      (menuIsOpen: boolean) => (this.menuIsOpen = menuIsOpen)
+    );
+  }
 
   toggleMenuState(): void {
     this.menuIsOpen
