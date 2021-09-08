@@ -58,6 +58,8 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
   pagination: Pagination;
   isParamsEmpty: boolean = true;
 
+  loading = true;
+
   isDesktop: boolean;
   _breakpointObserverSubscription: Subscription;
 
@@ -169,6 +171,7 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.products = productsPaged.result;
         this.pagination = productsPaged.pagination;
 
+        this.loading = false;
         this.busyService.idle();
       });
   }
