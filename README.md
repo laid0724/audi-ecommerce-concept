@@ -97,9 +97,6 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 #### API
 
 - Order creation email and status update email
-** these need language property zh/en **
-- add photo property to product category
-**
 - email / messaging / inbox functionality
   - inbox system for users, admin can send promo messages to them
   - notification system for users
@@ -121,9 +118,6 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - Angular universal
 - update user info
 - member's area
-- product list
-- single product page using fullpage - first page has product info and carousel, second page custom wysiwyg content and product recommendations in same category
-- user like product feature
 - cart
 - checkout / order
 - cancel / track order
