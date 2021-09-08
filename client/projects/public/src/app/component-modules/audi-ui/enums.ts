@@ -37,6 +37,8 @@ export enum AudiButton {
   Text = 'text',
   Icon = 'icon',
   IconLarge = 'icon-large',
+  IconNotRound = 'icon-not-round',
+  IconLargeNotRound = 'icon-large-not-round',
 }
 
 export enum AudiButtonGroup {
