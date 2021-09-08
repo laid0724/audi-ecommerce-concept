@@ -193,22 +193,9 @@
                       [coverImageUrl]="getProductMainPhoto(product.photos)!.url"
                       textAlign="center"
                     >
-                      <small
-                        class="
-                          hidden
-                          md-block
-                          text-grey-8 text-center
-                          md:line-clamp-3
-                          mt-2
-                          mb-4
-                        "
-                      >
-                        {{ product.description }}
-                      </small>
-
                       <audi-button
                         type="primary"
-                        class="block w-full mt-6 md:mt-0"
+                        class="block w-full mt-6"
                         [routerLink]="['/', language, 'products', product.id]"
                       >
                         {{ translationOutput('buttons.productsCTA') }}

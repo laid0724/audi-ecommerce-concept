@@ -212,22 +212,9 @@
                         "
                         textAlign="center"
                       >
-                        <small
-                          class="
-                            hidden
-                            text-grey-8
-                            md:line-clamp-3
-                            text-center
-                            mt-2
-                            mb-4
-                          "
-                        >
-                          {{ product.description }}
-                        </small>
-
                         <audi-button
                           type="primary"
-                          class="block w-full mt-6 md:mt-0"
+                          class="block w-full mt-6"
                           [routerLink]="['/', language, 'products', product.id]"
                         >
                           {{ translationOutput('buttons.productsCTA') }}
