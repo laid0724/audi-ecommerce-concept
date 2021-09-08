@@ -124,8 +124,7 @@
                       <small
                         class="
                           document-description-wrapper
-                          text-grey-8
-                          text-center
+                          text-grey-8 text-center
                           line-clamp-3
                           mt-1
                           mb-4
@@ -213,23 +212,22 @@
                         "
                         textAlign="center"
                       >
-                        <div class="flex flex-col items-center justify-center">
-                          <small
-                            class="
-                              text-grey-8
-                              line-clamp-3
-                              text-center
-                              mt-2
-                              mb-4
-                            "
-                          >
-                            {{ product.description }}
-                          </small>
-                        </div>
+                        <small
+                          class="
+                            hidden
+                            text-grey-8
+                            md:line-clamp-3
+                            text-center
+                            mt-2
+                            mb-4
+                          "
+                        >
+                          {{ product.description }}
+                        </small>
 
                         <audi-button
                           type="primary"
-                          class="block w-full"
+                          class="block w-full mt-6 md:mt-0"
                           [routerLink]="['/', language, 'products', product.id]"
                         >
                           {{ translationOutput('buttons.productsCTA') }}

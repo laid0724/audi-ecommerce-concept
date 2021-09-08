@@ -246,18 +246,18 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
 
   onVariantUpdate(variants: any): void {
     if (this.product !== null) {
+      if (variants.length < this.product.variants.length) {
+        this.hideProduct();
+      }
+
       this.product.variants = variants;
 
       const everyVariantHasValue: boolean = variants.every(
         (v: ProductVariant) => v.variantValues.length > 0
       );
+
       if (variants.length < 1 || !everyVariantHasValue) {
-        this.productService
-          .hideProduct(this.product.id)
-          .pipe(take(1))
-          .subscribe((_) => {
-            this.productForm.get('isVisible')?.setValue(false);
-          });
+        this.hideProduct();
       }
 
       const allVariantValueIds = variants
@@ -353,6 +353,17 @@ export class ProductsEditComponent implements OnInit, OnDestroy {
         }
       }
     );
+  }
+
+  hideProduct(): void {
+    if (this.product != null) {
+      this.productService
+        .hideProduct(this.product.id)
+        .pipe(take(1))
+        .subscribe((_) => {
+          this.productForm.get('isVisible')?.setValue(false);
+        });
+    }
   }
 
   ngOnDestroy(): void {

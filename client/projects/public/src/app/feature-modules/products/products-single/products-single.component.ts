@@ -2,26 +2,28 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
+  AccountService,
   BusyService,
   isNullOrEmptyString,
   LanguageStateService,
   PaginatedResult,
   Product,
   ProductPhoto,
+  ProductSku,
   ProductsService,
+  User,
 } from '@audi/data';
 import { filter, switchMap, take, tap } from 'rxjs/operators';
-import { TranslocoService } from '@ngneat/transloco';
-import { NotificationService } from '../../../component-modules/audi-ui/services/notification-service/notification.service';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+} from '@angular/forms';
 
 // TODO: transloco
-// TODO: RWD
-// TODO: implement product info panel
-// TODO: variant selector
-// TODO: product out of stock
-// TODO: product like/unlike
 // TODO: product add to cart
-// TODO: product checkout btn
 
 @Component({
   selector: 'audi-products-single',
@@ -31,6 +33,11 @@ import { NotificationService } from '../../../component-modules/audi-ui/services
 export class ProductsSingleComponent implements OnInit, OnDestroy {
   product: Product;
   similarProducts: Product[];
+
+  user: User | null = null;
+
+  addToCartForm: FormGroup;
+  variantSelectionForm: FormGroup;
 
   fullpageConfig: any;
   fullpageRef: any;
@@ -59,13 +66,37 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
     );
   }
 
+  get hasStock(): boolean {
+    if (this.product.stock < 1) {
+      return false;
+    }
+
+    const selectedValues = this.selections.value.map((v: string) => +v);
+
+    const matchingSku = this.product.skus.find((sku: ProductSku) =>
+      sku.variantValueIds.every((id) => selectedValues.includes(id))
+    );
+
+    if (matchingSku !== undefined && matchingSku.stock > 0) return true;
+
+    return false;
+  }
+
+  get selections(): FormArray {
+    const selections = this.variantSelectionForm.get('selections') as FormArray;
+    return selections;
+  }
+
+  public isNullOrEmptyString: (val: string | null | undefined) => boolean =
+    isNullOrEmptyString;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private fb: FormBuilder,
+    private accountService: AccountService,
     private productService: ProductsService,
-    private notificationService: NotificationService,
     private languageService: LanguageStateService,
-    private transloco: TranslocoService,
     private busyService: BusyService
   ) {
     // for more details on config options please visit fullPage.js docs
@@ -82,6 +113,13 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.initVariantSelectionForm();
+    this.initAddToCartForm();
+
+    this.accountService.currentUser$.subscribe((user: User | null) => {
+      this.user = user;
+    });
+
     this.route.paramMap
       .pipe(
         tap((_) => (this.isLoading = true)),
@@ -89,7 +127,15 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
         switchMap((params: ParamMap) =>
           this.productService.getProduct(+params.get('productId')!)
         ),
-        tap((product: Product) => (this.product = product)),
+        tap((product: Product) => {
+          this.product = product;
+
+          this.selections.clear();
+
+          product.variants.forEach((variant) => {
+            this.selections.push(this.fb.control(null));
+          });
+        }),
         switchMap((product: Product) =>
           this.productService.getIsVisibleProducts({
             pageNumber: 1,
@@ -119,6 +165,21 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
       );
   }
 
+  initVariantSelectionForm(): void {
+    this.variantSelectionForm = this.fb.group({
+      selections: this.fb.array([]),
+    });
+  }
+
+  initAddToCartForm(): void {
+    // TODO
+  }
+
+  convertToFormControl(abstractControl: AbstractControl | null): FormControl {
+    const control = abstractControl as FormControl;
+    return control;
+  }
+
   getFullpageRef(fullpageRef: any) {
     this.fullpageRef = fullpageRef;
 
@@ -135,6 +196,63 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
 
   getProductMainPhoto(photos: ProductPhoto[]): ProductPhoto | undefined {
     return photos.find((p) => p.isMain);
+  }
+
+  productIsLikedByUser(productId: number): boolean {
+    if (this.user) {
+      return this.user.likedProductIds.some((id) => id === productId);
+    }
+
+    return false;
+  }
+
+  onAddToCart(): void {
+    // TODO:
+  }
+
+  onLikeClicked(e: Event, productId: number): void {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (this.user != null) {
+      this.productIsLikedByUser(productId)
+        ? this.unlikeProduct(productId)
+        : this.likeProduct(productId);
+    }
+
+    if (this.user == null) {
+      this.directToLogin();
+    }
+  }
+
+  likeProduct(productId: number): void {
+    this.productService
+      .likeProduct(productId)
+      .pipe(take(1))
+      .subscribe((likedProducts: Product[]) => {
+        this.accountService.setCurrentUser({
+          ...(this.user as User),
+          likedProductIds: likedProducts.map((p: Product) => p.id) as number[],
+        });
+      });
+  }
+
+  unlikeProduct(productId: number): void {
+    this.productService
+      .unlikeProduct(productId)
+      .pipe(take(1))
+      .subscribe((likedProducts: Product[]) => {
+        this.accountService.setCurrentUser({
+          ...(this.user as User),
+          likedProductIds: likedProducts.map((p: Product) => p.id) as number[],
+        });
+      });
+  }
+
+  directToLogin(): void {
+    this.router.navigate(['/', this.language, 'login'], {
+      queryParams: { redirectTo: this.router.routerState.snapshot.url },
+    });
   }
 
   ngOnDestroy(): void {

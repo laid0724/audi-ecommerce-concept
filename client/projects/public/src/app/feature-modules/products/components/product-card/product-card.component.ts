@@ -71,7 +71,6 @@ export class ProductCardComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.accountService.currentUser$.subscribe((user: User | null) => {
       this.user = user;
-      console.log(user);
     });
   }
 

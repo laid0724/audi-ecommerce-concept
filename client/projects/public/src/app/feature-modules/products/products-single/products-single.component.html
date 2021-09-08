@@ -6,9 +6,9 @@
       id="fullpage"
       [options]="fullpageConfig"
       (ref)="getFullpageRef($event)"
-      class="-mt-12"
+      class="-mt-14"
     >
-      <section class="section">
+      <section class="section fp-auto-height">
         <div class="aui-layout">
           <div class="aui-grid">
             <div
@@ -16,11 +16,9 @@
                 aui-cell aui-cell--12
                 grid grid-rows-none grid-cols-12
                 hero-slide
+                p-0
               "
             >
-              <div class="col-span-12 flex justify-center items-center">
-                <h1 class="aui-headline-3">{{ product.name }}</h1>
-              </div>
               <div class="col-span-12 md:col-span-6 hero-slide__gallery">
                 <div class="w-full">
                   <audi-product-slider
@@ -29,7 +27,122 @@
                 </div>
               </div>
               <div class="col-span-12 md:col-span-6 hero-slide__product-info">
-                product info here
+                <h1 class="aui-headline-4">
+                  {{ product.name }}
+                </h1>
+                <ng-container *ngIf="product.isDiscounted; else price">
+                  <div
+                    class="
+                      flex flex-row
+                      items-center
+                      justify-center
+                      md:justify-start
+                      my-2
+                    "
+                  >
+                    <small class="mr-1 text-red">
+                      ${{
+                        (
+                          product.price - product.discountAmount
+                        ).toLocaleString()
+                      }}
+                    </small>
+                    <small class="aui-small line-through text-grey-8"
+                      >(${{ product.price.toLocaleString() }})</small
+                    >
+                  </div>
+                </ng-container>
+                <ng-template #price>
+                  <small class="text-grey-8 my-2">
+                    ${{ product.price.toLocaleString() }}
+                  </small>
+                </ng-template>
+
+                <p
+                  class="
+                    line-clamp-6
+                    text-center
+                    text-sm
+                    md:text-base
+                  "
+                >
+                  {{ product.description }}
+                </p>
+
+                <form [formGroup]="variantSelectionForm" class="w-full mb-10">
+                  <div class="grid grid-rows-none grid-cols-12 gap-2">
+                    <div
+                      formArrayName="selections"
+                      *ngFor="let variant of product.variants; let i = index"
+                      [ngClass]="{
+                        'col-span-12': product.variants.length === 1,
+                        'col-span-6': product.variants.length > 1
+                      }"
+                    >
+                      <audi-select-container
+                        [formControl]="
+                          convertToFormControl(selections.controls[i])
+                        "
+                        [label]="variant.name"
+                        [floatingLabel]="true"
+                      >
+                        <option
+                          *ngFor="let value of variant.variantValues"
+                          [value]="value.id"
+                        >
+                          {{ value.name }}
+                        </option>
+                      </audi-select-container>
+                    </div>
+                  </div>
+                </form>
+
+                <div class="w-full grid grid-rows-none grid-cols-12 gap-2 mb-10">
+                  <audi-button
+                    type="primary"
+                    [isDisabled]="!hasStock"
+                    class="
+                      col-span-12
+                      lg:col-span-6
+                      flex
+                      justify-center
+                      align-center
+                      w-full
+                    "
+                  >
+                    <audi-icon iconName="shopping-basket"></audi-icon>
+                    <span class="ml-3">{{
+                      !hasStock
+                        ? translationOutput('products.outOfStock')
+                        : 'Add to Cart'
+                    }}</span>
+                  </audi-button>
+                  <audi-button
+                    type="secondary"
+                    class="
+                      col-span-12
+                      lg:col-span-6
+                      flex
+                      justify-center
+                      align-center
+                      w-full
+                    "
+                    (click)="onLikeClicked($event, product.id)"
+                  >
+                    <audi-icon
+                      [customIconPath]="
+                        productIsLikedByUser(product.id)
+                          ? 'assets/icons/audi/favorited-small-black.svg'
+                          : 'assets/icons/audi/favorite-small.svg'
+                      "
+                    ></audi-icon>
+                    <span class="ml-3 line-clamp-1">{{
+                      productIsLikedByUser(product.id)
+                        ? 'Unfavorite'
+                        : 'Favorite'
+                    }}</span>
+                  </audi-button>
+                </div>
               </div>
             </div>
           </div>
@@ -82,23 +195,22 @@
                       [coverImageUrl]="getProductMainPhoto(product.photos)!.url"
                       textAlign="center"
                     >
-                      <div class="flex flex-col items-center justify-center">
-                        <small
-                          class="
-                            text-grey-8
-                            text-truncate-ellipses
-                            text-truncate-ellipses--3-lines
-                            mt-2
-                            mb-4
-                          "
-                        >
-                          {{ product.description }}
-                        </small>
-                      </div>
+                      <small
+                        class="
+                          hidden
+                          md-block
+                          text-grey-8 text-center
+                          md:line-clamp-3
+                          mt-2
+                          mb-4
+                        "
+                      >
+                        {{ product.description }}
+                      </small>
 
                       <audi-button
                         type="primary"
-                        class="block w-full"
+                        class="block w-full mt-6 md:mt-0"
                         [routerLink]="['/', language, 'products', product.id]"
                       >
                         {{ translationOutput('buttons.productsCTA') }}

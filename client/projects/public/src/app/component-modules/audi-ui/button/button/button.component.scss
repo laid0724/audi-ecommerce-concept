@@ -10,6 +10,12 @@
   }
 }
 
+:host(.justify-center) {
+  button.aui-button {
+    justify-content: center;
+  }
+}
+
 :host(.flex-row-reverse) {
   button.aui-button {
     flex-direction: row-reverse;
