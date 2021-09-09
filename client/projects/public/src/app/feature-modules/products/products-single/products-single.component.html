@@ -21,6 +21,7 @@
               <div class="col-span-12 md:col-span-6 hero-slide__gallery">
                 <div class="w-full">
                   <audi-product-slider
+                    *ngIf="imgUrls.length > 0"
                     [imgUrls]="imgUrls"
                   ></audi-product-slider>
                 </div>
@@ -191,7 +192,11 @@
                     <audi-card
                       [headerSize]="4"
                       [header]="product.name"
-                      [coverImageUrl]="getProductMainPhoto(product.photos)!.url"
+                      [coverImageUrl]="
+                        getProductMainPhoto(product.photos)?.url != undefined
+                          ? getProductMainPhoto(product.photos)!.url
+                          : 'assets/images/placeholder-white.png'
+                      "
                       textAlign="center"
                     >
                       <audi-button

@@ -3,7 +3,11 @@
     #card
     class="clickable"
     [routerLink]="['/', language, 'products', product.id]"
-    [coverImageUrl]="mainProductPhoto!.url"
+    [coverImageUrl]="
+      mainProductPhoto?.url != undefined
+        ? mainProductPhoto!.url
+        : 'assets/images/placeholder-white.png'
+    "
     [isDisabled]="product.stock === 0"
     textAlign="center"
   >
