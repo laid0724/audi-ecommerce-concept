@@ -152,3 +152,19 @@ audi-textarea-container {
     }
   }
 }
+
+.aui-badge {
+  &--small-animated {
+    text-indent: 100%;
+    transform: scale(0.25);
+    opacity: 0.5;
+    animation: scale 1.8s $audi-transition-timing-function infinite;
+  }
+}
+
+@keyframes scale {
+  50% {
+    transform: scale(0.3);
+    opacity: 1;
+  }
+}
