@@ -14,6 +14,7 @@ import {
   Member,
   MemberParams,
   MembersService,
+  objectIsEqual,
   PaginatedResult,
   Pagination,
   Roles,
@@ -149,6 +150,8 @@ export class MembersListComponent implements OnInit, OnDestroy {
       return;
     }
 
+    const oldState = this.memberParams;
+
     this.memberParams = {
       ...this.memberParams,
       pageNumber: state.page?.current as number,
@@ -184,7 +187,9 @@ export class MembersListComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.refresher$.next(this.memberParams);
+    if (!objectIsEqual(oldState, this.memberParams)) {
+      this.refresher$.next(this.memberParams);
+    }
   }
 
   initCreateModeratorForm(): void {

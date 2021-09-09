@@ -11,6 +11,7 @@ import {
   BusyService,
   LanguageCode,
   LanguageStateService,
+  objectIsEqual,
   PaginatedResult,
   Pagination,
   Product,
@@ -221,6 +222,8 @@ export class ProductsListComponent implements OnInit, OnDestroy {
       return;
     }
 
+    const oldState = this.productParams;
+
     this.productParams = {
       ...this.productParams,
       pageNumber: state.page?.current as number,
@@ -238,11 +241,7 @@ export class ProductsListComponent implements OnInit, OnDestroy {
     if (state.filters) {
       for (const filter of state.filters) {
         const { property, value } = <{ property: string; value: string }>filter;
-        if (
-          ['name', 'productCategoryId'].includes(
-            property
-          )
-        ) {
+        if (['name', 'productCategoryId'].includes(property)) {
           this.productParams = {
             ...this.productParams,
             [property]: value,
@@ -264,7 +263,9 @@ export class ProductsListComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.refresher$.next(this.productParams);
+    if (!objectIsEqual(oldState, this.productParams)) {
+      this.refresher$.next(this.productParams);
+    }
   }
 
   promptDelete(product: Product): void {
