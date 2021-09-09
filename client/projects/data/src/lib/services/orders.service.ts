@@ -10,8 +10,6 @@ import { getPaginatedResult, getPaginationHeaders } from '../helpers';
 
 export interface OrderItemUpsert {
   id?: number;
-  orderId?: number;
-  userId: number;
   productId: number;
   skuId: number;
   quantity: number;
@@ -19,7 +17,7 @@ export interface OrderItemUpsert {
 
 export interface OrderUpsert {
   id?: number;
-  userId: number;
+  email: string;
   billingAddress: Address;
   shippingAddress: Address;
   creditCard: CreditCard;

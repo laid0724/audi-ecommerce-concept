@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   HostListener,
@@ -115,7 +116,8 @@ export class ProductVariantEditorComponent implements OnInit {
 
   constructor(
     private productService: ProductsService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -217,10 +219,11 @@ export class ProductVariantEditorComponent implements OnInit {
     } else {
       this.variantForm.reset({
         productId: this.productId,
+        name: null,
       });
     }
-
     this.editVariantModalOpen = !this.editVariantModalOpen;
+    this.cdr.detectChanges();
   }
 
   toggleDeleteVariantModal(variant?: ProductVariant): void {
@@ -357,10 +360,12 @@ export class ProductVariantEditorComponent implements OnInit {
     } else {
       this.variantValueForm.reset({
         productId: this.productId,
+        name: null,
       });
     }
 
     this.editVariantValueModalOpen = !this.editVariantValueModalOpen;
+    this.cdr.detectChanges();
   }
 
   toggleDeleteVariantValueModal(variantValue?: ProductVariantValue): void {

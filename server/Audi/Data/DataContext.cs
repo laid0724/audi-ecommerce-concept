@@ -96,15 +96,17 @@ namespace Audi.Data
             builder.Entity<AppUser>()
                 .HasMany(u => u.Orders)
                 .WithOne(u => u.User)
-                .HasForeignKey(u => u.UserId)
-                .IsRequired()
+                .HasPrincipalKey(u => u.Email)
+                .HasForeignKey(u => u.Email)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
 
             builder.Entity<Order>()
                 .HasOne(o => o.User)
                 .WithMany(u => u.Orders)
-                .HasForeignKey(o => o.UserId)
-                .IsRequired()
+                .HasPrincipalKey(o => o.Email)
+                .HasForeignKey(o => o.Email)
+                .IsRequired(false)
                 .OnDelete(DeleteBehavior.Restrict);
             // relationship end
 
@@ -250,6 +252,11 @@ namespace Audi.Data
             // relationship end
 
             // Order & OrderItem
+            builder.Entity<Order>()
+                .Property(e => e.Email)
+                .HasColumnType("VARCHAR")
+                .HasMaxLength(256);
+
             builder.Entity<Order>()
                 .Property<Address>(e => e.BillingAddress)
                 .HasColumnType("jsonb")

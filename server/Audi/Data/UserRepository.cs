@@ -36,32 +36,38 @@ namespace Audi.Data
 
         public async Task<MemberDto> GetUserBasedOnRoleAsync(int userId, string role)
         {
-            var query = _context.Users
-                .IgnoreQueryFilters()
-                .Include(u => u.UserRoles)
-                    .ThenInclude(r => r.Role)
-                .Include(u => u.UserImage)
-                    .ThenInclude(ui => ui.Photo)
-                .Include(u => u.AppUserProducts)
-                    .ThenInclude(up => up.Product)
-                        .ThenInclude(p => p.ProductVariants)
-                            .ThenInclude(pv => pv.ProductVariantValues)
-                                .ThenInclude(pvv => pvv.ProductSkuValues)
-                                    .ThenInclude(psv => psv.ProductSku)
-                .Include(u => u.Orders)
-                    .ThenInclude(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
+            IQueryable<AppUser> query;
+
+            if (role == "Admin" || role == "Moderator")
+            {
+                query = _context.Users
+                    .Include(u => u.UserRoles)
+                        .ThenInclude(r => r.Role)
+                    .Where(e => e.Id == userId)
+                    .AsQueryable();
+            }
+            else
+            {
+                query = _context.Users
+                    .IgnoreQueryFilters()
+                    .Include(u => u.UserRoles)
+                        .ThenInclude(r => r.Role)
+                    .Include(u => u.AppUserProducts)
+                        .ThenInclude(up => up.Product)
                             .ThenInclude(p => p.ProductPhotos)
-                                .ThenInclude(pp => pp.Photo)
-                .Include(u => u.Orders)
-                    .ThenInclude(o => o.OrderItems)
-                        .ThenInclude(oi => oi.Product)
-                            .ThenInclude(p => p.ProductVariants)
-                                .ThenInclude(pv => pv.ProductVariantValues)
-                                    .ThenInclude(pvv => pvv.ProductSkuValues)
-                                        .ThenInclude(psv => psv.ProductSku)
-                .Where(e => e.Id == userId)
-                .AsQueryable();
+                                    .ThenInclude(pp => pp.Photo)
+                    .Include(u => u.Orders)
+                        .ThenInclude(o => o.OrderItems)
+                            .ThenInclude(oi => oi.Product)
+                                .ThenInclude(p => p.ProductPhotos)
+                                    .ThenInclude(pp => pp.Photo)
+                    .Include(u => u.Orders)
+                        .ThenInclude(o => o.OrderItems)
+                            .ThenInclude(oi => oi.ProductSku)
+                                .ThenInclude(sku => sku.ProductSkuValues)
+                    .Where(e => e.Id == userId)
+                    .AsQueryable();
+            }
 
             if (!string.IsNullOrWhiteSpace(role))
             {
@@ -80,8 +86,6 @@ namespace Audi.Data
             var query = _context.Users
                 .Include(u => u.UserRoles)
                     .ThenInclude(r => r.Role)
-                .Include(u => u.UserImage)
-                    .ThenInclude(ui => ui.Photo)
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(role))

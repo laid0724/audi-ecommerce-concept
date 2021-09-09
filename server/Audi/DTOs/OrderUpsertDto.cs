@@ -7,7 +7,7 @@ namespace Audi.DTOs
     public class OrderUpsertDto
     {
         public int? Id { get; set; }
-        public int UserId { get; set; }
+        public string Email { get; set; }
         public Address BillingAddress { get; set; }
         public Address ShippingAddress { get; set; }
         public CreditCard CreditCard { get; set; }

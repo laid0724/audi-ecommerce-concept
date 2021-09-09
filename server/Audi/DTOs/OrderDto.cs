@@ -8,7 +8,7 @@ namespace Audi.DTOs
     {
         public int Id { get; set; }
         public string OrderNumber { get; set; }
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Email { get; set; }
@@ -23,7 +23,7 @@ namespace Audi.DTOs
         public ICollection<OrderItemDto> OrderItems { get; set; }
         public string TrackingNumber { get; set; }
         public OrderStatus[] PreviousStatuses { get; set; }
-        public string CurrentStatus { get; set; }
+        public string CurrentStatus { get; set; } // placed | shipped | delived | canceled - see OrderStatus.cs
         public string CustomerNotes { get; set; }
         public string InternalNotes { get; set; }
     }

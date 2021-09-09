@@ -148,19 +148,19 @@ namespace Audi.Helpers
             CreateMap<Order, OrderDto>()
                 .ForMember(
                     dest => dest.FirstName,
-                    opt => opt.MapFrom(src => src.User.FirstName)
+                    opt => opt.MapFrom(src => src.ShippingAddress.FirstName)
                 )
                 .ForMember(
                     dest => dest.LastName,
-                    opt => opt.MapFrom(src => src.User.LastName)
-                )
-                .ForMember(
-                    dest => dest.Email,
-                    opt => opt.MapFrom(src => src.User.Email)
+                    opt => opt.MapFrom(src => src.ShippingAddress.LastName)
                 )
                 .ForMember(
                     dest => dest.PhoneNumber,
-                    opt => opt.MapFrom(src => src.User.PhoneNumber)
+                    opt => opt.MapFrom(src => src.ShippingAddress.PhoneNumber)
+                )
+                .ForMember(
+                    dest => dest.UserId,
+                    opt => opt.MapFrom(src => src.User.Id)
                 );
 
             CreateMap<DynamicDocument, FaqDto>()
