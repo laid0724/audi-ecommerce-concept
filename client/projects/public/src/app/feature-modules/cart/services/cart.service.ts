@@ -11,7 +11,7 @@ export class CartService {
   cart$ = this._cart$.asObservable();
 
   private _cartMenuIsOpen$ = new ReplaySubject<boolean>(1);
-  cartMenuIsOpen$ = this._cartMenuIsOpen$.asObservable().pipe(startWith(false));
+  cartMenuIsOpen$ = this._cartMenuIsOpen$.asObservable().pipe(startWith(true));
 
   constructor() {
     this.loadCartFromLocalStorage();
@@ -54,8 +54,6 @@ export class CartService {
         parsedLocalStorageCart[indexOfExistingSku].quantity += 1;
 
         updatedCart = [...parsedLocalStorageCart];
-
-        console.log(updatedCart);
       } else {
         updatedCart = [...parsedLocalStorageCart, item];
       }
@@ -65,8 +63,41 @@ export class CartService {
     }
   }
 
-  updateCart(item: CartItem): void {
-    // TODO: for quantity +/-
+  updateCartQuantity(item: CartItem, newQuantity: number): void {
+    const localStorageCart = localStorage.getItem('cart');
+
+    if (localStorageCart) {
+      const parsedLocalStorageCart: CartItem[] = JSON.parse(localStorageCart);
+
+      const cartItemToUpdate = parsedLocalStorageCart.find(
+        (cartItem: CartItem) => cartItem.productSku.id === item.productSku.id
+      );
+
+      if (cartItemToUpdate) {
+        const indexOfCartItemToUpdate =
+          parsedLocalStorageCart.indexOf(cartItemToUpdate);
+
+        const existingQuantity = cartItemToUpdate.quantity;
+
+        if (newQuantity > existingQuantity) {
+          if (cartItemToUpdate.productSku.stock - (existingQuantity + 1) < 0) {
+            console.error('stock insufficient');
+            return;
+          }
+        }
+
+        if (newQuantity <= 0) {
+          this.removeFromCart(cartItemToUpdate);
+          return;
+        }
+
+        parsedLocalStorageCart[indexOfCartItemToUpdate].quantity = newQuantity;
+
+        localStorage.setItem('cart', JSON.stringify(parsedLocalStorageCart));
+
+        this._cart$.next(parsedLocalStorageCart);
+      }
+    }
   }
 
   removeFromCart(item: CartItem): void {
