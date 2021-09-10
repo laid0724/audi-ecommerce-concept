@@ -127,6 +127,7 @@
     "similarProducts": "Similar Products"
   },
   "cart": {
-    "cart": "Cart"
+    "cart": "Cart",
+    "emptyCart": "Your cart is empty"
   }
 }

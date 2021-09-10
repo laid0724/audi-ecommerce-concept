@@ -127,6 +127,7 @@
     "similarProducts": "相似商品"
   },
   "cart": {
-    "cart": "購物車"
+    "cart": "購物車",
+    "emptyCart": "您的購物車是空的"
   }
 }

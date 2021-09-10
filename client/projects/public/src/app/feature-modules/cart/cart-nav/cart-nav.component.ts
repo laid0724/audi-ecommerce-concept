@@ -8,7 +8,7 @@ import {
   Output,
   Renderer2,
 } from '@angular/core';
-import { CartItem } from '@audi/data';
+import { CartItem, LanguageCode, LanguageStateService } from '@audi/data';
 import { Observable } from 'rxjs';
 import { CartService } from '../services/cart.service';
 
@@ -34,13 +34,18 @@ export class CartNavComponent implements OnInit {
     this.toggleMenuState();
   }
 
+  get language(): LanguageCode {
+    return this.languageService.getCurrentLanguage();
+  }
+
   @Output() menuIsOpenChange: EventEmitter<boolean> =
     new EventEmitter<boolean>();
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private renderer: Renderer2,
-    private cartService: CartService
+    private cartService: CartService,
+    private languageService: LanguageStateService
   ) {}
 
   ngOnInit(): void {
