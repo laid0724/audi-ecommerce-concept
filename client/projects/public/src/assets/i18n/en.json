@@ -21,7 +21,8 @@
     "sortBy": "Sort By",
     "addToCart": "Add To Cart",
     "favorite": "Favorite",
-    "unfavorite": "Unfavorite"
+    "unfavorite": "Unfavorite",
+    "checkout": "Checkout"
   },
   "menu": {},
   "footer": {
@@ -123,5 +124,8 @@
     "noProductsAvailable": "No Products Available",
     "outOfStock": "OUT OF STOCK",
     "similarProducts": "Similar Products"
+  },
+  "cart": {
+    "cart": "Cart"
   }
 }

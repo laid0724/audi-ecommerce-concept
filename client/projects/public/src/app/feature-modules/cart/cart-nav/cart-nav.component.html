@@ -22,15 +22,19 @@
         class="audi-cart__menu"
         [ngClass]="{ 'inactive-animation': !menuIsOpen }"
       >
-        <!-- TODO: transloco -->
         <div class="py-6 px-8 w-full">
-          <h1 class="aui-headline-4">Cart</h1>
+          <h1 class="aui-headline-4">{{ translationOutput('cart.cart') }}</h1>
         </div>
         <div class="audi-cart__menu__cart-items">
-          <pre>{{ cart | json }}</pre>
+          <audi-cart-item
+            *ngFor="let cartItem of cart"
+            [cartItem]="cartItem"
+          ></audi-cart-item>
         </div>
         <div class="py-6 px-8 w-full">
-          <audi-button class="block w-full">Checkout</audi-button>
+          <audi-button class="block w-full">{{
+            translationOutput('buttons.checkout')
+          }}</audi-button>
         </div>
       </div>
     </div>
