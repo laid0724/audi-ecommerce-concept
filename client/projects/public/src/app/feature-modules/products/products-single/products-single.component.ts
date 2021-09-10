@@ -6,6 +6,7 @@ import {
   BusyService,
   CartItem,
   isNullOrEmptyString,
+  LanguageCode,
   LanguageStateService,
   PaginatedResult,
   Product,
@@ -43,10 +44,13 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
   fullpageConfig: any;
   fullpageRef: any;
 
-  language = this.languageService.getCurrentLanguage();
   isLoading = true;
 
   destroy$ = new Subject<boolean>();
+
+  get language(): LanguageCode {
+    return this.languageService.getCurrentLanguage();
+  }
 
   get imgUrls(): string[] {
     if (this.product) {

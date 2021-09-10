@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CartItem } from '@audi/data';
+import { CartItem, LanguageCode, LanguageStateService } from '@audi/data';
 import { ReplaySubject } from 'rxjs';
 import { startWith } from 'rxjs/operators';
 
@@ -11,17 +11,22 @@ export class CartService {
   cart$ = this._cart$.asObservable();
 
   private _cartMenuIsOpen$ = new ReplaySubject<boolean>(1);
-  cartMenuIsOpen$ = this._cartMenuIsOpen$.asObservable().pipe(startWith(true));
+  cartMenuIsOpen$ = this._cartMenuIsOpen$.asObservable().pipe(startWith(false));
 
-  constructor() {
-    this.loadCartFromLocalStorage();
+  private currentLanguage: LanguageCode;
+
+  constructor(private languageService: LanguageStateService) {
+    languageService.language$.subscribe((language: LanguageCode) => {
+      this.currentLanguage = language;
+      this.loadCartFromLocalStorage(language);
+    });
   }
 
-  loadCartFromLocalStorage(): void {
-    const localStorageCart = localStorage.getItem('cart');
+  loadCartFromLocalStorage(language: LanguageCode): void {
+    const localStorageCart = localStorage.getItem(`cart-${language}`);
 
     if (localStorageCart === null) {
-      localStorage.setItem('cart', JSON.stringify([]));
+      localStorage.setItem(`cart-${language}`, JSON.stringify([]));
       this._cart$.next([]);
     } else {
       this._cart$.next(JSON.parse(localStorageCart));
@@ -29,7 +34,9 @@ export class CartService {
   }
 
   addToCart(item: CartItem): void {
-    const localStorageCart = localStorage.getItem('cart');
+    const localStorageCart = localStorage.getItem(
+      `cart-${this.currentLanguage}`
+    );
     if (localStorageCart) {
       const parsedLocalStorageCart: CartItem[] = JSON.parse(localStorageCart);
 
@@ -58,13 +65,18 @@ export class CartService {
         updatedCart = [...parsedLocalStorageCart, item];
       }
 
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      localStorage.setItem(
+        `cart-${this.currentLanguage}`,
+        JSON.stringify(updatedCart)
+      );
       this._cart$.next(updatedCart);
     }
   }
 
   updateCartQuantity(item: CartItem, newQuantity: number): void {
-    const localStorageCart = localStorage.getItem('cart');
+    const localStorageCart = localStorage.getItem(
+      `cart-${this.currentLanguage}`
+    );
 
     if (localStorageCart) {
       const parsedLocalStorageCart: CartItem[] = JSON.parse(localStorageCart);
@@ -93,7 +105,10 @@ export class CartService {
 
         parsedLocalStorageCart[indexOfCartItemToUpdate].quantity = newQuantity;
 
-        localStorage.setItem('cart', JSON.stringify(parsedLocalStorageCart));
+        localStorage.setItem(
+          `cart-${this.currentLanguage}`,
+          JSON.stringify(parsedLocalStorageCart)
+        );
 
         this._cart$.next(parsedLocalStorageCart);
       }
@@ -101,7 +116,9 @@ export class CartService {
   }
 
   removeFromCart(item: CartItem): void {
-    const localStorageCart = localStorage.getItem('cart');
+    const localStorageCart = localStorage.getItem(
+      `cart-${this.currentLanguage}`
+    );
     if (localStorageCart) {
       const parsedLocalStorageCart: CartItem[] = JSON.parse(localStorageCart);
 
@@ -113,7 +130,10 @@ export class CartService {
         (cartItem: CartItem) => cartItem !== targetCartItem
       );
 
-      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      localStorage.setItem(
+        `cart-${this.currentLanguage}`,
+        JSON.stringify(updatedCart)
+      );
       this._cart$.next(updatedCart);
     }
   }

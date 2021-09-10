@@ -6,6 +6,7 @@ import {
   Homepage,
   HomepageService,
   isNullOrEmptyString,
+  LanguageCode,
   LanguageStateService,
   News,
   PaginatedResult,
@@ -88,8 +89,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   splashScreenIsOff$ = this.splashscreenService._splashScreenIsOff$;
 
-  language = this.languageService.getCurrentLanguage();
-
   fullpageConfig: any;
   fullpageRef: any;
 
@@ -98,6 +97,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public isNullOrEmptyString: (val: string | null | undefined) => boolean =
     isNullOrEmptyString;
+
+  get language(): LanguageCode {
+    return this.languageService.getCurrentLanguage();
+  }
 
   constructor(
     private breakpointObserver: BreakpointObserver,

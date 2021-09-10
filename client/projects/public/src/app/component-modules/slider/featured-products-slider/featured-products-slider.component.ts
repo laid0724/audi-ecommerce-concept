@@ -11,6 +11,7 @@ import {
   isNullOrEmptyString,
   ProductPhoto,
   LanguageStateService,
+  LanguageCode,
 } from '@audi/data';
 
 // FIXME: desktop/mobile indicators active pin are not in sync
@@ -51,12 +52,14 @@ export class FeaturedProductsSliderComponent
 
   @Input() featuredProducts: Product[] = [];
 
-  language = this.languageService.getCurrentLanguage();
-
   swiperInstance: Swiper;
 
   public isNullOrEmptyString: (val: string | null | undefined) => boolean =
     isNullOrEmptyString;
+
+  get language(): LanguageCode {
+    return this.languageService.getCurrentLanguage();
+  }
 
   get validProducts(): Product[] {
     if (Array.isArray(this.featuredProducts)) {
