@@ -94,9 +94,7 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
       );
 
       if (cartItemWithMatchingSku) {
-        if (matchingSku.stock - (cartItemWithMatchingSku.quantity + 1) < 0) {
-          return false;
-        }
+        return matchingSku.stock - (cartItemWithMatchingSku.quantity + 1) >= 0;
       } else {
         return true;
       }
