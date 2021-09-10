@@ -26,6 +26,7 @@ import {
 import { CartService } from '../../cart/services/cart.service';
 import { Subject } from 'rxjs';
 import { FULLPAGE_JS_NORMAL_SCROLL_ELEMENTS } from '../../../constants';
+import { isProductDiscounted } from '../../../helpers';
 
 @Component({
   selector: 'audi-products-single',
@@ -114,6 +115,8 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
 
   public isNullOrEmptyString: (val: string | null | undefined) => boolean =
     isNullOrEmptyString;
+
+  public isDiscounted: (product: Product) => boolean = isProductDiscounted;
 
   constructor(
     private route: ActivatedRoute,

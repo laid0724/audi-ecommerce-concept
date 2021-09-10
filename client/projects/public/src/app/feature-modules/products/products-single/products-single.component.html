@@ -30,8 +30,15 @@
                 <h1 class="aui-headline-4">
                   {{ product.name }}
                 </h1>
-                <ng-container *ngIf="product.isDiscounted; else price">
-                  <div class="grid grid-rows-1 grid-cols-3 my-2 items-center text-center">
+                <ng-container *ngIf="isDiscounted(product); else price">
+                  <div
+                    class="
+                      grid grid-rows-1 grid-cols-3
+                      my-2
+                      items-center
+                      text-center
+                    "
+                  >
                     <span>&nbsp;</span>
                     <small class="text-red">
                       ${{

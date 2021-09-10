@@ -20,6 +20,7 @@ import {
 } from '@audi/data';
 import { take } from 'rxjs/operators';
 import { CardComponent } from 'projects/public/src/app/component-modules/audi-ui/card/card/card.component';
+import { isProductDiscounted } from 'projects/public/src/app/helpers';
 
 @Component({
   selector: 'audi-product-card',
@@ -56,6 +57,8 @@ export class ProductCardComponent implements OnInit, AfterViewInit, OnDestroy {
   get productPhotos(): ProductPhoto[] {
     return this.product.photos.sort((a, b) => +b.isMain - +a.isMain);
   }
+
+  public isDiscounted: (product: Product) => boolean = isProductDiscounted;
 
   cardMouseOverFn: () => void;
   cardMouseOutFn: () => void;
