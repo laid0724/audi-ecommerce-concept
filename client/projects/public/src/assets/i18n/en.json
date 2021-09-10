@@ -22,7 +22,8 @@
     "addToCart": "Add To Cart",
     "favorite": "Favorite",
     "unfavorite": "Unfavorite",
-    "checkout": "Checkout"
+    "checkout": "Checkout",
+    "remove": "Remove"
   },
   "menu": {},
   "footer": {

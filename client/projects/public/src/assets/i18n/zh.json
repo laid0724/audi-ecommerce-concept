@@ -22,7 +22,8 @@
     "addToCart": "加入購物車",
     "favorite": "加入追蹤清單",
     "unfavorite": "移除追蹤清單",
-    "checkout": "結帳"
+    "checkout": "結帳",
+    "remove": "移除"
   },
   "menu": {},
   "footer": {
