@@ -13,9 +13,10 @@
     <small class="aui-small line-clamp-1">{{ cartItem.productSku.sku }}</small>
     <small class="aui-small my-1"
       >${{
-        isDiscounted(cartItem.product)
+        (isDiscounted(cartItem.product)
           ? cartItem.product.price - cartItem.product.discountAmount
           : cartItem.product.price
+        ).toLocaleString()
       }}</small
     >
     <div class="w-full flex items-center justify-between mt-auto">

@@ -30,7 +30,9 @@
         <div class="grid grid-rows-1 grid-cols-3">
           <span>&nbsp;</span>
           <small class="product-price aui-small font-bold text-red text-center"
-            >${{ (product.price - product.discountAmount).toLocaleString() }}
+            >${{
+              (product.price - product.discountAmount).toLocaleString()
+            }}&nbsp;
           </small>
           <small class="product-price aui-small line-through text-grey-8">
             ${{ product.price.toLocaleString() }}
