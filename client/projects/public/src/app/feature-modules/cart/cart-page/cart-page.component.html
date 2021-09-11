@@ -1,1 +1,120 @@
-<p>cart-page works!</p>
+<ng-container *transloco="let translationOutput">
+  <div class="header">
+    <div class="header-bg" #headerBg></div>
+    <h1 class="aui-headline-2 z-2 text-white">
+      {{ translationOutput('cart.cart') }}
+    </h1>
+  </div>
+
+  <div class="aui-layout">
+    <div class="aui-grid">
+      <div class="aui-cell aui-cell--12 pt-8">
+        <ng-container *ngIf="cart.length > 0; else emptyCart">
+          <div
+            *ngIf="isDesktop; else mobileTemplate"
+            class="aui-table aui-table--stretched mb-8"
+          >
+            <table>
+              <thead>
+                <tr>
+                  <th>{{ translationOutput('cart.table.product') }}</th>
+                  <th>{{ translationOutput('cart.table.specification') }}</th>
+                  <th>{{ translationOutput('cart.table.quantity') }}</th>
+                  <th>{{ translationOutput('cart.table.price') }}</th>
+                </tr>
+              </thead>
+              <tr *ngFor="let cartItem of cart">
+                <td class="flex w-full">
+                  <div class="product flex items-center w-full">
+                    <div class="product-img mr-1">
+                      <img
+                        [src]="getProductMainPhotoUrl(cartItem.product)"
+                        [alt]="cartItem.product.name"
+                        class="w-full object-cover"
+                      />
+                    </div>
+                    <a
+                      class="aui-textlink"
+                      [routerLink]="[
+                        '/',
+                        language,
+                        'products',
+                        cartItem.product.id
+                      ]"
+                      >{{ cartItem.product.name }}</a
+                    >
+                  </div>
+                </td>
+                <td>{{ cartItem.productSku.sku }}</td>
+                <td>
+                  <audi-cart-item-quantity-selector
+                    class="m-0"
+                    [cartItem]="cartItem"
+                  ></audi-cart-item-quantity-selector>
+
+                  <a
+                    *transloco="let translationOutput"
+                    class="aui-small aui-textlink"
+                    (click)="removeItem(cartItem)"
+                    >{{ translationOutput('buttons.remove') }}</a
+                  >
+                </td>
+                <td>${{ getPrice(cartItem.product).toLocaleString() }}</td>
+              </tr>
+
+              <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="font-bold">${{ totalPrice.toLocaleString() }}</td>
+              </tr>
+            </table>
+          </div>
+          <ng-template #mobileTemplate>
+            <audi-cart-item
+              *ngFor="let cartItem of cart"
+              [cartItem]="cartItem"
+            ></audi-cart-item>
+
+            <hr class="my-8" />
+
+            <small class="block aui-small font-bold mb-8 text-center">
+              {{ translationOutput('cart.total') }}: ${{
+                totalPrice.toLocaleString()
+              }}
+            </small>
+          </ng-template>
+
+          <div class="w-full flex flex-col md:flex-row justify-end mb-8">
+            <audi-button
+              class="block w-full md:w-auto mb-1 md:mr-1"
+              type="secondary"
+              [routerLink]="['/', language, 'products']"
+              >{{ translationOutput('buttons.continueShopping') }}</audi-button
+            >
+            <audi-button
+              class="block w-full mb-1 md:w-auto"
+              type="primary"
+              [routerLink]="['/', language, 'checkout']"
+              >{{ translationOutput('buttons.checkout') }}</audi-button
+            >
+          </div>
+        </ng-container>
+
+        <ng-template #emptyCart>
+          <div class="flex flex-col items-center justify-center empty-cart">
+            <h3 class="aui-headline-3">
+              {{ translationOutput('cart.emptyCart') }}
+            </h3>
+            <audi-button
+              class="mt-4"
+              [routerLink]="['/', language, 'products']"
+            >
+              {{ translationOutput('buttons.exploreCTA') }}
+            </audi-button>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</ng-container>

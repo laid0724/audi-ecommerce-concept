@@ -14,7 +14,9 @@ export class CartItemComponent {
   public isDiscounted: (product: Product) => boolean = isProductDiscounted;
 
   get price(): number {
-    return 0;
+    return this.isDiscounted(this.cartItem.product)
+      ? this.cartItem.product.price - this.cartItem.product.discountAmount
+      : this.cartItem.product.price;
   }
 
   get productMainPhotoUrl(): string {

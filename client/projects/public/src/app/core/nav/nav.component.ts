@@ -58,6 +58,16 @@ export class NavComponent {
     );
   }
 
+  onCartClick(): void {
+    if (
+      !this.router.url.includes('cart') &&
+      !this.router.url.includes('checkout')
+    ) {
+      this.cartMenuIsOpen = true;
+      this.toggleMenuState(false);
+    }
+  }
+
   logout(): void {
     this.accountService.logout();
   }

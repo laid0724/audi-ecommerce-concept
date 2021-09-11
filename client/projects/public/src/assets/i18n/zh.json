@@ -23,7 +23,8 @@
     "favorite": "加入追蹤清單",
     "unfavorite": "移除追蹤清單",
     "checkout": "結帳",
-    "remove": "移除"
+    "remove": "移除",
+    "continueShopping": "繼續購物"
   },
   "menu": {},
   "footer": {
@@ -128,6 +129,13 @@
   },
   "cart": {
     "cart": "購物車",
-    "emptyCart": "您的購物車是空的"
+    "emptyCart": "您的購物車是空的",
+    "table": {
+      "product": "產品",
+      "specification": "型號",
+      "quantity": "數量",
+      "price": "價格"
+    },
+    "total": "總價"
   }
 }

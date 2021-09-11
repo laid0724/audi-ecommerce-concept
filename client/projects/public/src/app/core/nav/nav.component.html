@@ -75,11 +75,7 @@
           </ng-template>
 
           <ng-container *ngIf="cart$ | async; let cart">
-            <audi-button
-              type="icon"
-              class="ml-3 mr-2"
-              (click)="cartMenuIsOpen = true; toggleMenuState(false)"
-            >
+            <audi-button type="icon" class="ml-3 mr-2" (click)="onCartClick()">
               <audi-icon-with-badge
                 iconName="shopping-basket"
                 size="small"

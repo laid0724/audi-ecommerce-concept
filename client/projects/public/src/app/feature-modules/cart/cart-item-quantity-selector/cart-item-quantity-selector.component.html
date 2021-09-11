@@ -10,10 +10,10 @@
     >
     <small class="aui-small py-1">{{ cartItem.quantity }}</small>
     <small
-      class="aui-small px-3 py-1 opacity-40"
+      class="aui-small px-3 py-1"
       [ngClass]="{
-        'clickable hover:opacity-100': !notEnoughStock,
-        'cursor-default': notEnoughStock
+        'clickable  opacity-40 hover:opacity-100': !notEnoughStock,
+        'cursor-default opacity-10': notEnoughStock
       }"
       (click)="onIncreaseQuantity()"
       >+</small

@@ -23,7 +23,8 @@
     "favorite": "Favorite",
     "unfavorite": "Unfavorite",
     "checkout": "Checkout",
-    "remove": "Remove"
+    "remove": "Remove",
+    "continueShopping": "Continue Shopping"
   },
   "menu": {},
   "footer": {
@@ -128,6 +129,13 @@
   },
   "cart": {
     "cart": "Cart",
-    "emptyCart": "Your cart is empty"
+    "emptyCart": "Your cart is empty",
+    "table": {
+      "product": "Product",
+      "specification": "Specification",
+      "quantity": "Quantity",
+      "price": "Price"
+    },
+    "total": "Total"
   }
 }
