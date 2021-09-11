@@ -26,8 +26,7 @@ export class CartService {
     const localStorageCart = localStorage.getItem(`cart-${language}`);
 
     if (localStorageCart === null) {
-      localStorage.setItem(`cart-${language}`, JSON.stringify([]));
-      this._cart$.next([]);
+      this.resetCart();
     } else {
       this._cart$.next(JSON.parse(localStorageCart));
     }
@@ -136,6 +135,11 @@ export class CartService {
       );
       this._cart$.next(updatedCart);
     }
+  }
+
+  resetCart(): void {
+    localStorage.setItem(`cart-${this.currentLanguage}`, JSON.stringify([]));
+    this._cart$.next([]);
   }
 
   openCartMenu(): void {
