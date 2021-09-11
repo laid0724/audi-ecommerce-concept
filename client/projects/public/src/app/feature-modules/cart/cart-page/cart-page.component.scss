@@ -59,8 +59,10 @@ $product-image-width: 150px;
 }
 
 .product {
-  margin-left: calc(50% - #{$product-image-width});
-  transform: translateX(calc(-50% + #{$product-image-width}));
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  right: calc(#{$product-image-width} / 2);
   &-img {
     width: $product-image-width;
     max-width: $product-image-width;
