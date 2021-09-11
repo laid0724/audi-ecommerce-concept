@@ -118,7 +118,6 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - Angular universal
 - update user info
 - member's area
-- cart
 - checkout / order
 - cancel / track order
 - articles, e.g., news, events, promotions
