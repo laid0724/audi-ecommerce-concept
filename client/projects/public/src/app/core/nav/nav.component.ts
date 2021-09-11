@@ -27,6 +27,10 @@ export class NavComponent {
     map((user: User | null) => !!user)
   );
 
+  get language(): LanguageCode {
+    return this.languageService.getCurrentLanguage();
+  }
+
   constructor(
     @Inject(DOCUMENT) private document: Document,
     private languageService: LanguageStateService,
@@ -59,10 +63,13 @@ export class NavComponent {
   }
 
   onCartClick(): void {
-    if (
-      !this.router.url.includes('cart') &&
-      !this.router.url.includes('checkout')
-    ) {
+    if (this.router.url.includes('checkout')) {
+      this.router.navigate(['/', this.language, 'cart']);
+      this.toggleMenuState(false);
+      return;
+    }
+
+    if (!this.router.url.includes('cart')) {
       this.cartMenuIsOpen = true;
       this.toggleMenuState(false);
     }
