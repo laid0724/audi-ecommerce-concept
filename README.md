@@ -2,7 +2,7 @@
 
 A conceptual eCommerce site built for my favorite car brand: Audi.
 
-Stack: .NET Core 5, Angular 12, Tailwind CSS, Clarity, Audi UI packages.
+Stack: .NET Core 5, Angular 12, Tailwind CSS, Clarity, Audi UI.
 
 ---
 
@@ -92,6 +92,7 @@ Once you've setup your heroku app, you can just repeat steps 6 & 7 for continuou
 it also fucking shuts down when it hasn't been accessed in a while, and boots up only when someone visits the site, which takes forever too.**
 
 ---
+
 ##### Features to be implemented / Bugs to be fixed, in no particular order:
 
 #### API
@@ -99,20 +100,18 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - Order creation email and status update email
 - email / messaging / inbox functionality
   - inbox system for users, admin can send promo messages to them
-  - notification system for users
+  - notification system for spushing notification to users
 - SignalR for live chat
 - site-wide search
 - Statistics table and repo / controller
 
-#### Sys
+#### Angular Sys Project
 
 - sys inbox
 - live chat module with signalr
-- add photo to product category
 - ngx charts for statistics
-- ng select control value accessor
 
-#### Public
+#### Angular Public Project
 
 - RWD
 - Angular universal
@@ -120,5 +119,10 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - member's area
 - checkout / order
 - cancel / track order
-- articles, e.g., news, events, promotions
+- articles, e.g., news, events, promotions, faq
+- search
 - live chat
+
+#### Deployment
+
+- figure out how to host multiple angular projects in the same domain via different urls. nginx maybe?
