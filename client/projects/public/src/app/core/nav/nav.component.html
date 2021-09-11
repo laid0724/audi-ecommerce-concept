@@ -1,191 +1,199 @@
 <ng-container *ngIf="language$ | async; let language">
-  <audi-header *transloco="let translationOutput">
-    <div class="w-screen flex items-center justify-between relative">
-      <audi-button
-        type="icon-large"
-        (click)="toggleMenuState(true)"
-        class="z-1"
-      >
-        <audi-icon size="large" [iconName]="'off-canvas'"></audi-icon>
-      </audi-button>
-
-      <div
-        class="
-          absolute
-          top-0
-          bottom-0
-          left-0
-          right-0
-          flex
-          items-center
-          justify-center
-        "
-      >
-        <a
-          [routerLink]="['/', language, 'home']"
-          class="w-20 flex items-center justify-center"
-          (click)="!menuIsPristine ? toggleMenuState(false) : null"
+  <ng-container *transloco="let translationOutput">
+    <audi-header>
+      <div class="aui-header__content-wrapper">
+        <audi-button
+          type="icon-large"
+          (click)="toggleMenuState(true); cartMenuIsOpen = false"
+          class="z-1"
         >
-          <audi-button type="icon">
-            <img src="assets/audi-logo-black.svg" class="w-full" />
-          </audi-button>
-        </a>
-      </div>
+          <audi-icon size="large" [iconName]="'off-canvas'"></audi-icon>
+        </audi-button>
 
-      <div class="flex items-center justify-between">
-        <ng-container *ngIf="isLoggedIn$ | async; else notLoggedIn">
-          <audi-flyout position="center">
-            <audi-button
-              type="icon"
-              #triggeringElement
-              flyoutTriggerSetter
-              [applyToInnerElement]="true"
-              (click)="!menuIsPristine ? toggleMenuState(false) : null"
-            >
+        <div
+          class="
+            absolute
+            top-0
+            bottom-0
+            left-0
+            right-0
+            flex
+            items-center
+            justify-center
+          "
+        >
+          <a
+            [routerLink]="['/', language, 'home']"
+            class="w-20 flex items-center justify-center"
+            (click)="closeAllMenu()"
+          >
+            <audi-button type="icon">
+              <img src="assets/audi-logo-black.svg" class="w-full" />
+            </audi-button>
+          </a>
+        </div>
+
+        <div class="flex items-center justify-between">
+          <ng-container *ngIf="isLoggedIn$ | async; else notLoggedIn">
+            <audi-flyout position="center">
+              <audi-button
+                type="icon"
+                #triggeringElement
+                flyoutTriggerSetter
+                [applyToInnerElement]="true"
+                (click)="closeAllMenu()"
+              >
+                <audi-icon size="small" iconName="user"></audi-icon>
+              </audi-button>
+              <div class="flyout-content">
+                <audi-nav-list>
+                  <audi-nav-item
+                    iconName="private-customer"
+                    iconSize="small"
+                    routerLinkActive
+                    #rla="routerLinkActive"
+                    [isActive]="rla.isActive"
+                    [routerLink]="['/', language, 'members-area']"
+                  >
+                    {{ translationOutput('membersArea') }}
+                  </audi-nav-item>
+                  <audi-nav-item
+                    iconName="parking-out-right"
+                    iconSize="small"
+                    (click)="logout()"
+                    >{{ translationOutput('logout') }}
+                  </audi-nav-item>
+                </audi-nav-list>
+              </div>
+            </audi-flyout>
+          </ng-container>
+
+          <ng-template #notLoggedIn>
+            <audi-button type="icon" (click)="directToLogin(); closeAllMenu()">
               <audi-icon size="small" iconName="user"></audi-icon>
             </audi-button>
-            <div class="flyout-content">
-              <audi-nav-list>
-                <audi-nav-item
-                  iconName="private-customer"
-                  iconSize="small"
-                  routerLinkActive
-                  #rla="routerLinkActive"
-                  [isActive]="rla.isActive"
-                  [routerLink]="['/', language, 'members-area']"
-                >
-                  {{ translationOutput('membersArea') }}
-                </audi-nav-item>
-                <audi-nav-item
-                  iconName="parking-out-right"
-                  iconSize="small"
-                  (click)="logout()"
-                  >{{ translationOutput('logout') }}
-                </audi-nav-item>
-              </audi-nav-list>
-            </div>
-          </audi-flyout>
-        </ng-container>
+          </ng-template>
 
-        <ng-template #notLoggedIn>
-          <audi-button
-            type="icon"
-            (click)="
-              directToLogin(); !menuIsPristine ? toggleMenuState(false) : null
-            "
-          >
-            <audi-icon size="small" iconName="user"></audi-icon>
-          </audi-button>
-        </ng-template>
+          <ng-container *ngIf="cart$ | async; let cart">
+            <audi-button type="icon" class="ml-3 mr-2" (click)="onCartClick()">
+              <audi-icon-with-badge
+                iconName="shopping-basket"
+                size="small"
+                badgeBgColor="red"
+                [badgeIsHidden]="cart.length < 1"
+              ></audi-icon-with-badge>
+            </audi-button>
+          </ng-container>
 
-        <div class="w-12 flex items-center justify-center">
-          <audi-language-selector
-            (click)="!menuIsPristine ? toggleMenuState(false) : null"
-          ></audi-language-selector>
+          <div class="w-12 flex items-center justify-center">
+            <audi-language-selector
+              (click)="closeAllMenu()"
+            ></audi-language-selector>
+          </div>
         </div>
       </div>
-    </div>
-  </audi-header>
+    </audi-header>
 
-  <div
-    #menu
-    class="audi-side-nav"
-    [ngClass]="{
-      active: menuIsOpen
-    }"
-    *transloco="let translationOutput"
-  >
     <div
-      class="audi-side-nav__overlay"
-      (click)="!menuIsPristine ? toggleMenuState(false) : null"
-    ></div>
-    <div class="audi-side-nav__menu-container">
-      <div class="audi-side-nav__menu-close-btn-wrapper">
-        <div
-          class="audi-side-nav__menu-close-btn"
-          [ngClass]="{ 'inactive-animation': !menuIsPristine && !menuIsOpen }"
-        >
-          <audi-button type="icon-large" (click)="toggleMenuState(false)">
-            <audi-icon size="large" [iconName]="'cancel'"></audi-icon>
-          </audi-button>
+      class="audi-side-nav"
+      [ngClass]="{
+        active: menuIsOpen
+      }"
+    >
+      <div class="audi-side-nav__overlay" (click)="closeAllMenu()"></div>
+      <div class="audi-side-nav__menu-container">
+        <div class="audi-side-nav__menu-close-btn-wrapper">
+          <div
+            class="audi-side-nav__menu-close-btn"
+            [ngClass]="{ 'inactive-animation': !menuIsOpen }"
+          >
+            <audi-button type="icon-large" (click)="toggleMenuState(false)">
+              <audi-icon size="large" [iconName]="'cancel'"></audi-icon>
+            </audi-button>
+          </div>
         </div>
-      </div>
-      <div
-        class="audi-side-nav__menu"
-        [ngClass]="{ 'inactive-animation': !menuIsPristine && !menuIsOpen }"
-      >
-        <!-- TODO: transloco -->
-        <h3
-          class="aui-headline-3 clickable mb-4 mt-auto"
-          [routerLink]="['/', language, 'products']"
-          (click)="toggleMenuState(false)"
+        <div
+          class="audi-side-nav__menu"
+          [ngClass]="{ 'inactive-animation': !menuIsOpen }"
         >
-          {{ translationOutput('products.audiCollections') }}
-        </h3>
-        <h3
-          class="aui-headline-3 clickable my-4"
-          (click)="toggleMenuState(false)"
-        >
-          Nav Item 2
-        </h3>
-        <h3
-          class="aui-headline-3 clickable my-4"
-          (click)="toggleMenuState(false)"
-        >
-          Nav Item 3
-        </h3>
-        <h3
-          class="aui-headline-3 clickable my-4"
-          (click)="toggleMenuState(false)"
-        >
-          Nav Item 4
-        </h3>
-        <h3
-          class="aui-headline-3 clickable my-4"
-          (click)="toggleMenuState(false)"
-        >
-          Nav Item 5
-        </h3>
-        <div class="flex mt-auto">
-          <audi-button-group type="icon">
-            <audi-button type="icon-large">
-              <a href="https://www.facebook.com/AudiTaiwan" target="_blank">
-                <audi-icon
-                  size="large"
-                  [iconName]="'system-facebook'"
-                ></audi-icon>
-              </a>
-            </audi-button>
-            <audi-button type="icon-large">
-              <a href="https://www.instagram.com/audi_tw" target="_blank">
-                <audi-icon
-                  size="large"
-                  [iconName]="'system-instagram'"
-                ></audi-icon>
-              </a>
-            </audi-button>
-            <audi-button type="icon-large">
-              <a href="https://www.youtube.com/user/auditaiwan" target="_blank">
-                <audi-icon
-                  size="large"
-                  [iconName]="'system-youtube'"
-                ></audi-icon>
-              </a>
-            </audi-button>
-            <audi-button type="icon-large">
-              <a
-                href="https://gh.linkedin.com/company/audi-taiwan"
-                target="_blank"
-              >
-                <audi-icon
-                  size="large"
-                  [iconName]="'system-linkedin'"
-                ></audi-icon>
-              </a>
-            </audi-button>
-          </audi-button-group>
+          <!-- TODO: transloco -->
+          <h3
+            class="aui-headline-3 clickable mb-4 mt-auto"
+            [routerLink]="['/', language, 'products']"
+            (click)="toggleMenuState(false)"
+          >
+            {{ translationOutput('products.audiCollections') }}
+          </h3>
+          <h3
+            class="aui-headline-3 clickable my-4"
+            (click)="toggleMenuState(false)"
+          >
+            Nav Item 2
+          </h3>
+          <h3
+            class="aui-headline-3 clickable my-4"
+            (click)="toggleMenuState(false)"
+          >
+            Nav Item 3
+          </h3>
+          <h3
+            class="aui-headline-3 clickable my-4"
+            (click)="toggleMenuState(false)"
+          >
+            Nav Item 4
+          </h3>
+          <h3
+            class="aui-headline-3 clickable my-4"
+            (click)="toggleMenuState(false)"
+          >
+            Nav Item 5
+          </h3>
+          <div class="flex mt-auto">
+            <audi-button-group type="icon">
+              <audi-button type="icon-large">
+                <a href="https://www.facebook.com/AudiTaiwan" target="_blank">
+                  <audi-icon
+                    size="large"
+                    [iconName]="'system-facebook'"
+                  ></audi-icon>
+                </a>
+              </audi-button>
+              <audi-button type="icon-large">
+                <a href="https://www.instagram.com/audi_tw" target="_blank">
+                  <audi-icon
+                    size="large"
+                    [iconName]="'system-instagram'"
+                  ></audi-icon>
+                </a>
+              </audi-button>
+              <audi-button type="icon-large">
+                <a
+                  href="https://www.youtube.com/user/auditaiwan"
+                  target="_blank"
+                >
+                  <audi-icon
+                    size="large"
+                    [iconName]="'system-youtube'"
+                  ></audi-icon>
+                </a>
+              </audi-button>
+              <audi-button type="icon-large">
+                <a
+                  href="https://gh.linkedin.com/company/audi-taiwan"
+                  target="_blank"
+                >
+                  <audi-icon
+                    size="large"
+                    [iconName]="'system-linkedin'"
+                  ></audi-icon>
+                </a>
+              </audi-button>
+            </audi-button-group>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+
+    <audi-cart-nav [(menuIsOpen)]="cartMenuIsOpen"></audi-cart-nav>
+  </ng-container>
 </ng-container>

@@ -1,0 +1,65 @@
+<ng-container *ngIf="cart$ | async; let cart">
+  <div
+    class="audi-cart"
+    [ngClass]="{
+      active: menuIsOpen
+    }"
+    *transloco="let translationOutput"
+  >
+    <div class="audi-cart__overlay" (click)="menuIsOpen = false"></div>
+    <div class="audi-cart__menu-container">
+      <div class="audi-cart__menu-close-btn-wrapper">
+        <div
+          class="audi-cart__menu-close-btn"
+          [ngClass]="{ 'inactive-animation': !menuIsOpen }"
+        >
+          <audi-button type="icon-large" (click)="menuIsOpen = false">
+            <audi-icon size="large" [iconName]="'cancel'"></audi-icon>
+          </audi-button>
+        </div>
+      </div>
+      <div
+        class="audi-cart__menu"
+        [ngClass]="{ 'inactive-animation': !menuIsOpen }"
+      >
+        <div class="py-6 px-8 w-full">
+          <h1 class="aui-headline-4">{{ translationOutput('cart.cart') }}</h1>
+        </div>
+        <div class="audi-cart__menu__cart-items">
+          <ng-container *ngIf="cart.length > 0; else emptyCart">
+            <audi-cart-item
+              *ngFor="let cartItem of cart"
+              [cartItem]="cartItem"
+            ></audi-cart-item>
+          </ng-container>
+          <ng-template #emptyCart>
+            <div class="h-full flex flex-col items-center justify-center">
+              <h6 class="aui-headline-6">
+                {{ translationOutput('cart.emptyCart') }}
+              </h6>
+            </div>
+          </ng-template>
+        </div>
+        <div class="py-6 px-8 w-full">
+          <ng-container *ngIf="cart.length > 0; else shopNow">
+            <audi-button
+              class="block w-full"
+              [routerLink]="['/', language, 'checkout']"
+              (click)="menuIsOpen = false"
+              >{{ translationOutput('buttons.checkout') }}</audi-button
+            >
+          </ng-container>
+
+          <ng-template #shopNow>
+            <audi-button
+              class="block w-full"
+              [routerLink]="['/', language, 'products']"
+              (click)="menuIsOpen = false"
+              >{{ translationOutput('buttons.exploreCTA') }}</audi-button
+            >
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

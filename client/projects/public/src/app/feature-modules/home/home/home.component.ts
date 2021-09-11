@@ -6,6 +6,7 @@ import {
   Homepage,
   HomepageService,
   isNullOrEmptyString,
+  LanguageCode,
   LanguageStateService,
   News,
   PaginatedResult,
@@ -17,6 +18,7 @@ import { map, take } from 'rxjs/operators';
 import { combineLatest, Observable, Subscription, forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
 import { SplashScreenStateService } from '../../splash-screen/services/splash-screen-state-service/splash-screen-state.service';
+import { FULLPAGE_JS_NORMAL_SCROLL_ELEMENTS } from '../../../constants';
 
 interface HomepageData {
   homepageData: Homepage;
@@ -87,8 +89,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   splashScreenIsOff$ = this.splashscreenService._splashScreenIsOff$;
 
-  language = this.languageService.getCurrentLanguage();
-
   fullpageConfig: any;
   fullpageRef: any;
 
@@ -97,6 +97,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public isNullOrEmptyString: (val: string | null | undefined) => boolean =
     isNullOrEmptyString;
+
+  get language(): LanguageCode {
+    return this.languageService.getCurrentLanguage();
+  }
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -122,6 +126,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       scrollOverflow: true,
       resetSlider: true,
       paddingTop: '56px', // fixed header height
+      normalScrollElements: FULLPAGE_JS_NORMAL_SCROLL_ELEMENTS,
     };
   }
 

@@ -11,6 +11,7 @@ import {
   BusyService,
   LanguageCode,
   LanguageStateService,
+  objectIsEqual,
   PaginatedResult,
   Pagination,
   ProductCategory,
@@ -186,6 +187,8 @@ export class ProductsCategoryListComponent implements OnInit, OnDestroy {
       return;
     }
 
+    const oldState = this.productCategoryParams;
+
     this.productCategoryParams = {
       ...this.productCategoryParams,
       pageNumber: state.page?.current as number,
@@ -206,7 +209,9 @@ export class ProductsCategoryListComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.refresher$.next(this.productCategoryParams);
+    if (!objectIsEqual(oldState, this.productCategoryParams)) {
+      this.refresher$.next(this.productCategoryParams);
+    }
   }
 
   promptAddSubcategory(parentCategoryId: number): void {

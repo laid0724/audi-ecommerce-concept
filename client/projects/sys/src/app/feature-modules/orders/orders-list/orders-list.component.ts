@@ -1,7 +1,7 @@
 import { OnDestroy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, QueryParamsHandling, Router } from '@angular/router';
-import { toZhMapper } from '@audi/data';
+import { objectIsEqual, toZhMapper } from '@audi/data';
 import {
   BusyService,
   Order,
@@ -119,6 +119,8 @@ export class OrdersListComponent implements OnInit, OnDestroy {
       return;
     }
 
+    const oldState = this.orderParams;
+
     this.orderParams = {
       ...this.orderParams,
       pageNumber: state.page?.current as number,
@@ -163,7 +165,9 @@ export class OrdersListComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.refresher$.next(this.orderParams);
+    if (!objectIsEqual(oldState, this.orderParams)) {
+      this.refresher$.next(this.orderParams);
+    }
   }
 
   resetQueryParams(queryParams = {}, queryParamsHandling = ''): void {

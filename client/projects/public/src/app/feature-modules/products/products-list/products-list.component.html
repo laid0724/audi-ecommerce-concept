@@ -99,26 +99,42 @@
           </audi-flyout>
         </div>
         <div class="w-full my-6 grid grid-rows-none grid-cols-12">
-          <ng-container *ngIf="products.length > 0; else noProducts">
-            <div
-              *ngFor="let product of products"
-              class="
-                col-span-12
-                sm:col-span-6
-                md:col-span-4
-                2xl:col-span-3
-                mx-2
-                my-4
-              "
-            >
-              <audi-product-card [product]="product"></audi-product-card>
-            </div>
+          <ng-container *ngIf="!loading; else loadingTemplate">
+            <ng-container *ngIf="products.length > 0; else noProducts">
+              <div
+                *ngFor="let product of products"
+                class="
+                  col-span-12
+                  sm:col-span-6
+                  md:col-span-4
+                  2xl:col-span-3
+                  mx-2
+                  my-4
+                "
+              >
+                <audi-product-card [product]="product"></audi-product-card>
+              </div>
+            </ng-container>
+            <ng-template #noProducts>
+              <h1
+                class="
+                  col-span-12
+                  aui-headline-3
+                  w-full
+                  flex
+                  items-center
+                  justify-center
+                  no-products
+                "
+              >
+                {{ translationOutput('products.noProductsAvailable') }}
+              </h1>
+            </ng-template>
           </ng-container>
-          <ng-template #noProducts>
-            <h1
+          <ng-template #loadingTemplate>
+            <div
               class="
                 col-span-12
-                aui-headline-3
                 w-full
                 flex
                 items-center
@@ -126,8 +142,8 @@
                 no-products
               "
             >
-              {{ translationOutput('products.noProductsAvailable') }}
-            </h1>
+              <audi-spinner class="block" [isContinuous]="true"></audi-spinner>
+            </div>
           </ng-template>
         </div>
         <div

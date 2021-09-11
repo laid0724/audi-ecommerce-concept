@@ -51,19 +51,20 @@ namespace Audi.Controllers
         [HttpPost]
         public async Task<ActionResult<OrderDto>> CreateOrder([FromBody] OrderUpsertDto request)
         {
-            var user = await _unitOfWork.UserRepository.GetUserByIdAsync(request.UserId);
+            var user = await _unitOfWork.UserRepository.GetUserByEmailAsync(request.Email.ToLower().Trim());
 
-            if (user == null) return NotFound("user_not_found");
+            if (user != null)
+            {
+                if (!await _userManager.IsEmailConfirmedAsync(user)) return StatusCode(403, "email_not_confirmed");
 
-            if (!await _userManager.IsEmailConfirmedAsync(user)) return StatusCode(403, "email_not_confirmed");
+                if (await _userManager.IsLockedOutAsync(user)) return StatusCode(403, "locked_out");
 
-            if (await _userManager.IsLockedOutAsync(user)) return StatusCode(403, "locked_out");
+                if (user.IsDisabled) return StatusCode(403, "account_disabled");
 
-            if (user.IsDisabled) return StatusCode(403, "account_disabled");
+                var userRoles = await _userManager.GetRolesAsync(user);
 
-            var userRoles = await _userManager.GetRolesAsync(user);
-
-            if (!userRoles.Select(r => r.ToString()).ToArray().Contains("Member")) return StatusCode(403, "none_member");
+                if (!userRoles.Select(r => r.ToString()).ToArray().Contains("Member")) return StatusCode(403, "none_member");
+            }
 
             if (
                 request.CreditCard == null ||
@@ -95,7 +96,7 @@ namespace Audi.Controllers
 
             var order = new Order
             {
-                UserId = request.UserId,
+                Email = request.Email.ToLower().Trim(),
                 BillingAddress = request.BillingAddress,
                 ShippingAddress = request.ShippingAddress,
                 CreditCardLast4Digit = request.CreditCard.CardNumber.Substring(Math.Max(0, request.CreditCard.CardNumber.Length - 4)),

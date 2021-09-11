@@ -22,9 +22,13 @@
                       <th>電子信箱 Email</th>
                       <td>
                         <a
+                          *ngIf="order.userId !== null"
                           [routerLink]="['/manage/users/members', order.userId]"
                           >{{ order.email }}</a
                         >
+                        <ng-container *ngIf="order.userId === null">{{
+                          order.email
+                        }}</ng-container>
                       </td>
                     </tr>
                     <tr>
@@ -49,6 +53,14 @@
                           style="border: unset"
                         >
                           <tbody>
+                            <tr>
+                              <th>姓氏 Last Name</th>
+                              <td>{{ order.billingAddress.lastName }}</td>
+                            </tr>
+                            <tr>
+                              <th>名字 First Name</th>
+                              <td>{{ order.billingAddress.firstName }}</td>
+                            </tr>
                             <tr>
                               <th>市/縣 City</th>
                               <td>{{ order.billingAddress.city }}</td>
@@ -81,6 +93,14 @@
                           style="border: unset"
                         >
                           <tbody>
+                            <tr>
+                              <th>姓氏 Last Name</th>
+                              <td>{{ order.shippingAddress.lastName }}</td>
+                            </tr>
+                            <tr>
+                              <th>名字 First Name</th>
+                              <td>{{ order.shippingAddress.firstName }}</td>
+                            </tr>
                             <tr>
                               <th>市/縣 City</th>
                               <td>{{ order.shippingAddress.city }}</td>

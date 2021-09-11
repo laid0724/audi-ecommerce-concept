@@ -21,7 +21,10 @@
     "sortBy": "排序",
     "addToCart": "加入購物車",
     "favorite": "加入追蹤清單",
-    "unfavorite": "移除追蹤清單"
+    "unfavorite": "移除追蹤清單",
+    "checkout": "結帳",
+    "remove": "移除",
+    "continueShopping": "繼續購物"
   },
   "menu": {},
   "footer": {
@@ -123,5 +126,16 @@
     "noProductsAvailable": "無商品符合您的篩選條件",
     "outOfStock": "缺貨",
     "similarProducts": "相似商品"
+  },
+  "cart": {
+    "cart": "購物車",
+    "emptyCart": "您的購物車是空的",
+    "table": {
+      "product": "產品",
+      "specification": "型號",
+      "quantity": "數量",
+      "price": "價格"
+    },
+    "total": "總價"
   }
 }

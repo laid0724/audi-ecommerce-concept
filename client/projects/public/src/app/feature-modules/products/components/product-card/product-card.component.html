@@ -3,7 +3,11 @@
     #card
     class="clickable"
     [routerLink]="['/', language, 'products', product.id]"
-    [coverImageUrl]="mainProductPhoto!.url"
+    [coverImageUrl]="
+      mainProductPhoto?.url != undefined
+        ? mainProductPhoto!.url
+        : 'assets/images/placeholder-white.png'
+    "
     [isDisabled]="product.stock === 0"
     textAlign="center"
   >
@@ -22,11 +26,13 @@
     <div class="flex flex-col items-center justify-center">
       <h5 class="aui-headline-5 mb-1">{{ product.name }}</h5>
 
-      <ng-container *ngIf="product.isDiscounted; else regularPrice">
+      <ng-container *ngIf="isDiscounted(product); else regularPrice">
         <div class="grid grid-rows-1 grid-cols-3">
           <span>&nbsp;</span>
           <small class="product-price aui-small font-bold text-red text-center"
-            >${{ (product.price - product.discountAmount).toLocaleString() }}
+            >${{
+              (product.price - product.discountAmount).toLocaleString()
+            }}&nbsp;
           </small>
           <small class="product-price aui-small line-through text-grey-8">
             ${{ product.price.toLocaleString() }}

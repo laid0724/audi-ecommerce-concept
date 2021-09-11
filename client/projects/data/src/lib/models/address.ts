@@ -1,4 +1,6 @@
 export interface Address {
+  firstName: string;
+  lastName: string;
   country: string;
   state: string;
   city: string;

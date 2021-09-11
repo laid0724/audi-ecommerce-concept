@@ -10,6 +10,7 @@ export class BadgeComponent {
   @Input() bgColor: AudiColor | string = AudiColor.Black;
   @Input() textColor: AudiColor | string = AudiColor.White;
   @Input() isSmall: boolean = false;
+  @Input() isSmallAndAnimated: boolean = false;
   @Input() isSmallText: boolean = false;
   @Input() isHidden: boolean = false;
 }

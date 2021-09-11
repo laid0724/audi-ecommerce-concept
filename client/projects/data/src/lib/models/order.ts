@@ -5,7 +5,7 @@ import { OrderItem } from './order-item';
 export interface Order {
   id: number;
   orderNumber: string;
-  userId: number;
+  userId: number | null;
   firstName: string;
   lastName: string;
   email: string;

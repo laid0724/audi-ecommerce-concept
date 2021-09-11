@@ -59,6 +59,10 @@ let routes: Routes = [
     component: LoginComponent,
   },
   {
+    path: 'members-area',
+    redirectTo: `${lastSelectedLanguage}/members-area`,
+  },
+  {
     path: ':languageCode/members-area',
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard, MemberGuard],
@@ -68,11 +72,24 @@ let routes: Routes = [
       ),
   },
   {
+    path: 'products',
+    redirectTo: `${lastSelectedLanguage}/products`,
+  },
+  {
     path: ':languageCode/products',
     loadChildren: () =>
       import('./feature-modules/products/products.module').then(
         (m) => m.ProductsModule
       ),
+  },
+  {
+    path: 'cart',
+    redirectTo: `${lastSelectedLanguage}/cart`,
+  },
+  {
+    path: ':languageCode/cart',
+    loadChildren: () =>
+      import('./feature-modules/cart/cart.module').then((m) => m.CartModule),
   },
   {
     path: 'server-error',

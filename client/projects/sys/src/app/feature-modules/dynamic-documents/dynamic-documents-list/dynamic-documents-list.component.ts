@@ -16,6 +16,7 @@ import {
   formatClrDateToUTCString,
   LanguageCode,
   LanguageStateService,
+  objectIsEqual,
   PaginatedResult,
   Pagination,
   setQueryParams,
@@ -215,12 +216,13 @@ export class DynamicDocumentsListComponent implements OnInit, OnDestroy {
       return;
     }
 
+    const oldState = this.dynamicDocumentParams;
+
     this.dynamicDocumentParams = {
       ...this.dynamicDocumentParams,
       pageNumber: state.page?.current as number,
       pageSize: state.page?.size as number,
       title: undefined,
-      type: undefined,
       isVisible: undefined,
       dateStart: undefined,
       dateEnd: undefined,
@@ -255,7 +257,9 @@ export class DynamicDocumentsListComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.refresher$.next(this.dynamicDocumentParams);
+    if (!objectIsEqual(oldState, this.dynamicDocumentParams)) {
+      this.refresher$.next(this.dynamicDocumentParams);
+    }
   }
 
   promptDelete(dynamicDocument: DynamicDocumentWithoutFaq): void {

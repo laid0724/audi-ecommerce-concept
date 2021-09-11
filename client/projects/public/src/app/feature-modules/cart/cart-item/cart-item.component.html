@@ -1,0 +1,29 @@
+<div *ngIf="cartItem && cartItem.product" class="cart-item grid-rows">
+  <div class="cart-item__product-img flex">
+    <img
+      [src]="productMainPhotoUrl"
+      [alt]="cartItem.product.name"
+      class="w-full object-cover my-auto"
+    />
+  </div>
+  <div class="cart-item__product-info">
+    <small class="aui-small font-bold line-clamp-1">{{
+      cartItem.product.name
+    }}</small>
+    <small class="aui-small line-clamp-1">{{ cartItem.productSku.sku }}</small>
+    <small class="aui-small my-1">${{ price.toLocaleString() }}</small>
+    <div class="w-full flex items-center justify-between mt-auto">
+      <audi-cart-item-quantity-selector
+        class="m-0"
+        [cartItem]="cartItem"
+      ></audi-cart-item-quantity-selector>
+
+      <a
+        *transloco="let translationOutput"
+        class="aui-small aui-textlink"
+        (click)="removeItem()"
+        >{{ translationOutput('buttons.remove') }}</a
+      >
+    </div>
+  </div>
+</div>

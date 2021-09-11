@@ -84,6 +84,7 @@ namespace server.Data.Migrations
                         .HasColumnName("date_of_birth");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)")
                         .HasColumnName("email");
@@ -169,6 +170,9 @@ namespace server.Data.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_idt_users");
+
+                    b.HasAlternateKey("Email")
+                        .HasName("ak_idt_users_email");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("email_index");
@@ -488,6 +492,11 @@ namespace server.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("customer_notes");
 
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("VARCHAR")
+                        .HasColumnName("email");
+
                     b.Property<string>("InternalNotes")
                         .HasColumnType("text")
                         .HasColumnName("internal_notes");
@@ -520,15 +529,11 @@ namespace server.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("tracking_number");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
-                        .HasColumnName("user_id");
-
                     b.HasKey("Id")
                         .HasName("pk_orders");
 
-                    b.HasIndex("UserId")
-                        .HasDatabaseName("ix_orders_user_id");
+                    b.HasIndex("Email")
+                        .HasDatabaseName("ix_orders_email");
 
                     b.ToTable("orders");
                 });
@@ -561,18 +566,11 @@ namespace server.Data.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("sku_id");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer")
-                        .HasColumnName("user_id");
-
                     b.HasKey("Id")
                         .HasName("pk_order_items");
 
                     b.HasIndex("OrderId")
                         .HasDatabaseName("ix_order_items_order_id");
-
-                    b.HasIndex("UserId")
-                        .HasDatabaseName("ix_order_items_user_id");
 
                     b.HasIndex("ProductId", "SkuId")
                         .HasDatabaseName("ix_order_items_product_id_sku_id");
@@ -1085,9 +1083,9 @@ namespace server.Data.Migrations
                 {
                     b.HasOne("Audi.Entities.AppUser", "User")
                         .WithMany("Orders")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .HasForeignKey("Email")
+                        .HasPrincipalKey("Email")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("User");
                 });
@@ -1106,12 +1104,6 @@ namespace server.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Audi.Entities.AppUser", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Audi.Entities.ProductSku", "ProductSku")
                         .WithMany("OrderItems")
                         .HasForeignKey("ProductId", "SkuId")
@@ -1123,8 +1115,6 @@ namespace server.Data.Migrations
                     b.Navigation("Product");
 
                     b.Navigation("ProductSku");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Audi.Entities.Product", b =>

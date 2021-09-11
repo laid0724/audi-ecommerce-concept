@@ -4,7 +4,9 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import {
   AccountService,
   BusyService,
+  CartItem,
   isNullOrEmptyString,
+  LanguageCode,
   LanguageStateService,
   PaginatedResult,
   Product,
@@ -13,7 +15,7 @@ import {
   ProductsService,
   User,
 } from '@audi/data';
-import { filter, switchMap, take, tap } from 'rxjs/operators';
+import { filter, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import {
   AbstractControl,
   FormArray,
@@ -21,8 +23,10 @@ import {
   FormControl,
   FormGroup,
 } from '@angular/forms';
-
-// TODO: product add to cart
+import { CartService } from '../../cart/services/cart.service';
+import { Subject } from 'rxjs';
+import { FULLPAGE_JS_NORMAL_SCROLL_ELEMENTS } from '../../../constants';
+import { isProductDiscounted } from '../../../helpers';
 
 @Component({
   selector: 'audi-products-single',
@@ -32,17 +36,22 @@ import {
 export class ProductsSingleComponent implements OnInit, OnDestroy {
   product: Product;
   similarProducts: Product[];
+  cartItems: CartItem[];
 
   user: User | null = null;
 
-  addToCartForm: FormGroup;
   variantSelectionForm: FormGroup;
 
   fullpageConfig: any;
   fullpageRef: any;
 
-  language = this.languageService.getCurrentLanguage();
   isLoading = true;
+
+  destroy$ = new Subject<boolean>();
+
+  get language(): LanguageCode {
+    return this.languageService.getCurrentLanguage();
+  }
 
   get imgUrls(): string[] {
     if (this.product) {
@@ -84,7 +93,17 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
       sku.variantValueIds.every((id) => this.selectedValueIds.includes(id))
     );
 
-    if (matchingSku !== undefined && matchingSku.stock > 0) return true;
+    if (matchingSku !== undefined && matchingSku.stock > 0) {
+      const cartItemWithMatchingSku = this.cartItems.find(
+        (cartItem: CartItem) => cartItem.productSku.id === matchingSku.id
+      );
+
+      if (cartItemWithMatchingSku) {
+        return matchingSku.stock - (cartItemWithMatchingSku.quantity + 1) >= 0;
+      } else {
+        return true;
+      }
+    }
 
     return false;
   }
@@ -97,12 +116,15 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
   public isNullOrEmptyString: (val: string | null | undefined) => boolean =
     isNullOrEmptyString;
 
+  public isDiscounted: (product: Product) => boolean = isProductDiscounted;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
     private accountService: AccountService,
     private productService: ProductsService,
+    private cartService: CartService,
     private languageService: LanguageStateService,
     private busyService: BusyService
   ) {
@@ -116,16 +138,24 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
       scrollOverflow: true,
       resetSlider: true,
       paddingTop: '56px', // fixed header height
+      normalScrollElements: FULLPAGE_JS_NORMAL_SCROLL_ELEMENTS,
     };
   }
 
   ngOnInit(): void {
     this.initVariantSelectionForm();
-    this.initAddToCartForm();
 
-    this.accountService.currentUser$.subscribe((user: User | null) => {
-      this.user = user;
-    });
+    this.accountService.currentUser$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((user: User | null) => {
+        this.user = user;
+      });
+
+    this.cartService.cart$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((cartItems: CartItem[]) => {
+        this.cartItems = cartItems;
+      });
 
     this.route.paramMap
       .pipe(
@@ -156,7 +186,8 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
             (this.similarProducts = paginatedProducts.result.filter(
               (p) => p.id !== this.product.id
             ))
-        )
+        ),
+        takeUntil(this.destroy$)
       )
       .subscribe(
         (_) => {
@@ -176,10 +207,6 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
     this.variantSelectionForm = this.fb.group({
       selections: this.fb.array([]),
     });
-  }
-
-  initAddToCartForm(): void {
-    // TODO
   }
 
   convertToFormControl(abstractControl: AbstractControl | null): FormControl {
@@ -214,7 +241,22 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
   }
 
   onAddToCart(): void {
-    // TODO:
+    const matchingSku = this.product.skus.find((sku: ProductSku) =>
+      sku.variantValueIds.every((id) => this.selectedValueIds.includes(id))
+    );
+
+    if (matchingSku !== undefined && matchingSku.stock > 0) {
+      const cartItem: CartItem = {
+        product: this.product,
+        productSku: matchingSku,
+        quantity: 1,
+      };
+
+      // TODO: if you add more than 1 quantity and the stock runs out, now what?
+
+      this.cartService.addToCart(cartItem);
+      this.cartService.openCartMenu();
+    }
   }
 
   onLikeClicked(e: Event, productId: number): void {
@@ -266,5 +308,8 @@ export class ProductsSingleComponent implements OnInit, OnDestroy {
     if (this.fullpageRef) {
       this.fullpageRef.destroy('all');
     }
+
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

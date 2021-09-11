@@ -21,6 +21,7 @@
               <div class="col-span-12 md:col-span-6 hero-slide__gallery">
                 <div class="w-full">
                   <audi-product-slider
+                    *ngIf="imgUrls.length > 0"
                     [imgUrls]="imgUrls"
                   ></audi-product-slider>
                 </div>
@@ -29,17 +30,17 @@
                 <h1 class="aui-headline-4">
                   {{ product.name }}
                 </h1>
-                <ng-container *ngIf="product.isDiscounted; else price">
+                <ng-container *ngIf="isDiscounted(product); else price">
                   <div
                     class="
-                      flex flex-row
-                      items-center
-                      justify-center
-                      md:justify-start
+                      grid grid-rows-1 grid-cols-3
                       my-2
+                      items-center
+                      text-center
                     "
                   >
-                    <small class="mr-1 text-red">
+                    <span>&nbsp;</span>
+                    <small class="text-red">
                       ${{
                         (
                           product.price - product.discountAmount
@@ -95,6 +96,7 @@
                   <audi-button
                     type="primary"
                     [isDisabled]="!selectionHasStock"
+                    (click)="selectionHasStock ? onAddToCart() : null"
                     class="
                       col-span-12
                       lg:col-span-6
@@ -190,25 +192,16 @@
                     <audi-card
                       [headerSize]="4"
                       [header]="product.name"
-                      [coverImageUrl]="getProductMainPhoto(product.photos)!.url"
+                      [coverImageUrl]="
+                        getProductMainPhoto(product.photos)?.url != undefined
+                          ? getProductMainPhoto(product.photos)!.url
+                          : 'assets/images/placeholder-white.png'
+                      "
                       textAlign="center"
                     >
-                      <small
-                        class="
-                          hidden
-                          md-block
-                          text-grey-8 text-center
-                          md:line-clamp-3
-                          mt-2
-                          mb-4
-                        "
-                      >
-                        {{ product.description }}
-                      </small>
-
                       <audi-button
                         type="primary"
-                        class="block w-full mt-6 md:mt-0"
+                        class="block w-full mt-6"
                         [routerLink]="['/', language, 'products', product.id]"
                       >
                         {{ translationOutput('buttons.productsCTA') }}

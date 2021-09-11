@@ -50,11 +50,8 @@ namespace Audi.Data
                         .ThenInclude(p => p.ProductPhotos)
                             .ThenInclude(pp => pp.Photo)
                 .Include(o => o.OrderItems)
-                    .ThenInclude(oi => oi.Product)
-                        .ThenInclude(p => p.ProductVariants)
-                            .ThenInclude(pv => pv.ProductVariantValues)
-                                .ThenInclude(pvv => pvv.ProductSkuValues)
-                                    .ThenInclude(psv => psv.ProductSku)
+                    .ThenInclude(oi => oi.ProductSku)
+                        .ThenInclude(sku => sku.ProductSkuValues)
                 .Include(o => o.User)
                 .Where(o => o.Id == orderId)
                 .SingleOrDefaultAsync();
@@ -64,6 +61,13 @@ namespace Audi.Data
 
         public async Task<ICollection<Order>> GetOrdersByUserIdAsync(int userId)
         {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user == null)
+            {
+                return new List<Order>() { };
+            }
+
             var orders = await _context.Orders
                 .IgnoreQueryFilters()
                 .Include(o => o.OrderItems)
@@ -71,13 +75,28 @@ namespace Audi.Data
                         .ThenInclude(p => p.ProductPhotos)
                             .ThenInclude(pp => pp.Photo)
                 .Include(o => o.OrderItems)
-                    .ThenInclude(oi => oi.Product)
-                        .ThenInclude(p => p.ProductVariants)
-                            .ThenInclude(pv => pv.ProductVariantValues)
-                                .ThenInclude(pvv => pvv.ProductSkuValues)
-                                    .ThenInclude(psv => psv.ProductSku)
+                    .ThenInclude(oi => oi.ProductSku)
+                        .ThenInclude(sku => sku.ProductSkuValues)
                 .Include(o => o.User)
-                .Where(o => o.UserId == userId)
+                .Where(o => o.Email.ToLower().Trim() == user.Email.ToLower().Trim())
+                .ToListAsync();
+
+            return orders;
+        }
+
+        public async Task<ICollection<Order>> GetOrdersByEmailAsync(string email)
+        {
+            var orders = await _context.Orders
+                .IgnoreQueryFilters()
+                .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
+                        .ThenInclude(p => p.ProductPhotos)
+                            .ThenInclude(pp => pp.Photo)
+                .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.ProductSku)
+                        .ThenInclude(sku => sku.ProductSkuValues)
+                .Include(o => o.User)
+                .Where(o => o.Email.ToLower().Trim() == email.ToLower().Trim())
                 .ToListAsync();
 
             return orders;
@@ -92,17 +111,14 @@ namespace Audi.Data
                         .ThenInclude(p => p.ProductPhotos)
                             .ThenInclude(pp => pp.Photo)
                 .Include(o => o.OrderItems)
-                    .ThenInclude(oi => oi.Product)
-                        .ThenInclude(p => p.ProductVariants)
-                            .ThenInclude(pv => pv.ProductVariantValues)
-                                .ThenInclude(pvv => pvv.ProductSkuValues)
-                                    .ThenInclude(psv => psv.ProductSku)
+                    .ThenInclude(oi => oi.ProductSku)
+                        .ThenInclude(sku => sku.ProductSkuValues)
                 .Include(o => o.User)
                 .AsQueryable();
 
             if (orderParams.UserId.HasValue)
             {
-                query = query.Where(o => o.UserId == orderParams.UserId.Value);
+                query = query.Where(o => o.User.Id == orderParams.UserId.Value);
             }
 
             if (orderParams.PriceMin.HasValue)
@@ -127,22 +143,22 @@ namespace Audi.Data
 
             if (!string.IsNullOrWhiteSpace(orderParams.LastName))
             {
-                query = query.Where(o => o.User.LastName.ToLower().Trim().Contains(orderParams.LastName.ToLower().Trim()));
+                query = query.Where(o => o.ShippingAddress.LastName.ToLower().Trim().Contains(orderParams.LastName.ToLower().Trim()));
             }
 
             if (!string.IsNullOrWhiteSpace(orderParams.FirstName))
             {
-                query = query.Where(o => o.User.FirstName.ToLower().Trim().Contains(orderParams.FirstName.ToLower().Trim()));
+                query = query.Where(o => o.ShippingAddress.FirstName.ToLower().Trim().Contains(orderParams.FirstName.ToLower().Trim()));
             }
 
             if (!string.IsNullOrWhiteSpace(orderParams.Email))
             {
-                query = query.Where(o => o.User.Email.ToLower().Trim().Contains(orderParams.Email.ToLower().Trim()));
+                query = query.Where(o => o.Email.ToLower().Trim().Contains(orderParams.Email.ToLower().Trim()));
             }
 
             if (!string.IsNullOrWhiteSpace(orderParams.PhoneNumber))
             {
-                query = query.Where(o => o.User.PhoneNumber.ToLower().Trim().Contains(orderParams.PhoneNumber.ToLower().Trim()));
+                query = query.Where(o => o.ShippingAddress.PhoneNumber.ToLower().Trim().Contains(orderParams.PhoneNumber.ToLower().Trim()));
             }
 
             query = query

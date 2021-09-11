@@ -21,7 +21,10 @@
     "sortBy": "Sort By",
     "addToCart": "Add To Cart",
     "favorite": "Favorite",
-    "unfavorite": "Unfavorite"
+    "unfavorite": "Unfavorite",
+    "checkout": "Checkout",
+    "remove": "Remove",
+    "continueShopping": "Continue Shopping"
   },
   "menu": {},
   "footer": {
@@ -123,5 +126,16 @@
     "noProductsAvailable": "No Products Available",
     "outOfStock": "OUT OF STOCK",
     "similarProducts": "Similar Products"
+  },
+  "cart": {
+    "cart": "Cart",
+    "emptyCart": "Your cart is empty",
+    "table": {
+      "product": "Product",
+      "specification": "Specification",
+      "quantity": "Quantity",
+      "price": "Price"
+    },
+    "total": "Total"
   }
 }

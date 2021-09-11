@@ -71,7 +71,7 @@
           >
             <div #prevArrow class="previous-arrow background-color-grey-2">
               <audi-button
-                type="icon-large"
+                type="icon-large-not-round"
                 [isDisabled]="
                   prevArrow.classList.contains('swiper-button-disabled')
                 "
@@ -81,7 +81,7 @@
             </div>
             <div #nextArrow class="next-arrow background-color-warm-silver">
               <audi-button
-                type="icon-large"
+                type="icon-large-not-round"
                 [isDisabled]="
                   nextArrow.classList.contains('swiper-button-disabled')
                 "
@@ -136,26 +136,6 @@
             </div>
 
             <div class="md:mt-auto">
-              <!-- <ng-container *ngIf="product.isDiscounted">
-                <div
-                  class="
-                    my-3
-                    flex flex-row
-                    items-center
-                    justify-center
-                    md:justify-start
-                  "
-                >
-                  <h6 class="aui-headline-6 mr-1 text-red">
-                    > ${{
-                      (product.price - product.discountAmount).toLocaleString()
-                    }}
-                  </h6>
-                  <small class="aui-small line-through text-grey-8"
-                    >(${{ product.price.toLocaleString() }})</small
-                  >
-                </div>
-              </ng-container> -->
               <audi-button
                 type="primary"
                 class="block w-full mt-5 md:mt-10"

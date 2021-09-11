@@ -8,6 +8,14 @@ body {
   top: 0;
   left: 0;
   right: 0;
+  &__content-wrapper {
+    max-height: unit(14);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
 }
 
 .aui-modal-dialog__close {
@@ -142,5 +150,21 @@ audi-textarea-container {
         padding-right: 0;
       }
     }
+  }
+}
+
+.aui-badge {
+  &--small-animated {
+    text-indent: 100%;
+    transform: scale(0.25);
+    opacity: 0.5;
+    animation: scale 1.8s $audi-transition-timing-function infinite;
+  }
+}
+
+@keyframes scale {
+  50% {
+    transform: scale(0.3);
+    opacity: 1;
   }
 }

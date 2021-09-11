@@ -5,6 +5,7 @@ import {
   EventEmitter,
   OnInit,
   ViewChild,
+  HostListener,
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
@@ -22,6 +23,22 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./product-sku-editor.component.scss'],
 })
 export class ProductSkuEditorComponent implements OnInit {
+  @HostListener('document:keydown.escape', ['$event']) onEscapeHandler(
+    event: KeyboardEvent
+  ) {
+    if (this.editStockModalOpen) {
+      this.onCloseModal();
+    }
+  }
+
+  @HostListener('document:keydown.enter', ['$event']) onEnterHandler(
+    event: KeyboardEvent
+  ) {
+    if (this.editStockModalOpen) {
+      this.onUpdateStock();
+    }
+  }
+
   @ViewChild(ClrForm, { static: false }) clrForm: ClrForm;
   form: FormGroup;
 

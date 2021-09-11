@@ -12,6 +12,7 @@ import { utcToZonedTime } from 'date-fns-tz';
 import { format } from 'date-fns';
 import { PaginatedResult } from './models/pagination';
 import { Gender, LanguageCode, OrderStatus } from './enums';
+import _ from 'lodash';
 
 export function getPaginationHeaders(
   pageNumber: number,
@@ -295,4 +296,8 @@ export function toZhMapper(
 
 export function spreadNumberAsArray(n: number): number[] {
   return [...Array(n).keys()];
+}
+
+export function objectIsEqual(obj1: Object, obj2: Object): boolean {
+  return _.isEqual(obj1, obj2)
 }

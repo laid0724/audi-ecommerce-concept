@@ -28,12 +28,12 @@
 
     <span
       slot="container-end"
-      class="flex flex-col justify-center items-center"
+      class="flex flex-col justify-center items-center mt-2"
     >
       <div class="flex flex-row">
         <div #prevArrow class="previous-arrow background-color-grey-2">
           <audi-button
-            type="icon-large"
+            type="icon-large-not-round"
             [isDisabled]="
               prevArrow.classList.contains('swiper-button-disabled')
             "
@@ -43,7 +43,7 @@
         </div>
         <div #nextArrow class="next-arrow background-color-warm-silver">
           <audi-button
-            type="icon-large"
+            type="icon-large-not-round"
             [isDisabled]="
               nextArrow.classList.contains('swiper-button-disabled')
             "

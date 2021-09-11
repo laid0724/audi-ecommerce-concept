@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LanguageStateService } from '@audi/data';
+import { LanguageCode, LanguageStateService } from '@audi/data';
 import { TranslocoService } from '@ngneat/transloco';
 import { NotificationService } from '../../component-modules/audi-ui/services/notification-service/notification.service';
 
@@ -14,7 +14,9 @@ export class FooterComponent implements OnInit {
 
   currentYear: number = new Date().getFullYear();
 
-  language = this.languageService.getCurrentLanguage();
+  get language(): LanguageCode {
+    return this.languageService.getCurrentLanguage();
+  }
 
   constructor(
     private fb: FormBuilder,

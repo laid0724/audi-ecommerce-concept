@@ -18,6 +18,7 @@ export * from './lib/models/product-variant';
 export * from './lib/models/product-variant-value';
 export * from './lib/models/product-sku';
 export * from './lib/models/product';
+export * from './lib/models/cart-item';
 export * from './lib/models/order';
 export * from './lib/models/order-item';
 export * from './lib/models/order-params';
