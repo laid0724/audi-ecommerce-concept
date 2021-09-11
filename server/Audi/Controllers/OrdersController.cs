@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Audi.DTOs;
 using Audi.Entities;
@@ -7,10 +8,13 @@ using Audi.Extensions;
 using Audi.Helpers;
 using Audi.Interfaces;
 using Audi.Models;
+using Audi.Services.Mailer;
 using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Audi.Controllers
@@ -18,21 +22,29 @@ namespace Audi.Controllers
     public class OrdersController : BaseApiController
     {
         private readonly ILogger<OrdersController> _logger;
+        private readonly IEmailService _emailService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly UserManager<AppUser> _userManager;
+        private readonly string _domain;
 
         public OrdersController(
             IUnitOfWork unitOfWork,
             ILogger<OrdersController> logger,
             IMapper mapper,
-            UserManager<AppUser> userManager
+            UserManager<AppUser> userManager,
+            IEmailService emailService,
+            IHttpContextAccessor httpContextAccessor
         )
         {
             _mapper = mapper;
             _userManager = userManager;
+            _emailService = emailService;
             _unitOfWork = unitOfWork;
             _logger = logger;
+
+            var request = httpContextAccessor.HttpContext.Request;
+            _domain = $"{request.Scheme}://{request.Host}";
         }
 
         public class Requests
@@ -49,8 +61,10 @@ namespace Audi.Controllers
 
         [SwaggerOperation(Summary = "place order")]
         [HttpPost]
-        public async Task<ActionResult<OrderDto>> CreateOrder([FromBody] OrderUpsertDto request)
+        public async Task<ActionResult<OrderDto>> CreateOrder([FromBody] OrderUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language)
         {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+
             var user = await _unitOfWork.UserRepository.GetUserByEmailAsync(request.Email.ToLower().Trim());
 
             if (user != null)
@@ -145,16 +159,43 @@ namespace Audi.Controllers
 
             var createdOrder = _mapper.Map<OrderDto>(await _unitOfWork.OrderRepository.GetOrderByIdAsync(order.Id));
 
-            // TODO: send order detail email
+            // JavaScript btoa() equivalent in C#
+            // see: https://stackoverflow.com/questions/46093210/c-sharp-version-of-the-javascript-function-btoa
+            string btoa(string stringToEncode)
+            {
+                byte[] bytes = Encoding.GetEncoding(28591).GetBytes(stringToEncode);
+                string btoaEncoding = System.Convert.ToBase64String(bytes);
+                return btoaEncoding;
+            }
+
+            var json = JsonConvert.SerializeObject(createdOrder);
+
+            var jsEncryptedOrderData = btoa(json);
+
+            var orderSuccessUrl = $"{_domain}/{language}/checkout/success?order={jsEncryptedOrderData}";
+
+            // TODO: create a fancy email template for this
+
+            if (language == "zh")
+            {
+                string emailContent = $"請點擊<a href='{orderSuccessUrl}'>此連結</a>查看您的訂單詳情。";
+                await _emailService.SendAsync(order.Email, "Audi Collections - 訂單成立", emailContent);
+            }
+
+            if (language == "en")
+            {
+                string emailContent = $"Please visit <a href='{orderSuccessUrl}'>this link</a> to view the details of your order.";
+                await _emailService.SendAsync(order.Email, "Audi Collections - Order Placed", emailContent);
+            }
 
             return Ok(createdOrder);
         }
 
         [SwaggerOperation(Summary = "update order status")]
         [HttpPut]
-        public async Task<ActionResult<OrderDto>> UpdateOrderStatus([FromBody] Requests.OrderStatusUpdate request)
+        public async Task<ActionResult<OrderDto>> UpdateOrderStatus([FromBody] Requests.OrderStatusUpdate request, [FromHeader(Name = "X-LANGUAGE")] string language)
         {
-            if (string.IsNullOrWhiteSpace(request.Status)) return BadRequest("invalid_order_status");
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
 
             var status = request.Status.ToLower().Trim();
 
@@ -213,7 +254,17 @@ namespace Audi.Controllers
 
             if (_unitOfWork.HasChanges() && await _unitOfWork.Complete())
             {
-                // TODO: send update order status email
+                if (language == "zh")
+                {
+                    string emailContent = $"您的訂單（訂單號碼：{order.OrderNumber}）的狀態已更新，請前往會員中心查看該訂單目前狀態，謝謝。";
+                    await _emailService.SendAsync(order.Email, "Audi Collections - 訂單狀態更新", emailContent);
+                }
+
+                if (language == "en")
+                {
+                    string emailContent = $"The status of your order (Order number: {order.OrderNumber}) has been updated, please visit the member's area to view its current status, thank you.";
+                    await _emailService.SendAsync(order.Email, "Audi Collections - Order Status Updated", emailContent);
+                }
                 return Ok(_mapper.Map<OrderDto>(order));
             }
 

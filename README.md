@@ -97,10 +97,10 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 
 #### API
 
-- Order creation email and status update email
+- Order creation email and status update email template UI
 - email / messaging / inbox functionality
   - inbox system for users, admin can send promo messages to them
-  - notification system for spushing notification to users
+  - notification system for pushing notification to users
 - SignalR for live chat
 - site-wide search
 - Statistics table and repo / controller
