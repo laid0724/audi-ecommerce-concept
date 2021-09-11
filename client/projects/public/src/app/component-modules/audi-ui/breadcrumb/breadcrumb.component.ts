@@ -3,6 +3,30 @@ import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
 import { AudiNavThemeClass } from '../enums';
 import { AudiNavThemeInput } from '../nav/nav-bar/nav-bar.component';
 
+/*
+
+  USAGE:
+
+  <audi-breadcrumb>
+    <li class="aui-breadcrumb__item" audiBreadCrumbItem>
+      Audi
+    </li>
+
+    <li class="aui-breadcrumb__item" audiBreadCrumbItem>
+      Kundenbereich
+    </li>
+
+    <li class="aui-breadcrumb__item" audiBreadCrumbItem>
+      Reparatur und Service
+    </li>
+
+    <li class="aui-breadcrumb__item" audiBreadCrumbItem>
+      Audi Original Staub- und Pollenfilter
+    </li>
+  </audi-breadcrumb>
+
+*/
+
 @Component({
   selector: 'audi-breadcrumb',
   templateUrl: './breadcrumb.component.html',
