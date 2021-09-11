@@ -1,5 +1,3 @@
-import { Address } from './address';
-
 export interface CreditCard {
   cardHolderName: string;
   cardNumber: string;
@@ -7,5 +5,4 @@ export interface CreditCard {
   CVV: string;
   expirationMonth: string;
   expirationYear: string;
-  billingAddress: Address;
 }

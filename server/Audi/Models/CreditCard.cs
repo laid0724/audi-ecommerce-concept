@@ -13,6 +13,5 @@ namespace Audi.Models
         public string CVV { get; set; }
         public string ExpirationMonth { get; set; }
         public string ExpirationYear { get; set; }
-        public Address BillingAddress { get; set; }
     }
 }
