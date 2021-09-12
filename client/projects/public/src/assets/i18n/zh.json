@@ -48,8 +48,10 @@
     "email": "請輸入正確的電子信箱格式",
     "passwordMinLength": "密碼需至少8位數",
     "confirmPassword": "密碼不符",
-    "number": "需大於零",
-    "priceMaxNotGreaterThanPriceMin": "最高價格需高於最低價格"
+    "number": "請輸入數字",
+    "greaterThanZero": "需大於零",
+    "priceMaxNotGreaterThanPriceMin": "最高價格需高於最低價格",
+    "phoneNumber": "請輸入正確的電話號碼"
   },
   "formLabels": {
     "email": "電子信箱",
@@ -68,7 +70,11 @@
     "price": "價格",
     "priceMin": "最低價格",
     "priceMax": "最高價格",
-    "discounted": "優惠中"
+    "discounted": "優惠中",
+    "city": "市/縣",
+    "district": "區域",
+    "postalCode": "區域碼",
+    "addressLine": "地址"
   },
   "formDescriptions": {
     "email": "請輸入您的電子信箱",
@@ -79,7 +85,12 @@
     "confirmPassword": "請確認您的密碼",
     "confirmNewPassword": "請確認您的新密碼",
     "firstName": "請輸入您的名字",
-    "lastName": "請輸入您的姓氏"
+    "lastName": "請輸入您的姓氏",
+    "phoneNumber": "請輸入您的電話號碼",
+    "city": "請選擇縣市",
+    "district": "請選擇區域",
+    "postalCode": "請輸入您的區域碼",
+    "addressLine": "請輸入您的地址"
   },
   "notifications": {
     "success": "成功",

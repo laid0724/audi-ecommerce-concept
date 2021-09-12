@@ -1,0 +1,155 @@
+<audi-control-grid
+  *transloco="let translationOutput"
+  [formGroup]="fg"
+  [label]="label"
+  [type]="'input'"
+  [isInvalid]="fg.touched && fg.invalid"
+>
+  <div class="aui-fieldset__fields">
+    <div class="aui-fieldset__field">
+      <audi-input-container
+        [formControlName]="language === 'zh' ? 'lastName' : 'firstName'"
+        [label]="
+          language === 'zh'
+            ? translationOutput('formLabels.lastName')
+            : translationOutput('formLabels.firstName')
+        "
+      >
+        <audi-control-description>{{
+          translationOutput(
+            language === 'zh'
+              ? 'formDescriptions.lastName'
+              : 'formDescriptions.firstName'
+          )
+        }}</audi-control-description>
+        <audi-control-valid></audi-control-valid>
+        <audi-control-error>{{
+          translationOutput('formErrors.required')
+        }}</audi-control-error>
+      </audi-input-container>
+    </div>
+    <div class="aui-fieldset__field">
+      <audi-input-container
+        [formControlName]="language === 'zh' ? 'firstName' : 'lastName'"
+        [label]="
+          language === 'zh'
+            ? translationOutput('formLabels.firstName')
+            : translationOutput('formLabels.lastName')
+        "
+      >
+        <audi-control-description>{{
+          translationOutput(
+            language === 'zh'
+              ? 'formDescriptions.firstName'
+              : 'formDescriptions.lastName'
+          )
+        }}</audi-control-description>
+        <audi-control-valid></audi-control-valid>
+        <audi-control-error>{{
+          translationOutput('formErrors.required')
+        }}</audi-control-error>
+      </audi-input-container>
+    </div>
+  </div>
+
+  <div class="aui-fieldset__fields">
+    <div class="aui-fieldset__field">
+      <audi-select-container
+        formControlName="city"
+        [label]="translationOutput('formLabels.city')"
+      >
+        <option
+          *ngFor="let city of twCityDistricts"
+          [value]="language === 'zh' ? city.cityZh : city.cityEn"
+        >
+          {{ language === 'zh' ? city.cityZh : city.cityEn }}
+        </option>
+        <audi-control-description>{{
+          translationOutput('formDescriptions.city')
+        }}</audi-control-description>
+        <audi-control-valid></audi-control-valid>
+        <audi-control-error [type]="'select'">{{
+          translationOutput('formErrors.required')
+        }}</audi-control-error>
+      </audi-select-container>
+    </div>
+    <div class="aui-fieldset__field">
+      <audi-select-container
+        formControlName="district"
+        [label]="translationOutput('formLabels.district')"
+      >
+        <option
+          *ngFor="
+            let district of language === 'zh'
+              ? this.selectedCity?.districtsZh
+              : this.selectedCity?.districtsEn
+          "
+          [value]="district"
+        >
+          {{ district }}
+        </option>
+        <audi-control-description [type]="'select'">{{
+          translationOutput('formDescriptions.district')
+        }}</audi-control-description>
+        <audi-control-valid></audi-control-valid>
+        <audi-control-error [type]="'select'">{{
+          translationOutput('formErrors.required')
+        }}</audi-control-error>
+      </audi-select-container>
+    </div>
+    <div class="aui-fieldset__field">
+      <audi-input-container
+        formControlName="postalCode"
+        [label]="translationOutput('formLabels.postalCode')"
+      >
+        <audi-control-description>{{
+          translationOutput('formDescriptions.postalCode')
+        }}</audi-control-description>
+        <audi-control-valid></audi-control-valid>
+        <audi-control-error *ngIf="fg.get('postalCode')?.hasError('required')">
+          {{ translationOutput('formErrors.required') }}</audi-control-error
+        >
+        <audi-control-error *ngIf="fg.get('postalCode')?.hasError('pattern')">
+          {{ translationOutput('formErrors.number') }}</audi-control-error
+        >
+      </audi-input-container>
+    </div>
+  </div>
+
+  <div class="aui-fieldset__fields">
+    <div class="aui-fieldset__field">
+      <audi-input-container
+        formControlName="addressLine"
+        [label]="translationOutput('formLabels.addressLine')"
+      >
+        <audi-control-description>{{
+          translationOutput('formDescriptions.addressLine')
+        }}</audi-control-description>
+        <audi-control-valid></audi-control-valid>
+        <audi-control-error>{{
+          translationOutput('formErrors.required')
+        }}</audi-control-error>
+      </audi-input-container>
+    </div>
+  </div>
+
+  <div class="aui-fieldset__fields">
+    <div class="aui-fieldset__field">
+      <audi-input-container
+        formControlName="phoneNumber"
+        [label]="translationOutput('formLabels.phoneNumber')"
+      >
+        <audi-control-description>{{
+          translationOutput('formDescriptions.phoneNumber')
+        }}</audi-control-description>
+        <audi-control-valid></audi-control-valid>
+        <audi-control-error *ngIf="fg.get('phoneNumber')?.hasError('required')">
+          {{ translationOutput('formErrors.required') }}</audi-control-error
+        >
+        <audi-control-error *ngIf="fg.get('phoneNumber')?.hasError('pattern')">
+          {{ translationOutput('formErrors.phoneNumber') }}</audi-control-error
+        >
+      </audi-input-container>
+    </div>
+  </div>
+</audi-control-grid>
