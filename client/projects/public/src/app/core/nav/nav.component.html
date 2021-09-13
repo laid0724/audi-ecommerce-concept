@@ -119,34 +119,35 @@
           <!-- TODO: transloco -->
           <h3
             class="aui-headline-3 clickable mb-4 mt-auto"
+            (click)="toggleMenuState(false)"
+          >
+            關於 Audi
+          </h3>
+          <h3
+            class="aui-headline-3 clickable my-4"
+            (click)="toggleMenuState(false)"
+          >
+            最新消息
+          </h3>
+          <h3
+            class="aui-headline-3 clickable my-4"
+            (click)="toggleMenuState(false)"
+          >
+            活動及優惠
+          </h3>
+          <h3
+            class="aui-headline-3 clickable my-4"
             [routerLink]="['/', language, 'products']"
             (click)="toggleMenuState(false)"
           >
             {{ translationOutput('products.audiCollections') }}
           </h3>
+
           <h3
             class="aui-headline-3 clickable my-4"
             (click)="toggleMenuState(false)"
           >
-            Nav Item 2
-          </h3>
-          <h3
-            class="aui-headline-3 clickable my-4"
-            (click)="toggleMenuState(false)"
-          >
-            Nav Item 3
-          </h3>
-          <h3
-            class="aui-headline-3 clickable my-4"
-            (click)="toggleMenuState(false)"
-          >
-            Nav Item 4
-          </h3>
-          <h3
-            class="aui-headline-3 clickable my-4"
-            (click)="toggleMenuState(false)"
-          >
-            Nav Item 5
+            FAQ
           </h3>
           <div class="flex mt-auto">
             <audi-button-group type="icon">
