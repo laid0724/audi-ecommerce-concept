@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   forwardRef,
   Input,
@@ -13,12 +14,8 @@ import {
   FormControlDirective,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import {
-  AudiComponents,
-  AudiModuleName,
-  initAudiModules,
-  isNullOrEmptyString,
-} from '@audi/data';
+import { AudiComponents, AudiModuleName, initAudiModules } from '@audi/data';
+import { CreditCardFormatDirective } from 'angular-cc-library';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -26,45 +23,41 @@ import { takeUntil } from 'rxjs/operators';
   USAGE
 
   <form [formGroup]="form">
-    <audi-input-container
-      formControlName="name"
-      [label]="'Name'"
-      [smallLabel]="' (optional)'"
-      [iconName]="'search'"
-      [isLightTheme]="false"
-      [floatingLabel]="true"
+    <audi-card-number-input
+      formControlName="cardNumber"
+      [label]="'Card Number'"
     >
       <audi-control-description>lorem ipsum</audi-control-description>
       <audi-control-valid>lorem ipsum</audi-control-valid>
       <audi-control-error>required</audi-control-error>
-    </audi-input-container>
+    </audi-card-number-input>
   </form>
 */
 
 @Component({
-  selector: 'audi-input-container',
-  templateUrl: './input-container.component.html',
-  styleUrls: ['./input-container.component.scss'],
+  selector: 'audi-card-number-input',
+  templateUrl: './card-number-input.component.html',
+  styleUrls: ['./card-number-input.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputContainerComponent),
+      useExisting: forwardRef(() => CardNumberInputComponent),
       multi: true,
     },
   ],
 })
-export class InputContainerComponent
-  implements OnInit, OnDestroy, ControlValueAccessor
+export class CardNumberInputComponent
+  implements OnInit, AfterViewInit, OnDestroy, ControlValueAccessor
 {
   @ViewChild(FormControlDirective, { static: true })
   formControlDirective: FormControlDirective;
+
+  @ViewChild('ccNumber') ccNumber: CreditCardFormatDirective;
 
   textfieldComponents: any[];
 
   @Input() floatingLabel: boolean = true;
   @Input() isLightTheme: boolean = false;
-  @Input() type: 'text' | 'number' | 'password' | 'tel' | 'email' = 'text';
-  @Input() iconName: string;
   @Input() label: string;
   @Input() smallLabel: string;
 
@@ -83,9 +76,6 @@ export class InputContainerComponent
 
   destroy$ = new Subject<boolean>();
 
-  public isNullOrEmptyString: (val: string | null | undefined) => boolean =
-    isNullOrEmptyString;
-
   constructor(private controlContainer: ControlContainer) {}
 
   ngOnInit(): void {
@@ -103,6 +93,18 @@ export class InputContainerComponent
             textfield.update();
           }, 0);
         });
+      });
+  }
+
+  ngAfterViewInit(): void {
+    const cardTypeControl = this.controlContainer.control?.get(
+      'cardType'
+    ) as FormControl;
+
+    this.ccNumber.resolvedScheme$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((cardType: string) => {
+        cardTypeControl.patchValue(cardType);
       });
   }
 

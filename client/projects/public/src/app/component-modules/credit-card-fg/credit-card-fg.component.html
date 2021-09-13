@@ -1,0 +1,85 @@
+<audi-control-grid
+  *transloco="let translationOutput"
+  [formGroup]="fg"
+  [label]="label"
+  [type]="'input'"
+  [isInvalid]="fg.touched && fg.invalid"
+>
+  <div class="aui-fieldset__fields">
+    <div class="aui-fieldset__field">
+      <audi-card-number-input
+        formControlName="cardNumber"
+        [label]="translationOutput('formLabels.cardNumber')"
+      >
+        <audi-control-description>{{
+          translationOutput('formDescriptions.cardNumber')
+        }}</audi-control-description>
+        <audi-control-valid></audi-control-valid>
+        <audi-control-error
+          *ngIf="fg.get('cardNumber')?.hasError('ccNumber')"
+          >{{ translationOutput('formErrors.ccNumber') }}</audi-control-error
+        >
+      </audi-card-number-input>
+    </div>
+  </div>
+  <div class="aui-fieldset__fields">
+    <div class="aui-fieldset__field">
+      <audi-input-container
+        formControlName="cardHolderName"
+        [label]="translationOutput('formLabels.cardHolderName')"
+      >
+        <audi-control-description>{{
+          translationOutput('formDescriptions.cardHolderName')
+        }}</audi-control-description>
+        <audi-control-valid></audi-control-valid>
+        <audi-control-error>{{
+          translationOutput('formErrors.required')
+        }}</audi-control-error>
+      </audi-input-container>
+    </div>
+  </div>
+  <div class="aui-fieldset__fields">
+    <div class="aui-fieldset__field mb-0 md:mb-6">
+      <audi-card-expiration-date-input
+        formControlName="expirationDate"
+        [label]="translationOutput('formLabels.expirationDate')"
+      >
+        <audi-control-description>{{
+          translationOutput('formDescriptions.expirationDate')
+        }}</audi-control-description>
+        <audi-control-valid></audi-control-valid>
+        <audi-control-error
+          *ngIf="fg.get('expirationDate')?.hasError('required')"
+          >{{ translationOutput('formErrors.required') }}</audi-control-error
+        >
+        <audi-control-error
+          *ngIf="fg.get('expirationDate')?.hasError('expDate')"
+          >{{ translationOutput('formErrors.expDate') }}</audi-control-error
+        >
+      </audi-card-expiration-date-input>
+    </div>
+    <div class="aui-fieldset__field">
+      <audi-card-cvc-input
+        formControlName="cardCVV"
+        [label]="translationOutput('formLabels.cardCVV')"
+      >
+        <audi-control-description>{{
+          translationOutput('formDescriptions.cardCVV')
+        }}</audi-control-description>
+        <audi-control-valid></audi-control-valid>
+        <audi-control-error *ngIf="fg.get('cardCVV')?.hasError('required')">{{
+          translationOutput('formErrors.required')
+        }}</audi-control-error>
+        <audi-control-error *ngIf="fg.get('cardCVV')?.hasError('minlength')">{{
+          translationOutput('formErrors.cardCVVMinLength')
+        }}</audi-control-error>
+        <audi-control-error *ngIf="fg.get('cardCVV')?.hasError('maxlength')">{{
+          translationOutput('formErrors.cardCVVMaxLength')
+        }}</audi-control-error>
+        <audi-control-error *ngIf="fg.get('cardCVV')?.hasError('pattern')">{{
+          translationOutput('formErrors.number')
+        }}</audi-control-error>
+      </audi-card-cvc-input>
+    </div>
+  </div>
+</audi-control-grid>

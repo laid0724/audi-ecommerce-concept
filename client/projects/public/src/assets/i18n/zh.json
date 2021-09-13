@@ -53,7 +53,11 @@
     "priceMaxNotGreaterThanPriceMin": "最高價格需高於最低價格",
     "phoneNumber": "請輸入正確的電話號碼",
     "postalCodeMinLength": "需至少3碼",
-    "postalCodeMaxLength": "不可多於5碼"
+    "postalCodeMaxLength": "不可多於5碼",
+    "ccNumber": "請輸入正確的信用卡卡號",
+    "cardCVVMinLength": "需至少3碼",
+    "cardCVVMaxLength": "不可多於4碼",
+    "expDate": "請輸入正確的信用卡有效日期（MM/YYYY）"
   },
   "formLabels": {
     "email": "電子信箱",
@@ -76,7 +80,11 @@
     "city": "市/縣",
     "district": "區域",
     "postalCode": "區域碼",
-    "addressLine": "地址"
+    "addressLine": "地址",
+    "cardNumber": "信用卡卡號",
+    "cardHolderName": "持卡人姓名",
+    "expirationDate": "有效日期",
+    "cardCVV": "CVV碼"
   },
   "formDescriptions": {
     "email": "請輸入您的電子信箱",
@@ -92,7 +100,11 @@
     "city": "請選擇縣市",
     "district": "請選擇區域",
     "postalCode": "請輸入您的區域碼",
-    "addressLine": "請輸入您的地址"
+    "addressLine": "請輸入您的地址",
+    "cardNumber": "請輸入您的信用卡卡號",
+    "cardHolderName": "請輸入持卡人姓名",
+    "expirationDate": "請輸入信用卡的有效日期（MM/YYYY）",
+    "cardCVV": "請輸入信用卡的CVV安全碼"
   },
   "notifications": {
     "success": "成功",
@@ -150,5 +162,6 @@
       "price": "價格"
     },
     "total": "總價"
-  }
+  },
+  "checkout": {}
 }

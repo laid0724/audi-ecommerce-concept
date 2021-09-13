@@ -13,12 +13,7 @@ import {
   FormControlDirective,
   NG_VALUE_ACCESSOR,
 } from '@angular/forms';
-import {
-  AudiComponents,
-  AudiModuleName,
-  initAudiModules,
-  isNullOrEmptyString,
-} from '@audi/data';
+import { AudiComponents, AudiModuleName, initAudiModules } from '@audi/data';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -26,34 +21,30 @@ import { takeUntil } from 'rxjs/operators';
   USAGE
 
   <form [formGroup]="form">
-    <audi-input-container
-      formControlName="name"
-      [label]="'Name'"
-      [smallLabel]="' (optional)'"
-      [iconName]="'search'"
-      [isLightTheme]="false"
-      [floatingLabel]="true"
+    <audi-card-expiration-date-input
+      formControlName="expirationDate"
+      [label]="'Expiration Date'"
     >
       <audi-control-description>lorem ipsum</audi-control-description>
       <audi-control-valid>lorem ipsum</audi-control-valid>
       <audi-control-error>required</audi-control-error>
-    </audi-input-container>
+    </audi-card-expiration-date-input>
   </form>
 */
 
 @Component({
-  selector: 'audi-input-container',
-  templateUrl: './input-container.component.html',
-  styleUrls: ['./input-container.component.scss'],
+  selector: 'audi-card-expiration-date-input',
+  templateUrl: './card-expiration-date-input.component.html',
+  styleUrls: ['./card-expiration-date-input.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => InputContainerComponent),
+      useExisting: forwardRef(() => CardExpirationDateInputComponent),
       multi: true,
     },
   ],
 })
-export class InputContainerComponent
+export class CardExpirationDateInputComponent
   implements OnInit, OnDestroy, ControlValueAccessor
 {
   @ViewChild(FormControlDirective, { static: true })
@@ -63,8 +54,6 @@ export class InputContainerComponent
 
   @Input() floatingLabel: boolean = true;
   @Input() isLightTheme: boolean = false;
-  @Input() type: 'text' | 'number' | 'password' | 'tel' | 'email' = 'text';
-  @Input() iconName: string;
   @Input() label: string;
   @Input() smallLabel: string;
 
@@ -82,9 +71,6 @@ export class InputContainerComponent
   isDisabled: boolean = false;
 
   destroy$ = new Subject<boolean>();
-
-  public isNullOrEmptyString: (val: string | null | undefined) => boolean =
-    isNullOrEmptyString;
 
   constructor(private controlContainer: ControlContainer) {}
 

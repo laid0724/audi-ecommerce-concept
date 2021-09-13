@@ -53,7 +53,11 @@
     "priceMaxNotGreaterThanPriceMin": "Maximum price must be greater than minimum price",
     "phoneNumber": "Please enter a valid phone number",
     "postalCodeMinLength": "Must have at least 3 digits",
-    "postalCodeMaxLength": "Cannot exceed 5 digits"
+    "postalCodeMaxLength": "Cannot exceed 5 digits",
+    "ccNumber": "Please enter a valid credit card number",
+    "cardCVVMinLength": "Must have at least 3 digits",
+    "cardCVVMaxLength": "Cannot exceed 4 digits",
+    "expDate": "Please enter a valid expiration date (MM/YYYY)"
   },
   "formLabels": {
     "email": "Email",
@@ -76,7 +80,11 @@
     "city": "City",
     "district": "District",
     "postalCode": "Postal Code",
-    "addressLine": "Address"
+    "addressLine": "Address",
+    "cardNumber": "Card Number",
+    "cardHolderName": "Cardholder Name",
+    "expirationDate": "Expiration Date",
+    "cardCVV": "CVV"
   },
   "formDescriptions": {
     "email": "Please enter your email.",
@@ -92,7 +100,11 @@
     "city": "Please select a city.",
     "district": "Please select a district.",
     "postalCode": "Please enter your postal code.",
-    "addressLine": "Please enter your address."
+    "addressLine": "Please enter your address.",
+    "cardNumber": "Please enter your credit card number.",
+    "cardHolderName": "Please enter the card holder's full name.",
+    "expirationDate": "Please enter your credit card's expiration date (MM/YYYY).",
+    "cardCVV": "Please enter your credit card's security code."
   },
   "notifications": {
     "success": "Success",
@@ -150,5 +162,6 @@
       "price": "Price"
     },
     "total": "Total"
-  }
+  },
+  "checkout": {}
 }

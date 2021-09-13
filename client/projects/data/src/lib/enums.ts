@@ -49,3 +49,17 @@ export enum CloudinaryPhotoCroppingMode {
   Cover = 'cover',
   Fill = 'fill_pad',
 }
+
+export enum ShippingMethod {
+  Standard = 'standard',
+  Expedited = 'expedited',
+}
+
+export enum CreditCardType {
+  Unknown = 'unknown',
+  Amex = 'amex',
+  JCB = 'jcb',
+  Visa = 'visa',
+  MasterCard = 'mastercard',
+  Discover = 'discover'
+}
