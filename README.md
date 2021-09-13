@@ -97,6 +97,7 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 
 #### API
 
+- add about us to dynamic document controller
 - Order creation email and status update email template UI
 - email / messaging / inbox functionality
   - inbox system for users, admin can send promo messages to them
@@ -107,19 +108,19 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 
 #### Angular Sys Project
 
+- add about us dynamic document module / update service
 - sys inbox
 - live chat module with signalr
 - ngx charts for statistics
 
 #### Angular Public Project
 
-- RWD
-- Angular universal
+- convert to Angular universal
 - update user info
 - member's area
 - checkout / order
 - cancel / track order
-- articles, e.g., news, events, promotions, faq
+- articles, e.g., news, events, promotions, faq, about us
 - search
 - live chat
 

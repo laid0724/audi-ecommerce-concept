@@ -1,24 +1,31 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormComponentsModule } from '../../component-modules/form-components/form-components.module';
+import { ButtonModule } from '../../component-modules/audi-ui/button/button.module';
+import { TranslocoModule } from '@ngneat/transloco';
+import { BadgeModule } from '../../component-modules/audi-ui/badge/badge.module';
+import { NavModule } from '../../component-modules/audi-ui/nav/nav.module';
+import { CardModule } from '../../component-modules/audi-ui/card/card.module';
+import { AddressFgModule } from '../../component-modules/address-fg/address-fg.module';
+import { CreditCardFgModule } from '../../component-modules/credit-card-fg/credit-card-fg.module';
 
 import { CheckoutRoutingModule } from './checkout-routing.module';
 import { CheckoutPageComponent } from './checkout-page/checkout-page.component';
-import { FormComponentsModule } from '../../component-modules/form-components/form-components.module';
-import { ButtonModule } from '../../component-modules/audi-ui/button/button.module';
-import { IconModule } from '../../component-modules/audi-ui/icon/icon.module';
-import { IconWithBadgeModule } from '../../component-modules/audi-ui/icon-with-badge/icon-with-badge.module';
-import { BreadcrumbModule } from '../../component-modules/audi-ui/breadcrumb/breadcrumb.module';
+import { CheckoutSuccessComponent } from './checkout-success/checkout-success.component';
 
-const COMPONENTS = [CheckoutPageComponent];
+const COMPONENTS = [CheckoutPageComponent, CheckoutSuccessComponent];
 
 const IMPORT_MODULES = [
   CommonModule,
   CheckoutRoutingModule,
   FormComponentsModule,
   ButtonModule,
-  IconModule,
-  IconWithBadgeModule,
-  BreadcrumbModule,
+  BadgeModule,
+  CardModule,
+  NavModule,
+  TranslocoModule,
+  AddressFgModule,
+  CreditCardFgModule,
 ];
 
 @NgModule({
