@@ -6,7 +6,7 @@
   [isInvalid]="fg.touched && fg.invalid"
 >
   <div class="aui-fieldset__fields">
-    <div class="aui-fieldset__field">
+    <div class="aui-fieldset__field mb-0 md:mb-6">
       <audi-input-container
         [formControlName]="language === 'zh' ? 'lastName' : 'firstName'"
         [label]="
@@ -53,7 +53,7 @@
   </div>
 
   <div class="aui-fieldset__fields">
-    <div class="aui-fieldset__field">
+    <div class="aui-fieldset__field mb-0 md:mb-6">
       <audi-select-container
         formControlName="city"
         [label]="translationOutput('formLabels.city')"
@@ -73,7 +73,7 @@
         }}</audi-control-error>
       </audi-select-container>
     </div>
-    <div class="aui-fieldset__field">
+    <div class="aui-fieldset__field mb-0 md:mb-6">
       <audi-select-container
         formControlName="district"
         [label]="translationOutput('formLabels.district')"
@@ -113,10 +113,14 @@
           {{ translationOutput('formErrors.number') }}</audi-control-error
         >
         <audi-control-error *ngIf="fg.get('postalCode')?.hasError('minlength')">
-          {{ translationOutput('formErrors.postalCodeMinLength') }}</audi-control-error
+          {{
+            translationOutput('formErrors.postalCodeMinLength')
+          }}</audi-control-error
         >
         <audi-control-error *ngIf="fg.get('postalCode')?.hasError('maxlength')">
-          {{ translationOutput('formErrors.postalCodeMaxLength') }}</audi-control-error
+          {{
+            translationOutput('formErrors.postalCodeMaxLength')
+          }}</audi-control-error
         >
       </audi-input-container>
     </div>
