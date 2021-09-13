@@ -115,6 +115,8 @@ namespace Audi.Controllers
                 ShippingAddress = request.ShippingAddress,
                 CreditCardLast4Digit = request.CreditCard.CardNumber.Substring(Math.Max(0, request.CreditCard.CardNumber.Length - 4)),
                 CreditCardType = request.CreditCard.CardType,
+                ShippingMethod = request.ShippingMethod,
+                ShippingFee = 0,
                 CurrentStatus = "placed",
                 PreviousStatuses = new OrderStatus[] {
                     new OrderStatus() {
@@ -123,6 +125,11 @@ namespace Audi.Controllers
                     }
                 },
             };
+
+            if (order.ShippingMethod == "expedited")
+            {
+                order.ShippingFee = 200;
+            }
 
             _unitOfWork.OrderRepository.CreateOrder(order);
 
@@ -154,6 +161,9 @@ namespace Audi.Controllers
             }
 
             order.OrderNumber = "ORD" + order.Id.ToString().PadLeft(8, '0');
+            order.TotalPrice = order.TotalPrice + order.ShippingFee;
+
+            _unitOfWork.OrderRepository.UpdateOrder(order);
 
             if (_unitOfWork.HasChanges()) await _unitOfWork.Complete();
 

@@ -23,6 +23,8 @@ export interface Order {
   currentStatus: OrderStatus;
   customerNotes: string;
   internalNotes: string;
+  shippingMethod: string;
+  shippingFee: number;
 }
 
 export interface OrderStatusHistory {

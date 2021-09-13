@@ -3,6 +3,7 @@ export interface CreditCard {
   cardNumber: string;
   cardType: string;
   CVV: string;
-  expirationMonth: string;
-  expirationYear: string;
+  expirationDate: string;
+  // expirationMonth: string;
+  // expirationYear: string;
 }
