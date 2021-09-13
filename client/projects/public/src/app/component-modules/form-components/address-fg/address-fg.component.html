@@ -112,6 +112,12 @@
         <audi-control-error *ngIf="fg.get('postalCode')?.hasError('pattern')">
           {{ translationOutput('formErrors.number') }}</audi-control-error
         >
+        <audi-control-error *ngIf="fg.get('postalCode')?.hasError('minlength')">
+          {{ translationOutput('formErrors.postalCodeMinLength') }}</audi-control-error
+        >
+        <audi-control-error *ngIf="fg.get('postalCode')?.hasError('maxlength')">
+          {{ translationOutput('formErrors.postalCodeMaxLength') }}</audi-control-error
+        >
       </audi-input-container>
     </div>
   </div>
@@ -137,6 +143,7 @@
     <div class="aui-fieldset__field">
       <audi-input-container
         formControlName="phoneNumber"
+        type="tel"
         [label]="translationOutput('formLabels.phoneNumber')"
       >
         <audi-control-description>{{

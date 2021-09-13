@@ -29,7 +29,15 @@ export const addressFormGroupBuilder = (
     city: [null, [Validators.required]],
     district: [null, [Validators.required]],
     addressLine: [null, [Validators.required]],
-    postalCode: [null, [Validators.required, Validators.pattern(NUMBER_REGEX)]],
+    postalCode: [
+      null,
+      [
+        Validators.required,
+        Validators.pattern(NUMBER_REGEX),
+        Validators.minLength(3),
+        Validators.maxLength(5),
+      ],
+    ],
     phoneNumber: [
       null,
       [Validators.required, Validators.pattern(PHONE_NUMBER_REGEX)],

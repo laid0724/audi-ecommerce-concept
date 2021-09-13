@@ -51,7 +51,9 @@
     "number": "請輸入數字",
     "greaterThanZero": "需大於零",
     "priceMaxNotGreaterThanPriceMin": "最高價格需高於最低價格",
-    "phoneNumber": "請輸入正確的電話號碼"
+    "phoneNumber": "請輸入正確的電話號碼",
+    "postalCodeMinLength": "需至少3碼",
+    "postalCodeMaxLength": "不可多於5碼"
   },
   "formLabels": {
     "email": "電子信箱",

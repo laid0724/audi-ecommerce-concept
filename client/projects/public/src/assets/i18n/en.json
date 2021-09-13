@@ -51,7 +51,9 @@
     "number": "Please enter numbers",
     "greaterThanZero": "Must be greater than 0",
     "priceMaxNotGreaterThanPriceMin": "Maximum price must be greater than minimum price",
-    "phoneNumber": "Please enter a valid phone number"
+    "phoneNumber": "Please enter a valid phone number",
+    "postalCodeMinLength": "Must have at least 3 digits",
+    "postalCodeMaxLength": "Cannot exceed 5 digits"
   },
   "formLabels": {
     "email": "Email",
