@@ -1,1 +1,17 @@
-<p>checkout-success works!</p>
+<ng-container *ngIf="!loading; else loadingTemplate">
+</ng-container>
+
+<ng-template #loadingTemplate>
+  <div
+    class="
+      full-screen-height
+      mt-14
+      flex
+      items-center
+      justify-center
+      background-color-grey-2
+    "
+  >
+    <audi-spinner class="block" [isContinuous]="true"></audi-spinner>
+  </div>
+</ng-template>

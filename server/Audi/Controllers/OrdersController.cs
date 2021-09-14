@@ -179,11 +179,11 @@ namespace Audi.Controllers
                 return btoaEncoding;
             }
 
-            var json = JsonConvert.SerializeObject(createdOrder.Id.ToString());
+            // var json = JsonConvert.SerializeObject(createdOrder);
 
-            var jsEncryptedOrderData = btoa(json);
+            var jsEncryptedOrderId= btoa(createdOrder.Id.ToString());
 
-            var orderSuccessUrl = $"{_domain}/{language}/checkout/success?order={jsEncryptedOrderData}";
+            var orderSuccessUrl = $"{_domain}/{language}/checkout/success?order={jsEncryptedOrderId}";
 
             // TODO: create a fancy email template for this
 
