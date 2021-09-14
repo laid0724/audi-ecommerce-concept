@@ -7,6 +7,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { Router } from '@angular/router';
 import {
   AccountService,
@@ -18,20 +19,18 @@ import {
   Order,
   OrdersService,
   Product,
+  SensitiveUserData,
   ShippingMethod,
   User,
 } from '@audi/data';
 import { TranslocoService } from '@ngneat/transloco';
-import { Subject } from 'rxjs';
-import { take, takeUntil } from 'rxjs/operators';
+import { of, Subject } from 'rxjs';
+import { switchMap, take, takeUntil } from 'rxjs/operators';
 import { NotificationService } from '../../../component-modules/audi-ui/services/notification-service/notification.service';
 import { addressFormGroupBuilder } from '../../../component-modules/address-fg/address-fg.component';
 import { isProductDiscounted } from '../../../helpers';
 import { CartService } from '../../cart/services/cart.service';
 import { creditCardFormGroupBuilder } from '../../../component-modules/credit-card-fg/credit-card-fg.component';
-
-// TODO: transloco
-// TODO: RWD
 
 @Component({
   selector: 'audi-checkout-page',
@@ -40,14 +39,17 @@ import { creditCardFormGroupBuilder } from '../../../component-modules/credit-ca
 })
 export class CheckoutPageComponent implements OnInit, OnDestroy {
   cart: CartItem[] = [];
-  user: User | null = null;
+  user: SensitiveUserData | null = null;
 
   orderForm: FormGroup;
+  cartModalOpen: boolean = false;
 
   currentStep: 'info' | 'shipping' | 'payment' = 'info';
 
   step1Complete: boolean = false;
   step2Complete: boolean = false;
+
+  isDesktop: boolean;
 
   destroy$ = new Subject<boolean>();
 
@@ -99,6 +101,7 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
   }
 
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private fb: FormBuilder,
     private router: Router,
     private cartService: CartService,
@@ -106,10 +109,17 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private languageService: LanguageStateService,
     private notificationService: NotificationService,
-    private translocoService: TranslocoService
+    private transloco: TranslocoService
   ) {}
 
   ngOnInit(): void {
+    this.breakpointObserver
+      .observe(['(min-width: 768px)'])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((state: BreakpointState) => {
+        this.isDesktop = state.matches;
+      });
+
     this.initOrderForm();
 
     const shippingMethodControl = this.orderForm.get(
@@ -138,7 +148,10 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       .subscribe((isSame: boolean) =>
         isSame
           ? this.billingAddressFg.patchValue(this.shippingAddressFg.value)
-          : this.billingAddressFg.reset()
+          : this.billingAddressFg.reset({
+              country: this.language === 'zh' ? '台灣' : 'Taiwan',
+              state: this.language === 'zh' ? '台灣' : 'Taiwan',
+            })
       );
 
     this.cartService.cart$
@@ -168,12 +181,28 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       });
 
     this.accountService.currentUser$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((user: User | null) => {
+      .pipe(
+        switchMap((user: User | null) =>
+          user == null
+            ? of(null)
+            : this.accountService.getUserPersonalInfo().pipe(take(1))
+        ),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((user: SensitiveUserData | null) => {
         this.user = user;
-
         if (user) {
           this.orderForm.get('email')?.patchValue(user.email);
+          this.shippingAddressFg.patchValue({
+            ...user.address,
+            country: this.language === 'zh' ? '台灣' : 'Taiwan',
+            state: this.language === 'zh' ? '台灣' : 'Taiwan',
+          });
+          this.billingAddressFg.patchValue({
+            ...user.address,
+            country: this.language === 'zh' ? '台灣' : 'Taiwan',
+            state: this.language === 'zh' ? '台灣' : 'Taiwan',
+          });
         }
       });
   }
@@ -227,8 +256,8 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
 
     if (this.orderItemsFormArray.value.length < 1) {
       this.notificationService.error(
-        this.translocoService.translate('cart.emptyCart'),
-        this.translocoService.translate('notifications.error'),
+        this.transloco.translate('cart.emptyCart'),
+        this.transloco.translate('notifications.error'),
         3000
       );
       return;
@@ -289,14 +318,18 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       .pipe(take(1))
       .subscribe((order: Order) => {
         this.cartService.resetCart();
-        // TODO: transloco
-        this.notificationService.success('訂單送出', '成功', 3000);
+
+        this.notificationService.success(
+          this.transloco.translate('notifications.orderPlaced'),
+          this.transloco.translate('notifications.success'),
+          3000
+        );
 
         // btoa to encrypt string to base64, and then use JSON.parse(atob(<queryParamsValue>)) to decrypt
         // see: https://developer.mozilla.org/en-US/docs/Web/API/btoa
 
-        this.router.navigate(['/', this.language, 'checkout/success'], {
-          queryParams: { order: btoa(JSON.stringify(order)) },
+        this.router.navigate(['/', this.language, 'checkout', 'success'], {
+          queryParams: { order: btoa(order.id.toString()) },
         });
       });
   }

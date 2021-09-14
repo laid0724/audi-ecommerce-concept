@@ -118,6 +118,7 @@ namespace Audi.Controllers
                 ShippingMethod = request.ShippingMethod,
                 ShippingFee = 0,
                 CurrentStatus = "placed",
+                CustomerNotes = request.CustomerNotes,
                 PreviousStatuses = new OrderStatus[] {
                     new OrderStatus() {
                         Status = "placed",

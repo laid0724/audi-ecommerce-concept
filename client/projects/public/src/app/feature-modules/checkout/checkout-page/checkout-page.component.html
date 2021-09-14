@@ -1,134 +1,162 @@
-<div class="checkout-wrapper" *transloco="let translationOutput">
-  <div class="aui-layout h-full">
-    <div class="aui-grid h-full">
-      <div class="aui-cell aui-cell--12 h-full">
-        <div class="grid grid-rows-none grid-cols-12 h-full w-full">
-          <div class="col-span-12 md:col-span-7 checkout__order-wrapper p-10">
-            <a
-              [routerLink]="['/', language, 'home']"
-              class="w-28 flex items-start justify-center"
-            >
-              <audi-button type="icon" class="block">
-                <img src="assets/audi-logo-black.svg" class="w-full" />
-              </audi-button>
-            </a>
+<ng-container *transloco="let translationOutput">
+  <div class="checkout-wrapper">
+    <div class="aui-layout h-full">
+      <div class="aui-grid h-full">
+        <div class="aui-cell aui-cell--12 h-full">
+          <div class="grid grid-rows-none grid-cols-12 h-full w-full">
+            <div class="col-span-12 md:col-span-7 checkout__order-wrapper p-10">
+              <div class="flex items-center justify-between mb-6">
+                <a
+                  [routerLink]="['/', language, 'home']"
+                  class="w-28 flex items-start justify-center"
+                >
+                  <audi-button type="icon" class="block">
+                    <img src="assets/audi-logo-black.svg" class="w-full" />
+                  </audi-button>
+                </a>
 
-            <div class="block w-full mb-8">
-              <audi-nav-bar class="block my-4" [isSmall]="false">
-                <audi-nav-item
-                  [isActive]="currentStep === 'info'"
-                  (click)="currentStep = 'info'"
+                <audi-button
+                  type="text"
+                  class="flex items-center md:hidden"
+                  (click)="cartModalOpen = true"
                 >
-                  Your Info
-                </audi-nav-item>
-                <audi-nav-item
-                  [isActive]="currentStep === 'shipping'"
-                  [isDisabled]="!step1Complete"
-                  (click)="step1Complete ? onSubmitStep1() : null"
-                >
-                  Shipping Method</audi-nav-item
-                >
-                <audi-nav-item
-                  [isActive]="currentStep === 'payment'"
-                  [isDisabled]="!step1Complete || !step2Complete"
-                  (click)="
-                    step1Complete && step2Complete ? onSubmitStep2() : null
-                  "
-                >
-                  Payment</audi-nav-item
-                >
-              </audi-nav-bar>
-            </div>
-
-            <form [formGroup]="orderForm">
-              <ng-container
-                *ngTemplateOutlet="
-                  step1;
-                  context: {
-                    $implicit: {
-                      formGroup: orderForm,
-                      translationOutput
-                    }
-                  }
-                "
-              ></ng-container>
-
-              <ng-container
-                *ngTemplateOutlet="
-                  step2;
-                  context: {
-                    $implicit: {
-                      formGroup: orderForm,
-                      translationOutput
-                    }
-                  }
-                "
-              ></ng-container>
-
-              <ng-container
-                *ngTemplateOutlet="
-                  step3;
-                  context: {
-                    $implicit: {
-                      formGroup: orderForm,
-                      translationOutput
-                    }
-                  }
-                "
-              ></ng-container>
-            </form>
-          </div>
-          <div class="hidden md:block col-span-5 checkout__cart-wrapper p-10">
-            <h1 class="aui-headline-2 mt-2">Your Cart</h1>
-
-            <div class="checkout__cart-items">
-              <div class="checkout__cart-item" *ngFor="let item of cart">
-                <div
-                  class="checkout__cart-item__thumbnail"
-                  [ngStyle]="{
-                    backgroundImage:
-                      'url(' + getProductMainPhotoUrl(item.product) + ')'
-                  }"
-                >
-                  <audi-badge class="absolute -top-3 -right-3"
-                    >{{ item.quantity }}
-                  </audi-badge>
-                </div>
-                <div class="ml-6 flex flex-col flex-wrap">
-                  <small class="aui-small font-bold">{{
-                    item.product.name
-                  }}</small>
-                  <small class="aui-small">{{ item.productSku.sku }}</small>
-                </div>
-                <small class="aui-small font-bold ml-auto">
-                  ${{
-                    (getPrice(item.product) * item.quantity).toLocaleString()
-                  }}
-                </small>
+                  <audi-icon
+                    size="small"
+                    iconName="shopping-basket"
+                  ></audi-icon>
+                  <small class="aui-small font-bold ml-2"
+                    >${{ totalPrice }}</small
+                  >
+                </audi-button>
               </div>
-            </div>
 
-            <div class="border-t border-color-grey-4 my-4"></div>
-            <div class="flex justify-between">
-              <small class="aui-small">Subtotal</small>
-              <small class="aui-small font-bold"
-                >${{ totalPrice.toLocaleString() }}</small
-              >
+              <div class="block w-full mb-8">
+                <audi-nav-bar class="block my-4" [isSmall]="false">
+                  <audi-nav-item
+                    [isActive]="currentStep === 'info'"
+                    (click)="currentStep = 'info'"
+                  >
+                    {{ translationOutput('checkout.yourInfo') }}
+                  </audi-nav-item>
+                  <audi-nav-item
+                    [isActive]="currentStep === 'shipping'"
+                    [isDisabled]="!step1Complete"
+                    (click)="step1Complete ? onSubmitStep1() : null"
+                  >
+                    {{ translationOutput('checkout.shippingMethod') }}
+                  </audi-nav-item>
+                  <audi-nav-item
+                    [isActive]="currentStep === 'payment'"
+                    [isDisabled]="!step1Complete || !step2Complete"
+                    (click)="
+                      step1Complete && step2Complete ? onSubmitStep2() : null
+                    "
+                  >
+                    {{ translationOutput('checkout.payment') }}
+                  </audi-nav-item>
+                </audi-nav-bar>
+              </div>
+
+              <form [formGroup]="orderForm">
+                <ng-container
+                  *ngTemplateOutlet="
+                    step1;
+                    context: {
+                      $implicit: {
+                        formGroup: orderForm,
+                        translationOutput
+                      }
+                    }
+                  "
+                ></ng-container>
+
+                <ng-container
+                  *ngTemplateOutlet="
+                    step2;
+                    context: {
+                      $implicit: {
+                        formGroup: orderForm,
+                        translationOutput
+                      }
+                    }
+                  "
+                ></ng-container>
+
+                <ng-container
+                  *ngTemplateOutlet="
+                    step3;
+                    context: {
+                      $implicit: {
+                        formGroup: orderForm,
+                        translationOutput
+                      }
+                    }
+                  "
+                ></ng-container>
+              </form>
             </div>
-            <div class="flex justify-between">
-              <small class="aui-small">Shipping</small>
-              <small class="aui-small font-bold"
-                >${{ orderForm.get('shippingFee')?.value }}</small
-              >
-            </div>
-            <div class="border-t border-color-grey-4 my-4"></div>
-            <div class="flex justify-between items-center">
-              <small class="aui-small font-bold">Total</small>
-              <div class="flex items-center">
-                <small class="aui-small mr-2">NTD</small>
-                <h6 class="aui-headline-6">
-                  ${{ totalPrice.toLocaleString() }}
-                </h6>
+            <div class="hidden md:block col-span-5 checkout__cart-wrapper p-10">
+              <h1 class="aui-headline-2 mt-2">
+                {{ translationOutput('checkout.yourCart') }}
+              </h1>
+
+              <div class="checkout__cart-items">
+                <div class="checkout__cart-item" *ngFor="let item of cart">
+                  <div
+                    class="checkout__cart-item__thumbnail"
+                    [ngStyle]="{
+                      backgroundImage:
+                        'url(' + getProductMainPhotoUrl(item.product) + ')'
+                    }"
+                  >
+                    <audi-badge class="absolute -top-3 -right-3"
+                      >{{ item.quantity }}
+                    </audi-badge>
+                  </div>
+                  <div class="ml-6 flex flex-col flex-wrap">
+                    <small class="aui-small font-bold">{{
+                      item.product.name
+                    }}</small>
+                    <small class="aui-small">{{ item.productSku.sku }}</small>
+                  </div>
+                  <small class="aui-small font-bold ml-auto">
+                    ${{
+                      (getPrice(item.product) * item.quantity).toLocaleString()
+                    }}
+                  </small>
+                </div>
+              </div>
+
+              <div class="border-t border-color-grey-4 my-4"></div>
+              <div class="flex justify-between">
+                <small class="aui-small">{{
+                  translationOutput('checkout.subtotal')
+                }}</small>
+                <small class="aui-small font-bold"
+                  >${{ totalPrice.toLocaleString() }}</small
+                >
+              </div>
+              <div class="flex justify-between">
+                <small class="aui-small">{{
+                  translationOutput('checkout.shipping')
+                }}</small>
+                <small class="aui-small font-bold"
+                  >${{ orderForm.get('shippingFee')?.value }}</small
+                >
+              </div>
+              <div class="border-t border-color-grey-4 my-4"></div>
+              <div class="flex justify-between items-center">
+                <small class="aui-small font-bold">{{
+                  translationOutput('checkout.total')
+                }}</small>
+                <div class="flex items-center">
+                  <small class="aui-small mr-2">{{
+                    translationOutput('checkout.ntd')
+                  }}</small>
+                  <h6 class="aui-headline-6">
+                    ${{ totalPrice.toLocaleString() }}
+                  </h6>
+                </div>
               </div>
             </div>
           </div>
@@ -136,20 +164,79 @@
       </div>
     </div>
   </div>
-</div>
+
+  <audi-modal
+    [(isOpen)]="cartModalOpen"
+    [header]="translationOutput('checkout.yourCart')"
+    [headerSize]="3"
+    bgColor="white"
+    textColor="black"
+    type="full-page"
+  >
+    <div class="checkout__cart-items">
+      <div class="checkout__cart-item" *ngFor="let item of cart">
+        <div
+          class="checkout__cart-item__thumbnail"
+          [ngStyle]="{
+            backgroundImage: 'url(' + getProductMainPhotoUrl(item.product) + ')'
+          }"
+        >
+          <audi-badge class="absolute -top-3 -right-3"
+            >{{ item.quantity }}
+          </audi-badge>
+        </div>
+        <div class="ml-6 flex flex-col flex-wrap">
+          <small class="aui-small font-bold">{{ item.product.name }}</small>
+          <small class="aui-small">{{ item.productSku.sku }}</small>
+        </div>
+        <small class="aui-small font-bold ml-auto">
+          ${{ (getPrice(item.product) * item.quantity).toLocaleString() }}
+        </small>
+      </div>
+    </div>
+    <div class="border-t border-color-grey-4 my-4"></div>
+    <div class="flex justify-between">
+      <small class="aui-small">{{
+        translationOutput('checkout.subtotal')
+      }}</small>
+      <small class="aui-small font-bold"
+        >${{ totalPrice.toLocaleString() }}</small
+      >
+    </div>
+    <div class="flex justify-between">
+      <small class="aui-small">{{
+        translationOutput('checkout.shipping')
+      }}</small>
+      <small class="aui-small font-bold"
+        >${{ orderForm.get('shippingFee')?.value }}</small
+      >
+    </div>
+    <div class="border-t border-color-grey-4 my-4"></div>
+    <div class="flex justify-between items-center">
+      <small class="aui-small font-bold">{{
+        translationOutput('checkout.total')
+      }}</small>
+      <div class="flex items-center">
+        <small class="aui-small mr-2">{{
+          translationOutput('checkout.ntd')
+        }}</small>
+        <h6 class="aui-headline-6">${{ totalPrice.toLocaleString() }}</h6>
+      </div>
+    </div>
+  </audi-modal>
+</ng-container>
 
 <!-- STEP 1: YOUR INFO -->
 
 <ng-template #step1 let-data>
-  <div
+  <section
     [formGroup]="data.formGroup"
     [ngClass]="{ hidden: currentStep !== 'info' }"
-    class="checkout__order-form__step-1"
   >
     <ng-container *ngIf="user == null">
       <audi-control-grid
         class="block mb-8"
-        [label]="'Email'"
+        [label]="data.translationOutput('formLabels.email')"
         [type]="'input'"
         [isInvalid]="
           orderForm.get('email')!.touched && orderForm.get('email')!.invalid
@@ -158,65 +245,102 @@
         <ng-container *projectAsFields>
           <div class="aui-fieldset__field">
             <small class="aui-small"
-              >Already have an account?
-              <a class="aui-textlink" (click)="directToLogin()">Log in</a>
+              >{{ data.translationOutput('checkout.alreadyHaveAccount') }}
+              <a class="aui-textlink" (click)="directToLogin()">{{
+                data.translationOutput('checkout.login')
+              }}</a>
             </small>
             <audi-input-container
               formControlName="email"
               type="email"
-              [label]="'Email'"
+              [label]="data.translationOutput('formLabels.email')"
               [isLightTheme]="false"
               [floatingLabel]="true"
             >
-              <audi-control-description>lorem ipsum</audi-control-description>
-              <audi-control-valid>lorem ipsum</audi-control-valid>
+              <audi-control-description>{{
+                data.translationOutput('formDescriptions.email')
+              }}</audi-control-description>
+              <audi-control-valid></audi-control-valid>
+              <audi-control-error
+                *ngIf="data.formGroup.get('email')?.hasError('required')"
+              >
+                {{
+                  data.translationOutput('formErrors.required')
+                }}</audi-control-error
+              >
+              <audi-control-error
+                *ngIf="data.formGroup.get('email')?.hasError('email')"
+              >
+                {{
+                  data.translationOutput('formErrors.email')
+                }}</audi-control-error
+              >
             </audi-input-container>
           </div>
         </ng-container>
-
-        <audi-control-error [type]="'grid'">required</audi-control-error>
       </audi-control-grid>
     </ng-container>
 
     <audi-address-fg
       formGroupName="shippingAddress"
-      [label]="'Shipping Address'"
+      [label]="data.translationOutput('formLabels.shippingAddress')"
       class="block mb-8"
     ></audi-address-fg>
 
-    <audi-control-grid class="block mb-8" [label]="'Notes'" [type]="'input'">
+    <audi-control-grid
+      class="block mb-8"
+      [label]="data.translationOutput('formLabels.customerNotes')"
+      [type]="'input'"
+    >
       <ng-container *projectAsFields>
         <div class="aui-fieldset__field">
           <audi-textarea-container
             formControlName="customerNotes"
-            [label]="'Notes'"
+            [label]="data.translationOutput('formLabels.customerNotes')"
+            [smallLabel]="data.translationOutput('formLabels.optional')"
             [isLightTheme]="false"
           >
-            <audi-control-description>lorem ipsum</audi-control-description>
-            <audi-control-valid>lorem ipsum</audi-control-valid>
+            <audi-control-description>{{
+              data.translationOutput('formDescriptions.customerNotes')
+            }}</audi-control-description>
+            <audi-control-valid></audi-control-valid>
           </audi-textarea-container>
         </div>
       </ng-container>
     </audi-control-grid>
 
-    <audi-button-group class="block mt-8">
-      <audi-button type="primary" (click)="onSubmitStep1()"
-        >Continue to shipping</audi-button
-      >
-      <audi-button type="secondary" [routerLink]="['/', language, 'cart']"
-        >Return to cart</audi-button
+    <audi-button-group
+      class="block mt-8"
+      [ngClass]="{
+        'w-full': !isDesktop
+      }"
+    >
+      <audi-button
+        type="primary"
+        [ngClass]="{
+          'block w-full': !isDesktop
+        }"
+        (click)="onSubmitStep1()"
+        >{{ data.translationOutput('buttons.continueToShipping') }}
+      </audi-button>
+      <audi-button
+        type="secondary"
+        [ngClass]="{
+          'block w-full': !isDesktop
+        }"
+        [routerLink]="['/', language, 'cart']"
+        >{{ data.translationOutput('buttons.returnToCart') }}</audi-button
       >
     </audi-button-group>
-  </div>
+  </section>
 </ng-template>
 
 <!-- STEP 2: SHIPPING METHOD -->
 
 <ng-template #step2 let-data>
-  <div
+  <section
     [formGroup]="data.formGroup"
     [ngClass]="{ hidden: currentStep !== 'shipping' }"
-    class="checkout__order-form__step-2"
   >
     <audi-card
       bgColor="white"
@@ -226,56 +350,77 @@
     >
       <div class="grid grid-rows-none grid-cols-12 items-center">
         <ng-container *ngIf="user == null">
-          <div class="col-span-4 text-left pl-4">
-            <strong class="aui-caption">Contact Email</strong>
+          <div class="col-span-6 md:col-span-4 text-left pl-4">
+            <strong class="aui-caption">{{
+              data.translationOutput('checkout.contactEmail')
+            }}</strong>
           </div>
-          <div class="col-span-4 text-center">
+          <div class="hidden md:inline-grid col-span-4 text-center">
             <small class="aui-small line-clamp-1">{{
               orderForm.get('email')?.value
             }}</small>
           </div>
-          <div class="col-span-4 text-right pr-4">
-            <a class="aui-caption aui-textlink" (click)="currentStep = 'info'"
-              >Change</a
+          <div class="col-span-6 md:col-span-4 text-right pr-4">
+            <a
+              class="aui-caption aui-textlink"
+              (click)="currentStep = 'info'"
+              >{{ data.translationOutput('buttons.change') }}</a
             >
+          </div>
+          <div class="col-span-12 md:hidden text-left px-4 pt-4">
+            <small class="aui-small line-clamp-1">{{
+              orderForm.get('email')?.value
+            }}</small>
           </div>
           <div class="col-span-12">
             <hr class="my-4" />
           </div>
         </ng-container>
-        <div class="col-span-4 text-left pl-4">
-          <strong class="aui-caption">Contact Phone</strong>
+        <div class="col-span-6 md:col-span-4 text-left pl-4">
+          <strong class="aui-caption">{{
+            data.translationOutput('checkout.contactPhone')
+          }}</strong>
         </div>
-        <div class="col-span-4 text-center">
+        <div class="hidden md:inline-grid col-span-4 text-center">
           <small class="aui-small">{{
             orderForm.get('shippingAddress.phoneNumber')?.value
           }}</small>
         </div>
-        <div class="col-span-4 text-right pr-4">
-          <a class="aui-caption aui-textlink" (click)="currentStep = 'info'"
-            >Change</a
-          >
+        <div class="col-span-6 md:col-span-4 text-right pr-4">
+          <a class="aui-caption aui-textlink" (click)="currentStep = 'info'">{{
+            data.translationOutput('buttons.change')
+          }}</a>
+        </div>
+        <div class="col-span-12 md:hidden text-left px-4 pt-4">
+          <small class="aui-small line-clamp-1">{{
+            orderForm.get('shippingAddress.phoneNumber')?.value
+          }}</small>
         </div>
         <div class="col-span-12">
           <hr class="my-4" />
         </div>
-        <div class="col-span-4 text-left pl-4">
-          <strong class="aui-caption">Ship To</strong>
+        <div class="col-span-6 md:col-span-4 text-left pl-4">
+          <strong class="aui-caption">{{
+            data.translationOutput('checkout.shipTo')
+          }}</strong>
         </div>
-        <div class="col-span-4 text-center">
+        <div class="hidden md:inline-grid col-span-4 text-center">
           <small class="aui-small line-clamp-2">{{ shippingAddress }}</small>
         </div>
-        <div class="col-span-4 text-right pr-4">
-          <a class="aui-caption aui-textlink" (click)="currentStep = 'info'"
-            >Change</a
-          >
+        <div class="col-span-6 md:col-span-4 text-right pr-4">
+          <a class="aui-caption aui-textlink" (click)="currentStep = 'info'">{{
+            data.translationOutput('buttons.change')
+          }}</a>
+        </div>
+        <div class="col-span-12 md:hidden text-left px-4 pt-4">
+          <small class="aui-small line-clamp-2">{{ shippingAddress }}</small>
         </div>
       </div>
     </audi-card>
 
     <audi-control-grid
       class="block mb-10"
-      [label]="'Shipping Method'"
+      [label]="data.translationOutput('checkout.shippingMethod')"
       [type]="'input'"
       [isInvalid]="
         orderForm.get('shippingMethod')!.touched &&
@@ -297,12 +442,16 @@
           <audi-radio-container
             class="mb-3"
             formControlName="shippingMethod"
-            [label]="'Standard'"
+            [label]="data.translationOutput('checkout.shippingStandard')"
             [value]="'standard'"
           ></audi-radio-container>
           <small class="aui-small italic text-right">
-            <span class="block">5-7 Business Days</span>
-            <strong>Free</strong>
+            <span class="block">{{
+              data.translationOutput('checkout.shippingStandardTime')
+            }}</span>
+            <strong>{{
+              data.translationOutput('checkout.shippingFree')
+            }}</strong>
           </small>
         </div>
       </div>
@@ -321,36 +470,54 @@
           <audi-radio-container
             class="mb-3"
             formControlName="shippingMethod"
-            [label]="'Expedited'"
+            [label]="data.translationOutput('checkout.shippingExpedited')"
             [value]="'expedited'"
           ></audi-radio-container>
           <small class="aui-small italic text-right">
-            <div class="block">1-3 Business Days</div>
+            <div class="block">
+              {{ data.translationOutput('checkout.shippingExpeditedTime') }}
+            </div>
             <strong>$200</strong>
           </small>
         </div>
       </div>
-      <audi-control-error [type]="'grid'">required</audi-control-error>
+      <audi-control-error [type]="'grid'">{{
+        data.translationOutput('formErrors.required')
+      }}</audi-control-error>
     </audi-control-grid>
 
-    <audi-button-group class="block mt-8">
-      <audi-button type="primary" (click)="onSubmitStep2()"
-        >Continue to payment</audi-button
+    <audi-button-group
+      class="block mt-8"
+      [ngClass]="{
+        'w-full': !isDesktop
+      }"
+    >
+      <audi-button
+        type="primary"
+        [ngClass]="{
+          'block w-full': !isDesktop
+        }"
+        (click)="onSubmitStep2()"
+        >{{ data.translationOutput('buttons.continueToPayment') }}</audi-button
       >
-      <audi-button type="secondary" (click)="currentStep = 'info'"
-        >Return to your info</audi-button
+      <audi-button
+        type="secondary"
+        [ngClass]="{
+          'block w-full': !isDesktop
+        }"
+        (click)="currentStep = 'info'"
+        >{{ data.translationOutput('buttons.returnToYourInfo') }}</audi-button
       >
     </audi-button-group>
-  </div>
+  </section>
 </ng-template>
 
 <!-- STEP 3: PAYMENT -->
 
 <ng-template #step3 let-data>
-  <div
+  <section
     [formGroup]="data.formGroup"
     [ngClass]="{ hidden: currentStep !== 'payment' }"
-    class="checkout__order-form__step-3"
   >
     <audi-card
       bgColor="white"
@@ -360,57 +527,80 @@
     >
       <div class="grid grid-rows-none grid-cols-12 items-center">
         <ng-container *ngIf="user == null">
-          <div class="col-span-4 text-left pl-4">
-            <strong class="aui-caption">Contact Email</strong>
+          <div class="col-span-6 md:col-span-4 text-left pl-4">
+            <strong class="aui-caption">{{
+              data.translationOutput('checkout.contactEmail')
+            }}</strong>
           </div>
-          <div class="col-span-4 text-center">
+          <div class="hidden md:inline-grid col-span-4 text-center">
             <small class="aui-small line-clamp-1">{{
               orderForm.get('email')?.value
             }}</small>
           </div>
-          <div class="col-span-4 text-right pr-4">
-            <a class="aui-caption aui-textlink" (click)="currentStep = 'info'"
-              >Change</a
+          <div class="col-span-6 md:col-span-4 text-right pr-4">
+            <a
+              class="aui-caption aui-textlink"
+              (click)="currentStep = 'info'"
+              >{{ data.translationOutput('buttons.change') }}</a
             >
+          </div>
+          <div class="col-span-12 md:hidden text-left px-4 pt-4">
+            <small class="aui-small line-clamp-1">{{
+              orderForm.get('email')?.value
+            }}</small>
           </div>
           <div class="col-span-12">
             <hr class="my-4" />
           </div>
         </ng-container>
-        <div class="col-span-4 text-left pl-4">
-          <strong class="aui-caption">Contact Phone</strong>
+        <div class="col-span-6 md:col-span-4 text-left pl-4">
+          <strong class="aui-caption">{{
+            data.translationOutput('checkout.contactPhone')
+          }}</strong>
         </div>
-        <div class="col-span-4 text-center">
+        <div class="hidden md:inline-grid col-span-4 text-center">
           <small class="aui-small">{{
             orderForm.get('shippingAddress.phoneNumber')?.value
           }}</small>
         </div>
-        <div class="col-span-4 text-right pr-4">
-          <a class="aui-caption aui-textlink" (click)="currentStep = 'info'"
-            >Change</a
-          >
+        <div class="col-span-6 md:col-span-4 text-right pr-4">
+          <a class="aui-caption aui-textlink" (click)="currentStep = 'info'">{{
+            data.translationOutput('buttons.change')
+          }}</a>
+        </div>
+        <div class="col-span-12 md:hidden text-left px-4 pt-4">
+          <small class="aui-small line-clamp-1">{{
+            orderForm.get('shippingAddress.phoneNumber')?.value
+          }}</small>
         </div>
         <div class="col-span-12">
           <hr class="my-4" />
         </div>
-        <div class="col-span-4 text-left pl-4">
-          <strong class="aui-caption">Ship To</strong>
+        <div class="col-span-6 md:col-span-4 text-left pl-4">
+          <strong class="aui-caption">{{
+            data.translationOutput('checkout.shipTo')
+          }}</strong>
         </div>
-        <div class="col-span-4 text-center">
+        <div class="hidden md:inline-grid col-span-4 text-center">
           <small class="aui-small line-clamp-2">{{ shippingAddress }}</small>
         </div>
-        <div class="col-span-4 text-right pr-4">
-          <a class="aui-caption aui-textlink" (click)="currentStep = 'info'"
-            >Change</a
-          >
+        <div class="col-span-6 md:col-span-4 text-right pr-4">
+          <a class="aui-caption aui-textlink" (click)="currentStep = 'info'">{{
+            data.translationOutput('buttons.change')
+          }}</a>
+        </div>
+        <div class="col-span-12 md:hidden text-left px-4 pt-4">
+          <small class="aui-small line-clamp-2">{{ shippingAddress }}</small>
         </div>
         <div class="col-span-12">
           <hr class="my-4" />
         </div>
-        <div class="col-span-4 text-left pl-4">
-          <strong class="aui-caption">Method</strong>
+        <div class="col-span-6 md:col-span-4 text-left pl-4">
+          <strong class="aui-caption">{{
+            data.translationOutput('checkout.selectedShippingMethod')
+          }}</strong>
         </div>
-        <div class="col-span-4 text-center">
+        <div class="hidden md:inline-grid col-span-4 text-center">
           <small class="aui-small"
             >{{
               orderForm.get('shippingMethod')?.value
@@ -419,17 +609,41 @@
             }}</small
           >
         </div>
-        <div class="col-span-4 text-right pr-4">
-          <a class="aui-caption aui-textlink" (click)="currentStep = 'shipping'"
-            >Change</a
+        <div class="col-span-6 md:col-span-4 text-right pr-4">
+          <a
+            class="aui-caption aui-textlink"
+            (click)="currentStep = 'shipping'"
+            >{{ data.translationOutput('buttons.change') }}</a
           >
+        </div>
+        <div class="col-span-12 md:hidden text-left px-4 pt-4">
+          <small class="aui-small">
+            <ng-container
+              *ngIf="orderForm.get('shippingMethod')?.value === 'standard'"
+            >
+              {{
+                data.translationOutput('checkout.shippingStandard')
+              }}&nbsp;&nbsp;·&nbsp;&nbsp;${{
+                orderForm.get('shippingFee')?.value
+              }}
+            </ng-container>
+            <ng-container
+              *ngIf="orderForm.get('shippingMethod')?.value === 'expedited'"
+            >
+              {{
+                data.translationOutput('checkout.shippingExpedited')
+              }}&nbsp;&nbsp;·&nbsp;&nbsp;${{
+                orderForm.get('shippingFee')?.value
+              }}
+            </ng-container>
+          </small>
         </div>
       </div>
     </audi-card>
 
     <audi-control-grid
       class="block mb-8"
-      [label]="'Billing Address'"
+      [label]="data.translationOutput('formLabels.billingAddress')"
       [type]="'input'"
       [isInvalid]="billingAddressFg.touched && billingAddressFg.invalid"
     >
@@ -438,8 +652,12 @@
           <audi-toggle-container
             class="block mt-8"
             formControlName="isSameAddress"
-            [labelRight]="'Same as shipping address'"
-            [labelLeft]="'Use a different billing address'"
+            [labelRight]="
+              data.translationOutput('checkout.sameAsShippingAddress')
+            "
+            [labelLeft]="
+              data.translationOutput('checkout.useDifferentBillingAddress')
+            "
           ></audi-toggle-container>
 
           <audi-address-fg
@@ -449,22 +667,41 @@
           ></audi-address-fg>
         </div>
       </ng-container>
-      <audi-control-error [type]="'grid'">required</audi-control-error>
+      <audi-control-error [type]="'grid'">{{
+        data.translationOutput('formErrors.required')
+      }}</audi-control-error>
     </audi-control-grid>
 
     <audi-credit-card-fg
       class="block mb-8"
       formGroupName="creditCard"
-      [label]="'Payment Info'"
+      [label]="data.translationOutput('checkout.paymentInfo')"
     ></audi-credit-card-fg>
 
-    <audi-button-group class="block mt-8">
-      <audi-button type="primary" (click)="onSubmitOrder()"
-        >Submit Order</audi-button
+    <audi-button-group
+      class="block mt-8"
+      [ngClass]="{
+        'w-full': !isDesktop
+      }"
+    >
+      <audi-button
+        type="primary"
+        [ngClass]="{
+          'block w-full': !isDesktop
+        }"
+        (click)="onSubmitOrder()"
+        >{{ data.translationOutput('buttons.submitOrder') }}</audi-button
       >
-      <audi-button type="secondary" (click)="currentStep = 'shipping'"
-        >Return To Shipping Method</audi-button
+      <audi-button
+        type="secondary"
+        [ngClass]="{
+          'block w-full': !isDesktop
+        }"
+        (click)="currentStep = 'shipping'"
+        >{{
+          data.translationOutput('buttons.returnToShippingMethod')
+        }}</audi-button
       >
     </audi-button-group>
-  </div>
+  </section>
 </ng-template>

@@ -24,7 +24,14 @@
     "unfavorite": "Unfavorite",
     "checkout": "Checkout",
     "remove": "Remove",
-    "continueShopping": "Continue Shopping"
+    "continueShopping": "Continue Shopping",
+    "returnToCart": "Return To Cart",
+    "continueToShipping": "Continue To Shipping",
+    "returnToYourInfo": "Return To Your Info",
+    "continueToPayment": "Continue To Payment",
+    "submitOrder": "Submit Order",
+    "returnToShippingMethod": "Return To Shipping Method",
+    "change": "Change"
   },
   "menu": {},
   "footer": {
@@ -84,7 +91,11 @@
     "cardNumber": "Card Number",
     "cardHolderName": "Cardholder Name",
     "expirationDate": "Expiration Date",
-    "cardCVV": "CVV"
+    "cardCVV": "CVV",
+    "shippingAddress": "Shipping Address",
+    "billingAddress": "Billing Address",
+    "customerNotes": "Notes",
+    "optional": " (optional)"
   },
   "formDescriptions": {
     "email": "Please enter your email.",
@@ -104,7 +115,8 @@
     "cardNumber": "Please enter your credit card number.",
     "cardHolderName": "Please enter the card holder's full name.",
     "expirationDate": "Please enter your credit card's expiration date (MM/YYYY).",
-    "cardCVV": "Please enter your credit card's security code."
+    "cardCVV": "Please enter your credit card's security code.",
+    "customerNotes": "Please enter any instructions or notes for this order."
   },
   "notifications": {
     "success": "Success",
@@ -116,7 +128,8 @@
     "registerSuccessMessage": "An email has been sent to your inbox. Please verify your email.",
     "passwordResetSuccess": "Password reset successfully",
     "forgotPasswordSuccess": "An email with instructions to reset your password has been sent to the email you entered",
-    "error401": "Wrong username or password"
+    "error401": "Wrong username or password",
+    "orderPlaced": "Your order has been successfully placed"
   },
   "alerts": {
     "emailNotFound": "Email not found."
@@ -163,5 +176,28 @@
     },
     "total": "Total"
   },
-  "checkout": {}
+  "checkout": {
+    "yourInfo": "Your Info",
+    "shippingMethod": "Shipping Method",
+    "payment": "Payment",
+    "yourCart": "Your Cart",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "total",
+    "ntd": "NTD",
+    "alreadyHaveAccount": "Already have an account? ",
+    "login": "Log in",
+    "contactEmail": "Contact Email",
+    "contactPhone": "Contact Phone",
+    "shipTo": "Ship To",
+    "selectedShippingMethod": "Method",
+    "paymentInfo": "Payment Info",
+    "sameAsShippingAddress": "Same as shipping address",
+    "useDifferentBillingAddress": "Use a different billing address",
+    "shippingStandard": "Standard",
+    "shippingExpedited": "Expedited",
+    "shippingStandardTime": "5-7 Business Days",
+    "shippingExpeditedTime": "1-3 Business Days",
+    "shippingFree": "Free"
+  }
 }
