@@ -165,7 +165,14 @@
                       <td class="align-middle">${{ item.price }}</td>
                     </tr>
                     <tr>
+                      <td>運費</td>
                       <td></td>
+                      <td></td>
+                      <td></td>
+                      <td class="fw-bold">${{ order.shippingFee }}</td>
+                    </tr>
+                    <tr>
+                      <td>總計</td>
                       <td></td>
                       <td></td>
                       <td></td>
@@ -184,6 +191,12 @@
                       <th>訂單編號 Order Number</th>
                       <td>
                         {{ order.orderNumber }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>訂單運送方式 Order Shipping Method</th>
+                      <td>
+                        {{ order.shippingMethod | toZh: 'shippingMethodWithEn' }}
                       </td>
                     </tr>
                     <tr>

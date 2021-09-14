@@ -620,7 +620,7 @@ namespace Audi.Controllers
             }
 
             string emailContent = $"請點擊<a href='{resetPwUrl}'>此連結</a>重新設定您的密碼。";
-            await _emailService.SendAsync(user.Email, "Audi - 重設密碼", emailContent);
+            await _emailService.SendAsync(user.Email, "Audi Collections - 重設密碼", emailContent);
 
             return NoContent();
         }
@@ -657,7 +657,7 @@ namespace Audi.Controllers
             }
 
             string emailContent = $"謝謝您註冊成為Audi會員，請點擊<a href='{verificationUrl}'>此連結</a>完成會員帳號註冊。";
-            await _emailService.SendAsync(user.Email, "Audi - 註冊成功 - Email確認", emailContent);
+            await _emailService.SendAsync(user.Email, "Audi Collections - 註冊成功 - Email確認", emailContent);
 
             return NoContent();
         }

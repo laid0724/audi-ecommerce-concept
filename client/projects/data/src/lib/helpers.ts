@@ -11,7 +11,7 @@ import { ActivatedRoute, QueryParamsHandling, Router } from '@angular/router';
 import { utcToZonedTime } from 'date-fns-tz';
 import { format } from 'date-fns';
 import { PaginatedResult } from './models/pagination';
-import { Gender, LanguageCode, OrderStatus } from './enums';
+import { Gender, LanguageCode, OrderStatus, ShippingMethod } from './enums';
 import _ from 'lodash';
 
 export function getPaginationHeaders(
@@ -266,6 +266,15 @@ export function toZhMapper(
         return '已送達 Delivered';
       case OrderStatus.Canceled:
         return '已取消 Canceled';
+    }
+  }
+
+  if (type === 'shippingMethodWithEn') {
+    switch (value) {
+      case ShippingMethod.Standard:
+        return '正常 Standard';
+      case ShippingMethod.Expedited:
+        return '快遞 Expedited';
     }
   }
 

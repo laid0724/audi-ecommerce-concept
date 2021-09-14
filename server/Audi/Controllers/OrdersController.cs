@@ -178,7 +178,7 @@ namespace Audi.Controllers
                 return btoaEncoding;
             }
 
-            var json = JsonConvert.SerializeObject(createdOrder);
+            var json = JsonConvert.SerializeObject(createdOrder.Id.ToString());
 
             var jsEncryptedOrderData = btoa(json);
 
