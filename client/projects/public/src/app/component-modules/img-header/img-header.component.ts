@@ -35,9 +35,9 @@ import { takeUntil } from 'rxjs/operators';
 export class ImgHeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('headerBg') headerBg: ElementRef<HTMLDivElement>;
 
-  @Input() title: string;
-  @Input() subTitle: string;
-  @Input() resultCount: number;
+  @Input() title: string | undefined;
+  @Input() subTitle: string | undefined;
+  @Input() resultCount: number | undefined;
   @Input() desktopBgImageUrl: string;
   @Input() mobileBgImageUrl: string;
 
