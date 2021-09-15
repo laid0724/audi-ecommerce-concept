@@ -1,37 +1,39 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import {
-  Order,
-  BusyService,
-  OrdersService,
-  LanguageStateService,
-} from '@audi/data';
-import { Subject } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { LanguageStateService, LanguageCode } from '@audi/data';
 
 @Component({
   selector: 'audi-members-area-container',
   templateUrl: './members-area-container.component.html',
   styleUrls: ['./members-area-container.component.scss'],
 })
-export class MembersAreaContainerComponent implements OnInit, OnDestroy {
-  order: Order;
+export class MembersAreaContainerComponent implements OnInit {
+  activeRoute: string = 'personal-info';
+  tabRoutes = ['personal-info', 'liked-products', 'order-history'];
 
-  loading = true;
-
-  destroy$ = new Subject<boolean>();
+  get language(): LanguageCode {
+    return this.languageService.getCurrentLanguage();
+  }
 
   constructor(
-    private route: ActivatedRoute,
     private router: Router,
-    private busyService: BusyService,
-    private orderService: OrdersService,
     private languageService: LanguageStateService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.tabRoutes.forEach((route: string) => {
+      if (this.router.url.includes(route)) {
+        this.activeRoute = route;
+      }
+    });
+  }
 
-  ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
+  onTabIndexChange(tabIndex: number): void {
+    this.router.navigate([
+      '/',
+      this.language,
+      'members-area',
+      this.tabRoutes[tabIndex],
+    ]);
   }
 }

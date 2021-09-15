@@ -25,14 +25,14 @@ const routes: Routes = [
     component: MembersAreaContainerComponent,
   },
   {
-    path: 'orders',
+    path: 'order-history',
     data: {
-      activeTab: 'orders',
+      activeTab: 'order-history',
     },
     component: MembersAreaContainerComponent,
   },
   {
-    path: 'orders/:orderId',
+    path: 'order-history/:orderId',
     runGuardsAndResolvers: 'always',
     canActivate: [OrderGuard],
     component: MembersOrderSingleComponent,

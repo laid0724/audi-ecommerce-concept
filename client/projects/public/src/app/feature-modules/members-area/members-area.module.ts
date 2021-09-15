@@ -11,6 +11,7 @@ import { MembersLikedProductComponent } from './members-liked-product/members-li
 import { MembersOrderListComponent } from './members-order-list/members-order-list.component';
 import { MembersOrderSingleComponent } from './members-order-single/members-order-single.component';
 import { ImgHeaderModule } from '../../component-modules/img-header/img-header.module';
+import { RouterModule } from '@angular/router';
 
 const COMPONENTS = [
   MembersAreaContainerComponent,
@@ -27,6 +28,7 @@ const IMPORT_MODULES = [
   TranslocoModule,
   FormComponentsModule,
   ImgHeaderModule,
+  RouterModule,
 ];
 
 @NgModule({

@@ -6,6 +6,8 @@ import {
   QueryList,
   AfterContentInit,
   OnInit,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
@@ -21,7 +23,7 @@ import { takeUntil } from 'rxjs/operators';
 /*
   USAGE: only one active tab can be set in the beginning by default!
 
-  <audi-nav-tabs theme="grey">
+  <audi-nav-tabs theme="grey" (onTabIndexChange)="onTabIndexChange($event)">
     <audi-nav-tab tabTitle="Tab 1">content 1</audi-nav-tab>
     <audi-nav-tab tabTitle="Tab 2">content 2</audi-nav-tab>
     <audi-nav-tab tabTitle="Tab 3" [isActive]="true">content 3</audi-nav-tab>
@@ -40,6 +42,8 @@ export class NavTabsComponent
   implements OnInit, AfterContentInit, AfterViewInit, OnDestroy
 {
   @ContentChildren(NavTabComponent) tabs: QueryList<NavTabComponent>;
+
+  @Output() onTabIndexChange = new EventEmitter<number>();
 
   @Input() isSmall: boolean = false;
 
@@ -134,6 +138,10 @@ export class NavTabsComponent
       .forEach((tab: NavTabComponent) => (tab.isActive = false));
 
     tab.isActive = true;
+
+    const tabIndex = this.tabs.toArray().indexOf(tab);
+
+    this.onTabIndexChange.emit(tabIndex);
   }
 
   ngOnDestroy(): void {

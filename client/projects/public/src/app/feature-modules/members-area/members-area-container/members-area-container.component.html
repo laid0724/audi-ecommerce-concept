@@ -8,29 +8,29 @@
   <div class="aui-layout">
     <div class="aui-grid">
       <div class="aui-cell aui-cell--12">
-        <audi-nav-tabs>
+        <audi-nav-tabs (onTabIndexChange)="onTabIndexChange($event)">
           <audi-nav-tab
             [tabTitle]="translationOutput('membersArea.personalInfo')"
-            [isActive]="personalInfoTabActive"
+            [isActive]="activeRoute === 'personal-info'"
           >
             <audi-members-personal-info
-              *ngIf="personalInfoTabActive"
+              *ngIf="activeRoute === 'personal-info'"
             ></audi-members-personal-info>
           </audi-nav-tab>
           <audi-nav-tab
             [tabTitle]="translationOutput('membersArea.likedProducts')"
-            [isActive]="likedProductsTabActive"
+            [isActive]="activeRoute === 'liked-products'"
           >
             <audi-members-liked-product
-              *ngIf="likedProductsTabActive"
+              *ngIf="activeRoute === 'liked-products'"
             ></audi-members-liked-product>
           </audi-nav-tab>
           <audi-nav-tab
             [tabTitle]="translationOutput('membersArea.orderHistory')"
-            [isActive]="orderHistoryTabActive"
+            [isActive]="activeRoute === 'order-history'"
           >
             <audi-members-order-list
-              *ngIf="orderHistoryTabActive"
+              *ngIf="activeRoute === 'order-history'"
             ></audi-members-order-list>
           </audi-nav-tab>
         </audi-nav-tabs>
