@@ -2,7 +2,6 @@
   "notFound": "We couldn't find the page you requested.",
   "serverError": "Internal Server Error",
   "logout": "Logout",
-  "membersArea": "Member's Area",
   "pagination": {
     "previous": "Previous",
     "next": "Next"
@@ -208,5 +207,11 @@
     "last4CardDigit": "Card Number",
     "billingAddress": "Billing Address",
     "shippingAddress": "Shipping Address"
+  },
+  "membersArea": {
+    "title": "Member's Area",
+    "personalInfo": "Personal Info",
+    "likedProducts": "Liked Products",
+    "orderHistory": "Order History"
   }
 }
