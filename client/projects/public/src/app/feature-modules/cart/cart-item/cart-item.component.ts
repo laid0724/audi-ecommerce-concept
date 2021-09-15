@@ -1,5 +1,10 @@
 import { Component, Input } from '@angular/core';
-import { CartItem, Product } from '@audi/data';
+import {
+  CartItem,
+  LanguageCode,
+  LanguageStateService,
+  Product,
+} from '@audi/data';
 import { isProductDiscounted } from '../../../helpers';
 import { CartService } from '../services/cart.service';
 
@@ -34,7 +39,14 @@ export class CartItemComponent {
     return 'assets/images/placeholder-original.png';
   }
 
-  constructor(private cartService: CartService) {}
+  get language(): LanguageCode {
+    return this.languageService.getCurrentLanguage();
+  }
+
+  constructor(
+    private cartService: CartService,
+    private languageService: LanguageStateService
+  ) {}
 
   removeItem(): void {
     this.cartService.removeFromCart(this.cartItem);
