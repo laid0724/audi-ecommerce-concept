@@ -10,8 +10,9 @@ import {
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
 import { AudiNavThemeClass } from '../../enums';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { NavItemComponent } from '../nav-item/nav-item.component';
+import { takeUntil } from 'rxjs/operators';
 
 /*
 
@@ -83,15 +84,17 @@ export class NavBarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   isDesktop: boolean;
-  _breakpointObserverSubscription: Subscription;
+
+  destroy$ = new Subject<boolean>();
 
   public AudiNavThemeClass: AudiNavThemeClass | null;
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
-    this._breakpointObserverSubscription = this.breakpointObserver
+    this.breakpointObserver
       .observe(['(min-width: 640px)'])
+      .pipe(takeUntil(this.destroy$))
       .subscribe((state: BreakpointState) => {
         this.isDesktop = state.matches;
       });
@@ -114,8 +117,7 @@ export class NavBarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this._breakpointObserverSubscription) {
-      this._breakpointObserverSubscription.unsubscribe();
-    }
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

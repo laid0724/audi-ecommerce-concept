@@ -1,10 +1,9 @@
 <ng-container *transloco="let translationOutput">
-  <div class="header">
-    <div class="header-bg" #headerBg></div>
-    <h1 class="aui-headline-2 z-2 text-white">
-      {{ translationOutput('cart.cart') }}
-    </h1>
-  </div>
+  <audi-img-header
+    [title]="translationOutput('cart.cart')"
+    desktopBgImageUrl="/assets/images/cart-bg.jpg"
+    mobileBgImageUrl="/assets/images/cart-bg.jpg"
+  ></audi-img-header>
 
   <div class="aui-layout">
     <div class="aui-grid">

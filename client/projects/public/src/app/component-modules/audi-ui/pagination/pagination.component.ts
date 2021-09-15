@@ -17,7 +17,8 @@ import {
   Pagination,
 } from '@audi/data';
 import { AudiPaginationType } from '../enums';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 /*
   USAGE
@@ -41,7 +42,9 @@ import { Subscription } from 'rxjs';
   templateUrl: './pagination.component.html',
   styleUrls: ['./pagination.component.scss'],
 })
-export class PaginationComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class PaginationComponent
+  implements OnInit, OnChanges, AfterViewInit, OnDestroy
+{
   @Input() isLightTheme: boolean = false;
   @Input() type: AudiPaginationType | string = AudiPaginationType.Desktop;
   @Input() pagination: Pagination;
@@ -52,13 +55,14 @@ export class PaginationComponent implements OnInit, OnChanges, AfterViewInit, On
 
   audiPaginationJsComponents: any[];
 
-  _breakpointObserverSubscription: Subscription;
+  destroy$ = new Subject<boolean>();
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
-    this._breakpointObserverSubscription = this.breakpointObserver
+    this.breakpointObserver
       .observe(['(min-width: 768px)'])
+      .pipe(takeUntil(this.destroy$))
       .subscribe((state: BreakpointState) => {
         const isDesktop = state.matches;
 
@@ -135,8 +139,7 @@ export class PaginationComponent implements OnInit, OnChanges, AfterViewInit, On
   }
 
   ngOnDestroy(): void {
-    if (this._breakpointObserverSubscription) {
-      this._breakpointObserverSubscription.unsubscribe();
-    }
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

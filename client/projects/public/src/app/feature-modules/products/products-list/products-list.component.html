@@ -1,23 +1,11 @@
 <ng-container *transloco="let translationOutput">
-  <div class="header">
-    <div class="header-bg" #headerBg></div>
-    <h1 class="aui-headline-2 z-2 text-white">
-      {{ translationOutput('products.audiCollections') }}
-    </h1>
-    <h4
-      class="aui-headline-4 z-2 text-white mt-2"
-      *ngIf="
-        getProductCategoryName(productParams.productCategoryId);
-        let categoryName
-      "
-    >
-      {{ categoryName }}
-    </h4>
-    <small class="aui-small z-2 text-white mt-3" *ngIf="pagination"
-      >{{ pagination.totalItems }}
-      {{ translationOutput('products.results') }}</small
-    >
-  </div>
+  <audi-img-header
+    [title]="translationOutput('products.audiCollections')"
+    [subTitle]="getProductCategoryName(productParams.productCategoryId)!"
+    [resultCount]="pagination.totalItems"
+    desktopBgImageUrl="/assets/images/product-list-default-bg-desktop.jpg"
+    mobileBgImageUrl="/assets/images/product-list-default-bg-mobile.jpg"
+  ></audi-img-header>
 
   <div class="aui-layout">
     <div class="aui-grid">
@@ -227,7 +215,9 @@
         >
           <audi-control-error
             *ngIf="filterForm.get('priceMin')?.hasError('pattern')"
-            >{{ translationOutput('formErrors.greaterThanZero') }}</audi-control-error
+            >{{
+              translationOutput('formErrors.greaterThanZero')
+            }}</audi-control-error
           >
         </audi-input-container>
         <audi-input-container
@@ -238,7 +228,9 @@
         >
           <audi-control-error
             *ngIf="filterForm.get('priceMax')?.hasError('pattern')"
-            >{{ translationOutput('formErrors.greaterThanZero') }}</audi-control-error
+            >{{
+              translationOutput('formErrors.greaterThanZero')
+            }}</audi-control-error
           >
         </audi-input-container>
         <audi-control-error

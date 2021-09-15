@@ -15,6 +15,7 @@ import { FormComponentsModule } from '../../component-modules/form-components/fo
 import { CardModule } from '../../component-modules/audi-ui/card/card.module';
 import { WysiwygGridDisplayModule } from '../../component-modules/wysiwyg-grid-display/wysiwyg-grid-display.module';
 import { SpinnerModule } from '../../component-modules/audi-ui/spinner/spinner.module';
+import { ImgHeaderModule } from '../../component-modules/img-header/img-header.module';
 
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsSingleComponent } from './products-single/products-single.component';
@@ -48,6 +49,7 @@ const COMPONENTS = [
     TranslocoModule,
     AngularFullpageModule,
     WysiwygGridDisplayModule,
+    ImgHeaderModule,
     ...AUDI_MODULES,
   ],
   exports: [...COMPONENTS],

@@ -1,0 +1,20 @@
+<div class="header" *transloco="let translationOutput">
+  <div
+    class="header-bg"
+    #headerBg
+    [ngStyle]="{
+      backgroundImage: isDesktop
+        ? 'url(' + desktopBgImageUrl + ')'
+        : 'url(' + mobileBgImageUrl + ')'
+    }"
+  ></div>
+  <h1 class="aui-headline-2 z-2 text-white" *ngIf="!!title">
+    {{ title }}
+  </h1>
+  <h4 class="aui-headline-4 z-2 text-white mt-2" *ngIf="!!subTitle">
+    {{ subTitle }}
+  </h4>
+  <small class="aui-small z-2 text-white mt-3" *ngIf="!!resultCount">
+    {{ resultCount }} {{ translationOutput('products.results') }}
+  </small>
+</div>

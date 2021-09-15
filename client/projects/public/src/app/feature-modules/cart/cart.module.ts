@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ButtonModule } from '../../component-modules/audi-ui/button/button.module';
 import { IconModule } from '../../component-modules/audi-ui/icon/icon.module';
 import { TranslocoModule } from '@ngneat/transloco';
+import { ImgHeaderModule } from '../../component-modules/img-header/img-header.module';
 
 import { CartRoutingModule } from './cart-routing.module';
 import { CartPageComponent } from './cart-page/cart-page.component';
@@ -23,6 +24,7 @@ const IMPORT_MODULES = [
   ButtonModule,
   IconModule,
   TranslocoModule,
+  ImgHeaderModule,
 ];
 
 @NgModule({

@@ -10,6 +10,7 @@ import { MembersPersonalInfoComponent } from './members-personal-info/members-pe
 import { MembersLikedProductComponent } from './members-liked-product/members-liked-product.component';
 import { MembersOrderListComponent } from './members-order-list/members-order-list.component';
 import { MembersOrderSingleComponent } from './members-order-single/members-order-single.component';
+import { ImgHeaderModule } from '../../component-modules/img-header/img-header.module';
 
 const COMPONENTS = [
   MembersAreaContainerComponent,
@@ -25,6 +26,7 @@ const IMPORT_MODULES = [
   NavModule,
   TranslocoModule,
   FormComponentsModule,
+  ImgHeaderModule,
 ];
 
 @NgModule({

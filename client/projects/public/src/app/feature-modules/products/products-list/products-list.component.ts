@@ -1,15 +1,4 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  Inject,
-  OnDestroy,
-  OnInit,
-  PLATFORM_ID,
-  Renderer2,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   ActivatedRoute,
@@ -31,7 +20,7 @@ import {
   ProductsService,
   setQueryParams,
 } from '@audi/data';
-import { Subject, Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { startWith, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 
 @Component({
@@ -39,9 +28,7 @@ import { startWith, switchMap, take, takeUntil, tap } from 'rxjs/operators';
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.scss'],
 })
-export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('headerBg') headerBg: ElementRef<HTMLDivElement>;
-
+export class ProductsListComponent implements OnInit, OnDestroy {
   productCategories: ProductCategoryWithoutProducts[] = [];
   products: Product[] = [];
 
@@ -61,12 +48,9 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
   loading = true;
 
   isDesktop: boolean;
-  _breakpointObserverSubscription: Subscription;
 
   refresher$ = new Subject<ProductParams>();
   destroy$ = new Subject<boolean>();
-
-  windowScrollListenerFn: () => void;
 
   getProductCategoryName(
     productCategoryId: number | undefined
@@ -79,9 +63,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    @Inject(DOCUMENT) private document: Document,
-    private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
@@ -102,8 +83,9 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
           ?.updateValueAndValidity({ onlySelf: true });
       });
 
-    this._breakpointObserverSubscription = this.breakpointObserver
+    this.breakpointObserver
       .observe(['(min-width: 640px)'])
+      .pipe(takeUntil(this.destroy$))
       .subscribe((state: BreakpointState) => {
         this.isDesktop = state.matches;
       });
@@ -174,34 +156,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
         this.loading = false;
         this.busyService.idle();
       });
-  }
-
-  ngAfterViewInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      /*
-        using background-attachment: fixed ALONG with background-size: cover
-        makes the background bg size all messed up.
-
-        this is a workaround to that issue, mimicking parallax effect.
-
-        see: https://stackoverflow.com/questions/21786272/css-background-size-cover-background-attachment-fixed-clipping-background-im
-      */
-
-      this.windowScrollListenerFn = this.renderer.listen(
-        window,
-        'scroll',
-        (event: any) => {
-          // see: see: https://stackoverflow.com/questions/28050548/window-pageyoffset-is-always-0-with-overflow-x-hidden
-          const scrollTop = event.srcElement.scrollingElement.scrollTop;
-
-          this.renderer.setStyle(
-            this.headerBg.nativeElement,
-            'transform',
-            `translateY(${scrollTop}px)`
-          );
-        }
-      );
-    }
   }
 
   initFilterForm(): void {
@@ -336,14 +290,6 @@ export class ProductsListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (isPlatformBrowser(this.platformId) && this.windowScrollListenerFn) {
-      this.windowScrollListenerFn();
-    }
-
-    if (this._breakpointObserverSubscription) {
-      this._breakpointObserverSubscription.unsubscribe();
-    }
-
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }

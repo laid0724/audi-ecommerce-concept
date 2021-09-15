@@ -13,7 +13,8 @@ import { AudiNavThemeClass } from '../../enums';
 import { AudiNavThemeInput } from '../nav-bar/nav-bar.component';
 import { NavTabComponent } from '../nav-tab/nav-tab.component';
 import { OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 // for reference, see: https://juristr.com/blog/2016/02/learning-ng2-creating-tab-component/
 
@@ -77,15 +78,17 @@ export class NavTabsComponent
   navs: any[];
 
   isDesktop: boolean;
-  _breakpointObserverSubscription: Subscription;
+
+  destroy$ = new Subject<boolean>();
 
   public AudiNavThemeClass: AudiNavThemeClass | null;
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
-    this._breakpointObserverSubscription = this.breakpointObserver
+    this.breakpointObserver
       .observe(['(min-width: 640px)'])
+      .pipe(takeUntil(this.destroy$))
       .subscribe((state: BreakpointState) => {
         this.isDesktop = state.matches;
 
@@ -134,8 +137,7 @@ export class NavTabsComponent
   }
 
   ngOnDestroy(): void {
-    if (this._breakpointObserverSubscription) {
-      this._breakpointObserverSubscription.unsubscribe();
-    }
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

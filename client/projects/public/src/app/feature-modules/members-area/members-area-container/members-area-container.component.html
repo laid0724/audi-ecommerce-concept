@@ -1,8 +1,11 @@
 <ng-container *transloco="let translationOutput">
-  <div class="header">
-    <div class="header-bg" #headerBg></div>
-    <h1 class="aui-headline-2 z-2 text-white">會員中心</h1>
-  </div>
+  <!-- TODO: transloco -->
+  <audi-img-header
+    [title]="'會員中心'"
+    desktopBgImageUrl="/assets/images/members-area-bg.webp"
+    mobileBgImageUrl="/assets/images/members-area-bg.webp"
+  ></audi-img-header>
+
   <div class="aui-layout">
     <div class="aui-grid">
       <div class="aui-cell aui-cell--12">
