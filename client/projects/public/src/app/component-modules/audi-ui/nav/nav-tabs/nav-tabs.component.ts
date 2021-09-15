@@ -8,11 +8,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import {
-  initAudiModules,
-  AudiModuleName,
-  AudiComponents,
-} from '@audi/data';
+import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
 import { AudiNavThemeClass } from '../../enums';
 import { AudiNavThemeInput } from '../nav-bar/nav-bar.component';
 import { NavTabComponent } from '../nav-tab/nav-tab.component';
@@ -73,10 +69,12 @@ export class NavTabsComponent
         this.AudiNavThemeClass = AudiNavThemeClass.Grey;
         break;
       default:
-        this.AudiNavThemeClass = null;
+        this.AudiNavThemeClass = AudiNavThemeClass.Default;
         break;
     }
   }
+
+  navs: any[];
 
   isDesktop: boolean;
   _breakpointObserverSubscription: Subscription;
@@ -90,6 +88,12 @@ export class NavTabsComponent
       .observe(['(min-width: 640px)'])
       .subscribe((state: BreakpointState) => {
         this.isDesktop = state.matches;
+
+        if (Array.isArray(this.navs) && this.navs.length >= 1) {
+          setTimeout(() => {
+            this.navs.forEach((nav: any) => nav.update());
+          }, 0);
+        }
       });
   }
 
@@ -113,10 +117,10 @@ export class NavTabsComponent
     const audiNavModules = initAudiModules(AudiModuleName.Nav);
 
     audiNavModules.forEach((navModule: AudiComponents) => {
-      const navs = navModule.components.upgradeElements();
+      this.navs = navModule.components.upgradeElements();
 
       setTimeout(() => {
-        navs.forEach((nav: any) => nav.update());
+        this.navs.forEach((nav: any) => nav.update());
       }, 0);
     });
   }

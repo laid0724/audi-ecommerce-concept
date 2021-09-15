@@ -1,1 +1,23 @@
-<p>members-area-container works!</p>
+<ng-container *transloco="let translationOutput">
+  <div class="header">
+    <div class="header-bg" #headerBg></div>
+    <h1 class="aui-headline-2 z-2 text-white">會員中心</h1>
+  </div>
+  <div class="aui-layout">
+    <div class="aui-grid">
+      <div class="aui-cell aui-cell--12">
+        <audi-nav-tabs>
+          <audi-nav-tab tabTitle="個人資料" [isActive]="true">
+            <audi-members-personal-info></audi-members-personal-info>
+          </audi-nav-tab>
+          <audi-nav-tab tabTitle="追蹤商品">
+            <audi-members-liked-product></audi-members-liked-product>
+          </audi-nav-tab>
+          <audi-nav-tab tabTitle="訂單歷史">
+            <audi-members-order-list></audi-members-order-list>
+          </audi-nav-tab>
+        </audi-nav-tabs>
+      </div>
+    </div>
+  </div>
+</ng-container>

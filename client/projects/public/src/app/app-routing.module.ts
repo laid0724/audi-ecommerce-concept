@@ -66,6 +66,7 @@ let routes: Routes = [
     path: ':languageCode/members-area',
     runGuardsAndResolvers: 'always',
     canActivate: [AuthGuard, MemberGuard],
+    canActivateChild: [AuthGuard, MemberGuard],
     loadChildren: () =>
       import('./feature-modules/members-area/members-area.module').then(
         (m) => m.MembersAreaModule

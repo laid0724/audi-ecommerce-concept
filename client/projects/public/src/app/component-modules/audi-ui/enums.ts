@@ -88,5 +88,6 @@ export enum AudiNavThemeClass {
   WarmSilver = 'aui-theme-warmsilver',
   Silver = 'aui-theme-silver',
   Red = 'aui-theme-red',
-  Grey = 'aui-theme-gray10-gray20'
+  Grey = 'aui-theme-gray10-gray20',
+  Default = 'aui-theme-gray95'
 }
