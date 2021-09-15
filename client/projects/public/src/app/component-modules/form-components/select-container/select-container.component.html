@@ -21,9 +21,14 @@
   <ng-content
     *ngIf="
       (control.pristine && control.untouched) ||
-      (control.touched && control.dirty && control.valid)
+      (control.untouched && control.dirty && control.valid)
     "
     select="audi-control-description"
+  ></ng-content>
+
+  <ng-content
+    *ngIf="control.touched && control.dirty && control.valid"
+    select="audi-control-valid"
   ></ng-content>
 
   <ng-content

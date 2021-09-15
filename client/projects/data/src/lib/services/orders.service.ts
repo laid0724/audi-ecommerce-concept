@@ -23,6 +23,7 @@ export interface OrderUpsert {
   creditCard: CreditCard;
   orderItems: OrderItemUpsert[];
   customerNotes?: string;
+  shippingMethod: string;
 }
 
 export interface OrderStatusUpdateRequest {

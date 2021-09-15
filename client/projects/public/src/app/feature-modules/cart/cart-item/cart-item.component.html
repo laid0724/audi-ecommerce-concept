@@ -7,11 +7,15 @@
     />
   </div>
   <div class="cart-item__product-info">
-    <small class="aui-small font-bold line-clamp-1">{{
-      cartItem.product.name
-    }}</small>
+    <small
+      class="aui-small font-bold line-clamp-1 clickable"
+      [routerLink]="['/', language, 'products', cartItem.product.id]"
+      >{{ cartItem.product.name }}</small
+    >
     <small class="aui-small line-clamp-1">{{ cartItem.productSku.sku }}</small>
-    <small class="aui-small my-1">${{ price.toLocaleString() }}</small>
+    <small class="aui-small my-1"
+      >${{ (price * cartItem.quantity).toLocaleString() }}</small
+    >
     <div class="w-full flex items-center justify-between mt-auto">
       <audi-cart-item-quantity-selector
         class="m-0"

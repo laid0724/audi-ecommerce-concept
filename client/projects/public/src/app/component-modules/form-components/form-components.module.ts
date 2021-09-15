@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IconModule } from '../audi-ui/icon/icon.module';
+import { TranslocoModule } from '@ngneat/transloco';
 
 import { ControlDescriptionComponent } from './control-description/control-description.component';
 import { ControlValidComponent } from './control-valid/control-valid.component';
@@ -33,7 +34,13 @@ const DIRECTIVES = [ProjectAsFieldDirective, ProjectAsFieldsDirective];
 
 @NgModule({
   declarations: [...COMPONENTS, ...DIRECTIVES],
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, IconModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    IconModule,
+    TranslocoModule,
+  ],
   exports: [...COMPONENTS, ...DIRECTIVES, FormsModule, ReactiveFormsModule],
 })
 export class FormComponentsModule {}

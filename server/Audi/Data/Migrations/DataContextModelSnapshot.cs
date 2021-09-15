@@ -521,6 +521,14 @@ namespace server.Data.Migrations
                         .HasColumnName("shipping_address")
                         .HasDefaultValueSql("'{}'");
 
+                    b.Property<decimal>("ShippingFee")
+                        .HasColumnType("numeric")
+                        .HasColumnName("shipping_fee");
+
+                    b.Property<string>("ShippingMethod")
+                        .HasColumnType("text")
+                        .HasColumnName("shipping_method");
+
                     b.Property<decimal>("TotalPrice")
                         .HasColumnType("numeric")
                         .HasColumnName("total_price");

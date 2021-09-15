@@ -4,15 +4,14 @@ import {
   AfterViewInit,
   OnInit,
   OnDestroy,
+  ContentChildren,
+  QueryList,
 } from '@angular/core';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import {
-  initAudiModules,
-  AudiModuleName,
-  AudiComponents,
-} from '@audi/data';
+import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
 import { AudiNavThemeClass } from '../../enums';
 import { Subscription } from 'rxjs';
+import { NavItemComponent } from '../nav-item/nav-item.component';
 
 /*
 
@@ -47,6 +46,8 @@ export type AudiNavThemeInput =
   styleUrls: ['./nav-bar.component.scss'],
 })
 export class NavBarComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ContentChildren(NavItemComponent) items: QueryList<NavItemComponent>;
+
   @Input() isSmall: boolean = false;
 
   _theme: AudiNavThemeInput;
@@ -100,10 +101,14 @@ export class NavBarComponent implements OnInit, AfterViewInit, OnDestroy {
     const audiNavModules = initAudiModules(AudiModuleName.Nav);
 
     audiNavModules.forEach((navModule: AudiComponents) => {
-      const navs = navModule.components.upgradeElements();
+      const navBarComponents = navModule.components.upgradeElements();
+
+      const navItemComponents = this.items.toArray();
+
+      navItemComponents.forEach((c) => (c.navBarRef = navBarComponents));
 
       setTimeout(() => {
-        navs.forEach((nav: any) => nav.update());
+        navBarComponents.forEach((navbar: any) => navbar.update());
       }, 0);
     });
   }

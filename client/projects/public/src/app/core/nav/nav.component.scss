@@ -51,6 +51,7 @@ $audi-header-height: 56px;
   }
 
   &__menu {
+    overflow-y: hidden;
     height: calc(100vh - #{$audi-header-height});
     width: 100%;
     display: none;

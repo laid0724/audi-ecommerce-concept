@@ -24,7 +24,14 @@
     "unfavorite": "Unfavorite",
     "checkout": "Checkout",
     "remove": "Remove",
-    "continueShopping": "Continue Shopping"
+    "continueShopping": "Continue Shopping",
+    "returnToCart": "Return To Cart",
+    "continueToShipping": "Continue To Shipping",
+    "returnToYourInfo": "Return To Your Info",
+    "continueToPayment": "Continue To Payment",
+    "submitOrder": "Submit Order",
+    "returnToShippingMethod": "Return To Shipping Method",
+    "change": "Change"
   },
   "menu": {},
   "footer": {
@@ -47,9 +54,17 @@
     "required": "Required",
     "email": "Please enter a valid email address",
     "passwordMinLength": "Password must be at least 8 characters",
-    "confirmPassword": "Passwords do not match.",
-    "number": "Must be greater than 0",
-    "priceMaxNotGreaterThanPriceMin": "Maximum price must be greater than minimum price"
+    "confirmPassword": "Passwords do not match",
+    "number": "Please enter numbers",
+    "greaterThanZero": "Must be greater than 0",
+    "priceMaxNotGreaterThanPriceMin": "Maximum price must be greater than minimum price",
+    "phoneNumber": "Please enter a valid phone number",
+    "postalCodeMinLength": "Must have at least 3 digits",
+    "postalCodeMaxLength": "Cannot exceed 5 digits",
+    "ccNumber": "Please enter a valid credit card number",
+    "cardCVVMinLength": "Must have at least 3 digits",
+    "cardCVVMaxLength": "Cannot exceed 4 digits",
+    "expDate": "Please enter a valid expiration date (MM/YYYY)"
   },
   "formLabels": {
     "email": "Email",
@@ -68,7 +83,19 @@
     "price": "Price",
     "priceMin": "Minimum Price",
     "priceMax": "Maximum Price",
-    "discounted": "Discounted"
+    "discounted": "Discounted",
+    "city": "City",
+    "district": "District",
+    "postalCode": "Postal Code",
+    "addressLine": "Address",
+    "cardNumber": "Card Number",
+    "cardHolderName": "Cardholder Name",
+    "expirationDate": "Expiration Date",
+    "cardCVV": "CVV",
+    "shippingAddress": "Shipping Address",
+    "billingAddress": "Billing Address",
+    "customerNotes": "Notes",
+    "optional": " (optional)"
   },
   "formDescriptions": {
     "email": "Please enter your email.",
@@ -79,7 +106,17 @@
     "confirmPassword": "Please confirm your password.",
     "confirmNewPassword": "Please confirm your new password.",
     "firstName": "Please enter your first name.",
-    "lastName": "Please enter your last name."
+    "lastName": "Please enter your last name.",
+    "phoneNumber": "Please enter your phone number.",
+    "city": "Please select a city.",
+    "district": "Please select a district.",
+    "postalCode": "Please enter your postal code.",
+    "addressLine": "Please enter your address.",
+    "cardNumber": "Please enter your credit card number.",
+    "cardHolderName": "Please enter the card holder's full name.",
+    "expirationDate": "Please enter your credit card's expiration date (MM/YYYY).",
+    "cardCVV": "Please enter your credit card's security code.",
+    "customerNotes": "Please enter any instructions or notes for this order."
   },
   "notifications": {
     "success": "Success",
@@ -91,7 +128,8 @@
     "registerSuccessMessage": "An email has been sent to your inbox. Please verify your email.",
     "passwordResetSuccess": "Password reset successfully",
     "forgotPasswordSuccess": "An email with instructions to reset your password has been sent to the email you entered",
-    "error401": "錯誤的帳戶或密碼"
+    "error401": "Wrong username or password",
+    "orderPlaced": "Your order has been successfully placed"
   },
   "alerts": {
     "emailNotFound": "Email not found."
@@ -137,5 +175,38 @@
       "price": "Price"
     },
     "total": "Total"
+  },
+  "checkout": {
+    "yourInfo": "Your Info",
+    "shippingMethod": "Shipping Method",
+    "payment": "Payment",
+    "yourCart": "Your Cart",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "total",
+    "ntd": "NTD",
+    "alreadyHaveAccount": "Already have an account? ",
+    "login": "Log in",
+    "contactEmail": "Contact Email",
+    "contactPhone": "Contact Phone",
+    "shipTo": "Ship To",
+    "selectedShippingMethod": "Method",
+    "paymentInfo": "Payment Info",
+    "shippingInfo": "Delivery Info",
+    "sameAsShippingAddress": "Same as shipping address",
+    "useDifferentBillingAddress": "Use a different billing address",
+    "shippingStandard": "Standard",
+    "shippingExpedited": "Expedited",
+    "shippingStandardTime": "5-7 Business Days",
+    "shippingExpeditedTime": "1-3 Business Days",
+    "shippingFree": "Free",
+    "success": "Order Placed",
+    "orderPlaced": "Your order has been placed.",
+    "orderNumber": "Order Number",
+    "payer": "Card Holder",
+    "recipient": "Recipient",
+    "last4CardDigit": "Card Number",
+    "billingAddress": "Billing Address",
+    "shippingAddress": "Shipping Address"
   }
 }

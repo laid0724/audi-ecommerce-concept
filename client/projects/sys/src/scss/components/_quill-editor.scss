@@ -2,6 +2,7 @@
 @import '~@audi/audi-ui/src/functions';
 @import '~@audi/audi-ui/src/mixins';
 @import '~@audi/audi-ui/src/typography/typography';
+@import '~@audi/audi-ui/src/list/list';
 
 @mixin audi-ui-h1() {
   @extend .aui-headline-1;
@@ -34,14 +35,6 @@
   font-family: $aui-font-default;
   font-weight: $aui-font-weight-light;
   @include aui-responsive-type(0, 1.75);
-}
-
-@mixin audi-ui-list() {
-  margin-top: 0;
-  margin-bottom: 0;
-  margin-left: 0;
-  padding-left: 1.5em;
-  list-style-position: inside;
 }
 
 .ql-container {
@@ -102,7 +95,45 @@
 }
 .ql-editor ol,
 .ql-editor ul {
-  @include audi-ui-list;
+  // @extend .aui-list;
+  counter-reset: li;
+  margin-left: 0;
+  padding-left: 0;
+  list-style: none;
+  @include aui-responsive-type(0, 1.5);
+
+  li {
+    // @extend .aui-list__item;
+    margin-left: $aui-list-style-position;
+
+    & + & {
+      margin-top: unit(3);
+    }
+
+    &::before {
+      display: inline-block;
+      width: $aui-list-style-position;
+      margin-left: #{$aui-list-style-position * -1};
+      color: rgba(#000, 0.3);
+    }
+  }
+}
+.ql-editor ol {
+  // @extend .aui-list--number;
+  li {
+    &::before {
+      content: counter(li);
+      counter-increment: li;
+    }
+  }
+}
+.ql-editor ul {
+  // @extend .aui-list--arrow;
+  li {
+    &::before {
+      content: '›';
+    }
+  }
 }
 .ql-editor .ql-video {
   display: block;
@@ -788,5 +819,19 @@
   @include audi-ui-p();
 }
 .ql-snow .ql-editor li {
-  @include audi-ui-p();
+  li {
+    // @extend .aui-list__item;
+    margin-left: $aui-list-style-position;
+
+    & + & {
+      margin-top: unit(3);
+    }
+
+    &::before {
+      display: inline-block;
+      width: $aui-list-style-position;
+      margin-left: #{$aui-list-style-position * -1};
+      color: rgba(#000, 0.3);
+    }
+  }
 }

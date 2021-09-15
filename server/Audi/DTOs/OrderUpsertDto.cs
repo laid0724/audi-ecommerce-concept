@@ -16,5 +16,6 @@ namespace Audi.DTOs
         public string CurrentStatus { get; set; }
         public string CustomerNotes { get; set; }
         public string InternalNotes { get; set; }
+        public string ShippingMethod { get; set; } // standard | expedited
     }
 }

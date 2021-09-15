@@ -227,7 +227,7 @@
         >
           <audi-control-error
             *ngIf="filterForm.get('priceMin')?.hasError('pattern')"
-            >{{ translationOutput('formErrors.number') }}</audi-control-error
+            >{{ translationOutput('formErrors.greaterThanZero') }}</audi-control-error
           >
         </audi-input-container>
         <audi-input-container
@@ -238,7 +238,7 @@
         >
           <audi-control-error
             *ngIf="filterForm.get('priceMax')?.hasError('pattern')"
-            >{{ translationOutput('formErrors.number') }}</audi-control-error
+            >{{ translationOutput('formErrors.greaterThanZero') }}</audi-control-error
           >
         </audi-input-container>
         <audi-control-error

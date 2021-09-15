@@ -12,6 +12,25 @@ import { ProjectAsFieldsDirective } from '../project-as-fields.directive';
         [type]="'input'"
         [isInvalid]="form.touched && form.invalid"
       >
+        <!-- TO PROJECT YOUR OWN GRID -->
+
+        <div class="aui-fieldset__fields">
+          <div class="aui_fieldset__field">
+            ....
+          </div>
+          <div class="aui_fieldset__field">
+            ....
+          </div>
+        </div>
+        <div class="aui-fieldset__fields">
+          <div class="aui_fieldset__field">
+            ....
+          </div>
+          <div class="aui_fieldset__field">
+            ....
+          </div>
+        </div>
+
         <!-- TO PROJECT AS ROW -->
 
         <ng-container *projectAsFields>

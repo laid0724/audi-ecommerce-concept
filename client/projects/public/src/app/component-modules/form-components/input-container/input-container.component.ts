@@ -63,7 +63,7 @@ export class InputContainerComponent
 
   @Input() floatingLabel: boolean = true;
   @Input() isLightTheme: boolean = false;
-  @Input() type: 'text' | 'number' | 'password' = 'text';
+  @Input() type: 'text' | 'number' | 'password' | 'tel' | 'email' = 'text';
   @Input() iconName: string;
   @Input() label: string;
   @Input() smallLabel: string;

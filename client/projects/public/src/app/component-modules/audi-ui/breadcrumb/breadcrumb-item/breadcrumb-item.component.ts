@@ -17,7 +17,7 @@ import { Component, Input } from '@angular/core';
       Reparatur und Service
     </li>
 
-    <li class="aui-breadcrumb__item" audiBreadCrumbItem">
+    <li class="aui-breadcrumb__item" audiBreadCrumbItem>
       Audi Original Staub- und Pollenfilter
     </li>
   </audi-breadcrumb>

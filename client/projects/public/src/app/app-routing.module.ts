@@ -92,6 +92,17 @@ let routes: Routes = [
       import('./feature-modules/cart/cart.module').then((m) => m.CartModule),
   },
   {
+    path: 'checkout',
+    redirectTo: `${lastSelectedLanguage}/checkout`,
+  },
+  {
+    path: ':languageCode/checkout',
+    loadChildren: () =>
+      import('./feature-modules/checkout/checkout.module').then(
+        (m) => m.CheckoutModule
+      ),
+  },
+  {
     path: 'server-error',
     redirectTo: `${lastSelectedLanguage}/server-error`,
   },

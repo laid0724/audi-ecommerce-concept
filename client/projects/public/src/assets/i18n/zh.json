@@ -24,7 +24,14 @@
     "unfavorite": "移除追蹤清單",
     "checkout": "結帳",
     "remove": "移除",
-    "continueShopping": "繼續購物"
+    "continueShopping": "繼續購物",
+    "returnToCart": "返回購物車",
+    "continueToShipping": "選取配送方式",
+    "returnToYourInfo": "返回個人資訊",
+    "continueToPayment": "前往付款",
+    "submitOrder": "送出訂單",
+    "returnToShippingMethod": "返回選取配送方式",
+    "change": "變更"
   },
   "menu": {},
   "footer": {
@@ -48,8 +55,16 @@
     "email": "請輸入正確的電子信箱格式",
     "passwordMinLength": "密碼需至少8位數",
     "confirmPassword": "密碼不符",
-    "number": "需大於零",
-    "priceMaxNotGreaterThanPriceMin": "最高價格需高於最低價格"
+    "number": "請輸入數字",
+    "greaterThanZero": "需大於零",
+    "priceMaxNotGreaterThanPriceMin": "最高價格需高於最低價格",
+    "phoneNumber": "請輸入正確的電話號碼",
+    "postalCodeMinLength": "需至少3碼",
+    "postalCodeMaxLength": "不可多於5碼",
+    "ccNumber": "請輸入正確的信用卡卡號",
+    "cardCVVMinLength": "需至少3碼",
+    "cardCVVMaxLength": "不可多於4碼",
+    "expDate": "請輸入正確的信用卡有效日期（MM/YYYY）"
   },
   "formLabels": {
     "email": "電子信箱",
@@ -68,7 +83,19 @@
     "price": "價格",
     "priceMin": "最低價格",
     "priceMax": "最高價格",
-    "discounted": "優惠中"
+    "discounted": "優惠中",
+    "city": "市/縣",
+    "district": "區域",
+    "postalCode": "區域碼",
+    "addressLine": "地址",
+    "cardNumber": "信用卡卡號",
+    "cardHolderName": "持卡人姓名",
+    "expirationDate": "有效日期",
+    "cardCVV": "CVV碼",
+    "shippingAddress": "寄件地址",
+    "billingAddress": "帳單地址",
+    "customerNotes": "留言 / 備註",
+    "optional": " (非必填)"
   },
   "formDescriptions": {
     "email": "請輸入您的電子信箱",
@@ -79,7 +106,17 @@
     "confirmPassword": "請確認您的密碼",
     "confirmNewPassword": "請確認您的新密碼",
     "firstName": "請輸入您的名字",
-    "lastName": "請輸入您的姓氏"
+    "lastName": "請輸入您的姓氏",
+    "phoneNumber": "請輸入您的電話號碼",
+    "city": "請選擇縣市",
+    "district": "請選擇區域",
+    "postalCode": "請輸入您的區域碼",
+    "addressLine": "請輸入您的地址",
+    "cardNumber": "請輸入您的信用卡卡號",
+    "cardHolderName": "請輸入持卡人姓名",
+    "expirationDate": "請輸入信用卡的有效日期（MM/YYYY）",
+    "cardCVV": "請輸入信用卡的CVV安全碼",
+    "customerNotes": "請留下任何跟此訂單相關的留言或備註"
   },
   "notifications": {
     "success": "成功",
@@ -91,7 +128,8 @@
     "registerSuccessMessage": "請前往您的信箱認證您的Email",
     "passwordResetSuccess": "密碼重置成功",
     "forgotPasswordSuccess": "已發送重置密碼的信件至您所輸入的信箱",
-    "error401": "錯誤的帳戶或密碼"
+    "error401": "錯誤的帳戶或密碼",
+    "orderPlaced": "訂單送出"
   },
   "alerts": {
     "emailNotFound": "Email 不存在"
@@ -137,5 +175,38 @@
       "price": "價格"
     },
     "total": "總價"
+  },
+  "checkout": {
+    "yourInfo": "個人資訊",
+    "shippingMethod": "配送方式",
+    "payment": "付款",
+    "yourCart": "訂單摘要",
+    "subtotal": "商品金額",
+    "shipping": "運費",
+    "total": "總計",
+    "ntd": "新台幣",
+    "alreadyHaveAccount": "已經是會員？ ",
+    "login": "登入",
+    "contactEmail": "聯絡信箱",
+    "contactPhone": "聯絡電話",
+    "shipTo": "配送地址",
+    "selectedShippingMethod": "配送方式",
+    "paymentInfo": "付款資訊",
+    "shippingInfo": "配送資訊",
+    "sameAsShippingAddress": "同寄件地址",
+    "useDifferentBillingAddress": "填寫新帳單地址",
+    "shippingStandard": "正常",
+    "shippingExpedited": "快遞",
+    "shippingStandardTime": "5-7 工作天",
+    "shippingExpeditedTime": "1-3 工作天",
+    "shippingFree": "免費",
+    "success": "訂單成立",
+    "orderPlaced": "您的訂單已成立，訂購明細如下",
+    "orderNumber": "訂單號碼",
+    "payer": "付款人",
+    "recipient": "收件人",
+    "last4CardDigit": "卡片末四碼",
+    "billingAddress": "帳單地址",
+    "shippingAddress": "收件地址"
   }
 }

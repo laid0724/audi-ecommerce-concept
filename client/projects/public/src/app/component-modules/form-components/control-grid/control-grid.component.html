@@ -13,6 +13,8 @@
   </legend>
   <!-- see: https://stackoverflow.com/questions/59185318/get-multiple-ng-template-ref-values-using-contentchildren-in-angular-5 -->
 
+  <ng-content select=".aui-fieldset__fields"></ng-content>
+
   <ng-container *ngIf="fieldsTemplates.length > 0">
     <div class="aui-fieldset__fields" *ngFor="let fields of fieldsTemplates">
       <ng-template [ngTemplateOutlet]="fields.template"></ng-template>

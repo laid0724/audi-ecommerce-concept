@@ -23,5 +23,7 @@ namespace Audi.Entities
         public string CurrentStatus { get; set; } // placed | shipped | delived | canceled - see OrderStatus.css
         public string CustomerNotes { get; set; }
         public string InternalNotes { get; set; }
+        public string ShippingMethod { get; set; } // standard | expedited
+        public decimal ShippingFee { get; set; } // 0 | 200
     }
 }

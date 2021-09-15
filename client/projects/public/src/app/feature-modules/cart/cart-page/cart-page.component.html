@@ -25,7 +25,7 @@
               </thead>
               <tr *ngFor="let cartItem of cart">
                 <td class="flex w-full">
-                  <div class="product flex items-center w-full">
+                  <div class="product flex items-center">
                     <div class="product-img mr-1">
                       <img
                         [src]="getProductMainPhotoUrl(cartItem.product)"
@@ -59,7 +59,13 @@
                     >{{ translationOutput('buttons.remove') }}</a
                   >
                 </td>
-                <td>${{ getPrice(cartItem.product).toLocaleString() }}</td>
+                <td>
+                  ${{
+                    (
+                      getPrice(cartItem.product) * cartItem.quantity
+                    ).toLocaleString()
+                  }}
+                </td>
               </tr>
 
               <tr>

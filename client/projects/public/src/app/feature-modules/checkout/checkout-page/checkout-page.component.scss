@@ -1,0 +1,53 @@
+.checkout {
+  &-wrapper {
+    position: absolute;
+    background-color: var(--audi-white);
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 101;
+    width: 100vw;
+    height: 100vh;
+
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  &__cart {
+    &-wrapper {
+      position: relative;
+      &:after {
+        content: '';
+        background-color: var(--audi-grey-3);
+        width: 300%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        z-index: -1;
+      }
+    }
+    &-items {
+      margin: 2rem 0;
+    }
+    &-item {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      &:not(:first-child):not(:last-child) {
+        margin: 1rem 0;
+      }
+      &__thumbnail {
+        width: 4.6em;
+        height: 4.6em;
+        border-radius: 8px;
+        border: 1px solid var(--audi-grey-5);
+        position: relative;
+        background-repeat: no-repeat;
+        background-size: contain;
+        background-position: center;
+        background-color: var(--audi-white);
+      }
+    }
+  }
+}

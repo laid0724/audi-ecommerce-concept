@@ -1,0 +1,69 @@
+$product-image-width: 150px;
+
+.header {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+  overflow: hidden;
+
+  @media (min-width: 768px) {
+    min-height: 50vh;
+  }
+
+  &-bg {
+    position: absolute;
+    width: 100vw;
+    min-height: 40vh;
+    transform: translateY(0px);
+    background-image: url('/assets/images/checkout-success-bg-mobile.webp');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    will-change: transform;
+
+    @media (min-width: 768px) {
+      min-height: 50vh;
+      background-image: url('/assets/images/checkout-success-bg-desktop.webp');
+    }
+
+    &:after {
+      content: '';
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      opacity: 0.4;
+      background-color: var(--audi-black);
+    }
+  }
+}
+
+.cart {
+  &-items {
+    margin: 2rem 0;
+  }
+  &-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    &:not(:first-child):not(:last-child) {
+      margin: 1rem 0;
+    }
+    &__thumbnail {
+      width: 4.6em;
+      height: 4.6em;
+      border-radius: 8px;
+      border: 1px solid var(--audi-grey-5);
+      position: relative;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      background-color: var(--audi-white);
+    }
+  }
+}

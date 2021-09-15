@@ -1,0 +1,42 @@
+<div
+  class="aui-textfield aui-js-textfield mt-3"
+  [ngClass]="{
+    'aui-textfield--floating-label': floatingLabel,
+    'aui-theme-light': isLightTheme,
+    'is-dirty': control.dirty && control.touched,
+    'is-valid': control.valid && control.touched,
+    'is-invalid': control.invalid && control.touched,
+    'is-disabled': isDisabled
+  }"
+>
+  <div class="aui-textfield__field">
+    <input
+      class="aui-textfield__input"
+      [formControl]="control"
+      id="cc-cvc"
+      type="tel"
+      autocomplete="off"
+      ccCVC
+    />
+    <label class="aui-textfield__label"
+      >{{ label }}<span class="aui-small">{{ smallLabel }}</span></label
+    >
+  </div>
+  <ng-content
+    *ngIf="
+      (control.pristine && control.untouched) ||
+      (control.untouched && control.dirty && control.valid)
+    "
+    select="audi-control-description"
+  ></ng-content>
+
+  <ng-content
+    *ngIf="control.touched && control.dirty && control.valid"
+    select="audi-control-valid"
+  ></ng-content>
+
+  <ng-content
+    *ngIf="control.touched && control.invalid"
+    select="audi-control-error"
+  ></ng-content>
+</div>

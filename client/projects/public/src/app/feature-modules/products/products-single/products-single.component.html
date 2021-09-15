@@ -58,7 +58,7 @@
                   </small>
                 </ng-template>
 
-                <p class="line-clamp-6 text-center text-sm md:text-base">
+                <p class="aui-caption line-clamp-6 text-center text-sm md:text-base">
                   {{ product.description }}
                 </p>
 
@@ -150,7 +150,7 @@
       </section>
 
       <ng-container *ngIf="hasWysiwygContent">
-        <section class="section fp-auto-height">
+        <section class="section min-h-screen pt-14 fp-auto-height">
           <audi-wysiwyg-grid-display
             [wysiwygGrid]="product.wysiwyg"
           ></audi-wysiwyg-grid-display>
