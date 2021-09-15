@@ -117,11 +117,10 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 
 - convert to Angular universal
 - update user info
-- member's area
-- checkout / order
+- member's area (update user info, liked products, orders)
 - cancel / track order
 - articles, e.g., news, events, promotions, faq, about us
-- search
+- site-wide search
 - live chat
 
 #### Deployment
