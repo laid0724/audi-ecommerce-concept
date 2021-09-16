@@ -1,0 +1,61 @@
+dp-date-picker {
+  position: absolute !important;
+}
+
+.aui-calendar {
+  * {
+    font-family: $font-family-sans-serif;
+  }
+
+  .dp-nav-btns-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .dp-calendar-nav-container-left,
+    .dp-calendar-nav-container-right {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .dp-calendar-secondary-nav-left,
+    .dp-calendar-secondary-nav-right,
+    .dp-calendar-nav-left,
+    .dp-calendar-nav-right {
+      min-height: 20px;
+      min-width: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  .dp-weekdays {
+    .dp-calendar-weekday {
+      margin: 5px;
+    }
+  }
+
+  .dp-calendar-day {
+    margin: 5px;
+  }
+
+  .dp-months-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    .dp-calendar-month {
+      margin: 20px;
+    }
+  }
+
+  .dp-current-month,
+  .dp-current-day {
+    border-color: $audi-black !important;
+  }
+
+  .dp-selected {
+    background: $audi-black !important;
+  }
+}
