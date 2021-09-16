@@ -233,7 +233,7 @@
     [headerSize]="4"
     [bgColor]="'white'"
     [textColor]="'black'"
-    [type]="'default'"
+    [type]="isDesktop ? 'default' : 'full-page'"
     [isClosable]="false"
   >
     <form [formGroup]="resetPwForm">
@@ -310,7 +310,7 @@
     [headerSize]="4"
     [bgColor]="'white'"
     [textColor]="'black'"
-    [type]="'default'"
+    [type]="isDesktop ? 'default' : 'full-page'"
     [isClosable]="false"
   >
     <form [formGroup]="forgotPwForm">

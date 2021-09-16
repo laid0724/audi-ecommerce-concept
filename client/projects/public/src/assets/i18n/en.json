@@ -30,7 +30,10 @@
     "continueToPayment": "Continue To Payment",
     "submitOrder": "Submit Order",
     "returnToShippingMethod": "Return To Shipping Method",
-    "change": "Change"
+    "change": "Change",
+    "save": "Save",
+    "reset": "Reset",
+    "changePassword": "Change Password"
   },
   "menu": {},
   "footer": {
@@ -63,7 +66,8 @@
     "ccNumber": "Please enter a valid credit card number",
     "cardCVVMinLength": "Must have at least 3 digits",
     "cardCVVMaxLength": "Cannot exceed 4 digits",
-    "expDate": "Please enter a valid expiration date (MM/YYYY)"
+    "expDate": "Please enter a valid expiration date (MM/YYYY)",
+    "date": "Please enter a valid date (MM/DD/YYYY)"
   },
   "formLabels": {
     "email": "Email",
@@ -94,7 +98,8 @@
     "shippingAddress": "Shipping Address",
     "billingAddress": "Billing Address",
     "customerNotes": "Notes",
-    "optional": " (optional)"
+    "optional": " (optional)",
+    "dateOfBirth": "Date of Birth"
   },
   "formDescriptions": {
     "email": "Please enter your email.",
@@ -115,7 +120,8 @@
     "cardHolderName": "Please enter the card holder's full name.",
     "expirationDate": "Please enter your credit card's expiration date (MM/YYYY).",
     "cardCVV": "Please enter your credit card's security code.",
-    "customerNotes": "Please enter any instructions or notes for this order."
+    "customerNotes": "Please enter any instructions or notes for this order.",
+    "dateOfBirth": "Please enter your date of birth (MM/DD/YYYY)."
   },
   "notifications": {
     "success": "Success",
@@ -126,7 +132,9 @@
     "registerSuccess": "Successfully Registered",
     "registerSuccessMessage": "An email has been sent to your inbox. Please verify your email.",
     "passwordResetSuccess": "Password reset successfully",
+    "passwordChangeSuccess": "Password changed successfully",
     "forgotPasswordSuccess": "An email with instructions to reset your password has been sent to the email you entered",
+    "updateUserInfoSuccess": "Your personal info has been updated successfully",
     "error401": "Wrong username or password",
     "orderPlaced": "Your order has been successfully placed"
   },
@@ -213,5 +221,11 @@
     "personalInfo": "Personal Info",
     "likedProducts": "Liked Products",
     "orderHistory": "Order History"
+  },
+  "gender": {
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "other": "Other"
   }
 }

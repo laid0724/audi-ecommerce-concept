@@ -12,6 +12,10 @@ import { MembersOrderListComponent } from './members-order-list/members-order-li
 import { MembersOrderSingleComponent } from './members-order-single/members-order-single.component';
 import { ImgHeaderModule } from '../../component-modules/img-header/img-header.module';
 import { RouterModule } from '@angular/router';
+import { AddressFgModule } from '../../component-modules/address-fg/address-fg.module';
+import { ButtonModule } from '../../component-modules/audi-ui/button/button.module';
+import { IconModule } from '../../component-modules/audi-ui/icon/icon.module';
+import { ModalModule } from '../../component-modules/audi-ui/modal/modal.module';
 
 const COMPONENTS = [
   MembersAreaContainerComponent,
@@ -29,6 +33,10 @@ const IMPORT_MODULES = [
   FormComponentsModule,
   ImgHeaderModule,
   RouterModule,
+  AddressFgModule,
+  ButtonModule,
+  IconModule,
+  ModalModule,
 ];
 
 @NgModule({

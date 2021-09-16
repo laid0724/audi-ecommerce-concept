@@ -1,3 +1,4 @@
+import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { HttpErrorResponse } from '@angular/common/http';
 import {
   AfterViewInit,
@@ -18,7 +19,7 @@ import {
 } from '@audi/data';
 import { TranslocoService } from '@ngneat/transloco';
 import { of, Subject } from 'rxjs';
-import { filter, switchMap, take, tap } from 'rxjs/operators';
+import { filter, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 import { NotificationService } from '../../component-modules/audi-ui/services/notification-service/notification.service';
 
 // TODO: RFX this and break apart into smaller component with single responsibility
@@ -75,6 +76,8 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
 
   emailNotFoundError: boolean = false;
 
+  isDesktop: boolean = true;
+
   currentLanguage: LanguageCode = this.languageService.getCurrentLanguage();
 
   urlToRedirectAfterLogin: string | undefined;
@@ -82,6 +85,7 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
   destroy$ = new Subject<boolean>();
 
   constructor(
+    private breakpointObserver: BreakpointObserver,
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
@@ -98,6 +102,13 @@ export class LoginComponent implements OnInit, AfterViewInit, OnDestroy {
     this.initForgotPwForm();
 
     this.urlToRedirectAfterLogin = this.route.snapshot.queryParams?.redirectTo;
+
+    this.breakpointObserver
+      .observe(['(min-width: 768px)'])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((state: BreakpointState) => {
+        this.isDesktop = state.matches;
+      });
   }
 
   ngAfterViewInit(): void {

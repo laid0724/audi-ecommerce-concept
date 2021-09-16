@@ -30,7 +30,10 @@
     "continueToPayment": "前往付款",
     "submitOrder": "送出訂單",
     "returnToShippingMethod": "返回選取配送方式",
-    "change": "變更"
+    "change": "變更",
+    "save": "儲存",
+    "reset": "重設",
+    "changePassword": "更改密碼"
   },
   "menu": {},
   "footer": {
@@ -63,7 +66,8 @@
     "ccNumber": "請輸入正確的信用卡卡號",
     "cardCVVMinLength": "需至少3碼",
     "cardCVVMaxLength": "不可多於4碼",
-    "expDate": "請輸入正確的信用卡有效日期（MM/YYYY）"
+    "expDate": "請輸入正確的信用卡有效日期（MM/YYYY）",
+    "date": "請輸入正確的日期格式（MM/DD/YYYY）"
   },
   "formLabels": {
     "email": "電子信箱",
@@ -94,7 +98,8 @@
     "shippingAddress": "寄件地址",
     "billingAddress": "帳單地址",
     "customerNotes": "留言 / 備註",
-    "optional": " (非必填)"
+    "optional": " (非必填)",
+    "dateOfBirth": "出生日期"
   },
   "formDescriptions": {
     "email": "請輸入您的電子信箱",
@@ -115,7 +120,8 @@
     "cardHolderName": "請輸入持卡人姓名",
     "expirationDate": "請輸入信用卡的有效日期（MM/YYYY）",
     "cardCVV": "請輸入信用卡的CVV安全碼",
-    "customerNotes": "請留下任何跟此訂單相關的留言或備註"
+    "customerNotes": "請留下任何跟此訂單相關的留言或備註",
+    "dateOfBirth": "請輸入您的出生日期（MM/DD/YYYY）"
   },
   "notifications": {
     "success": "成功",
@@ -126,7 +132,9 @@
     "registerSuccess": "註冊成功",
     "registerSuccessMessage": "請前往您的信箱認證您的Email",
     "passwordResetSuccess": "密碼重置成功",
+    "passwordChangeSuccess": "密碼更改成功",
     "forgotPasswordSuccess": "已發送重置密碼的信件至您所輸入的信箱",
+    "updateUserInfoSuccess": "會員資料更新成功",
     "error401": "錯誤的帳戶或密碼",
     "orderPlaced": "訂單送出"
   },
@@ -213,5 +221,11 @@
     "personalInfo": "個人資料",
     "likedProducts": "追蹤商品",
     "orderHistory": "訂單歷史"
+  },
+  "gender": {
+    "gender": "性別",
+    "male": "男",
+    "female": "女",
+    "other": "其他"
   }
 }

@@ -112,7 +112,7 @@ namespace Audi.Controllers
                 public string Gender { get; set; }
                 public string PhoneNumber { get; set; }
                 public Address Address { get; set; }
-                public DateTime DateOfBirth { get; set; }
+                public DateTime? DateOfBirth { get; set; }
             }
         }
 
@@ -385,7 +385,11 @@ namespace Audi.Controllers
             user.Gender = request.Gender;
             user.PhoneNumber = request.PhoneNumber;
             user.Address = request.Address;
-            user.DateOfBirth = request.DateOfBirth;
+
+            if (request.DateOfBirth.HasValue)
+            {
+                user.DateOfBirth = request.DateOfBirth.Value;
+            }
 
             await _userManager.UpdateAsync(user);
 

@@ -99,7 +99,9 @@ export class ModalComponent
 
   ngOnChanges(changes: SimpleChanges): void {
     const { isOpen } = changes;
-    this.isOpen = isOpen.currentValue;
+    if (isOpen != null) {
+      this.isOpen = isOpen.currentValue;
+    }
   }
 
   toggleAndEmitIsOpen() {

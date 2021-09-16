@@ -168,3 +168,11 @@ audi-textarea-container {
     opacity: 1;
   }
 }
+
+.aui-notification-container {
+  z-index: 1901 !important; // 1 higher than modal (1900)
+}
+
+.aui-modal-dialog--layer {
+  overflow: hidden;
+}
