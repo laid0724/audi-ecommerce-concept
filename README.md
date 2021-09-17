@@ -97,29 +97,31 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 
 #### API
 
-- add about us to dynamic document controller
 - Order creation email and status update email template UI
+- SignalR for live chat
+- site-wide search
 - email / messaging / inbox functionality
   - inbox system for users, admin can send promo messages to them
   - notification system for pushing notification to users
-- SignalR for live chat
-- site-wide search
 - Statistics table and repo / controller
 
 #### Angular Sys Project
 
-- add about us dynamic document module / update service
-- sys inbox
 - live chat module with signalr
+- sys inbox thread with users
+- notification push system
 - ngx charts for statistics
 
 #### Angular Public Project
 
-- convert to Angular universal
 - articles, e.g., news, events, promotions, faq, about us
-- site-wide search
+- convert to Angular universal
 - live chat
+- site-wide search
+- inbox thread between user and moderator
+- notification system
 
 #### Deployment
 
-- figure out how to host multiple angular projects in the same domain via different urls. nginx maybe?
+- figure out how to deploy this fucking thing (.NET Core 5 Web Api, Angular 12 (2 sites), PostgreSQL DB)
+  - AWS? Azure? GCP? 
