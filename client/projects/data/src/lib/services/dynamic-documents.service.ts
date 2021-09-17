@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { DynamicDocumentParams } from '../models/dynamic-document-params';
 import { News, Event } from '../models/dynamic-document';
 import { Faq, FaqItem } from '../models/faq';
+import { About } from '../models/about';
 import { PaginatedResult } from '../models/pagination';
 import { WysiwygGrid } from '../models/wysiwyg';
 import { getPaginatedResult, getPaginationHeaders } from '../helpers';
@@ -26,6 +27,13 @@ interface FaqUpsertRequest {
   faqItems: FaqItem[];
 }
 
+interface AboutUpsertRequest {
+  id: number;
+  title: string;
+  introduction: string;
+  wysiwyg: WysiwygGrid;
+}
+
 interface DynamicDocumentCrudFunctions<TUpsertRequest, TResult> {
   getOne: (dynamicDocumentId: number) => Observable<TResult>;
   getAll: (
@@ -40,6 +48,11 @@ interface DynamicDocumentCrudFunctions<TUpsertRequest, TResult> {
 interface FaqCrudFunctions {
   getOne: () => Observable<Faq>;
   update: (upsertRequest: FaqUpsertRequest) => Observable<Faq>;
+  deleteFeaturedImage: (dynamicDocumentId: number) => Observable<null>;
+}
+interface AboutCrudFunctions {
+  getOne: () => Observable<About>;
+  update: (upsertRequest: AboutUpsertRequest) => Observable<About>;
   deleteFeaturedImage: (dynamicDocumentId: number) => Observable<null>;
 }
 
@@ -93,6 +106,7 @@ export class DynamicDocumentsService {
     Event
   >;
   readonly faq: FaqCrudFunctions;
+  readonly about: AboutCrudFunctions;
 
   constructor(private http: HttpClient) {
     this.news = buildCrudFunctions<DynamicDocumentUpsertRequest, News>(
@@ -116,6 +130,18 @@ export class DynamicDocumentsService {
       getOne: () => http.get<Faq>(this.endpoint + '/faq'),
       update: faqCrud.update,
       deleteFeaturedImage: faqCrud.deleteFeaturedImage,
+    };
+
+    const aboutCrud = buildCrudFunctions<AboutUpsertRequest, About>(
+      http,
+      this.endpoint + '/about',
+      DynamicDocumentType.About
+    );
+
+    this.about = {
+      getOne: () => http.get<About>(this.endpoint + '/about'),
+      update: aboutCrud.update,
+      deleteFeaturedImage: aboutCrud.deleteFeaturedImage,
     };
   }
 }

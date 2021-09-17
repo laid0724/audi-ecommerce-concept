@@ -26,6 +26,7 @@ export enum DynamicDocumentType {
   Event = 'events',
   News = 'news',
   Faq = 'faq',
+  About = 'about',
 }
 
 export enum OrderStatus {
@@ -61,5 +62,5 @@ export enum CreditCardType {
   JCB = 'jcb',
   Visa = 'visa',
   MasterCard = 'mastercard',
-  Discover = 'discover'
+  Discover = 'discover',
 }
