@@ -168,6 +168,7 @@ namespace Audi.Helpers
                     dest => dest.FaqItems,
                     opt => opt.MapFrom(src => src.JsonData.ToObject<Faqs>().FaqItems)
                 );
+            CreateMap<DynamicDocument, AboutDto>();
             CreateMap<DynamicDocument, EventDto>();
             CreateMap<DynamicDocument, NewsDto>();
 
