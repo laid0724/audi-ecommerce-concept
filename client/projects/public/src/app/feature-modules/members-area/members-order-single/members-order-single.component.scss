@@ -1,0 +1,24 @@
+.cart {
+  &-items {
+    margin: 2rem 0;
+  }
+  &-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    &:not(:first-child):not(:last-child) {
+      margin: 1rem 0;
+    }
+    &__thumbnail {
+      width: 4.6em;
+      height: 4.6em;
+      border-radius: 8px;
+      border: 1px solid var(--audi-grey-5);
+      position: relative;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      background-color: var(--audi-white);
+    }
+  }
+}

@@ -34,7 +34,8 @@
             <strong
               [ngClass]="{
                 'text-danger': order.currentStatus === 'canceled',
-                'text-success': order.currentStatus === 'delivered'
+                'text-success': order.currentStatus === 'delivered',
+                'text-warning': order.currentStatus === 'shipped'
               }"
             >
               {{ translationOutput('orderStatus.' + order.currentStatus) }}

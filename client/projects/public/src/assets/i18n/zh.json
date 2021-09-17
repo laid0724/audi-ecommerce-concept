@@ -33,7 +33,9 @@
     "change": "變更",
     "save": "儲存",
     "reset": "重設",
-    "changePassword": "更改密碼"
+    "changePassword": "更改密碼",
+    "return": "返回",
+    "cancelOrder": "取消訂單"
   },
   "menu": {},
   "footer": {
@@ -136,7 +138,8 @@
     "forgotPasswordSuccess": "已發送重置密碼的信件至您所輸入的信箱",
     "updateUserInfoSuccess": "會員資料更新成功",
     "error401": "錯誤的帳戶或密碼",
-    "orderPlaced": "訂單送出"
+    "orderPlaced": "訂單送出",
+    "orderCancelSuccess": "訂單取消成功"
   },
   "alerts": {
     "emailNotFound": "Email 不存在"
@@ -144,7 +147,8 @@
   "modals": {
     "changePassword": "更改密碼",
     "forgotPassword": "忘記密碼",
-    "filters": "篩選條件"
+    "filters": "篩選條件",
+    "cancelOrder": "取消訂單"
   },
   "homepage": {
     "featuredProduct": "精選商品",
@@ -224,7 +228,10 @@
     "noLikedProducts": "您目前尚未追蹤任何商品",
     "orderNumber": "訂單號碼",
     "status": "訂單狀態",
-    "createdAt": "建立時間"
+    "createdAt": "建立時間",
+    "updatedAt": "最近更新時間",
+    "trackingNumber": "寄件包裹編號",
+    "cancelOrderConfirmMessage": "確定要取消訂單？"
   },
   "orderStatus": {
     "placed": "處理中",

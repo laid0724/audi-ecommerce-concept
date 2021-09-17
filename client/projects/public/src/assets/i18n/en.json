@@ -33,7 +33,9 @@
     "change": "Change",
     "save": "Save",
     "reset": "Reset",
-    "changePassword": "Change Password"
+    "changePassword": "Change Password",
+    "return": "Return",
+    "cancelOrder": "Cancel Order"
   },
   "menu": {},
   "footer": {
@@ -136,7 +138,8 @@
     "forgotPasswordSuccess": "An email with instructions to reset your password has been sent to the email you entered",
     "updateUserInfoSuccess": "Your personal info has been updated successfully",
     "error401": "Wrong username or password",
-    "orderPlaced": "Your order has been successfully placed"
+    "orderPlaced": "Your order has been successfully placed",
+    "orderCancelSuccess": "Your order has been successfully canceled"
   },
   "alerts": {
     "emailNotFound": "Email not found."
@@ -144,7 +147,8 @@
   "modals": {
     "changePassword": "Change Password",
     "forgotPassword": "Forgot Password",
-    "filters": "Filters"
+    "filters": "Filters",
+    "cancelOrder": "Cancel Order"
   },
   "homepage": {
     "featuredProduct": "Featured Products",
@@ -224,7 +228,10 @@
     "noLikedProducts": "No Liked Products",
     "orderNumber": "Order Number",
     "status": "Order Status",
-    "createdAt": "Created At"
+    "createdAt": "Created At",
+    "updatedAt": "Last Updated",
+    "trackingNumber": "Tracking Number",
+    "cancelOrderConfirmMessage": "Are you sure you want to cancel this order?"
   },
   "orderStatus": {
     "placed": "Confirmed",

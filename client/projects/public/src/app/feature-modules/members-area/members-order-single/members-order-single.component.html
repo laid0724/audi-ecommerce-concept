@@ -1,1 +1,280 @@
-<p>members-order-single works!</p>
+<ng-container *ngIf="!loading; else loadingTemplate">
+  <ng-container *transloco="let translationOutput">
+    <audi-img-header
+      [title]="translationOutput('membersArea.orderHistory')"
+      [subTitle]="order.orderNumber"
+      desktopBgImageUrl="/assets/images/order-single-bg.jpg"
+      mobileBgImageUrl="/assets/images/order-single-bg.jpg"
+    ></audi-img-header>
+
+    <div class="aui-layout">
+      <div class="aui-grid">
+        <div class="aui-cell aui-cell--12 pt-8">
+          <div class="px-4 md:px-10">
+            <p class="aui-caption text-left my-4">
+              {{ translationOutput('checkout.orderNumber') }}:
+              <strong>{{ order.orderNumber }}</strong>
+            </p>
+            <p class="aui-caption text-left my-4">
+              {{ translationOutput('membersArea.createdAt') }}:
+              <strong>{{
+                order.createdAt | date: 'MM/dd/YYYY hh:mm:ss'
+              }}</strong>
+            </p>
+            <p class="aui-caption text-left my-4">
+              {{ translationOutput('membersArea.status') }}:
+              <strong
+                [ngClass]="{
+                  'text-danger': order.currentStatus === 'canceled',
+                  'text-success': order.currentStatus === 'delivered',
+                  'text-warning': order.currentStatus === 'shipped'
+                }"
+              >
+                {{ translationOutput('orderStatus.' + order.currentStatus) }}
+              </strong>
+            </p>
+            <p
+              class="aui-caption text-left my-4"
+              *ngIf="!!order.trackingNumber"
+            >
+              {{ translationOutput('membersArea.trackingNumber') }}:
+              <strong class="aui-textlink clickable">
+                {{ order.trackingNumber }}
+              </strong>
+            </p>
+            <p class="aui-caption text-left my-4">
+              {{ translationOutput('membersArea.updatedAt') }}:
+              <strong>{{
+                order.lastUpdated | date: 'MM/dd/YYYY hh:mm:ss'
+              }}</strong>
+            </p>
+
+            <div
+              class="block border-t border-color-grey-4 w-full mb-4 mt-8"
+            ></div>
+          </div>
+
+          <div class="px-4 md:px-10 mb-10">
+            <div class="cart-items">
+              <div class="cart-item" *ngFor="let item of order.orderItems">
+                <div
+                  class="cart-item__thumbnail"
+                  [ngStyle]="{
+                    backgroundImage:
+                      'url(' + getProductMainPhotoUrl(item.product) + ')'
+                  }"
+                >
+                  <audi-badge class="absolute -top-3 -right-3"
+                    >{{ item.quantity }}
+                  </audi-badge>
+                </div>
+                <div class="ml-6 flex flex-col flex-wrap">
+                  <small class="aui-small font-bold">{{
+                    item.product.name
+                  }}</small>
+                  <small class="aui-small">{{ item.productSku.sku }}</small>
+                </div>
+                <small class="aui-small font-bold ml-auto">
+                  ${{
+                    (getPrice(item.product) * item.quantity).toLocaleString()
+                  }}
+                </small>
+              </div>
+            </div>
+            <div class="border-t border-color-grey-4 my-4"></div>
+            <div class="flex justify-between">
+              <small class="aui-small">{{
+                translationOutput('checkout.subtotal')
+              }}</small>
+              <small class="aui-small font-bold"
+                >${{ totalPrice.toLocaleString() }}</small
+              >
+            </div>
+            <div class="flex justify-between">
+              <small class="aui-small">{{
+                translationOutput('checkout.shipping')
+              }}</small>
+              <small class="aui-small font-bold"
+                >${{ order.shippingFee }}</small
+              >
+            </div>
+            <div class="border-t border-color-grey-4 my-4"></div>
+            <div class="flex justify-between items-center">
+              <small class="aui-small font-bold">{{
+                translationOutput('checkout.total')
+              }}</small>
+              <div class="flex items-center">
+                <small class="aui-small mr-2">{{
+                  translationOutput('checkout.ntd')
+                }}</small>
+                <h6 class="aui-headline-6">
+                  ${{ totalPrice.toLocaleString() }}
+                </h6>
+              </div>
+            </div>
+            <div class="border-t border-color-grey-4 my-4"></div>
+          </div>
+
+          <div class="px-4 md:px-10 mb-14 grid grid-rows-none grid-cols-12">
+            <div class="col-span-12 md:col-span-6">
+              <h5 class="aui-headline-5">
+                {{ translationOutput('checkout.paymentInfo') }}
+              </h5>
+              <div class="aui-caption mt-4">
+                <strong>{{ translationOutput('checkout.payer') }}: </strong>
+                {{
+                  language === 'zh'
+                    ? order.billingAddress.lastName +
+                      order.billingAddress.firstName
+                    : order.billingAddress.firstName +
+                      ' ' +
+                      order.billingAddress.lastName
+                }}
+              </div>
+              <div class="aui-caption mt-2">
+                <strong
+                  >{{ translationOutput('checkout.last4CardDigit') }}: </strong
+                >**** **** ****
+                {{ order.creditCardLast4Digit }}
+              </div>
+              <div class="aui-caption mt-2">
+                <strong
+                  >{{ translationOutput('checkout.billingAddress') }}
+                </strong>
+                {{ billingAddress }}
+              </div>
+            </div>
+            <div class="col-span-12 md:col-span-6 mt-8 md:mt-0">
+              <h5 class="aui-headline-5">
+                {{ translationOutput('checkout.shippingInfo') }}
+              </h5>
+              <div class="aui-caption mt-4">
+                <strong>{{ translationOutput('checkout.recipient') }}: </strong>
+                {{
+                  language === 'zh'
+                    ? order.shippingAddress.lastName +
+                      order.shippingAddress.firstName
+                    : order.shippingAddress.firstName +
+                      ' ' +
+                      order.shippingAddress.lastName
+                }}
+              </div>
+              <div class="aui-caption mt-2">
+                <strong
+                  >{{ translationOutput('checkout.shippingMethod') }}:
+                </strong>
+                <ng-container *ngIf="order.shippingMethod === 'standard'">
+                  {{ translationOutput('checkout.shippingStandard') }}
+                  <em
+                    >({{
+                      translationOutput('checkout.shippingStandardTime')
+                    }})</em
+                  >
+                </ng-container>
+                <ng-container *ngIf="order.shippingMethod === 'expedited'">
+                  {{ translationOutput('checkout.shippingExpedited') }}
+                  <em
+                    >({{
+                      translationOutput('checkout.shippingExpeditedTime')
+                    }})</em
+                  >
+                </ng-container>
+              </div>
+              <div class="aui-caption mt-2">
+                <strong
+                  >{{ translationOutput('checkout.shippingAddress') }}:
+                </strong>
+                {{ shippingAddress }}
+              </div>
+            </div>
+
+            <div class="col-span-12 mt-4" *ngIf="!!order.customerNotes">
+              <div class="border-t border-color-grey-4 my-8"></div>
+              <h5 class="aui-headline-5">
+                {{ translationOutput('formLabels.customerNotes') }}
+              </h5>
+              <em class="aui-caption mt-4">
+                {{ order.customerNotes }}
+              </em>
+            </div>
+
+            <div class="col-span-12 mt-4">
+              <audi-button-group
+                class="block mt-8"
+                [ngClass]="{
+                  'w-full': !isDesktop
+                }"
+              >
+                <audi-button
+                  *ngIf="order.currentStatus === 'placed'"
+                  type="primary"
+                  [ngClass]="{
+                    'block w-full': !isDesktop
+                  }"
+                  (click)="confirmCancelOrderModalOpen = true"
+                  >{{ translationOutput('buttons.cancelOrder') }}
+                </audi-button>
+                <audi-button
+                  type="secondary"
+                  [ngClass]="{
+                    'block w-full': !isDesktop
+                  }"
+                  [routerLink]="[
+                    '/',
+                    language,
+                    'members-area',
+                    'order-history'
+                  ]"
+                  >{{ translationOutput('buttons.return') }}</audi-button
+                >
+              </audi-button-group>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <audi-modal
+      [(isOpen)]="confirmCancelOrderModalOpen"
+      [header]="translationOutput('modals.cancelOrder')"
+      [headerSize]="4"
+      [bgColor]="'white'"
+      [textColor]="'black'"
+      [type]="isDesktop ? 'default' : 'full-page'"
+      [isClosable]="true"
+    >
+      <p class="aui-caption">
+        {{ translationOutput('membersArea.cancelOrderConfirmMessage') }}
+      </p>
+      <div class="block mt-6">
+        <audi-button-group>
+          <audi-button type="primary" (click)="onCancelOrder()">{{
+            translationOutput('buttons.submit')
+          }}</audi-button>
+          <audi-button
+            type="secondary"
+            (click)="confirmCancelOrderModalOpen = false"
+            >{{ translationOutput('buttons.cancel') }}</audi-button
+          >
+        </audi-button-group>
+      </div>
+    </audi-modal>
+  </ng-container>
+</ng-container>
+
+<ng-template #loadingTemplate>
+  <div
+    class="
+      full-screen-height
+      mt-14
+      flex
+      items-center
+      justify-center
+      background-color-grey-2
+    "
+  >
+    <audi-spinner class="block" [isContinuous]="true"></audi-spinner>
+  </div>
+</ng-template>
+
+<!-- TODO: customer notes && in checkout success -->

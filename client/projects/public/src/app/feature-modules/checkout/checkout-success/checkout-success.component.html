@@ -151,6 +151,15 @@
                 {{ shippingAddress }}
               </div>
             </div>
+            <div class="col-span-12 mt-4" *ngIf="!!order.customerNotes">
+              <div class="border-t border-color-grey-4 my-8"></div>
+              <h5 class="aui-headline-5">
+                {{ translationOutput('formLabels.customerNotes') }}
+              </h5>
+              <em class="aui-caption mt-4">
+                {{ order.customerNotes }}
+              </em>
+            </div>
           </div>
         </div>
       </div>
