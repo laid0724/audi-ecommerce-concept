@@ -221,7 +221,16 @@
     "personalInfo": "Personal Info",
     "likedProducts": "Liked Products",
     "orderHistory": "Order History",
-    "noLikedProducts": "No Liked Products"
+    "noLikedProducts": "No Liked Products",
+    "orderNumber": "Order Number",
+    "status": "Order Status",
+    "createdAt": "Created At"
+  },
+  "orderStatus": {
+    "placed": "Confirmed",
+    "shipped": "Shipped",
+    "delivered": "Delivered",
+    "canceled": "Canceled"
   },
   "gender": {
     "gender": "Gender",

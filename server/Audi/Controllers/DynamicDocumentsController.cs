@@ -337,6 +337,8 @@ namespace Audi.Controllers
             if (request.Date.HasValue)
             {
                 newDynamicDocument.Date = request.Date.Value;
+            } else {
+                newDynamicDocument.Date = newDynamicDocument.CreatedAt;
             }
 
             _unitOfWork.DynamicDocumentRepository.AddDynamicDocument(newDynamicDocument);

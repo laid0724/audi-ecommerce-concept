@@ -18,6 +18,7 @@ import { MembersLikedProductComponent } from './members-liked-product/members-li
 import { MembersOrderListComponent } from './members-order-list/members-order-list.component';
 import { MembersOrderSingleComponent } from './members-order-single/members-order-single.component';
 import { ProductCardModule } from '../products/components/product-card/product-card.module';
+import { PaginationModule } from '../../component-modules/audi-ui/pagination/pagination.module';
 
 const COMPONENTS = [
   MembersAreaContainerComponent,
@@ -40,7 +41,8 @@ const IMPORT_MODULES = [
   IconModule,
   ModalModule,
   SpinnerModule,
-  ProductCardModule
+  ProductCardModule,
+  PaginationModule,
 ];
 
 @NgModule({
