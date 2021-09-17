@@ -641,6 +641,10 @@ namespace Audi.Data
                             .ThenInclude(pv => pv.ProductVariantValues)
                                 .ThenInclude(pvv => pvv.ProductSkuValues)
                                     .ThenInclude(psv => psv.ProductSku)
+                .Include(u => u.AppUserProducts)
+                    .ThenInclude(up => up.Product)
+                        .ThenInclude(p => p.ProductPhotos)
+                            .ThenInclude(p => p.Photo)
                 .Where(u => u.Id == userId)
                 .SingleOrDefaultAsync();
 

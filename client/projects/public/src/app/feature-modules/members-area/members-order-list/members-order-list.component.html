@@ -1,1 +1,12 @@
-<p>members-order-list works!</p>
+<ng-container *ngIf="!loading; else loadingTemplate">
+
+</ng-container>
+
+<ng-template #loadingTemplate>
+  <div class="my-14 flex items-center justify-center">
+    <audi-spinner
+      class="flex items-center"
+      [isContinuous]="true"
+    ></audi-spinner>
+  </div>
+</ng-template>

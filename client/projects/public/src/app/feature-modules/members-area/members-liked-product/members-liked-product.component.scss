@@ -1,0 +1,6 @@
+.no-products {
+  min-height: calc(45vh - 56px);
+  @media (min-width: 768px) {
+    min-height: calc(35vh - 56px);
+  }
+}

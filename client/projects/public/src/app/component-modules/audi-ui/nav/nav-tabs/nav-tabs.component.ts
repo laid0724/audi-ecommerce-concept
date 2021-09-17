@@ -59,6 +59,9 @@ export class NavTabsComponent
 
     switch (value) {
       case 'white':
+        this.AudiNavThemeClass = AudiNavThemeClass.White;
+        break;
+      case 'black':
         this.AudiNavThemeClass = AudiNavThemeClass.Black;
         break;
       case 'red':
@@ -73,8 +76,11 @@ export class NavTabsComponent
       case 'grey':
         this.AudiNavThemeClass = AudiNavThemeClass.Grey;
         break;
-      default:
+      case 'default':
         this.AudiNavThemeClass = AudiNavThemeClass.Default;
+        break;
+      default:
+        this.AudiNavThemeClass = null;
         break;
     }
   }

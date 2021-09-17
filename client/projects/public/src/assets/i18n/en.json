@@ -220,7 +220,8 @@
     "title": "Member's Area",
     "personalInfo": "Personal Info",
     "likedProducts": "Liked Products",
-    "orderHistory": "Order History"
+    "orderHistory": "Order History",
+    "noLikedProducts": "No Liked Products"
   },
   "gender": {
     "gender": "Gender",

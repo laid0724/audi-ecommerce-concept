@@ -220,7 +220,8 @@
     "title": "會員中心",
     "personalInfo": "個人資料",
     "likedProducts": "追蹤商品",
-    "orderHistory": "訂單歷史"
+    "orderHistory": "訂單歷史",
+    "noLikedProducts": "您目前尚未追蹤任何商品"
   },
   "gender": {
     "gender": "性別",
