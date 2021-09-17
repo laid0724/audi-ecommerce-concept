@@ -15,10 +15,11 @@ import { FormComponentsModule } from '../../component-modules/form-components/fo
 import { CardModule } from '../../component-modules/audi-ui/card/card.module';
 import { WysiwygGridDisplayModule } from '../../component-modules/wysiwyg-grid-display/wysiwyg-grid-display.module';
 import { SpinnerModule } from '../../component-modules/audi-ui/spinner/spinner.module';
+import { ImgHeaderModule } from '../../component-modules/img-header/img-header.module';
 
+import { ProductCardModule } from './components/product-card/product-card.module';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsSingleComponent } from './products-single/products-single.component';
-import { ProductCardComponent } from './components/product-card/product-card.component';
 
 const AUDI_MODULES = [
   SliderModule,
@@ -33,11 +34,7 @@ const AUDI_MODULES = [
   SpinnerModule
 ];
 
-const COMPONENTS = [
-  ProductsListComponent,
-  ProductsSingleComponent,
-  ProductCardComponent,
-];
+const COMPONENTS = [ProductsListComponent, ProductsSingleComponent];
 
 @NgModule({
   declarations: [...COMPONENTS],
@@ -48,8 +45,9 @@ const COMPONENTS = [
     TranslocoModule,
     AngularFullpageModule,
     WysiwygGridDisplayModule,
+    ImgHeaderModule,
+    ProductCardModule,
     ...AUDI_MODULES,
   ],
-  exports: [...COMPONENTS],
 })
 export class ProductsModule {}

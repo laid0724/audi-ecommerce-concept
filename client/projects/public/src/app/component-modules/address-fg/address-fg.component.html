@@ -75,14 +75,15 @@
     </div>
     <div class="aui-fieldset__field mb-0 md:mb-6">
       <audi-select-container
+        *ngIf="selectedCity !== undefined"
         formControlName="district"
         [label]="translationOutput('formLabels.district')"
       >
         <option
           *ngFor="
             let district of language === 'zh'
-              ? this.selectedCity?.districtsZh
-              : this.selectedCity?.districtsEn
+              ? selectedCity?.districtsZh
+              : selectedCity?.districtsEn
           "
           [value]="district"
         >

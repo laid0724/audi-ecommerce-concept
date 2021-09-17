@@ -1,13 +1,4 @@
-import { isPlatformBrowser } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import {
-  AfterViewInit,
-  ElementRef,
-  Inject,
-  PLATFORM_ID,
-  Renderer2,
-  ViewChild,
-} from '@angular/core';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import {
@@ -27,18 +18,12 @@ import { isProductDiscounted } from '../../../helpers';
   templateUrl: './checkout-success.component.html',
   styleUrls: ['./checkout-success.component.scss'],
 })
-export class CheckoutSuccessComponent
-  implements OnInit, AfterViewInit, OnDestroy
-{
-  @ViewChild('headerBg') headerBg: ElementRef<HTMLDivElement>;
-
+export class CheckoutSuccessComponent implements OnInit, OnDestroy {
   order: Order;
 
   loading = true;
 
   destroy$ = new Subject<boolean>();
-
-  windowScrollListenerFn: () => void;
 
   public isDiscounted: (product: Product) => boolean = isProductDiscounted;
 
@@ -95,8 +80,6 @@ export class CheckoutSuccessComponent
   }
 
   constructor(
-    @Inject(PLATFORM_ID) private platformId: Object,
-    private renderer: Renderer2,
     private route: ActivatedRoute,
     private router: Router,
     private busyService: BusyService,
@@ -137,34 +120,6 @@ export class CheckoutSuccessComponent
       );
   }
 
-  ngAfterViewInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      /*
-        using background-attachment: fixed ALONG with background-size: cover
-        makes the background bg size all messed up.
-
-        this is a workaround to that issue, mimicking parallax effect.
-
-        see: https://stackoverflow.com/questions/21786272/css-background-size-cover-background-attachment-fixed-clipping-background-im
-      */
-
-      this.windowScrollListenerFn = this.renderer.listen(
-        window,
-        'scroll',
-        (event: any) => {
-          // see: see: https://stackoverflow.com/questions/28050548/window-pageyoffset-is-always-0-with-overflow-x-hidden
-          const scrollTop = event.srcElement.scrollingElement.scrollTop;
-
-          this.renderer.setStyle(
-            this.headerBg.nativeElement,
-            'transform',
-            `translateY(${scrollTop}px)`
-          );
-        }
-      );
-    }
-  }
-
   getPrice(product: Product): number {
     return this.isDiscounted(product)
       ? product.price - product.discountAmount
@@ -187,10 +142,6 @@ export class CheckoutSuccessComponent
   }
 
   ngOnDestroy(): void {
-    if (isPlatformBrowser(this.platformId) && this.windowScrollListenerFn) {
-      this.windowScrollListenerFn();
-    }
-
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
   }

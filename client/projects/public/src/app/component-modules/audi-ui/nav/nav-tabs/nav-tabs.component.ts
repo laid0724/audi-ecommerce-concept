@@ -6,25 +6,24 @@ import {
   QueryList,
   AfterContentInit,
   OnInit,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import {
-  initAudiModules,
-  AudiModuleName,
-  AudiComponents,
-} from '@audi/data';
+import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
 import { AudiNavThemeClass } from '../../enums';
 import { AudiNavThemeInput } from '../nav-bar/nav-bar.component';
 import { NavTabComponent } from '../nav-tab/nav-tab.component';
 import { OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 // for reference, see: https://juristr.com/blog/2016/02/learning-ng2-creating-tab-component/
 
 /*
   USAGE: only one active tab can be set in the beginning by default!
 
-  <audi-nav-tabs theme="grey">
+  <audi-nav-tabs theme="grey" (onTabIndexChange)="onTabIndexChange($event)">
     <audi-nav-tab tabTitle="Tab 1">content 1</audi-nav-tab>
     <audi-nav-tab tabTitle="Tab 2">content 2</audi-nav-tab>
     <audi-nav-tab tabTitle="Tab 3" [isActive]="true">content 3</audi-nav-tab>
@@ -44,6 +43,8 @@ export class NavTabsComponent
 {
   @ContentChildren(NavTabComponent) tabs: QueryList<NavTabComponent>;
 
+  @Output() onTabIndexChange = new EventEmitter<number>();
+
   @Input() isSmall: boolean = false;
 
   _theme: AudiNavThemeInput;
@@ -58,6 +59,9 @@ export class NavTabsComponent
 
     switch (value) {
       case 'white':
+        this.AudiNavThemeClass = AudiNavThemeClass.White;
+        break;
+      case 'black':
         this.AudiNavThemeClass = AudiNavThemeClass.Black;
         break;
       case 'red':
@@ -72,24 +76,37 @@ export class NavTabsComponent
       case 'grey':
         this.AudiNavThemeClass = AudiNavThemeClass.Grey;
         break;
+      case 'default':
+        this.AudiNavThemeClass = AudiNavThemeClass.Default;
+        break;
       default:
         this.AudiNavThemeClass = null;
         break;
     }
   }
 
+  navs: any[];
+
   isDesktop: boolean;
-  _breakpointObserverSubscription: Subscription;
+
+  destroy$ = new Subject<boolean>();
 
   public AudiNavThemeClass: AudiNavThemeClass | null;
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
-    this._breakpointObserverSubscription = this.breakpointObserver
+    this.breakpointObserver
       .observe(['(min-width: 640px)'])
+      .pipe(takeUntil(this.destroy$))
       .subscribe((state: BreakpointState) => {
         this.isDesktop = state.matches;
+
+        if (Array.isArray(this.navs) && this.navs.length >= 1) {
+          setTimeout(() => {
+            this.navs.forEach((nav: any) => nav.update());
+          }, 0);
+        }
       });
   }
 
@@ -113,10 +130,10 @@ export class NavTabsComponent
     const audiNavModules = initAudiModules(AudiModuleName.Nav);
 
     audiNavModules.forEach((navModule: AudiComponents) => {
-      const navs = navModule.components.upgradeElements();
+      this.navs = navModule.components.upgradeElements();
 
       setTimeout(() => {
-        navs.forEach((nav: any) => nav.update());
+        this.navs.forEach((nav: any) => nav.update());
       }, 0);
     });
   }
@@ -127,11 +144,14 @@ export class NavTabsComponent
       .forEach((tab: NavTabComponent) => (tab.isActive = false));
 
     tab.isActive = true;
+
+    const tabIndex = this.tabs.toArray().indexOf(tab);
+
+    this.onTabIndexChange.emit(tabIndex);
   }
 
   ngOnDestroy(): void {
-    if (this._breakpointObserverSubscription) {
-      this._breakpointObserverSubscription.unsubscribe();
-    }
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

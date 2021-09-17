@@ -100,11 +100,11 @@ export class CardCvcInputComponent
   }
 
   registerOnChange(fn: any): void {
-    this.formControlDirective.valueAccessor!.registerOnTouched(fn);
+    this.formControlDirective.valueAccessor!.registerOnChange(fn);
   }
 
   registerOnTouched(fn: any): void {
-    this.formControlDirective.valueAccessor!.registerOnChange(fn);
+    this.formControlDirective.valueAccessor!.registerOnTouched(fn);
   }
 
   setDisabledState(isDisabled: boolean): void {

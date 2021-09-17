@@ -1,0 +1,259 @@
+<ng-container *transloco="let translationOutput">
+  <form [formGroup]="form">
+    <audi-control-grid
+      class="block mb-8"
+      [label]="translationOutput('checkout.yourInfo')"
+      [type]="'input'"
+    >
+      <div class="aui-fieldset__fields">
+        <div class="aui-fieldset__field mb-0 md:mb-6">
+          <audi-input-container
+            [formControlName]="language === 'zh' ? 'lastName' : 'firstName'"
+            [label]="
+              language === 'zh'
+                ? translationOutput('formLabels.lastName')
+                : translationOutput('formLabels.firstName')
+            "
+          >
+            <audi-control-description>{{
+              translationOutput(
+                language === 'zh'
+                  ? 'formDescriptions.lastName'
+                  : 'formDescriptions.firstName'
+              )
+            }}</audi-control-description>
+            <audi-control-valid></audi-control-valid>
+            <audi-control-error>{{
+              translationOutput('formErrors.required')
+            }}</audi-control-error>
+          </audi-input-container>
+        </div>
+        <div class="aui-fieldset__field">
+          <audi-input-container
+            [formControlName]="language === 'zh' ? 'firstName' : 'lastName'"
+            [label]="
+              language === 'zh'
+                ? translationOutput('formLabels.firstName')
+                : translationOutput('formLabels.lastName')
+            "
+          >
+            <audi-control-description>{{
+              translationOutput(
+                language === 'zh'
+                  ? 'formDescriptions.firstName'
+                  : 'formDescriptions.lastName'
+              )
+            }}</audi-control-description>
+            <audi-control-valid></audi-control-valid>
+            <audi-control-error>{{
+              translationOutput('formErrors.required')
+            }}</audi-control-error>
+          </audi-input-container>
+        </div>
+      </div>
+      <div class="aui-fieldset__fields">
+        <div class="aui-fieldset__field mb-0 md:mb-6">
+          <audi-input-container
+            formControlName="phoneNumber"
+            type="tel"
+            [label]="translationOutput('formLabels.phoneNumber')"
+          >
+            <audi-control-description>{{
+              translationOutput('formDescriptions.phoneNumber')
+            }}</audi-control-description>
+            <audi-control-valid></audi-control-valid>
+            <audi-control-error
+              *ngIf="form.get('phoneNumber')?.hasError('required')"
+            >
+              {{ translationOutput('formErrors.required') }}</audi-control-error
+            >
+            <audi-control-error
+              *ngIf="form.get('phoneNumber')?.hasError('pattern')"
+            >
+              {{
+                translationOutput('formErrors.phoneNumber')
+              }}</audi-control-error
+            >
+          </audi-input-container>
+        </div>
+        <div class="aui-fieldset__field">
+          <audi-datepicker-container
+            formControlName="dateOfBirth"
+            [label]="translationOutput('formLabels.dateOfBirth')"
+            [floatingLabel]="true"
+          >
+            <audi-control-description>{{
+              translationOutput('formDescriptions.dateOfBirth')
+            }}</audi-control-description>
+            <audi-control-valid></audi-control-valid>
+            <audi-control-error>{{
+              translationOutput('formErrors.date')
+            }}</audi-control-error>
+          </audi-datepicker-container>
+        </div>
+      </div>
+    </audi-control-grid>
+
+    <audi-control-grid
+      class="block mb-8"
+      [label]="translationOutput('gender.gender')"
+      [type]="'select'"
+    >
+      <ng-container *projectAsField>
+        <audi-radio-container
+          formControlName="gender"
+          *ngFor="let gender of genders"
+          [label]="translationOutput('gender.' + gender)"
+          [value]="gender"
+        ></audi-radio-container>
+      </ng-container>
+    </audi-control-grid>
+
+    <audi-address-fg
+      formGroupName="address"
+      [label]="translationOutput('checkout.shippingAddress')"
+      class="block mb-8"
+    ></audi-address-fg>
+
+    <div class="flex justify-between flex-col md:flex-row">
+      <audi-button-group
+        class="block mt-8"
+        [ngClass]="{
+          'w-full': !isDesktop
+        }"
+      >
+        <audi-button
+          type="primary"
+          [ngClass]="{
+            'block w-full': !isDesktop
+          }"
+          (click)="onSave()"
+          >{{ translationOutput('buttons.save') }}</audi-button
+        >
+        <audi-button
+          type="secondary"
+          [ngClass]="{
+            'block w-full': !isDesktop
+          }"
+          (click)="onReset()"
+          >{{ translationOutput('buttons.reset') }}</audi-button
+        >
+      </audi-button-group>
+
+      <audi-button
+        type="primary"
+        class="flex justify-center mt-8"
+        [ngClass]="{
+          'w-full': !isDesktop
+        }"
+        (click)="changePwModalOpen = true"
+      >
+        <audi-icon size="small" iconName="login"></audi-icon>
+        <span class="ml-2">{{
+          translationOutput('buttons.changePassword')
+        }}</span>
+      </audi-button>
+    </div>
+  </form>
+
+  <audi-modal
+    [(isOpen)]="changePwModalOpen"
+    [header]="translationOutput('modals.changePassword')"
+    [headerSize]="4"
+    [bgColor]="'white'"
+    [textColor]="'black'"
+    [type]="isDesktop ? 'default' : 'full-page'"
+    [isClosable]="false"
+  >
+    <form [formGroup]="changePwForm">
+      <div class="max-w-xs block mb-3">
+        <audi-input-container
+          formControlName="currentPassword"
+          type="password"
+          [label]="translationOutput('formLabels.password')"
+          [isLightTheme]="false"
+          [floatingLabel]="true"
+        >
+          <audi-control-description>{{
+            translationOutput('formDescriptions.password')
+          }}</audi-control-description>
+          <audi-control-valid></audi-control-valid>
+          <audi-control-error
+            *ngIf="changePwForm.get('oldPassword')?.hasError('required')"
+          >
+            {{ translationOutput('formErrors.required') }}
+          </audi-control-error>
+          <audi-control-error
+            *ngIf="changePwForm.get('oldPassword')?.hasError('minlength')"
+          >
+            {{ translationOutput('formErrors.passwordMinLength') }}
+          </audi-control-error>
+        </audi-input-container>
+        <audi-input-container
+          formControlName="newPassword"
+          type="password"
+          [label]="translationOutput('formLabels.newPassword')"
+          [isLightTheme]="false"
+          [floatingLabel]="true"
+        >
+          <audi-control-description>{{
+            translationOutput('formDescriptions.newPassword')
+          }}</audi-control-description>
+          <audi-control-valid></audi-control-valid>
+          <audi-control-error
+            *ngIf="changePwForm.get('newPassword')?.hasError('required')"
+          >
+            {{ translationOutput('formErrors.required') }}
+          </audi-control-error>
+          <audi-control-error
+            *ngIf="changePwForm.get('newPassword')?.hasError('minlength')"
+          >
+            {{ translationOutput('formErrors.passwordMinLength') }}
+          </audi-control-error>
+        </audi-input-container>
+        <audi-input-container
+          formControlName="confirmNewPassword"
+          type="password"
+          [label]="translationOutput('formLabels.confirmNewPassword')"
+          [isLightTheme]="false"
+          [floatingLabel]="true"
+        >
+          <audi-control-description>{{
+            translationOutput('formDescriptions.confirmNewPassword')
+          }}</audi-control-description>
+          <audi-control-valid></audi-control-valid>
+          <audi-control-error
+            *ngIf="changePwForm.get('confirmNewPassword')?.hasError('required')"
+          >
+            {{ translationOutput('formErrors.required') }}
+          </audi-control-error>
+          <audi-control-error
+            *ngIf="
+              changePwForm.get('confirmNewPassword')?.hasError('minlength')
+            "
+          >
+            {{ translationOutput('formErrors.passwordMinLength') }}
+          </audi-control-error>
+          <audi-control-error
+            *ngIf="
+              changePwForm.get('confirmNewPassword')?.hasError('isNotSameValue')
+            "
+          >
+            {{ translationOutput('formErrors.confirmPassword') }}
+          </audi-control-error>
+        </audi-input-container>
+      </div>
+
+      <div class="block mt-6">
+        <audi-button-group>
+          <audi-button type="primary" (click)="onChangePassword()">{{
+            translationOutput('buttons.submit')
+          }}</audi-button>
+          <audi-button type="secondary" (click)="closeChangePwModal()">{{
+            translationOutput('buttons.cancel')
+          }}</audi-button>
+        </audi-button-group>
+      </div>
+    </form>
+  </audi-modal>
+</ng-container>

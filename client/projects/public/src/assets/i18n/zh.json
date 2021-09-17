@@ -2,7 +2,6 @@
   "notFound": "查無資訊",
   "serverError": "系統錯誤",
   "logout": "登出",
-  "membersArea": "會員中心",
   "pagination": {
     "previous": "上一頁",
     "next": "下一頁"
@@ -31,7 +30,12 @@
     "continueToPayment": "前往付款",
     "submitOrder": "送出訂單",
     "returnToShippingMethod": "返回選取配送方式",
-    "change": "變更"
+    "change": "變更",
+    "save": "儲存",
+    "reset": "重設",
+    "changePassword": "更改密碼",
+    "return": "返回",
+    "cancelOrder": "取消訂單"
   },
   "menu": {},
   "footer": {
@@ -64,7 +68,8 @@
     "ccNumber": "請輸入正確的信用卡卡號",
     "cardCVVMinLength": "需至少3碼",
     "cardCVVMaxLength": "不可多於4碼",
-    "expDate": "請輸入正確的信用卡有效日期（MM/YYYY）"
+    "expDate": "請輸入正確的信用卡有效日期（MM/YYYY）",
+    "date": "請輸入正確的日期格式（MM/DD/YYYY）"
   },
   "formLabels": {
     "email": "電子信箱",
@@ -95,7 +100,8 @@
     "shippingAddress": "寄件地址",
     "billingAddress": "帳單地址",
     "customerNotes": "留言 / 備註",
-    "optional": " (非必填)"
+    "optional": " (非必填)",
+    "dateOfBirth": "出生日期"
   },
   "formDescriptions": {
     "email": "請輸入您的電子信箱",
@@ -116,7 +122,8 @@
     "cardHolderName": "請輸入持卡人姓名",
     "expirationDate": "請輸入信用卡的有效日期（MM/YYYY）",
     "cardCVV": "請輸入信用卡的CVV安全碼",
-    "customerNotes": "請留下任何跟此訂單相關的留言或備註"
+    "customerNotes": "請留下任何跟此訂單相關的留言或備註",
+    "dateOfBirth": "請輸入您的出生日期（MM/DD/YYYY）"
   },
   "notifications": {
     "success": "成功",
@@ -127,9 +134,12 @@
     "registerSuccess": "註冊成功",
     "registerSuccessMessage": "請前往您的信箱認證您的Email",
     "passwordResetSuccess": "密碼重置成功",
+    "passwordChangeSuccess": "密碼更改成功",
     "forgotPasswordSuccess": "已發送重置密碼的信件至您所輸入的信箱",
+    "updateUserInfoSuccess": "會員資料更新成功",
     "error401": "錯誤的帳戶或密碼",
-    "orderPlaced": "訂單送出"
+    "orderPlaced": "訂單送出",
+    "orderCancelSuccess": "訂單取消成功"
   },
   "alerts": {
     "emailNotFound": "Email 不存在"
@@ -137,7 +147,8 @@
   "modals": {
     "changePassword": "更改密碼",
     "forgotPassword": "忘記密碼",
-    "filters": "篩選條件"
+    "filters": "篩選條件",
+    "cancelOrder": "取消訂單"
   },
   "homepage": {
     "featuredProduct": "精選商品",
@@ -208,5 +219,30 @@
     "last4CardDigit": "卡片末四碼",
     "billingAddress": "帳單地址",
     "shippingAddress": "收件地址"
+  },
+  "membersArea": {
+    "title": "會員中心",
+    "personalInfo": "個人資料",
+    "likedProducts": "追蹤商品",
+    "orderHistory": "訂單歷史",
+    "noLikedProducts": "您目前尚未追蹤任何商品",
+    "orderNumber": "訂單號碼",
+    "status": "訂單狀態",
+    "createdAt": "建立時間",
+    "updatedAt": "最近更新時間",
+    "trackingNumber": "寄件包裹編號",
+    "cancelOrderConfirmMessage": "確定要取消訂單？"
+  },
+  "orderStatus": {
+    "placed": "處理中",
+    "shipped": "運送中",
+    "delivered": "送達",
+    "canceled": "取消"
+  },
+  "gender": {
+    "gender": "性別",
+    "male": "男",
+    "female": "女",
+    "other": "其他"
   }
 }

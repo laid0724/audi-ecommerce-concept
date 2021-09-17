@@ -1,48 +1,5 @@
 $product-image-width: 150px;
 
-.header {
-  display: flex;
-  position: relative;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 40vh;
-  overflow: hidden;
-
-  @media (min-width: 768px) {
-    min-height: 50vh;
-  }
-
-  &-bg {
-    position: absolute;
-    width: 100vw;
-    min-height: 40vh;
-    transform: translateY(0px);
-    background-image: url('/assets/images/cart-bg.jpg');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-    will-change: transform;
-
-    @media (min-width: 768px) {
-      min-height: 50vh;
-      background-image: url('/assets/images/cart-bg.jpg');
-    }
-
-    &:after {
-      content: '';
-      position: absolute;
-      z-index: 1;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      opacity: 0.5;
-      background-color: var(--audi-black);
-    }
-  }
-}
-
 .empty-cart {
   min-height: calc(60vh - 56px);
   @media (min-width: 768px) {

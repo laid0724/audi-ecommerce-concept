@@ -67,4 +67,8 @@ export class OrdersService {
 
     return getPaginatedResult<Order[]>(this.http, this.endpoint, params);
   }
+
+  getOrdersByUserId(userId: number): Observable<Order[]> {
+    return this.http.get<Order[]>(`${this.endpoint}/user/${userId}`);
+  }
 }

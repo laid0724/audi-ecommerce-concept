@@ -11,6 +11,7 @@ import { CreditCardFgModule } from '../../component-modules/credit-card-fg/credi
 import { IconModule } from '../../component-modules/audi-ui/icon/icon.module';
 import { ModalModule } from '../../component-modules/audi-ui/modal/modal.module';
 import { SpinnerModule } from '../../component-modules/audi-ui/spinner/spinner.module';
+import { ImgHeaderModule } from '../../component-modules/img-header/img-header.module';
 
 import { CheckoutRoutingModule } from './checkout-routing.module';
 import { CheckoutPageComponent } from './checkout-page/checkout-page.component';
@@ -31,7 +32,8 @@ const IMPORT_MODULES = [
   CreditCardFgModule,
   IconModule,
   ModalModule,
-  SpinnerModule
+  SpinnerModule,
+  ImgHeaderModule,
 ];
 
 @NgModule({

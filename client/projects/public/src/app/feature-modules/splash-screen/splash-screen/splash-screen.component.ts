@@ -10,7 +10,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { BusyService, LanguageStateService } from '@audi/data';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { SplashScreenStateService } from '../services/splash-screen-state-service/splash-screen-state.service';
 
 // for reference, see: https://javascript.plainenglish.io/creating-a-splash-screen-in-angular-for-loading-all-the-data-at-startup-b0b91d9d9f93
@@ -33,8 +34,7 @@ export class SplashScreenComponent implements OnInit, AfterViewInit, OnDestroy {
 
   language$ = this.languageService._language$;
 
-  _breakpointObserverSubscription: Subscription;
-  _isBusySubscription: Subscription;
+  destroy$ = new Subject<boolean>();
 
   constructor(
     private splashScreenStateService: SplashScreenStateService,
@@ -57,18 +57,19 @@ export class SplashScreenComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     );
 
-    this._breakpointObserverSubscription = this.breakpointObserver
+    this.breakpointObserver
       .observe(['(max-width: 800px)'])
+      .pipe(takeUntil(this.destroy$))
       .subscribe((state: BreakpointState) => {
         this.isMobile = state.matches;
       });
 
-    this._isBusySubscription = this.busyService.isBusy$.subscribe(
-      (isBusy: boolean) => {
+    this.busyService.isBusy$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isBusy: boolean) => {
         this.isBusy = isBusy;
         this.detectVideoState();
-      }
-    );
+      });
   }
 
   ngAfterViewInit(): void {
@@ -117,11 +118,7 @@ export class SplashScreenComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this._breakpointObserverSubscription) {
-      this._breakpointObserverSubscription.unsubscribe();
-    }
-    if (this._isBusySubscription) {
-      this._isBusySubscription.unsubscribe();
-    }
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

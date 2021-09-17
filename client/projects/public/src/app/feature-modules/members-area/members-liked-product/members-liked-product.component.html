@@ -1,0 +1,45 @@
+<div
+  *ngIf="!loading; else loadingTemplate"
+  class="grid grid-rows-none grid-cols-12"
+>
+  <ng-container *ngIf="likedProducts.length > 0; else noLikedProducts">
+    <div
+      *ngFor="let product of likedProducts"
+      class="col-span-12 sm:col-span-6 md:col-span-4 2xl:col-span-3 mx-2 my-4"
+    >
+      <ng-container *ngIf="isLikedByUser(product.id)">
+        <audi-product-card [product]="product"></audi-product-card>
+      </ng-container>
+    </div>
+  </ng-container>
+  <ng-template #noLikedProducts>
+    <ng-container *transloco="let translationOutput">
+      <div
+        class="
+          col-span-12
+          w-full
+          flex flex-col
+          items-center
+          justify-center
+          no-products
+        "
+      >
+        <h1 class="aui-headline-3">
+          {{ translationOutput('membersArea.noLikedProducts') }}
+        </h1>
+        <audi-button class="mt-4" [routerLink]="['/', language, 'products']">{{
+          translationOutput('buttons.exploreCTA')
+        }}</audi-button>
+      </div>
+    </ng-container>
+  </ng-template>
+</div>
+
+<ng-template #loadingTemplate>
+  <div class="my-14 flex items-center justify-center">
+    <audi-spinner
+      class="flex items-center"
+      [isContinuous]="true"
+    ></audi-spinner>
+  </div>
+</ng-template>

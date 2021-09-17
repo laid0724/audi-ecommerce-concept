@@ -116,9 +116,6 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 #### Angular Public Project
 
 - convert to Angular universal
-- update user info
-- member's area (update user info, liked products, orders)
-- cancel / track order
 - articles, e.g., news, events, promotions, faq, about us
 - site-wide search
 - live chat

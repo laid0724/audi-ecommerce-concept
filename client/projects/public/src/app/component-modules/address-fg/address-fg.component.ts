@@ -113,6 +113,8 @@ export class AddressFgComponent implements OnInit, OnDestroy {
 
         districtFC.reset();
       });
+
+    // FIXME: district control value is not patched correctly unless i use ngIf selectedCity != undefined
   }
 
   ngOnDestroy(): void {

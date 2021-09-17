@@ -14,8 +14,8 @@ import {
   ProductPhoto,
   ProductsService,
 } from '@audi/data';
-import { map, take } from 'rxjs/operators';
-import { combineLatest, Observable, Subscription, forkJoin } from 'rxjs';
+import { map, take, takeUntil } from 'rxjs/operators';
+import { combineLatest, Observable, forkJoin, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { SplashScreenStateService } from '../../splash-screen/services/splash-screen-state-service/splash-screen-state.service';
 import { FULLPAGE_JS_NORMAL_SCROLL_ELEMENTS } from '../../../constants';
@@ -93,7 +93,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   fullpageRef: any;
 
   isDesktop: boolean;
-  _breakpointObserverSubscription: Subscription;
+
+  destroy$ = new Subject<boolean>();
 
   public isNullOrEmptyString: (val: string | null | undefined) => boolean =
     isNullOrEmptyString;
@@ -131,8 +132,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this._breakpointObserverSubscription = this.breakpointObserver
+    this.breakpointObserver
       .observe(['(min-width: 640px)'])
+      .pipe(takeUntil(this.destroy$))
       .subscribe((state: BreakpointState) => {
         this.isDesktop = state.matches;
       });
@@ -147,11 +149,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this._breakpointObserverSubscription) {
-      this._breakpointObserverSubscription.unsubscribe();
-    }
     if (this.fullpageRef) {
       this.fullpageRef.destroy('all');
     }
+
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

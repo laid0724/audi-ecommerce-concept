@@ -15,7 +15,7 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  -webkit-box-shadow: 0 0 0px 1000px $audi-white inset !important;
 }
 
 // hide scroll bar in chrome
@@ -42,7 +42,10 @@ a {
 html {
   // prevent chrome from showing white space when you scroll to top or end of the page
   // https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior
-  overscroll-behavior: contain;
+  overscroll-behavior: none !important;
+  * {
+    overscroll-behavior: none !important;
+  }
 }
 
 body {

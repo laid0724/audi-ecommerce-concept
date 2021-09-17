@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -181,7 +182,7 @@ namespace Audi.Controllers
 
             // var json = JsonConvert.SerializeObject(createdOrder);
 
-            var jsEncryptedOrderId= btoa(createdOrder.Id.ToString());
+            var jsEncryptedOrderId = btoa(createdOrder.Id.ToString());
 
             var orderSuccessUrl = $"{_domain}/{language}/checkout/success?order={jsEncryptedOrderId}";
 
@@ -295,13 +296,22 @@ namespace Audi.Controllers
 
         [SwaggerOperation(Summary = "get all orders")]
         [HttpGet]
-        public async Task<ActionResult<PagedList<OrderDto>>> GetProducts([FromQuery] OrderParams orderParams)
+        public async Task<ActionResult<PagedList<OrderDto>>> GetOrders([FromQuery] OrderParams orderParams)
         {
             var orders = await _unitOfWork.OrderRepository.GetOrdersPagedAsync(orderParams);
 
             Response.AddPaginationHeader(orders.CurrentPage, orders.PageSize, orders.TotalCount, orders.TotalPages);
 
             return Ok(orders);
+        }
+
+        [SwaggerOperation(Summary = "get orders by user id")]
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<ICollection<OrderDto>>> GetOrdersByUserId(int userId)
+        {
+            var orders = await _unitOfWork.OrderRepository.GetOrdersByUserIdAsync(userId);
+
+            return Ok(_mapper.Map<ICollection<OrderDto>>(orders));
         }
     }
 }

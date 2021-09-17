@@ -80,13 +80,15 @@ export enum AudiAlertStyle {
 
 export enum AudiAlertType {
   Default = 'default',
-  Global = 'global'
+  Global = 'global',
 }
 
 export enum AudiNavThemeClass {
+  White = 'aui-theme-white',
   Black = 'aui-theme-black',
   WarmSilver = 'aui-theme-warmsilver',
   Silver = 'aui-theme-silver',
   Red = 'aui-theme-red',
-  Grey = 'aui-theme-gray10-gray20'
+  Grey = 'aui-theme-gray10-gray20',
+  Default = 'aui-theme-gray95',
 }

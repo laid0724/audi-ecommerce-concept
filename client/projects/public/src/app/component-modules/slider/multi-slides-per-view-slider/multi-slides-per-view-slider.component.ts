@@ -16,7 +16,8 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 // import Swiper core and required modules
 import SwiperCore, { Navigation, Autoplay } from 'swiper/core';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 // install Swiper modules
 SwiperCore.use([Navigation, Autoplay]);
@@ -81,21 +82,22 @@ export class MultiSlidesPerViewSliderComponent implements OnInit, OnDestroy {
   // };
 
   isDesktop: boolean;
-  _breakpointObserverSubscription: Subscription;
+
+  destroy$ = new Subject<boolean>();
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
-    this._breakpointObserverSubscription = this.breakpointObserver
+    this.breakpointObserver
       .observe(['(min-width: 640px)'])
+      .pipe(takeUntil(this.destroy$))
       .subscribe((state: BreakpointState) => {
         this.isDesktop = state.matches;
       });
   }
 
   ngOnDestroy(): void {
-    if (this._breakpointObserverSubscription) {
-      this._breakpointObserverSubscription.unsubscribe();
-    }
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

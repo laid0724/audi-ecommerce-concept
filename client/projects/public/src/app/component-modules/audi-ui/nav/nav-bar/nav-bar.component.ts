@@ -10,8 +10,9 @@ import {
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
 import { AudiNavThemeClass } from '../../enums';
-import { Subscription } from 'rxjs';
+import { Subject } from 'rxjs';
 import { NavItemComponent } from '../nav-item/nav-item.component';
+import { takeUntil } from 'rxjs/operators';
 
 /*
 
@@ -35,10 +36,12 @@ import { NavItemComponent } from '../nav-item/nav-item.component';
 
 export type AudiNavThemeInput =
   | 'white'
+  | 'black'
   | 'red'
   | 'silver'
   | 'warm-silver'
-  | 'grey';
+  | 'grey'
+  | 'default';
 
 @Component({
   selector: 'audi-nav-bar',
@@ -62,6 +65,9 @@ export class NavBarComponent implements OnInit, AfterViewInit, OnDestroy {
 
     switch (value) {
       case 'white':
+        this.AudiNavThemeClass = AudiNavThemeClass.White;
+        break;
+      case 'black':
         this.AudiNavThemeClass = AudiNavThemeClass.Black;
         break;
       case 'red':
@@ -76,6 +82,9 @@ export class NavBarComponent implements OnInit, AfterViewInit, OnDestroy {
       case 'grey':
         this.AudiNavThemeClass = AudiNavThemeClass.Grey;
         break;
+      case 'default':
+        this.AudiNavThemeClass = AudiNavThemeClass.Default;
+        break;
       default:
         this.AudiNavThemeClass = null;
         break;
@@ -83,15 +92,17 @@ export class NavBarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   isDesktop: boolean;
-  _breakpointObserverSubscription: Subscription;
+
+  destroy$ = new Subject<boolean>();
 
   public AudiNavThemeClass: AudiNavThemeClass | null;
 
   constructor(private breakpointObserver: BreakpointObserver) {}
 
   ngOnInit(): void {
-    this._breakpointObserverSubscription = this.breakpointObserver
+    this.breakpointObserver
       .observe(['(min-width: 640px)'])
+      .pipe(takeUntil(this.destroy$))
       .subscribe((state: BreakpointState) => {
         this.isDesktop = state.matches;
       });
@@ -114,8 +125,7 @@ export class NavBarComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this._breakpointObserverSubscription) {
-      this._breakpointObserverSubscription.unsubscribe();
-    }
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }
