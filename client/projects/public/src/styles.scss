@@ -42,9 +42,9 @@ a {
 html {
   // prevent chrome from showing white space when you scroll to top or end of the page
   // https://developer.mozilla.org/en-US/docs/Web/CSS/overscroll-behavior
-  overscroll-behavior: contain !important;
+  overscroll-behavior: none !important;
   * {
-    overscroll-behavior: contain !important;
+    overscroll-behavior: none !important;
   }
 }
 
