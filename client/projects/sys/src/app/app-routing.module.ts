@@ -274,7 +274,7 @@ const routes: Routes = [
               dynamicDocumentSettings: {
                 type: 'faq',
                 typeName: {
-                  zh: '常見問題',
+                  zh: '購物須知',
                   en: 'Faq',
                 },
                 form: {
@@ -294,6 +294,43 @@ const routes: Routes = [
                       key: 'faqItems',
                       label: '問答列表 Faq Items',
                       type: 'faqitems',
+                    },
+                  ],
+                },
+                hasFeaturedImage: true,
+                saveOnly: true,
+              },
+            },
+            component: DynamicDocumentsEditComponent,
+          },
+          {
+            path: 'about',
+            resolve: { data: LanguageSelectorResolver },
+            data: {
+              languageSettings: DEFAULT_ZH_EN_ONLY,
+              dynamicDocumentSettings: {
+                type: 'about',
+                typeName: {
+                  zh: '關於 Audi',
+                  en: 'About Audi',
+                },
+                form: {
+                  fields: [
+                    {
+                      key: 'title',
+                      label: '標題 Title',
+                      type: 'text',
+                      validators: [Validators.required],
+                    },
+                    {
+                      key: 'introduction',
+                      label: '簡介 Introduction',
+                      type: 'textarea',
+                    },
+                    {
+                      key: 'wysiwyg',
+                      label: '內容 Content',
+                      type: 'wysiwyg',
                     },
                   ],
                 },

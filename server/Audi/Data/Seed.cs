@@ -81,7 +81,7 @@ namespace Audi.Data
             var faqZh = new DynamicDocument
             {
                 Language = "zh",
-                Title = "常見問題",
+                Title = "購物須知",
                 Type = "faq",
                 IsVisible = true
             };

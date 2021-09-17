@@ -8,6 +8,9 @@ import {
   LanguageCode,
   LanguageStateService,
   Faq,
+  About,
+  News,
+  Event,
   WysiwygRowType,
   BusyService,
   getAllErrors,
@@ -94,6 +97,13 @@ export function isDynamicDocumentFaq(
   return type === DynamicDocumentType.Faq && 'faqItems' in dynamicDocument;
 }
 
+export function isDynamicDocumentAbout(
+  dynamicDocument: DynamicDocument
+): dynamicDocument is About {
+  const { type } = dynamicDocument;
+  return type === DynamicDocumentType.About;
+}
+
 @Component({
   selector: 'audi-sys-dynamic-documents-edit',
   templateUrl: './dynamic-documents-edit.component.html',
@@ -114,6 +124,10 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
 
   get isFaq(): boolean {
     return this.router.url.split('/').includes('faq');
+  }
+
+  get isAbout(): boolean {
+    return this.router.url.split('/').includes('about');
   }
 
   constructor(
@@ -163,7 +177,10 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
               return dynamicDocumentData;
             }),
             switchMap((data: DynamicDocumentData) => this.route.paramMap),
-            filter((pm: ParamMap) => pm.has('dynamicDocumentId') || this.isFaq),
+            filter(
+              (pm: ParamMap) =>
+                pm.has('dynamicDocumentId') || this.isFaq || this.isAbout
+            ),
             switchMap((pm: ParamMap) => {
               if (pm.has('dynamicDocumentId')) {
                 this.dynamicDocumentId = parseInt(
@@ -179,11 +196,15 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
                 return this.dynamicDocumentsService.faq.getOne();
               }
 
+              if (this.isAbout) {
+                return this.dynamicDocumentsService.about.getOne();
+              }
+
               return of(null);
             }),
             tap((res: DynamicDocument | null) => {
               if (res !== null) {
-                if (res.type === 'faq') {
+                if (res.type === 'faq' || res.type === 'about') {
                   this.dynamicDocumentId = res.id as number;
                 }
 
@@ -251,11 +272,16 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
 
                 if (
                   !isDynamicDocumentFaq(res) &&
+                  !isDynamicDocumentAbout(res) &&
                   this.isFormFieldAvailable('date')
                 ) {
                   this.form
                     .get('date')
-                    ?.patchValue(formatServerTimeToClrDate(res.date as Date));
+                    ?.patchValue(
+                      formatServerTimeToClrDate(
+                        (res as Event | News).date as Date
+                      )
+                    );
                 }
               }
             })

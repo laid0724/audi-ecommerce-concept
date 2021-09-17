@@ -31,6 +31,7 @@ export * from './lib/models/homepage-carousel-item';
 export * from './lib/models/carousel-item';
 export * from './lib/models/carousel-item-photo';
 export * from './lib/models/faq';
+export * from './lib/models/about';
 export * from './lib/models/credit-card';
 
 // Enums
