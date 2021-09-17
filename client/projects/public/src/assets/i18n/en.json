@@ -37,7 +37,13 @@
     "return": "Return",
     "cancelOrder": "Cancel Order"
   },
-  "menu": {},
+  "menu": {
+    "about": "About Audi",
+    "news": "Latest News",
+    "events": "Events and Promotions",
+    "products": "Audi Collections",
+    "faq": "FAQ"
+  },
   "footer": {
     "privacyPolicy": "Privacy and Cookie Policy",
     "termsAndConditions": "Terms and Conditions",

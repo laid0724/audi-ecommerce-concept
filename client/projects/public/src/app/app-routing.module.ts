@@ -73,6 +73,17 @@ let routes: Routes = [
       ),
   },
   {
+    path: 'documents',
+    redirectTo: `${lastSelectedLanguage}/documents`,
+  },
+  {
+    path: ':languageCode/documents',
+    loadChildren: () =>
+      import(
+        './feature-modules/dynamic-documents/dynamic-documents.module'
+      ).then((m) => m.DynamicDocumentsModule),
+  },
+  {
     path: 'products',
     redirectTo: `${lastSelectedLanguage}/products`,
   },

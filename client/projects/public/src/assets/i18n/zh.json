@@ -37,7 +37,13 @@
     "return": "返回",
     "cancelOrder": "取消訂單"
   },
-  "menu": {},
+  "menu": {
+    "about": "關於 Audi",
+    "news": "最新消息",
+    "events": "活動及優惠",
+    "products": "Audi 精品與配件",
+    "faq": "FAQ"
+  },
   "footer": {
     "privacyPolicy": "隱私權政策",
     "termsAndConditions": "服務條款",
