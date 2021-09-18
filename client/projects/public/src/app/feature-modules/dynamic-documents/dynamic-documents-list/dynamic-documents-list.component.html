@@ -78,12 +78,18 @@
           <ng-container *ngIf="!loading; else loadingTemplate">
             <ng-container *ngIf="dynamicDocuments.length > 0; else noDocuments">
               <div
-                *ngFor="let document of dynamicDocuments"
-                class="col-span-12 my-4"
+                *ngFor="let document of dynamicDocuments; let last = last"
+                class="col-span-12 px-8"
               >
                 <audi-dynamic-documents-card
                   [dynamicDocument]="document"
+                  [dynamicDocumentType]="dynamicDocumentType"
                 ></audi-dynamic-documents-card>
+
+                <div
+                  *ngIf="!last && dynamicDocuments.length > 1"
+                  class="border-t border-color-grey-4 my-4"
+                ></div>
               </div>
             </ng-container>
             <ng-template #noDocuments>
