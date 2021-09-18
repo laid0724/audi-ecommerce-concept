@@ -285,12 +285,12 @@ const routes: Routes = [
                 },
                 form: {
                   fields: [
-                    {
-                      key: 'title',
-                      label: '標題 Title',
-                      type: 'text',
-                      validators: [Validators.required],
-                    },
+                    // {
+                    //   key: 'title',
+                    //   label: '標題 Title',
+                    //   type: 'text',
+                    //   validators: [Validators.required],
+                    // },
                     {
                       key: 'introduction',
                       label: '簡介 Introduction',
@@ -322,12 +322,12 @@ const routes: Routes = [
                 },
                 form: {
                   fields: [
-                    {
-                      key: 'title',
-                      label: '標題 Title',
-                      type: 'text',
-                      validators: [Validators.required],
-                    },
+                    // {
+                    //   key: 'title',
+                    //   label: '標題 Title',
+                    //   type: 'text',
+                    //   validators: [Validators.required],
+                    // },
                     {
                       key: 'introduction',
                       label: '簡介 Introduction',
