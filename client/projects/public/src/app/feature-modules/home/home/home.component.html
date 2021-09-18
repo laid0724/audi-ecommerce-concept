@@ -119,6 +119,13 @@
                     "
                     [isBordered]="true"
                     textAlign="center"
+                    [routerLink]="[
+                      '/',
+                      language,
+                      'documents',
+                      document.type,
+                      document.id
+                    ]"
                   >
                     <div class="flex flex-col items-center justify-center">
                       <small
@@ -134,11 +141,7 @@
                       </small>
                     </div>
 
-                    <audi-button
-                      type="primary"
-                      class="block w-full"
-                      [routerLink]="['/', language, document.type, document.id]"
-                    >
+                    <audi-button type="primary" class="block w-full">
                       {{ translationOutput('buttons.learnMore') }}
                     </audi-button>
                   </audi-card>
