@@ -155,7 +155,10 @@ const routes: Routes = [
                       key: 'date',
                       label: '日期 Date',
                       type: 'date',
-                      validators: [Validators.pattern(DATE_REGEX)],
+                      validators: [
+                        Validators.pattern(DATE_REGEX),
+                        Validators.required,
+                      ],
                     },
                     {
                       key: 'introduction',
@@ -238,7 +241,10 @@ const routes: Routes = [
                       key: 'date',
                       label: '日期 Date',
                       type: 'date',
-                      validators: [Validators.pattern(DATE_REGEX)],
+                      validators: [
+                        Validators.pattern(DATE_REGEX),
+                        Validators.required,
+                      ],
                     },
                     {
                       key: 'introduction',
