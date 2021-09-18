@@ -1,6 +1,17 @@
 using System;
+using System.Runtime.Serialization;
+
 namespace Audi.Helpers
 {
+    public enum DynamicDocumentSort
+    {
+        [EnumMember(Value = "date")]
+        Date,
+        [EnumMember(Value = "dateDesc")]
+        DateDesc,
+    }
+
+
     public class DynamicDocumentParams : PaginationParams
     {
         public string Language { get; set; }
@@ -13,5 +24,6 @@ namespace Audi.Helpers
         public DateTime? CreatedAtEnd { get; set; }
         public DateTime? LastUpdatedStart { get; set; }
         public DateTime? LastUpdatedEnd { get; set; }
+        public DynamicDocumentSort? Sort { get; set; }
     }
 }
