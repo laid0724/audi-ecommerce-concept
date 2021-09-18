@@ -55,15 +55,7 @@ export class DynamicDocumentsListComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<boolean>();
 
   get imgHeaderBgImageUrl(): string {
-    if (this.dynamicDocumentType === DynamicDocumentType.Event) {
-      return '/assets/images/events-bg.jpg';
-    }
-
-    if (this.dynamicDocumentType === DynamicDocumentType.News) {
-      return '/assets/images/news-bg.jpg';
-    }
-
-    return '';
+    return `/assets/images/${this.dynamicDocumentType}-bg.jpg`;
   }
 
   constructor(
