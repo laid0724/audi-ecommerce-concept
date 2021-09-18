@@ -75,7 +75,8 @@
     "cardCVVMinLength": "需至少3碼",
     "cardCVVMaxLength": "不可多於4碼",
     "expDate": "請輸入正確的信用卡有效日期（MM/YYYY）",
-    "date": "請輸入正確的日期格式（MM/DD/YYYY）"
+    "date": "請輸入正確的日期格式（MM/DD/YYYY）",
+    "dateRangeError": "起迄日期範圍錯誤"
   },
   "formLabels": {
     "email": "電子信箱",
@@ -107,7 +108,11 @@
     "billingAddress": "帳單地址",
     "customerNotes": "留言 / 備註",
     "optional": " (非必填)",
-    "dateOfBirth": "出生日期"
+    "dateOfBirth": "出生日期",
+    "title": "標題",
+    "dateRange": "起迄日期",
+    "dateStart": "日期起",
+    "dateEnd": "日期迄"
   },
   "formDescriptions": {
     "email": "請輸入您的電子信箱",
@@ -173,11 +178,7 @@
   },
   "products": {
     "audiCollections": "Audi 精品與配件",
-    "results": "件商品",
-    "priceLowToHigh": "價格, 低至高",
-    "priceHighToLow": "價格, 高至低",
-    "dateOldToNew": "日期, 舊至新",
-    "dateNewToOld": "日期, 新至舊",
+    "resultsLabel": "件商品",
     "noProductsAvailable": "無商品符合您的篩選條件",
     "outOfStock": "缺貨",
     "similarProducts": "相似商品"
@@ -250,5 +251,19 @@
     "male": "男",
     "female": "女",
     "other": "其他"
+  },
+  "sort": {
+    "priceLowToHigh": "價格, 低至高",
+    "priceHighToLow": "價格, 高至低",
+    "dateOldToNew": "日期, 舊至新",
+    "dateNewToOld": "日期, 新至舊"
+  },
+  "dynamicDocuments": {
+    "resultLabel": "則結果",
+    "noResults": "無結果符合您的篩選條件",
+    "news": "最新消息",
+    "events": "活動及優惠",
+    "about": "關於 Audi",
+    "faq": "FAQ"
   }
 }

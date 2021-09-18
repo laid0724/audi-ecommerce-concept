@@ -1,8 +1,8 @@
 ### Description
 
-A conceptual eCommerce site built for my favorite car brand: Audi.
+A conceptual eCommerce site with a full-fledged CMS built for my favorite car brand: Audi.
 
-Stack: .NET Core 5, Angular 12, Tailwind CSS, Clarity, Audi UI.
+Stack: .NET Core 5, Postgresql, Angular 12, Tailwind CSS, Clarity, Audi UI.
 
 ---
 
@@ -124,4 +124,4 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 #### Deployment
 
 - figure out how to deploy this fucking thing (.NET Core 5 Web Api, Angular 12 (2 sites), PostgreSQL DB)
-  - AWS? Azure? GCP? 
+  - AWS? Azure? GCP?

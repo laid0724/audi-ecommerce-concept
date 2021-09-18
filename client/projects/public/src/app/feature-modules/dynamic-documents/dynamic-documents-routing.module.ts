@@ -1,9 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NotFoundComponent } from '../../core/not-found/not-found.component';
 import { DynamicDocumentsListComponent } from './dynamic-documents-list/dynamic-documents-list.component';
 import { DynamicDocumentsSingleComponent } from './dynamic-documents-single/dynamic-documents-single.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    pathMatch: 'full',
+    redirectTo: 'not-found',
+  },
   {
     path: 'news',
     data: {
@@ -45,6 +51,14 @@ const routes: Routes = [
       documentType: 'faq',
     },
     component: DynamicDocumentsSingleComponent,
+  },
+  {
+    path: 'not-found',
+    component: NotFoundComponent,
+  },
+  {
+    path: '**',
+    redirectTo: 'not-found',
   },
 ];
 

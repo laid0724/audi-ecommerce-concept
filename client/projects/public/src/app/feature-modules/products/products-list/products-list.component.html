@@ -3,6 +3,7 @@
     [title]="translationOutput('products.audiCollections')"
     [subTitle]="getProductCategoryName(productParams.productCategoryId)!"
     [resultCount]="pagination?.totalItems"
+    [resultLabel]="translationOutput('products.resultsLabel')"
     desktopBgImageUrl="/assets/images/product-list-default-bg-desktop.jpg"
     mobileBgImageUrl="/assets/images/product-list-default-bg-mobile.jpg"
   ></audi-img-header>
@@ -56,21 +57,21 @@
                   [isActive]="productParams.sort === productSortEnum.Price"
                   (click)="onSortProduct(productSortEnum.Price)"
                   >{{
-                    translationOutput('products.priceLowToHigh')
+                    translationOutput('sort.priceLowToHigh')
                   }}</audi-nav-item
                 >
                 <audi-nav-item
                   [isActive]="productParams.sort === productSortEnum.PriceDesc"
                   (click)="onSortProduct(productSortEnum.PriceDesc)"
                   >{{
-                    translationOutput('products.priceHighToLow')
+                    translationOutput('sort.priceHighToLow')
                   }}</audi-nav-item
                 >
                 <audi-nav-item
                   [isActive]="productParams.sort === productSortEnum.CreatedAt"
                   (click)="onSortProduct(productSortEnum.CreatedAt)"
                   >{{
-                    translationOutput('products.dateOldToNew')
+                    translationOutput('sort.dateOldToNew')
                   }}</audi-nav-item
                 >
                 <audi-nav-item
@@ -79,7 +80,7 @@
                   "
                   (click)="onSortProduct(productSortEnum.CreatedAtDesc)"
                   >{{
-                    translationOutput('products.dateNewToOld')
+                    translationOutput('sort.dateNewToOld')
                   }}</audi-nav-item
                 >
               </audi-nav-list>

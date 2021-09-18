@@ -75,7 +75,8 @@
     "cardCVVMinLength": "Must have at least 3 digits",
     "cardCVVMaxLength": "Cannot exceed 4 digits",
     "expDate": "Please enter a valid expiration date (MM/YYYY)",
-    "date": "Please enter a valid date (MM/DD/YYYY)"
+    "date": "Please enter a valid date (MM/DD/YYYY)",
+    "dateRangeError": "Invalid date range"
   },
   "formLabels": {
     "email": "Email",
@@ -107,7 +108,11 @@
     "billingAddress": "Billing Address",
     "customerNotes": "Notes",
     "optional": " (optional)",
-    "dateOfBirth": "Date of Birth"
+    "dateOfBirth": "Date of Birth",
+    "title": "Title",
+    "dateRange": "Date Range",
+    "dateStart": "Start Date",
+    "dateEnd": "End Date"
   },
   "formDescriptions": {
     "email": "Please enter your email.",
@@ -173,11 +178,7 @@
   },
   "products": {
     "audiCollections": "Audi Collections",
-    "results": "results",
-    "priceLowToHigh": "Price, low to high",
-    "priceHighToLow": "Price, high to low",
-    "dateOldToNew": "Date, old to new",
-    "dateNewToOld": "Date, new to old",
+    "resultsLabel": "results",
     "noProductsAvailable": "No Products Available",
     "outOfStock": "OUT OF STOCK",
     "similarProducts": "Similar Products"
@@ -250,5 +251,19 @@
     "male": "Male",
     "female": "Female",
     "other": "Other"
+  },
+  "sort": {
+    "priceLowToHigh": "Price, low to high",
+    "priceHighToLow": "Price, high to low",
+    "dateOldToNew": "Date, old to new",
+    "dateNewToOld": "Date, new to old"
+  },
+  "dynamicDocuments": {
+    "resultLabel": "results",
+    "noResults": "No results available",
+    "news": "Latest News",
+    "events": "Events and Promotions",
+    "about": "About Audi",
+    "faq": "FAQ"
   }
 }

@@ -135,6 +135,7 @@ export function clrDatagridDateRangeFilterValidator(
         !isNullOrEmptyString(dateStartValue) &&
         !isNullOrEmptyString(dateEndValue) &&
         new Date(dateStartValue) > new Date(dateEndValue);
+
       return hasRangeError ? { hasRangeError } : null;
     }
   }

@@ -39,6 +39,9 @@ interface DynamicDocumentCrudFunctions<TUpsertRequest, TResult> {
   getAll: (
     queryParams: DynamicDocumentParams
   ) => Observable<PaginatedResult<TResult[]>>;
+  getAllIsVisible: (
+    queryParams: DynamicDocumentParams
+  ) => Observable<PaginatedResult<TResult[]>>;
   add: (upsertRequest: TUpsertRequest) => Observable<TResult>;
   update: (upsertRequest: TUpsertRequest) => Observable<TResult>;
   delete: (dynamicDocumentId: number) => Observable<null>;
@@ -77,6 +80,23 @@ const buildCrudFunctions = <TUpsertRequest, TResult>(
       });
 
       params = params.append('type', documentType);
+
+      return getPaginatedResult<TResult[]>(http, endpoint, params);
+    },
+    getAllIsVisible: (queryParams: DynamicDocumentParams) => {
+      const { pageNumber, pageSize, ...qp } = queryParams;
+      let params = getPaginationHeaders(pageNumber, pageSize);
+
+      Object.keys(qp).forEach((key) => {
+        // @ts-ignore
+        const property = qp[key];
+        if (property != null) {
+          params = params.append(key, property.toString());
+        }
+      });
+
+      params = params.append('type', documentType);
+      params = params.append('isVisible', true);
 
       return getPaginatedResult<TResult[]>(http, endpoint, params);
     },

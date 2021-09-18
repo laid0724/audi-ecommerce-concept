@@ -1,1 +1,225 @@
-<p>dynamic-documents-list works!</p>
+<ng-container *transloco="let translationOutput">
+  <audi-img-header
+    [title]="translationOutput('dynamicDocuments.' + dynamicDocumentType)"
+    [resultCount]="pagination?.totalItems"
+    [resultLabel]="translationOutput('dynamicDocuments.resultLabel')"
+    [desktopBgImageUrl]="imgHeaderBgImageUrl"
+    [mobileBgImageUrl]="imgHeaderBgImageUrl"
+  ></audi-img-header>
+
+  <div class="aui-layout">
+    <div class="aui-grid">
+      <div class="aui-cell aui-cell--12">
+        <div class="w-full flex items-center justify-between">
+          <audi-button-group>
+            <audi-button
+              [isLightTheme]="isParamsEmpty"
+              type="primary"
+              class="flex"
+              (click)="filterModalIsOpen = true"
+            >
+              <audi-icon size="small" iconName="filter"></audi-icon>
+              <span class="ml-2">{{
+                translationOutput('buttons.filter')
+              }}</span>
+            </audi-button>
+            <audi-button
+              *ngIf="!isParamsEmpty && isDesktop"
+              [isLightTheme]="true"
+              type="primary"
+              class="flex"
+              (click)="onResetFilters()"
+            >
+              <audi-icon size="small" iconName="replay"></audi-icon>
+              <span class="ml-2">{{
+                translationOutput('buttons.clearFilters')
+              }}</span>
+            </audi-button>
+          </audi-button-group>
+
+          <audi-flyout position="center">
+            <audi-button
+              [isLightTheme]="true"
+              type="primary"
+              class="flex flex-row-reverse items-center"
+              #triggeringElement
+              flyoutTriggerSetter
+              [applyToInnerElement]="true"
+            >
+              <audi-icon size="small" iconName="arrow-down"></audi-icon>
+              <span style="padding-bottom: 1px; margin-right: 2px">{{
+                translationOutput('buttons.sortBy')
+              }}</span>
+            </audi-button>
+            <div class="flyout-content">
+              <audi-nav-list>
+                <audi-nav-item
+                  [isActive]="
+                    dynamicDocumentParams.sort === dynamicDocumentSortEnum.Date
+                  "
+                  (click)="onSortDynamicDocument(dynamicDocumentSortEnum.Date)"
+                  >{{ translationOutput('sort.dateOldToNew') }}</audi-nav-item
+                >
+                <audi-nav-item
+                  [isActive]="
+                    dynamicDocumentParams.sort ===
+                    dynamicDocumentSortEnum.DateDesc
+                  "
+                  (click)="
+                    onSortDynamicDocument(dynamicDocumentSortEnum.DateDesc)
+                  "
+                  >{{ translationOutput('sort.dateNewToOld') }}</audi-nav-item
+                >
+              </audi-nav-list>
+            </div>
+          </audi-flyout>
+        </div>
+        <div class="w-full my-6 grid grid-rows-none grid-cols-12">
+          <ng-container *ngIf="!loading; else loadingTemplate">
+            <ng-container *ngIf="dynamicDocuments.length > 0; else noDocuments">
+              <div
+                *ngFor="let document of dynamicDocuments"
+                class="col-span-12 my-4"
+              >
+                <audi-dynamic-documents-card
+                  [dynamicDocument]="document"
+                ></audi-dynamic-documents-card>
+              </div>
+            </ng-container>
+            <ng-template #noDocuments>
+              <h1
+                class="
+                  col-span-12
+                  aui-headline-3
+                  w-full
+                  flex
+                  items-center
+                  justify-center
+                  no-documents
+                "
+              >
+                {{ translationOutput('dynamicDocuments.noResults') }}
+              </h1>
+            </ng-template>
+          </ng-container>
+          <ng-template #loadingTemplate>
+            <div
+              class="
+                col-span-12
+                w-full
+                flex
+                items-center
+                justify-center
+                no-products
+              "
+            >
+              <audi-spinner class="block" [isContinuous]="true"></audi-spinner>
+            </div>
+          </ng-template>
+        </div>
+        <div
+          class="w-full flex items-center justify-center mb-12"
+          *ngIf="
+            pagination && pagination.totalItems > 0 && pagination.totalPages > 1
+          "
+        >
+          <audi-pagination
+            [type]="'desktop'"
+            [pagination]="pagination"
+            (pageChange)="onPageChange($event)"
+          >
+          </audi-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+
+<audi-modal
+  *transloco="let translationOutput"
+  [(isOpen)]="filterModalIsOpen"
+  [header]="translationOutput('modals.filters')"
+  [headerSize]="3"
+  [bgColor]="'white'"
+  [textColor]="'black'"
+  [type]="'full-page'"
+  [isClosable]="true"
+>
+  <form [formGroup]="filterForm" class="mt-8">
+    <div class="block mb-4">
+      <audi-control-grid
+        [label]="translationOutput('formLabels.title')"
+        type="input"
+      >
+        <audi-input-container
+          *projectAsField
+          formControlName="title"
+          [label]="translationOutput('formLabels.title')"
+          type="text"
+        >
+        </audi-input-container>
+      </audi-control-grid>
+    </div>
+
+    <div class="block mb-4">
+      <audi-control-grid
+        [label]="translationOutput('formLabels.dateRange')"
+        type="input"
+        [isInvalid]="
+          (filterForm.get('dateStart')!.touched &&
+            filterForm.get('dateStart')!.invalid) ||
+          (filterForm.get('dateEnd')!.touched &&
+            filterForm.get('dateEnd')!.invalid) ||
+          filterForm.hasError('hasRangeError')
+        "
+      >
+        <audi-datepicker-container
+          *projectAsField
+          formControlName="dateStart"
+          [label]="translationOutput('formLabels.dateStart')"
+        >
+          <audi-control-error>{{
+            translationOutput('formErrors.date')
+          }}</audi-control-error>
+        </audi-datepicker-container>
+        <audi-datepicker-container
+          *projectAsField
+          formControlName="dateEnd"
+          [label]="translationOutput('formLabels.dateEnd')"
+        >
+          <audi-control-error>{{
+            translationOutput('formErrors.date')
+          }}</audi-control-error>
+        </audi-datepicker-container>
+        <audi-control-error
+          type="grid"
+          *ngIf="filterForm.hasError('hasRangeError')"
+        >
+          {{ translationOutput('formErrors.dateRangeError') }}
+        </audi-control-error>
+      </audi-control-grid>
+    </div>
+
+    <div class="mt-20 w-full flex justify-end">
+      <audi-button-group>
+        <audi-button
+          *ngIf="!isParamsEmpty && !isDesktop"
+          [isLightTheme]="false"
+          type="secondary"
+          (click)="onResetFilters()"
+        >
+          {{ translationOutput('buttons.clearFilters') }}
+        </audi-button>
+        <audi-button
+          *ngIf="isDesktop || (!isDesktop && isParamsEmpty)"
+          type="secondary"
+          (click)="filterModalIsOpen = false"
+          >{{ translationOutput('buttons.cancel') }}</audi-button
+        >
+        <audi-button type="primary" (click)="onSubmitFilter()">{{
+          translationOutput('buttons.submit')
+        }}</audi-button>
+      </audi-button-group>
+    </div>
+  </form>
+</audi-modal>

@@ -38,6 +38,7 @@ export class ImgHeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() title: string | undefined;
   @Input() subTitle: string | undefined;
   @Input() resultCount: number | undefined;
+  @Input() resultLabel: string | undefined;
   @Input() desktopBgImageUrl: string;
   @Input() mobileBgImageUrl: string;
 
