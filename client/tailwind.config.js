@@ -1,6 +1,6 @@
 module.exports = {
   purge: {
-    enabled: false,
+    enabled: true,
     content: [
       './projects/data/src/**/*.{html,ts}',
       './projects/sys/src/**/*.{html,ts}',
