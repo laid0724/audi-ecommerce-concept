@@ -10,6 +10,8 @@ import {
   Faq,
   News,
   Event,
+  LanguageStateService,
+  LanguageCode,
 } from '@audi/data';
 import { throwError } from 'rxjs';
 import { Subject } from 'rxjs';
@@ -35,6 +37,10 @@ export class DynamicDocumentsSingleComponent implements OnInit, OnDestroy {
 
   loading: boolean = true;
   destroy$ = new Subject<boolean>();
+
+  get language(): LanguageCode {
+    return this.languageService.getCurrentLanguage();
+  }
 
   get imgHeaderBgImageUrl(): string {
     return `/assets/images/${this.dynamicDocumentType}-bg.jpg`;
@@ -80,6 +86,7 @@ export class DynamicDocumentsSingleComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private dynamicDocumentsService: DynamicDocumentsService,
+    private languageService: LanguageStateService,
     private busyService: BusyService
   ) {}
 
