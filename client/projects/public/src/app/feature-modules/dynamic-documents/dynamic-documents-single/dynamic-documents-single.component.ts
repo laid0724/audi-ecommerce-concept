@@ -6,10 +6,21 @@ import {
   BusyService,
   DynamicDocumentType,
   DynamicDocument,
+  isNullOrEmptyString,
+  Faq,
+  News,
+  Event,
 } from '@audi/data';
 import { throwError } from 'rxjs';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
+
+export function isDynamicDocumentFaq(
+  dynamicDocument: DynamicDocument
+): dynamicDocument is Faq {
+  const { type } = dynamicDocument;
+  return type === DynamicDocumentType.Faq && 'faqItems' in dynamicDocument;
+}
 
 @Component({
   selector: 'audi-dynamic-documents-single',
@@ -28,6 +39,42 @@ export class DynamicDocumentsSingleComponent implements OnInit, OnDestroy {
   get imgHeaderBgImageUrl(): string {
     return `/assets/images/${this.dynamicDocumentType}-bg.jpg`;
   }
+
+  get hasWysiwygContent(): boolean {
+    if (!isDynamicDocumentFaq(this.dynamicDocument)) {
+      const rows = this.dynamicDocument.wysiwyg.rows;
+      return (
+        this.dynamicDocument &&
+        this.dynamicDocument.wysiwyg &&
+        rows &&
+        Array.isArray(rows) &&
+        rows.length > 0 &&
+        rows.some((row) =>
+          row.columns.some((column) => !isNullOrEmptyString(column.content))
+        )
+      );
+    }
+
+    return false;
+  }
+
+  get dynamicDocumentWithFeaturedImage(): Event | News {
+    return this.dynamicDocument as Event | News;
+  }
+
+  get dynamicDocumentAsNonFaq(): Exclude<DynamicDocument, Faq> {
+    return this.dynamicDocument as Exclude<DynamicDocument, Faq>;
+  }
+
+  get dynamicDocumentAsFaq(): Faq {
+    return this.dynamicDocument as Faq;
+  }
+
+  public isNullOrEmptyString: (val: string | null | undefined) => boolean =
+    isNullOrEmptyString;
+
+  public isDynamicDocumentFaq: (dynamicDocument: DynamicDocument) => boolean =
+    isDynamicDocumentFaq;
 
   constructor(
     private route: ActivatedRoute,

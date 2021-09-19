@@ -51,12 +51,12 @@ interface DynamicDocumentCrudFunctions<TUpsertRequest, TResult> {
 interface FaqCrudFunctions {
   getOne: () => Observable<Faq>;
   update: (upsertRequest: FaqUpsertRequest) => Observable<Faq>;
-  deleteFeaturedImage: (dynamicDocumentId: number) => Observable<null>;
+  // deleteFeaturedImage: (dynamicDocumentId: number) => Observable<null>;
 }
 interface AboutCrudFunctions {
   getOne: () => Observable<About>;
   update: (upsertRequest: AboutUpsertRequest) => Observable<About>;
-  deleteFeaturedImage: (dynamicDocumentId: number) => Observable<null>;
+  // deleteFeaturedImage: (dynamicDocumentId: number) => Observable<null>;
 }
 
 const buildCrudFunctions = <TUpsertRequest, TResult>(
@@ -149,7 +149,7 @@ export class DynamicDocumentsService {
     this.faq = {
       getOne: () => http.get<Faq>(this.endpoint + '/faq'),
       update: faqCrud.update,
-      deleteFeaturedImage: faqCrud.deleteFeaturedImage,
+      // deleteFeaturedImage: faqCrud.deleteFeaturedImage,
     };
 
     const aboutCrud = buildCrudFunctions<AboutUpsertRequest, About>(
@@ -161,7 +161,7 @@ export class DynamicDocumentsService {
     this.about = {
       getOne: () => http.get<About>(this.endpoint + '/about'),
       update: aboutCrud.update,
-      deleteFeaturedImage: aboutCrud.deleteFeaturedImage,
+      // deleteFeaturedImage: aboutCrud.deleteFeaturedImage,
     };
   }
 }

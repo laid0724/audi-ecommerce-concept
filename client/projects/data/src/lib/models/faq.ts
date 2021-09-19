@@ -6,7 +6,7 @@ export interface Faq {
   title: string;
   type: DynamicDocumentType;
   introduction: string;
-  featuredImage: DynamicDocumentPhoto;
+  // featuredImage: DynamicDocumentPhoto;
   faqItems: FaqItem[];
 }
 

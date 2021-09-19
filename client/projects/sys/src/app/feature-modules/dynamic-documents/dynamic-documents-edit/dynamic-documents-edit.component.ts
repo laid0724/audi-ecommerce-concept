@@ -130,6 +130,10 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
     return this.router.url.split('/').includes('about');
   }
 
+  get dynamicDocumentWithFeaturedImage(): Event | News {
+    return this.dynamicDocument as Event | News;
+  }
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -373,16 +377,31 @@ export class DynamicDocumentsEditComponent implements OnInit, OnDestroy {
   }
 
   onImageChange(image: any): void {
-    this.dynamicDocument.featuredImage = image;
+    if (
+      this.dynamicDocumentType === DynamicDocumentType.Event ||
+      this.dynamicDocumentType === DynamicDocumentType.News
+    ) {
+      this.dynamicDocumentWithFeaturedImage.featuredImage = image;
+    }
   }
 
   deleteFeaturedImageFn(dynamicDocumentId: number): () => Observable<null> {
-    const fn = () =>
-      this.dynamicDocumentsService[
-        this.dynamicDocumentType
-      ].deleteFeaturedImage(dynamicDocumentId);
+    if (
+      this.dynamicDocumentType === DynamicDocumentType.Event ||
+      this.dynamicDocumentType === DynamicDocumentType.News
+    ) {
+      const fn = () =>
+        this.dynamicDocumentsService[
+          this.dynamicDocumentType as Exclude<
+            DynamicDocumentType,
+            'faq' | 'about'
+          >
+        ].deleteFeaturedImage(dynamicDocumentId);
 
-    return fn;
+      return fn;
+    }
+
+    return () => of(null);
   }
 
   ngOnDestroy(): void {

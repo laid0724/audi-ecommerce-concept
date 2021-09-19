@@ -7,6 +7,6 @@ export interface About {
   title: string;
   type: DynamicDocumentType;
   introduction: string;
-  featuredImage: DynamicDocumentPhoto;
+  // featuredImage: DynamicDocumentPhoto;
   wysiwyg: WysiwygGrid;
 }

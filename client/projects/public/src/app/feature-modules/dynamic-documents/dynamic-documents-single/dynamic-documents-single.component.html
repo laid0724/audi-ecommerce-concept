@@ -11,11 +11,89 @@
     [mobileBgImageUrl]="imgHeaderBgImageUrl"
   ></audi-img-header>
 
-  <div class="aui-layout">
+  <div class="aui-layout mt-3">
     <div class="aui-grid">
       <div class="aui-cell aui-cell--12">
         <div class="w-full my-6 grid grid-rows-none grid-cols-12">
-          <ng-container *ngIf="!loading; else loadingTemplate"></ng-container>
+          <ng-container *ngIf="!loading; else loadingTemplate">
+            <div
+              class="col-span-12 mb-8"
+              *ngIf="dynamicDocumentWithFeaturedImage?.featuredImage !== null"
+            >
+              <div class="aui-layout">
+                <div class="aui-grid">
+                  <div class="aui-cell aui-cell--12">
+                    <img
+                      [src]="dynamicDocumentWithFeaturedImage.featuredImage.url"
+                      [alt]="dynamicDocument.title"
+                      class="object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-12 mb-8">
+              <div class="aui-layout">
+                <div class="aui-grid">
+                  <div class="aui-cell aui-cell--12">
+                    <h3
+                      class="aui-headline-3 text-center"
+                      *ngIf="!isNullOrEmptyString(dynamicDocument.title)"
+                    >
+                      {{ dynamicDocument.title }}
+                    </h3>
+                    <small
+                      class="aui-small inline-block w-full text-center mb-6"
+                      *ngIf="
+                        !isNullOrEmptyString(
+                          dynamicDocumentWithFeaturedImage?.date?.toString()
+                        )
+                      "
+                    >
+                      {{
+                        dynamicDocumentWithFeaturedImage?.date
+                          | date: 'MM-dd-YYYY'
+                      }}
+                    </small>
+                    <p
+                      class="aui-shortread whitespace-pre-wrap"
+                      *ngIf="!isNullOrEmptyString(dynamicDocument.introduction)"
+                    >
+                      {{ dynamicDocument.introduction }}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-span-12 mb-8" *ngIf="hasWysiwygContent">
+              <audi-wysiwyg-grid-display
+                [wysiwygGrid]="dynamicDocumentAsNonFaq.wysiwyg"
+              ></audi-wysiwyg-grid-display>
+            </div>
+            <div
+              class="col-span-12 mb-8"
+              *ngIf="isDynamicDocumentFaq(dynamicDocument)"
+            >
+              <div class="aui-layout">
+                <div class="aui-grid">
+                  <div class="aui-cell aui-cell--12">
+                    <ol class="aui-list aui-list--number">
+                      <li
+                        class="aui-list__item"
+                        *ngFor="let faqItem of dynamicDocumentAsFaq.faqItems"
+                      >
+                        <strong>{{ faqItem.question }}</strong>
+
+                        <em class="block aui-caption my-3 ml-3">{{
+                          faqItem.answer
+                        }}</em>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </ng-container>
           <ng-template #loadingTemplate>
             <div
               class="
