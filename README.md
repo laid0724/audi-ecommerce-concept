@@ -97,7 +97,7 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 
 #### API
 
-- Order creation email and status update email template UI
+- Email Template UI for all system emails (order placed, order status update, sign up, forget pw, etc.)
 - SignalR for live chat
 - site-wide search
 - email / messaging / inbox functionality
@@ -114,7 +114,6 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 
 #### Angular Public Project
 
-- articles, e.g., news, events, promotions, faq, about us
 - convert to Angular universal
 - live chat
 - site-wide search
