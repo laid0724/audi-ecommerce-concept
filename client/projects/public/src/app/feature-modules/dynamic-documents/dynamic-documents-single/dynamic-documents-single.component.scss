@@ -1,0 +1,7 @@
+.loading-wrapper {
+  min-height: calc(40vh - 56px);
+  margin: 52px 0;
+  @media (min-width: 768px) {
+    min-height: calc(30vh - 56px);
+  }
+}

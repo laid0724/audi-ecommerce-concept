@@ -1,0 +1,38 @@
+<ng-container *ngIf="dynamicDocument && dynamicDocumentType">
+  <ng-container *transloco="let translationOutput">
+    <div class="flex flex-col md:flex-row mb-8">
+      <div class="document-img max-w-xs mx-auto md:ml-0 md:mr-8 mb-3 md:mb-0">
+        <img
+          [src]="
+            dynamicDocument.featuredImage !== null
+              ? dynamicDocument.featuredImage.url
+              : 'assets/images/placeholder.png'
+          "
+          [alt]="dynamicDocument.title"
+          style="--aspect-ratio: 16/9"
+          class="object-cover mt-3"
+        />
+      </div>
+      <div class="document-content text-center md:text-left">
+        <small class="aui-small mb-3">{{
+          dynamicDocument.date | date: 'MM/dd/YYYY'
+        }}</small>
+        <h4 class="aui-headline-4 mt-1 mb-2">{{ dynamicDocument.title }}</h4>
+        <p class="aui-caption line-clamp-3">
+          {{ dynamicDocument.introduction }}
+        </p>
+        <audi-button
+          class="flex justify-center md:block mt-4"
+          [routerLink]="[
+            '/',
+            language,
+            'documents',
+            dynamicDocumentType,
+            dynamicDocument.id
+          ]"
+          >{{ translationOutput('buttons.learnMore') }}</audi-button
+        >
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

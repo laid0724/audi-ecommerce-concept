@@ -1,6 +1,11 @@
 import { DynamicDocumentType } from '../enums';
 import { PagedRequest } from './pagination';
 
+export enum DynamicDocumentSort {
+  Date = 'date',
+  DateDesc = 'dateDesc',
+}
+
 export interface DynamicDocumentParams extends PagedRequest {
   title?: string;
   type?: DynamicDocumentType;
@@ -11,4 +16,5 @@ export interface DynamicDocumentParams extends PagedRequest {
   createdAtEnd?: Date;
   lastUpdatedStart?: Date;
   lastUpdatedEnd?: Date;
+  sort?: DynamicDocumentSort;
 }

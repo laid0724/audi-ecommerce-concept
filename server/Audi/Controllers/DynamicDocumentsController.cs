@@ -39,6 +39,71 @@ namespace Audi.Controllers
             _logger = logger;
         }
 
+        // about
+
+        [SwaggerOperation(Summary = "get about")]
+        [HttpGet("about")]
+        public async Task<ActionResult<AboutDto>> GetAbout([FromQuery] DynamicDocumentParams dynamicDocumentParams, [FromHeader(Name = "X-LANGUAGE")] string language)
+        {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+
+            dynamicDocumentParams.Language = language;
+            dynamicDocumentParams.Type = "about";
+
+            var about = await _unitOfWork.DynamicDocumentRepository.GetQueryableDynamicDocuments(dynamicDocumentParams).SingleOrDefaultAsync();
+
+            // this should never happen, unless DB was not seeded properly.
+            if (about == null) return NotFound("about not found");
+
+            return Ok(_mapper.Map<AboutDto>(about));
+        }
+
+        [SwaggerOperation(Summary = "update about")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPut("about")]
+        public async Task<ActionResult<AboutDto>> UpdateAbout([FromBody] AboutUpsertDto request, [FromHeader(Name = "X-LANGUAGE")] string language, [FromServices] IHtmlProcessor htmlProcessor)
+        {
+            if (string.IsNullOrWhiteSpace(language)) return BadRequest("Language header parameter missing");
+
+            var about = await _unitOfWork.DynamicDocumentRepository
+                .GetQueryableDynamicDocuments(new DynamicDocumentParams
+                {
+                    Language = language,
+                    Type = "about"
+                })
+                .SingleOrDefaultAsync();
+
+            if (about == null) return NotFound();
+
+            var dynamicDocumentUpsertRequest = new DynamicDocumentUpsertDto
+            {
+                Id = about.Id,
+                Language = language,
+                Type = "about",
+                Title = request.Title,
+                Introduction = request.Introduction,
+                Wysiwyg = request.Wysiwyg
+            };
+
+            return await UpsertDynamicDocument<AboutDto>(dynamicDocumentUpsertRequest, htmlProcessor);
+        }
+
+        [SwaggerOperation(Summary = "add featured image to about")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpPost("about/{dynamicDocumentId}/featured-image")]
+        public async Task<ActionResult<DynamicDocumentPhotoDto>> AddFeaturedImageToAbout(int dynamicDocumentId, IFormFile file)
+        {
+            return await AddFeaturedImage(dynamicDocumentId, file);
+        }
+
+        [SwaggerOperation(Summary = "delete featured image from about")]
+        [Authorize(Policy = "RequireModerateRole")]
+        [HttpDelete("about/{dynamicDocumentId}/featured-image")]
+        public async Task<ActionResult<DynamicDocumentPhotoDto>> DeleteFeaturedImageFromAbout(int dynamicDocumentId)
+        {
+            return await DeleteFeaturedImage(dynamicDocumentId);
+        }
+
         // faqs
 
         [SwaggerOperation(Summary = "get faq")]
@@ -337,7 +402,9 @@ namespace Audi.Controllers
             if (request.Date.HasValue)
             {
                 newDynamicDocument.Date = request.Date.Value;
-            } else {
+            }
+            else
+            {
                 newDynamicDocument.Date = newDynamicDocument.CreatedAt;
             }
 
@@ -355,6 +422,7 @@ namespace Audi.Controllers
             if (dynamicDocument == null) return NotFound("dynamic document not found");
 
             if (dynamicDocument.Type == "faq") return BadRequest("cannot delete faq");
+            if (dynamicDocument.Type == "about") return BadRequest("cannot delete about");
 
             _unitOfWork.DynamicDocumentRepository.DeleteDynamicDocument(dynamicDocument);
 

@@ -81,7 +81,7 @@ namespace Audi.Data
             var faqZh = new DynamicDocument
             {
                 Language = "zh",
-                Title = "常見問題",
+                Title = "購物須知",
                 Type = "faq",
                 IsVisible = true
             };
@@ -96,6 +96,43 @@ namespace Audi.Data
 
             unitOfWork.DynamicDocumentRepository.AddDynamicDocument(faqZh);
             unitOfWork.DynamicDocumentRepository.AddDynamicDocument(faqEn);
+
+            if (unitOfWork.HasChanges())
+            {
+                await unitOfWork.Complete();
+            }
+        }
+
+        public static async Task SeedAbout(IUnitOfWork unitOfWork)
+        {
+            var aboutEntitiesExist = await unitOfWork.DynamicDocumentRepository
+                .GetQueryableDynamicDocuments(
+                    new DynamicDocumentParams
+                    {
+                        Type = "about"
+                    }
+                ).CountAsync() == 2;
+
+            if (aboutEntitiesExist) return;
+
+            var aboutZh = new DynamicDocument
+            {
+                Language = "zh",
+                Title = "關於 Audi",
+                Type = "about",
+                IsVisible = true
+            };
+
+            var aboutEn = new DynamicDocument
+            {
+                Language = "en",
+                Title = "About Audi",
+                Type = "about",
+                IsVisible = true
+            };
+
+            unitOfWork.DynamicDocumentRepository.AddDynamicDocument(aboutZh);
+            unitOfWork.DynamicDocumentRepository.AddDynamicDocument(aboutEn);
 
             if (unitOfWork.HasChanges())
             {

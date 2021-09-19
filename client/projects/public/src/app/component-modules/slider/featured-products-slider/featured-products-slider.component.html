@@ -36,16 +36,16 @@
 
 <ng-template #slide let-product>
   <ng-container *transloco="let translationOutput">
-    <div class="w-full">
+    <div class="w-full px-20">
       <div class="w-full flex flex-col md:grid md:grid-rows-1 md:grid-cols-6">
         <div
           class="md:col-span-3 lg:col-span-4 background-color-white relative"
         >
-          <!-- MOBILE -->
           <img
-            class="slide-image object-cover w-full border-0 md:border"
+            class="slide-image object-cover w-full mb-6 md:mb-0"
             [src]="getMainPhoto(product)?.url"
           />
+          <!-- MOBILE -->
           <div
             class="
               pagination
@@ -100,7 +100,7 @@
               md:justify-between
               w-full
               h-full
-              p06
+              p-6
               md:p-8
             "
           >

@@ -116,38 +116,41 @@
           class="audi-side-nav__menu"
           [ngClass]="{ 'inactive-animation': !menuIsOpen }"
         >
-          <!-- TODO: transloco -->
           <h3
             class="aui-headline-3 clickable mb-4 mt-auto"
+            [routerLink]="['/', language, 'documents', 'about']"
             (click)="toggleMenuState(false)"
           >
-            關於 Audi
+            {{ translationOutput('menu.about') }}
           </h3>
           <h3
             class="aui-headline-3 clickable my-4"
+            [routerLink]="['/', language, 'documents', 'news']"
             (click)="toggleMenuState(false)"
           >
-            最新消息
+            {{ translationOutput('menu.news') }}
           </h3>
           <h3
             class="aui-headline-3 clickable my-4"
+            [routerLink]="['/', language, 'documents', 'events']"
             (click)="toggleMenuState(false)"
           >
-            活動及優惠
+            {{ translationOutput('menu.events') }}
           </h3>
           <h3
             class="aui-headline-3 clickable my-4"
             [routerLink]="['/', language, 'products']"
             (click)="toggleMenuState(false)"
           >
-            {{ translationOutput('products.audiCollections') }}
+            {{ translationOutput('menu.products') }}
           </h3>
 
           <h3
             class="aui-headline-3 clickable my-4"
+            [routerLink]="['/', language, 'documents', 'faq']"
             (click)="toggleMenuState(false)"
           >
-            FAQ
+            {{ translationOutput('menu.faq') }}
           </h3>
           <div class="flex mt-auto">
             <audi-button-group type="icon">

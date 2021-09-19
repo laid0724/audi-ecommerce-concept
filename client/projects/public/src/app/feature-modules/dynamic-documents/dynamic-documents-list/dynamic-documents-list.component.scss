@@ -1,0 +1,7 @@
+.no-documents {
+  min-height: calc(40vh - 56px);
+  margin-bottom: 52px;
+  @media (min-width: 768px) {
+    min-height: calc(35vh - 56px);
+  }
+}

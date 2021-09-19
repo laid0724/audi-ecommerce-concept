@@ -87,7 +87,31 @@ namespace Audi.Data
                 query = query.Where(e => e.LastUpdated <= dynamicDocumentParams.LastUpdatedEnd.Value);
             }
 
-            return query.OrderByDescending(e => e.CreatedAt);
+            if (dynamicDocumentParams.Sort.HasValue)
+            {
+                switch (dynamicDocumentParams.Sort.Value)
+                {
+                    case DynamicDocumentSort.Date:
+                        query = query.OrderBy(e => e.Date)
+                                    .ThenByDescending(e => e.CreatedAt);
+                        break;
+                    case DynamicDocumentSort.DateDesc:
+                        query = query.OrderByDescending(e => e.Date)
+                                    .ThenByDescending(e => e.CreatedAt);
+                        break;
+                    default:
+                        query = query.OrderByDescending(e => e.Date)
+                                    .ThenByDescending(e => e.CreatedAt);
+                        break;
+                }
+            }
+            else
+            {
+                query = query.OrderByDescending(e => e.Date)
+                                .ThenByDescending(e => e.CreatedAt);
+            }
+
+            return query;
 
             /*
                 Create separate methods to query this and convert to pagedDto:

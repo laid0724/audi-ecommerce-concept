@@ -1,4 +1,5 @@
 import { DynamicDocumentType } from '../enums';
+import { About } from './about';
 import { DynamicDocumentPhoto } from './dynamic-document-photo';
 import { Faq } from './faq';
 import { WysiwygGrid } from './wysiwyg';
@@ -20,4 +21,4 @@ export interface News extends DynamicDocumentBase {}
 
 export interface Event extends DynamicDocumentBase {}
 
-export type DynamicDocument = News | Event | Faq;
+export type DynamicDocument = News | Event | Faq | About;

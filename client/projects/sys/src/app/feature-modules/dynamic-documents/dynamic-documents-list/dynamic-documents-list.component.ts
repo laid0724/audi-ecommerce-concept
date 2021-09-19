@@ -8,14 +8,14 @@ import {
 } from '@angular/router';
 import {
   BusyService,
-  DynamicDocument,
   DynamicDocumentParams,
   DynamicDocumentsService,
   DynamicDocumentType,
-  Faq,
   formatClrDateToUTCString,
   LanguageCode,
   LanguageStateService,
+  News,
+  Event,
   objectIsEqual,
   PaginatedResult,
   Pagination,
@@ -44,7 +44,7 @@ import {
   DynamicDocumentSettings,
 } from '../interfaces';
 
-type DynamicDocumentWithoutFaq = Exclude<DynamicDocument, Faq>;
+type DynamicDocumentsWithList = Event | News;
 
 @Component({
   selector: 'audi-sys-dynamic-documents-list',
@@ -97,11 +97,11 @@ export class DynamicDocumentsListComponent implements OnInit, OnDestroy {
   datagridLoading = true;
   confirmDeleteModalOpen = false;
 
-  dynamicDocuments: DynamicDocumentWithoutFaq[] = [];
-  dynamicDocumentType: Exclude<DynamicDocumentType, 'faq'>;
+  dynamicDocuments: DynamicDocumentsWithList[] = [];
+  dynamicDocumentType: Exclude<DynamicDocumentType, 'faq' | 'about'>;
   dynamicDocumentSettings: DynamicDocumentSettings;
   dynamicDocumentDatagridColumns: DynamicDocumentDatagridColumn[];
-  dynamicDocumentToDelete: DynamicDocumentWithoutFaq | null = null;
+  dynamicDocumentToDelete: DynamicDocumentsWithList | null = null;
 
   title: { zh: string; en: string };
 
@@ -158,7 +158,7 @@ export class DynamicDocumentsListComponent implements OnInit, OnDestroy {
 
               this.dynamicDocumentType = type as Exclude<
                 DynamicDocumentType,
-                'faq'
+                'faq' | 'about'
               >;
               this.dynamicDocumentSettings = dynamicDocumentSettings;
               this.dynamicDocumentDatagridColumns = datagridColumns;
@@ -182,7 +182,7 @@ export class DynamicDocumentsListComponent implements OnInit, OnDestroy {
         ),
         takeUntil(this.destroy$)
       )
-      .subscribe((res: PaginatedResult<DynamicDocumentWithoutFaq[]>) => {
+      .subscribe((res: PaginatedResult<DynamicDocumentsWithList[]>) => {
         this.dynamicDocuments = res.result;
         this.paging = res.pagination;
         this.datagridLoading = false;
@@ -190,10 +190,7 @@ export class DynamicDocumentsListComponent implements OnInit, OnDestroy {
       });
   }
 
-  public getValue(
-    dynamicDocument: DynamicDocumentWithoutFaq,
-    key: string
-  ): any {
+  public getValue(dynamicDocument: DynamicDocumentsWithList, key: string): any {
     // @ts-ignore
     const value = dynamicDocument[key];
     return value;
@@ -262,7 +259,7 @@ export class DynamicDocumentsListComponent implements OnInit, OnDestroy {
     }
   }
 
-  promptDelete(dynamicDocument: DynamicDocumentWithoutFaq): void {
+  promptDelete(dynamicDocument: DynamicDocumentsWithList): void {
     this.dynamicDocumentToDelete = dynamicDocument;
     this.confirmDeleteModalOpen = true;
   }

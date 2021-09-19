@@ -155,7 +155,10 @@ const routes: Routes = [
                       key: 'date',
                       label: '日期 Date',
                       type: 'date',
-                      validators: [Validators.pattern(DATE_REGEX)],
+                      validators: [
+                        Validators.pattern(DATE_REGEX),
+                        Validators.required,
+                      ],
                     },
                     {
                       key: 'introduction',
@@ -238,7 +241,10 @@ const routes: Routes = [
                       key: 'date',
                       label: '日期 Date',
                       type: 'date',
-                      validators: [Validators.pattern(DATE_REGEX)],
+                      validators: [
+                        Validators.pattern(DATE_REGEX),
+                        Validators.required,
+                      ],
                     },
                     {
                       key: 'introduction',
@@ -274,17 +280,17 @@ const routes: Routes = [
               dynamicDocumentSettings: {
                 type: 'faq',
                 typeName: {
-                  zh: '常見問題',
+                  zh: '購物須知',
                   en: 'Faq',
                 },
                 form: {
                   fields: [
-                    {
-                      key: 'title',
-                      label: '標題 Title',
-                      type: 'text',
-                      validators: [Validators.required],
-                    },
+                    // {
+                    //   key: 'title',
+                    //   label: '標題 Title',
+                    //   type: 'text',
+                    //   validators: [Validators.required],
+                    // },
                     {
                       key: 'introduction',
                       label: '簡介 Introduction',
@@ -297,7 +303,44 @@ const routes: Routes = [
                     },
                   ],
                 },
-                hasFeaturedImage: true,
+                hasFeaturedImage: false,
+                saveOnly: true,
+              },
+            },
+            component: DynamicDocumentsEditComponent,
+          },
+          {
+            path: 'about',
+            resolve: { data: LanguageSelectorResolver },
+            data: {
+              languageSettings: DEFAULT_ZH_EN_ONLY,
+              dynamicDocumentSettings: {
+                type: 'about',
+                typeName: {
+                  zh: '關於 Audi',
+                  en: 'About Audi',
+                },
+                form: {
+                  fields: [
+                    // {
+                    //   key: 'title',
+                    //   label: '標題 Title',
+                    //   type: 'text',
+                    //   validators: [Validators.required],
+                    // },
+                    {
+                      key: 'introduction',
+                      label: '簡介 Introduction',
+                      type: 'textarea',
+                    },
+                    {
+                      key: 'wysiwyg',
+                      label: '內容 Content',
+                      type: 'wysiwyg',
+                    },
+                  ],
+                },
+                hasFeaturedImage: false,
                 saveOnly: true,
               },
             },

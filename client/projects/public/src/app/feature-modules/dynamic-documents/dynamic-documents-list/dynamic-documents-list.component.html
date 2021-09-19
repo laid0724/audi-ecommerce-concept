@@ -1,11 +1,10 @@
 <ng-container *transloco="let translationOutput">
   <audi-img-header
-    [title]="translationOutput('products.audiCollections')"
-    [subTitle]="getProductCategoryName(productParams.productCategoryId)!"
+    [title]="translationOutput('dynamicDocuments.' + dynamicDocumentType)"
     [resultCount]="pagination?.totalItems"
-    [resultLabel]="translationOutput('products.resultsLabel')"
-    desktopBgImageUrl="/assets/images/product-list-default-bg-desktop.jpg"
-    mobileBgImageUrl="/assets/images/product-list-default-bg-mobile.jpg"
+    [resultLabel]="translationOutput('dynamicDocuments.resultLabel')"
+    [desktopBgImageUrl]="imgHeaderBgImageUrl"
+    [mobileBgImageUrl]="imgHeaderBgImageUrl"
   ></audi-img-header>
 
   <div class="aui-layout">
@@ -37,6 +36,7 @@
               }}</span>
             </audi-button>
           </audi-button-group>
+
           <audi-flyout position="center">
             <audi-button
               [isLightTheme]="true"
@@ -54,34 +54,21 @@
             <div class="flyout-content">
               <audi-nav-list>
                 <audi-nav-item
-                  [isActive]="productParams.sort === productSortEnum.Price"
-                  (click)="onSortProduct(productSortEnum.Price)"
-                  >{{
-                    translationOutput('sort.priceLowToHigh')
-                  }}</audi-nav-item
-                >
-                <audi-nav-item
-                  [isActive]="productParams.sort === productSortEnum.PriceDesc"
-                  (click)="onSortProduct(productSortEnum.PriceDesc)"
-                  >{{
-                    translationOutput('sort.priceHighToLow')
-                  }}</audi-nav-item
-                >
-                <audi-nav-item
-                  [isActive]="productParams.sort === productSortEnum.CreatedAt"
-                  (click)="onSortProduct(productSortEnum.CreatedAt)"
-                  >{{
-                    translationOutput('sort.dateOldToNew')
-                  }}</audi-nav-item
+                  [isActive]="
+                    dynamicDocumentParams.sort === dynamicDocumentSortEnum.Date
+                  "
+                  (click)="onSortDynamicDocument(dynamicDocumentSortEnum.Date)"
+                  >{{ translationOutput('sort.dateOldToNew') }}</audi-nav-item
                 >
                 <audi-nav-item
                   [isActive]="
-                    productParams.sort === productSortEnum.CreatedAtDesc
+                    dynamicDocumentParams.sort ===
+                    dynamicDocumentSortEnum.DateDesc
                   "
-                  (click)="onSortProduct(productSortEnum.CreatedAtDesc)"
-                  >{{
-                    translationOutput('sort.dateNewToOld')
-                  }}</audi-nav-item
+                  (click)="
+                    onSortDynamicDocument(dynamicDocumentSortEnum.DateDesc)
+                  "
+                  >{{ translationOutput('sort.dateNewToOld') }}</audi-nav-item
                 >
               </audi-nav-list>
             </div>
@@ -89,22 +76,23 @@
         </div>
         <div class="w-full my-6 grid grid-rows-none grid-cols-12">
           <ng-container *ngIf="!loading; else loadingTemplate">
-            <ng-container *ngIf="products.length > 0; else noProducts">
+            <ng-container *ngIf="dynamicDocuments.length > 0; else noDocuments">
               <div
-                *ngFor="let product of products"
-                class="
-                  col-span-12
-                  sm:col-span-6
-                  md:col-span-4
-                  2xl:col-span-3
-                  mx-2
-                  my-4
-                "
+                *ngFor="let document of dynamicDocuments; let last = last"
+                class="col-span-12 px-8"
               >
-                <audi-product-card [product]="product"></audi-product-card>
+                <audi-dynamic-documents-card
+                  [dynamicDocument]="document"
+                  [dynamicDocumentType]="dynamicDocumentType"
+                ></audi-dynamic-documents-card>
+
+                <div
+                  *ngIf="!last && dynamicDocuments.length > 1"
+                  class="border-t border-color-grey-4 my-4"
+                ></div>
               </div>
             </ng-container>
-            <ng-template #noProducts>
+            <ng-template #noDocuments>
               <h1
                 class="
                   col-span-12
@@ -113,10 +101,10 @@
                   flex
                   items-center
                   justify-center
-                  no-products
+                  no-documents
                 "
               >
-                {{ translationOutput('products.noProductsAvailable') }}
+                {{ translationOutput('dynamicDocuments.noResults') }}
               </h1>
             </ng-template>
           </ng-container>
@@ -128,7 +116,7 @@
                 flex
                 items-center
                 justify-center
-                no-products
+                no-documents
               "
             >
               <audi-spinner class="block" [isContinuous]="true"></audi-spinner>
@@ -166,98 +154,58 @@
   <form [formGroup]="filterForm" class="mt-8">
     <div class="block mb-4">
       <audi-control-grid
-        [label]="translationOutput('formLabels.productName')"
+        [label]="translationOutput('formLabels.title')"
         type="input"
       >
         <audi-input-container
           *projectAsField
-          formControlName="name"
-          [label]="translationOutput('formLabels.productName')"
+          formControlName="title"
+          [label]="translationOutput('formLabels.title')"
           type="text"
         >
         </audi-input-container>
       </audi-control-grid>
     </div>
+
     <div class="block mb-4">
       <audi-control-grid
-        [label]="translationOutput('formLabels.productCategory')"
-        type="input"
-      >
-        <audi-select-container
-          *projectAsField
-          formControlName="productCategoryId"
-          [label]="translationOutput('formLabels.productCategory')"
-        >
-          <option
-            *ngFor="let category of productCategories"
-            [value]="category.id"
-          >
-            {{ category.name }}
-          </option>
-        </audi-select-container>
-      </audi-control-grid>
-    </div>
-    <div class="block mb-4">
-      <audi-control-grid
-        [label]="translationOutput('formLabels.price')"
+        [label]="translationOutput('formLabels.dateRange')"
         type="input"
         [isInvalid]="
-          (filterForm.get('priceMin')!.touched &&
-            filterForm.get('priceMin')!.invalid) ||
-          (filterForm.get('priceMax')!.touched &&
-            filterForm.get('priceMax')!.invalid)
+          (filterForm.get('dateStart')!.touched &&
+            filterForm.get('dateStart')!.invalid) ||
+          (filterForm.get('dateEnd')!.touched &&
+            filterForm.get('dateEnd')!.invalid) ||
+          filterForm.hasError('hasRangeError')
         "
       >
-        <audi-input-container
+        <audi-datepicker-container
           *projectAsField
-          formControlName="priceMin"
-          [label]="translationOutput('formLabels.priceMin')"
-          type="number"
+          formControlName="dateStart"
+          [label]="translationOutput('formLabels.dateStart')"
         >
-          <audi-control-error
-            *ngIf="filterForm.get('priceMin')?.hasError('pattern')"
-            >{{
-              translationOutput('formErrors.greaterThanZero')
-            }}</audi-control-error
-          >
-        </audi-input-container>
-        <audi-input-container
+          <audi-control-error>{{
+            translationOutput('formErrors.date')
+          }}</audi-control-error>
+        </audi-datepicker-container>
+        <audi-datepicker-container
           *projectAsField
-          formControlName="priceMax"
-          [label]="translationOutput('formLabels.priceMax')"
-          type="number"
+          formControlName="dateEnd"
+          [label]="translationOutput('formLabels.dateEnd')"
         >
-          <audi-control-error
-            *ngIf="filterForm.get('priceMax')?.hasError('pattern')"
-            >{{
-              translationOutput('formErrors.greaterThanZero')
-            }}</audi-control-error
-          >
-        </audi-input-container>
+          <audi-control-error>{{
+            translationOutput('formErrors.date')
+          }}</audi-control-error>
+        </audi-datepicker-container>
         <audi-control-error
           type="grid"
-          *ngIf="
-            filterForm
-              .get('priceMax')
-              ?.hasError('isEqualOrGreaterThanAnotherControlValue')
-          "
+          *ngIf="filterForm.hasError('hasRangeError')"
         >
-          {{ translationOutput('formErrors.priceMaxNotGreaterThanPriceMin') }}
+          {{ translationOutput('formErrors.dateRangeError') }}
         </audi-control-error>
       </audi-control-grid>
     </div>
-    <div class="block mb-4">
-      <audi-control-grid
-        [label]="translationOutput('formLabels.discounted')"
-        type="input"
-      >
-        <div class="mt-6" *projectAsField>
-          <audi-toggle-container
-            formControlName="isDiscounted"
-          ></audi-toggle-container>
-        </div>
-      </audi-control-grid>
-    </div>
+
     <div class="mt-20 w-full flex justify-end">
       <audi-button-group>
         <audi-button
