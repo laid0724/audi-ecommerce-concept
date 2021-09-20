@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { isNullOrEmptyString } from '@audi/data';
-import { AudiColor } from '../../enums';
+import { AudiColor } from '@audi/data';
 
 @Component({
   selector: 'audi-card',

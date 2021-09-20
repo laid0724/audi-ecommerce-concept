@@ -11,6 +11,7 @@ import { ProductParams } from '../models/product-params';
 import { PaginatedResult } from '../models/pagination';
 import { ProductVariant } from '../models/product-variant';
 import { ProductVariantValue } from '../models/product-variant-value';
+import { ProductSku } from '../models/product-sku';
 import {
   getPaginatedResult,
   getPaginationHeaders,
@@ -26,7 +27,6 @@ import {
   switchMap,
   takeWhile,
 } from 'rxjs/operators';
-import { ProductSku } from '@audi/data';
 
 export interface ProductCategoryUpsertRequest {
   id?: number;

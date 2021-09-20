@@ -9,8 +9,13 @@ import {
   ChangeDetectorRef,
   OnDestroy,
 } from '@angular/core';
-import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
-import { AudiAlertType, AudiColor } from '../../enums';
+import {
+  initAudiModules,
+  AudiModuleName,
+  AudiComponents,
+  AudiAlertType,
+  AudiColor,
+} from '@audi/data';
 import { AlertInjectionMarkerDirective } from '../alert-injection-marker.directive';
 
 // this component can be either dynamically created via alert-container-global

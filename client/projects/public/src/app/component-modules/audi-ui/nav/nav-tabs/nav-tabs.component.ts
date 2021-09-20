@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
-import { AudiNavThemeClass } from '../../enums';
+import { AudiNavThemeClass } from '@audi/data';
 import { AudiNavThemeInput } from '../nav-bar/nav-bar.component';
 import { NavTabComponent } from '../nav-tab/nav-tab.component';
 import { OnDestroy } from '@angular/core';

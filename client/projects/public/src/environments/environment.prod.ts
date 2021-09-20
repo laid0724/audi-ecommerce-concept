@@ -1,4 +1,4 @@
 export const environment = {
-  baseUrl: 'http://localhost:4200',
-  production: true
+  production: true,
+  baseUrl: 'http://localhost:4200' // for routing to asset folder
 };

@@ -4,8 +4,8 @@ import {
   AudiModuleName,
   AudiComponents,
   isNullOrEmptyString,
+  AudiColor,
 } from '@audi/data';
-import { AudiColor } from '../../enums';
 
 @Component({
   selector: 'audi-notification',

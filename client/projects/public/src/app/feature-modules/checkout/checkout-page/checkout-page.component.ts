@@ -22,11 +22,11 @@ import {
   SensitiveUserData,
   ShippingMethod,
   User,
+  NotificationService
 } from '@audi/data';
 import { TranslocoService } from '@ngneat/transloco';
 import { of, Subject } from 'rxjs';
 import { switchMap, take, takeUntil } from 'rxjs/operators';
-import { NotificationService } from '../../../component-modules/audi-ui/services/notification-service/notification.service';
 import { addressFormGroupBuilder } from '../../../component-modules/address-fg/address-fg.component';
 import { isProductDiscounted } from '../../../helpers';
 import { CartService } from '../../cart/services/cart.service';

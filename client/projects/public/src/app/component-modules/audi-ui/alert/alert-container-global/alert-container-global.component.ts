@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AudiAlertStyle, AudiAlertType, AudiColor } from '../../enums';
+import { AudiAlertStyle, AudiAlertType, AudiColor } from '@audi/data';
 import {
   AlertService,
   AudiGlobalAlert,

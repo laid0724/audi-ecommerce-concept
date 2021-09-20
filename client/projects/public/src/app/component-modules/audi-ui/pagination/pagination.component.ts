@@ -16,7 +16,7 @@ import {
   initAudiModules,
   Pagination,
 } from '@audi/data';
-import { AudiPaginationType } from '../enums';
+import { AudiPaginationType } from '@audi/data';
 import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

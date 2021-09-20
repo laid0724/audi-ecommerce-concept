@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AudiAlertStyle, AudiColor } from '../../enums';
+import { AudiAlertStyle, AudiColor } from '@audi/data';
 
 /*
   USAGE:

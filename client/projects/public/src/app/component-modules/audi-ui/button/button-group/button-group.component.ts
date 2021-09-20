@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AudiButtonGroup } from '../../enums';
+import { Component, Input } from '@angular/core';
+import { AudiButtonGroup } from '@audi/data';
 
 @Component({
   selector: 'audi-button-group',

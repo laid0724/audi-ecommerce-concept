@@ -8,8 +8,12 @@ import {
   QueryList,
 } from '@angular/core';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
-import { AudiNavThemeClass } from '../../enums';
+import {
+  initAudiModules,
+  AudiModuleName,
+  AudiComponents,
+  AudiNavThemeClass,
+} from '@audi/data';
 import { Subject } from 'rxjs';
 import { NavItemComponent } from '../nav-item/nav-item.component';
 import { takeUntil } from 'rxjs/operators';

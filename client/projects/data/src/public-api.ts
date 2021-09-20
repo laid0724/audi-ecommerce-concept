@@ -36,6 +36,7 @@ export * from './lib/models/credit-card';
 
 // Enums
 export * from './lib/enums';
+export * from './lib/audi-ui-enums';
 
 // Services
 export * from './lib/services/account.service';
@@ -47,10 +48,12 @@ export * from './lib/services/photo.service';
 export * from './lib/services/dynamic-documents.service';
 export * from './lib/services/orders.service';
 export * from './lib/services/homepage.service';
+export * from './lib/services/notification-service/notification.service';
 
 // Directives
 export * from './lib/directives/project-as-template.directive';
 export * from './lib/directives/attribute-setter.directive';
+export * from './lib/directives/class-setter.directive';
 export * from './lib/directives/directives.module';
 
 // Interceptors
@@ -70,8 +73,26 @@ export * from './lib/guards/member.guard';
 // Injection Tokens
 export * from './lib/tokens';
 
-// Misc
+// Pipes
+export * from './lib/pipes/count.pipe';
+export * from './lib/pipes/debounce.pipe';
+export * from './lib/pipes/duration.pipe';
+export * from './lib/pipes/ellipsis.pipe';
+export * from './lib/pipes/filter.pipe';
+export * from './lib/pipes/html-remove.pipe';
+export * from './lib/pipes/limit.pipe';
+export * from './lib/pipes/map.pipe';
+export * from './lib/pipes/phone-number.pipe';
+export * from './lib/pipes/safe-html.pipe';
+export * from './lib/pipes/slug.pipe';
+export * from './lib/pipes/sort.pipe';
+export * from './lib/pipes/spaced-comma.pipe';
+export * from './lib/pipes/string.pipe';
+export * from './lib/pipes/to-local-time.pipe';
+export * from './lib/pipes/to-zh.pipe';
 export * from './lib/pipes/pipes.module';
+
+// Misc
 export * from './lib/regex';
 export * from './lib/validators';
 export * from './lib/helpers';

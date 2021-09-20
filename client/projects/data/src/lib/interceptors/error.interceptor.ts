@@ -11,7 +11,7 @@ import { Observable, throwError } from 'rxjs';
 import { NavigationExtras, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { catchError } from 'rxjs/operators';
-import { NotificationService } from 'projects/public/src/app/component-modules/audi-ui/services/notification-service/notification.service';
+import { NotificationService } from '../services/notification-service/notification.service';
 import { INJECT_TOASTR, INJECT_TRANSLOCO } from '../tokens';
 import { TranslocoService } from '@ngneat/transloco';
 

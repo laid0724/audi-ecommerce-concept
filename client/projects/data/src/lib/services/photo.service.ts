@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CloudinaryPhotoCroppingMode } from '@audi/data';
+import { CloudinaryPhotoCroppingMode } from '../enums';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 

@@ -72,6 +72,12 @@ Run backend CMS project:
 
 ---
 
+### Docker
+
+To run this project via docker, 
+
+---
+
 ### Deployment
 
 Currently, I am hosting this on heroku (which uses pgsql as its db), with the angular app being served via .net. You will need the heroku cli installed in your system.
