@@ -13,7 +13,6 @@
         // "dist/data"
       ]
     },
-    "rootDir": ".",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -30,7 +29,7 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
+    "target": "es2015",
     "module": "es2020",
     "lib": ["es2019", "es2018", "es6", "dom"]
   },
