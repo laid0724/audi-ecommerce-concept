@@ -5,12 +5,8 @@
     "baseUrl": "./",
     "paths": {
       "@audi/data": [
-        // NOTE: below for development
         "projects/data/src/public-api",
         "projects/data/src/*"
-        // NOTE: below for production
-        // "dist/data/data",
-        // "dist/data"
       ]
     },
     "outDir": "./dist/out-tsc",

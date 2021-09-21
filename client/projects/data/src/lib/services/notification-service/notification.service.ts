@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
-import { AudiNotificationType } from '@audi/data';
+import { AudiNotificationType } from '../../audi-ui-enums';
 import { NotificationServiceModule } from './notification-service.module';
 
 export interface AudiNotification {

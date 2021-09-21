@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { INJECT_API_ENDPOINT } from '@audi/data';
 import { Observable } from 'rxjs';
 import { CarouselColor, CarouselType } from '../enums';
 import { Homepage } from '../models/homepage';
@@ -32,9 +33,9 @@ export interface HomepageFeaturedProductsUpsert {
   providedIn: 'root',
 })
 export class HomepageService {
-  private endpoint = '/api/homepage';
+  private endpoint = this.injectApiEndpoint + '/homepage';
 
-  constructor(private http: HttpClient) {}
+  constructor(@Inject(INJECT_API_ENDPOINT) private injectApiEndpoint: string,private http: HttpClient) {}
 
   getHomepage(): Observable<Homepage> {
     return this.http.get<Homepage>(this.endpoint);

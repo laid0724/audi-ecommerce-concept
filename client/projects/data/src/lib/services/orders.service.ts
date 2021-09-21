@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Order } from '../models/order';
 import { OrderParams } from '../models/order-params';
@@ -7,6 +7,7 @@ import { Address } from '../models/address';
 import { CreditCard } from '../models/credit-card';
 import { PaginatedResult } from '../models/pagination';
 import { getPaginatedResult, getPaginationHeaders } from '../helpers';
+import { INJECT_API_ENDPOINT } from '@audi/data';
 
 export interface OrderItemUpsert {
   id?: number;
@@ -38,9 +39,12 @@ export interface OrderStatusUpdateRequest {
   providedIn: 'root',
 })
 export class OrdersService {
-  private endpoint = '/api/orders';
+  private endpoint = this.injectApiEndpoint + '/orders';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    @Inject(INJECT_API_ENDPOINT) private injectApiEndpoint: string,
+    private http: HttpClient
+  ) {}
 
   createOrder(request: OrderUpsert): Observable<Order> {
     return this.http.post<Order>(this.endpoint, request);

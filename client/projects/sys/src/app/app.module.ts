@@ -14,10 +14,12 @@ import {
   JwtInterceptorProvider,
   INJECT_TOASTR,
   INJECT_TRANSLOCO,
+  INJECT_API_ENDPOINT,
 } from '@audi/data';
 import { CoreModule } from './core/core.module';
 import { HttpClientModule } from '@angular/common/http';
 import { QuillModule } from 'ngx-quill';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -49,6 +51,10 @@ import { QuillModule } from 'ngx-quill';
     {
       provide: INJECT_TRANSLOCO,
       useValue: false,
+    },
+    {
+      provide: INJECT_API_ENDPOINT,
+      useValue: environment.apiUrl,
     },
   ],
   bootstrap: [AppComponent],

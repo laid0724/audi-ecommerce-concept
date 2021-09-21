@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DynamicDocumentParams } from '../models/dynamic-document-params';
 import { News, Event } from '../models/dynamic-document';
@@ -9,6 +9,7 @@ import { PaginatedResult } from '../models/pagination';
 import { WysiwygGrid } from '../models/wysiwyg';
 import { getPaginatedResult, getPaginationHeaders } from '../helpers';
 import { DynamicDocumentType } from '../enums';
+import { INJECT_API_ENDPOINT } from '@audi/data';
 
 interface DynamicDocumentUpsertRequest {
   id?: number;
@@ -115,7 +116,7 @@ const buildCrudFunctions = <TUpsertRequest, TResult>(
   providedIn: 'root',
 })
 export class DynamicDocumentsService {
-  private endpoint = '/api/dynamicdocuments';
+  private endpoint = this.injectApiEndpoint + '/dynamicdocuments';
 
   readonly news: DynamicDocumentCrudFunctions<
     DynamicDocumentUpsertRequest,
@@ -128,7 +129,10 @@ export class DynamicDocumentsService {
   readonly faq: FaqCrudFunctions;
   readonly about: AboutCrudFunctions;
 
-  constructor(private http: HttpClient) {
+  constructor(
+    @Inject(INJECT_API_ENDPOINT) private injectApiEndpoint: string,
+    private http: HttpClient
+  ) {
     this.news = buildCrudFunctions<DynamicDocumentUpsertRequest, News>(
       http,
       this.endpoint + '/news',

@@ -3,8 +3,9 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  baseUrl: '.' // for routing to asset folder
+  apiUrl: 'https://localhost:5001/api',
+  baseUrl: '.', // for routing to asset folder
+  production: false
 };
 
 /*

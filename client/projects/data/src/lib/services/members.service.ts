@@ -1,18 +1,19 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Member } from '../models/member';
 import { MemberParams } from '../models/member-params';
 import { PaginatedResult } from '../models/pagination';
 import { getPaginatedResult, getPaginationHeaders } from '../helpers';
 import { Observable } from 'rxjs';
+import { INJECT_API_ENDPOINT } from '@audi/data';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MembersService {
-  private endpoint = '/api/members';
+  private endpoint = this.injectApiEndpoint + '/members';
 
-  constructor(private http: HttpClient) {}
+  constructor(@Inject(INJECT_API_ENDPOINT) private injectApiEndpoint: string, private http: HttpClient) {}
 
   getMembers(
     memberParams: MemberParams

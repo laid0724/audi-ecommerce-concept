@@ -10,8 +10,10 @@ import {
   LanguageSelectorResolver,
   INJECT_TOASTR,
   INJECT_TRANSLOCO,
+  INJECT_API_ENDPOINT,
 } from '@audi/data';
 import { CookieService } from 'ngx-cookie-service';
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AlertsModule } from './component-modules/alerts/alerts.module';
@@ -50,6 +52,10 @@ const AUDI_MODULES = [NotificationModule, AlertModule, ProgressBarModule];
     {
       provide: INJECT_TRANSLOCO,
       useValue: true,
+    },
+    {
+      provide: INJECT_API_ENDPOINT,
+      useValue: environment.apiUrl,
     },
     CookieService,
   ],
