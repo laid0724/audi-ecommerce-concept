@@ -72,7 +72,7 @@ namespace Audi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.IsDevelopment() || env.IsEnvironment("LocalDocker"))
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
@@ -92,6 +92,7 @@ namespace Audi
                     .AllowCredentials()
                     .WithOrigins("http://localhost:4200")
                     .WithOrigins("http://localhost:4201")
+                    .WithOrigins("http://localhost:8080")
             );
 
             app.UseAuthentication();

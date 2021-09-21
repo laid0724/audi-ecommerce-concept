@@ -75,6 +75,20 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "localdocker": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "projects/sys/src/environments/environment.ts",
+                  "with": "projects/sys/src/environments/environment.localdocker.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -86,8 +100,7 @@
               "browserTarget": "sys:build:production"
             },
             "development": {
-              "browserTarget": "sys:build:development",
-              "proxyConfig": "proxy.conf.js"
+              "browserTarget": "sys:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -214,6 +227,20 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "localdocker": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "projects/public/src/environments/environment.ts",
+                  "with": "projects/public/src/environments/environment.localdocker.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -225,8 +252,7 @@
               "browserTarget": "public:build:production"
             },
             "development": {
-              "browserTarget": "public:build:development",
-              "proxyConfig": "proxy.conf.js"
+              "browserTarget": "public:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -35,7 +35,7 @@ namespace Audi
             // and: https://stackoverflow.com/questions/44437325/access-environment-name-in-program-main-in-asp-net-core
             // IMPORTANT: read from ASPNETCORE_ENVIRONMENT and NOT from DOTNET_ENVIRONMENT
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-            var isDevelopment = env == Environments.Development;
+            var isDevelopment = env == Environments.Development || env == "LocalDocker";
             var configuration = new ConfigurationBuilder()
                 .AddJsonFile($"{(isDevelopment ? "appsettings." + env + ".json" : "appsettings.json")}", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables()
