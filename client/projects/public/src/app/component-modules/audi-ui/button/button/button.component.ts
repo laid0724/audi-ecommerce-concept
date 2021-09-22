@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
 import { AudiModuleName, initAudiModules } from '@audi/data';
-import { AudiButton } from '../../enums';
+import { AudiButton } from '@audi/data';
 
 /*
   USAGE:

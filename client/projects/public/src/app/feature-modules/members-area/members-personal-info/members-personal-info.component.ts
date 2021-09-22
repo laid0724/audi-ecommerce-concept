@@ -9,18 +9,17 @@ import {
   formatServerTimeToClrDate,
   Gender,
   hasSameValueValidator,
-  isNullOrEmptyString,
   LanguageCode,
   LanguageStateService,
   PHONE_NUMBER_REGEX,
   SensitiveUserData,
   User,
+  NotificationService,
 } from '@audi/data';
 import { TranslocoService } from '@ngneat/transloco';
 import { Subject } from 'rxjs';
 import { filter, switchMap, take, takeUntil } from 'rxjs/operators';
 import { addressFormGroupBuilder } from '../../../component-modules/address-fg/address-fg.component';
-import { NotificationService } from '../../../component-modules/audi-ui/services/notification-service/notification.service';
 
 @Component({
   selector: 'audi-members-personal-info',

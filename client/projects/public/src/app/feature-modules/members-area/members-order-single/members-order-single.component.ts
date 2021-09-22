@@ -10,11 +10,11 @@ import {
   OrdersService,
   OrderStatus,
   Product,
+  NotificationService
 } from '@audi/data';
 import { TranslocoService } from '@ngneat/transloco';
 import { Subject, of } from 'rxjs';
 import { filter, switchMap, take, takeUntil } from 'rxjs/operators';
-import { NotificationService } from '../../../component-modules/audi-ui/services/notification-service/notification.service';
 import { isProductDiscounted } from '../../../helpers';
 
 @Component({

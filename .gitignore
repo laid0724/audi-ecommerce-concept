@@ -44,6 +44,8 @@ client/typings
 # .NET Files
 server/Audi/appsettings.Development.json
 server/Audi/appsettings.Development.Sqlite.json
+server/Audi/appsettings.LocalDocker.json
+server/Audi/appsettings.Production.json
 server/Audi/bin/*
 server/Audi/obj/*
 server/Audi/*.db*
@@ -51,3 +53,6 @@ server/Audi/*.db*
 # System Files
 **/.DS_STORE
 **/Thumbs.db
+
+gcp-ssh-key-file.ppk
+gcp-ssh-key-file.pem

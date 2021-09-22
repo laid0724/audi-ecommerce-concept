@@ -1,4 +1,5 @@
 export const environment = {
-  baseUrl: 'http://localhost:4200',
+  apiUrl: 'http://35.234.44.22/api',
+  baseUrl: '.', // for routing to asset folder
   production: true
 };

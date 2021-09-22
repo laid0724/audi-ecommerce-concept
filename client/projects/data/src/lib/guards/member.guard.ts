@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, Router, UrlTree } from '@angular/router';
 import { Roles } from '../enums';
 import { TranslocoService } from '@ngneat/transloco';
-import { NotificationService } from 'projects/public/src/app/component-modules/audi-ui/services/notification-service/notification.service';
+import { NotificationService } from '../services/notification-service/notification.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from '../models/user';

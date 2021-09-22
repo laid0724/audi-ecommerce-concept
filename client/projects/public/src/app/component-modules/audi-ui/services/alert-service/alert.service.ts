@@ -1,6 +1,6 @@
 import { Injectable, Type } from '@angular/core';
 import { Observable, ReplaySubject } from 'rxjs';
-import { AudiAlertStyle } from '../../enums';
+import { AudiAlertStyle } from '@audi/data';
 import { AlertServiceModule } from './alert-service.module';
 
 export interface AudiGlobalAlert {

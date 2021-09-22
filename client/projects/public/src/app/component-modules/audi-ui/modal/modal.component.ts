@@ -10,7 +10,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { AudiModuleName, initAudiModules, AudiComponents } from '@audi/data';
-import { AudiColor, AudiModalType } from '../enums';
+import { AudiColor, AudiModalType } from '@audi/data';
 import {
   AudiModalComponent,
   ModalService,

@@ -2,7 +2,19 @@
 
 A conceptual eCommerce site with a full-fledged CMS built for my favorite car brand: Audi.
 
-Stack: .NET Core 5, Postgresql, Angular 12, Tailwind CSS, Clarity, Audi UI.
+Stack: .NET Core 5, Postgresql, Angular 12, Tailwind CSS, Clarity, Audi UI. Deployed via Docker and GCP.
+
+[E-Commerce Site Demo](http://35.201.150.30:80/)
+
+![App Preview](public-preview-1.png)
+![App Preview](public-preview-2.png)
+![App Preview](public-preview-3.png)
+
+[Backend CMS Site Demo](http://35.201.150.30:80/sys/) (username: admin; pw: @udi4dminPw)
+
+![App Preview](sys-preview-1.png)
+![App Preview](sys-preview-2.png)
+![App Preview](sys-preview-3.png)
 
 ---
 
@@ -72,24 +84,88 @@ Run backend CMS project:
 
 ---
 
+### Local Docker Environment
+
+To run this project via docker, run the following commands in your terminal:
+
+1. In the root folder, run `docker-compose build` to build the docker image
+2. Then, after the image is built, run `docker-compose up -d` to launch the image in the background process
+
+Notes:
+
+- the pgsql db is run internally on 5432 port of the docker VM, exposed by docker on 5439 port
+- the dotnet api is run internally on 8800 port of the docker VM, exposed by docker on 6578 port
+  - API endpoint: localhost:6578/api
+  - Swagger endpoint: localhost:6578/swagger
+- the angular project is run internally on 80 port of the docker VM, exposed by docker on 8080 port
+  - public project: localhost:8080
+  - sys project: localhost:8080/sys/
+
+For documentation on how this is setup, see:
+
+- https://medium.com/geekculture/docker-net-core-5-0-angular-11-nginx-and-postgres-on-the-google-cloud-platform-pt-1-363160e34439
+
+---
+
 ### Deployment
 
-Currently, I am hosting this on heroku (which uses pgsql as its db), with the angular app being served via .net. You will need the heroku cli installed in your system.
+Notes:
 
-It is recommended that you generate your keys/password via https://passwordsgenerator.net/
+```
+This app is hosted via GCP with dockerized images of this solution through a pretty hacky way.
 
-1. Go to heroku and create a new app, and then under the resources tab, add the Heroku Postgres addon
-2. Go to settings tab, and under Config Vars, enter the key:value pair settings of your `appsetting.json`
-3. Login to heroku via its CLI and add heroku to your remote: `heroku git:remote -a {appName}`
-4. Set dotnetcore buildpack for the app: `heroku buildpacks:set https://github.com/jincod/dotnetcore-buildpack`
-5. Set your heroku environment to production: `heroku config:set ASPNETCORE_ENVIRONMENT=Production`
-6. Build production output of angular project: `cd client` and `npm run build` and commit them the output to the codebase (do not gitignore these, heroku needs the file!)
-7. Deploy dotnet project: `git push heroku master`
+Not sure what the best way to do this is as i couldn't figure out how to deploy the docker network created via "docker-compose build" all together.
 
-Once you've setup your heroku app, you can just repeat steps 6 & 7 for continuous deployment, unless you need to add further environment variables.
+Had to push these images one by one to GCP and I don't know how to contain them under one IP with different ports like they are setup in my "docker-compose build".
+```
 
-**heroku is fucking slow since the only hosting options are in US/Europe, i need a better free alternative that supports node.js / dotnet.
-it also fucking shuts down when it hasn't been accessed in a while, and boots up only when someone visits the site, which takes forever too.**
+To deploy, you will need the following GCP APIs enabled:
+
+1. VPC network
+2. Container Registry
+3. VM instances
+4. Kubernetes Engine
+
+Host your pgsql somewhere, I chose to use AWS RDS because I couldn't figure out how to connect to GCP's Cloud SQL via their auth proxy. (https://aws.amazon.com/getting-started/hands-on/create-connect-postgresql-db/)
+
+Get the outgoing IP and credentials of the cloud db, set it up in your `appsettings.Production.json`.
+
+Then, build and deploy your api image to gcloud first:
+
+1. `cd server && docker build --build-arg "ENV=PROD" -t audi-ecommerce-concept_production_api .`
+
+2. `docker tag audi-ecommerce-concept_production_api gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_api`
+
+3. `gcloud builds submit --tag gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_api`
+
+<!-- 3. `docker push gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_api` -->
+
+After the image is created in your container registry (https://console.cloud.google.com/gcr/), go to kubernetes (https://console.cloud.google.com/kubernetes/) and create a cluster, then go to workloads and deploy the image.
+
+\*Note: whenever you deploy a new version of an image, go to workloads and choose the right container.
+
+After it is deployed, expose the image (workload) and get its external IP.
+
+Then, go to External Addresses under VPC Network (https://console.cloud.google.com/networking/addresses/list) and make that IP static.
+
+Next, in your angular projects' `environment.production.ts` (both `sys` and and `public`), replace `apiUrl` with the IP of the api container's external ip.
+
+Then, build and push the angular image:
+
+1. `cd client && docker build --build-arg "ENV=PROD" -t audi-ecommerce-concept_production_web .`
+
+2. `docker tag audi-ecommerce-concept_production_web gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_web`
+
+3. `gcloud builds submit --tag gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_web --timeout=3600`
+
+<!-- 3. `docker -- push gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_web` -->
+
+follow the same steps listed about, e.g., deploy and expose the image's ip, and then it's up!
+
+References:
+
+1. https://towardsdatascience.com/how-to-deploy-docker-containers-to-the-cloud-b4d89b2c6c31
+2. https://medium.com/google-cloud/deploying-docker-images-to-google-cloud-using-kubernetes-engine-637af009e594
 
 ---
 
@@ -119,8 +195,3 @@ it also fucking shuts down when it hasn't been accessed in a while, and boots up
 - site-wide search
 - inbox thread between user and moderator
 - notification system
-
-#### Deployment
-
-- figure out how to deploy this fucking thing (.NET Core 5 Web Api, Angular 12 (2 sites), PostgreSQL DB)
-  - AWS? Azure? GCP?

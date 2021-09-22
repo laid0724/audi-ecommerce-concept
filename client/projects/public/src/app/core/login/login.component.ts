@@ -16,11 +16,11 @@ import {
   LanguageStateService,
   Roles,
   User,
+  NotificationService,
 } from '@audi/data';
 import { TranslocoService } from '@ngneat/transloco';
 import { of, Subject } from 'rxjs';
 import { filter, switchMap, take, takeUntil, tap } from 'rxjs/operators';
-import { NotificationService } from '../../component-modules/audi-ui/services/notification-service/notification.service';
 
 // TODO: RFX this and break apart into smaller component with single responsibility
 

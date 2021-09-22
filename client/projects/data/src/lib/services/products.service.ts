@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
   ProductCategory,
   ProductCategoryWithoutProducts,
@@ -11,6 +11,7 @@ import { ProductParams } from '../models/product-params';
 import { PaginatedResult } from '../models/pagination';
 import { ProductVariant } from '../models/product-variant';
 import { ProductVariantValue } from '../models/product-variant-value';
+import { ProductSku } from '../models/product-sku';
 import {
   getPaginatedResult,
   getPaginationHeaders,
@@ -26,7 +27,7 @@ import {
   switchMap,
   takeWhile,
 } from 'rxjs/operators';
-import { ProductSku } from '@audi/data';
+import { INJECT_API_ENDPOINT } from '@audi/data';
 
 export interface ProductCategoryUpsertRequest {
   id?: number;
@@ -68,7 +69,7 @@ export interface ProductSkuStockUpsertRequest {
   providedIn: 'root',
 })
 export class ProductsService {
-  private endpoint = '/api/products';
+  private endpoint = this.injectApiEndpoint + '/products';
 
   // TODO: implement caching with map
 
@@ -143,7 +144,10 @@ export class ProductsService {
     )
   );
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    @Inject(INJECT_API_ENDPOINT) private injectApiEndpoint: string,
+    private http: HttpClient
+  ) {}
 
   getAllProductCategories(): Observable<ProductCategoryWithoutProducts[]> {
     return this.http.get<ProductCategoryWithoutProducts[]>(

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input } from '@angular/core';
 import { initAudiModules, AudiModuleName, AudiComponents } from '@audi/data';
-import { AudiNavThemeClass } from '../enums';
+import { AudiNavThemeClass } from '@audi/data';
 import { AudiNavThemeInput } from '../nav/nav-bar/nav-bar.component';
 
 /*

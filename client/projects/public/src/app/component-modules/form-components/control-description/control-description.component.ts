@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { AudiControlType } from '../../audi-ui/enums';
+import { AudiControlType } from '@audi/data';
 
 @Component({
   selector: 'audi-control-description',

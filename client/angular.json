@@ -33,7 +33,7 @@
             "styles": [
               "node_modules/normalize.css/normalize.css",
               "node_modules/@clr/icons/clr-icons.min.css",
-              "node_modules/@clr/ui/clr-ui.min.css",
+              "projects/sys/src/clr-ui-fixed.css",
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/bootstrap/scss/bootstrap-grid.scss",
               "node_modules/bootstrap/scss/bootstrap-utilities.scss",
@@ -51,8 +51,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -75,6 +75,20 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "localdocker": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "projects/sys/src/environments/environment.ts",
+                  "with": "projects/sys/src/environments/environment.localdocker.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -86,8 +100,7 @@
               "browserTarget": "sys:build:production"
             },
             "development": {
-              "browserTarget": "sys:build:development",
-              "proxyConfig": "proxy.conf.js"
+              "browserTarget": "sys:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -190,8 +203,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -214,6 +227,20 @@
               "extractLicenses": false,
               "sourceMap": true,
               "namedChunks": true
+            },
+            "localdocker": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true,
+              "fileReplacements": [
+                {
+                  "replace": "projects/public/src/environments/environment.ts",
+                  "with": "projects/public/src/environments/environment.localdocker.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
@@ -225,8 +252,7 @@
               "browserTarget": "public:build:production"
             },
             "development": {
-              "browserTarget": "public:build:development",
-              "proxyConfig": "proxy.conf.js"
+              "browserTarget": "public:build:development"
             }
           },
           "defaultConfiguration": "development"

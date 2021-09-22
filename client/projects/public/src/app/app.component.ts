@@ -12,12 +12,12 @@ import {
   LanguageStateService,
   Roles,
   User,
+  NotificationService,
 } from '@audi/data';
 import { Observable, Subject } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { TranslocoService } from '@ngneat/transloco';
 import { AlertService } from './component-modules/audi-ui/services/alert-service/alert.service';
-import { NotificationService } from './component-modules/audi-ui/services/notification-service/notification.service';
 import { CookieConsentAlertComponent } from './component-modules/alerts/cookie-consent-alert/cookie-consent-alert.component';
 import { CookieService } from 'ngx-cookie-service';
 

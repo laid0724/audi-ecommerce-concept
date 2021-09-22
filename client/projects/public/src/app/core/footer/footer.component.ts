@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { LanguageCode, LanguageStateService } from '@audi/data';
+import {
+  LanguageCode,
+  LanguageStateService,
+  NotificationService,
+} from '@audi/data';
 import { TranslocoService } from '@ngneat/transloco';
-import { NotificationService } from '../../component-modules/audi-ui/services/notification-service/notification.service';
 
 @Component({
   selector: 'audi-footer',

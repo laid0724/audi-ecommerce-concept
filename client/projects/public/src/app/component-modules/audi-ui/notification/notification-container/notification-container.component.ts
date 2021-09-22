@@ -8,11 +8,13 @@ import {
 } from '@angular/core';
 import { isNullOrEmptyString } from '@audi/data';
 import { Subscription } from 'rxjs';
-import { AudiColor, AudiNotificationType } from '../../enums';
 import {
+  AudiColor,
+  AudiNotificationType,
   AudiNotification,
   NotificationService,
-} from '../../services/notification-service/notification.service';
+} from '@audi/data';
+
 import { NotificationInjectionMarkerDirective } from '../notification-injection-marker.directive';
 import { NotificationComponent } from '../notification/notification.component';
 

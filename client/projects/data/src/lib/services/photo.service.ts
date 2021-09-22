@@ -1,16 +1,17 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { CloudinaryPhotoCroppingMode } from '@audi/data';
+import { Inject, Injectable } from '@angular/core';
+import { CloudinaryPhotoCroppingMode } from '../enums';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
+import { INJECT_API_ENDPOINT } from '@audi/data';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PhotoService {
-  private endpoint = '/api/photos';
+  private endpoint = this.injectApiEndpoint + '/photos';
 
-  constructor(private http: HttpClient) {}
+  constructor(@Inject(INJECT_API_ENDPOINT) private injectApiEndpoint: string,private http: HttpClient) {}
 
   uploadPhoto(
     file: File,

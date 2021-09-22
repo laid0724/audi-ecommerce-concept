@@ -9,7 +9,7 @@ import {
   Renderer2,
 } from '@angular/core';
 import { AudiComponents, AudiModuleName, initAudiModules } from '@audi/data';
-import { AudiPopoverPlacement } from '../enums';
+import { AudiPopoverPlacement } from '@audi/data';
 import {
   AudiPopoverComponent,
   PopoverService,

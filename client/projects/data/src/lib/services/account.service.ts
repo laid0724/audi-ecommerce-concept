@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { take, tap } from 'rxjs/operators';
 import { Observable, ReplaySubject } from 'rxjs';
@@ -8,6 +8,7 @@ import { User } from '../models/user';
 import { CreditCard } from '../models/credit-card';
 import { Address } from '../models/address';
 import { SensitiveUserData } from '../models/sensitive-user-data';
+import { INJECT_API_ENDPOINT } from '@audi/data';
 
 interface UserCredential {
   userName: string;
@@ -71,12 +72,16 @@ interface JwtToken {
   providedIn: 'root',
 })
 export class AccountService {
-  private endpoint = '/api/account';
+  private endpoint = this.injectApiEndpoint + '/account';
 
   private currentUserSource = new ReplaySubject<User | null>(1); // only store one value from the stream when next is triggered
   currentUser$ = this.currentUserSource.asObservable();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(
+    @Inject(INJECT_API_ENDPOINT) private injectApiEndpoint: string,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   setCurrentUser(user: User | null): void {
     if (user != null) {

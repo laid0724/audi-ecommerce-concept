@@ -6,7 +6,7 @@ import { ButtonModule } from '../component-modules/audi-ui/button/button.module'
 import { IconModule } from '../component-modules/audi-ui/icon/icon.module';
 import { NavModule } from '../component-modules/audi-ui/nav/nav.module';
 import { LanguageSelectorModule } from './language-selector/language-selector.module';
-import { NotificationServiceModule } from '../component-modules/audi-ui/services/notification-service/notification-service.module';
+import { NotificationServiceModule } from '../../../../data/src/lib/services/notification-service/notification-service.module';
 import { TranslocoModule } from '@ngneat/transloco';
 import { FooterModule } from './footer/footer.module';
 import { FormComponentsModule } from '../component-modules/form-components/form-components.module';

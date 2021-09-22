@@ -1,5 +1,5 @@
 import { Component, ContentChildren, Input, QueryList } from '@angular/core';
-import { AudiControlType } from '../../audi-ui/enums';
+import { AudiControlType } from '@audi/data';
 import { ProjectAsFieldDirective } from '../project-as-field.directive';
 import { ProjectAsFieldsDirective } from '../project-as-fields.directive';
 

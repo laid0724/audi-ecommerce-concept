@@ -50,7 +50,7 @@ namespace Audi.Middleware
                 context.Response.ContentType = "application/json";
                 context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
-                var response = _env.IsDevelopment()
+                var response = _env.IsDevelopment() || _env.IsEnvironment("LocalDocker")
                     ? new ApiException(context.Response.StatusCode, ex.Message, ex.StackTrace?.ToString())
                     : new ApiException(context.Response.StatusCode, "Internal Server Error"); // in prod, dont show stack trace for security
 
