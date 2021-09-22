@@ -33,7 +33,7 @@
             "styles": [
               "node_modules/normalize.css/normalize.css",
               "node_modules/@clr/icons/clr-icons.min.css",
-              "projects/sys/src/clr-ui-fixed.css",
+              "projects/sys/src/clr-ui-fixed.min.css",
               "node_modules/ngx-toastr/toastr.css",
               "node_modules/bootstrap/scss/bootstrap-grid.scss",
               "node_modules/bootstrap/scss/bootstrap-utilities.scss",
