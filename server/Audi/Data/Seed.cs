@@ -36,13 +36,21 @@ namespace Audi.Data
             {
                 UserName = "admin",
                 FirstName = "Admin",
+                LastName = "Audi",
                 Email = "admin@audi.com.tw",
                 LockoutEnabled = true,
                 EmailConfirmed = true,
+                SecurityStamp = Guid.NewGuid().ToString()
             };
 
-            await userManager.CreateAsync(admin, adminDefaultPassword);
-            await userManager.AddToRolesAsync(admin, new[] { "Admin", "Moderator" });
+            var createAdmin = await userManager.CreateAsync(admin, adminDefaultPassword);
+
+            var createdAdmin = await userManager.FindByEmailAsync("admin@audi.com.tw");
+
+            if (createdAdmin != null)
+            {
+                await userManager.AddToRolesAsync(createdAdmin, new[] { "Admin", "Moderator" });
+            }
 
             var userDefaultPassword = config.GetValue<string>("SeederConfig:UserPassword");
             var userData = await System.IO.File.ReadAllTextAsync("Data/UserSeedData.json"); // read seed data

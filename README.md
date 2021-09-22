@@ -2,7 +2,19 @@
 
 A conceptual eCommerce site with a full-fledged CMS built for my favorite car brand: Audi.
 
-Stack: .NET Core 5, Postgresql, Angular 12, Tailwind CSS, Clarity, Audi UI.
+Stack: .NET Core 5, Postgresql, Angular 12, Tailwind CSS, Clarity, Audi UI. Deployed via Docker and GCP.
+
+[E-Commerce Site Demo](http://35.201.150.30:80/)
+
+![App Preview](public-preview-1.png)
+![App Preview](public-preview-2.png)
+![App Preview](public-preview-3.png)
+
+[Backend CMS Site Demo](http://35.201.150.30:80/sys/) (username: admin; pw: @udi4dminPw)
+
+![App Preview](sys-preview-1.png)
+![App Preview](sys-preview-2.png)
+![App Preview](sys-preview-3.png)
 
 ---
 
@@ -72,7 +84,7 @@ Run backend CMS project:
 
 ---
 
-### Docker
+### Local Docker Environment
 
 To run this project via docker, run the following commands in your terminal:
 
@@ -97,11 +109,63 @@ For documentation on how this is setup, see:
 
 ### Deployment
 
-GCP
+Notes:
 
-For documentation on how this works, see:
+```
+This app is hosted via GCP with dockerized images of this solution through a pretty hacky way.
 
-- - https://medium.com/geekculture/docker-net-core-5-0-angular-11-nginx-and-postgres-on-the-google-cloud-platform-pt-2-a8b32167e183
+Not sure what the best way to do this is as i couldn't figure out how to deploy the docker network created via "docker-compose build" all together.
+
+Had to push these images one by one to GCP and I don't know how to contain them under one IP with different ports like they are setup in my "docker-compose build".
+```
+
+To deploy, you will need the following GCP APIs enabled:
+
+1. VPC network
+2. Container Registry
+3. VM instances
+4. Kubernetes Engine
+
+Host your pgsql somewhere, I chose to use AWS RDS because I couldn't figure out how to connect to GCP's Cloud SQL via their auth proxy. (https://aws.amazon.com/getting-started/hands-on/create-connect-postgresql-db/)
+
+Get the outgoing IP and credentials of the cloud db, set it up in your `appsettings.Production.json`.
+
+Then, build and deploy your api image to gcloud first:
+
+1. `cd server && docker build --build-arg "ENV=PROD" -t audi-ecommerce-concept_production_api .`
+
+2. `docker tag audi-ecommerce-concept_production_api gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_api`
+
+3. `gcloud builds submit --tag gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_api`
+
+<!-- 3. `docker push gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_api` -->
+
+After the image is created in your container registry (https://console.cloud.google.com/gcr/), go to kubernetes (https://console.cloud.google.com/kubernetes/) and create a cluster, then go to workloads and deploy the image.
+
+\*Note: whenever you deploy a new version of an image, go to workloads and choose the right container.
+
+After it is deployed, expose the image (workload) and get its external IP.
+
+Then, go to External Addresses under VPC Network (https://console.cloud.google.com/networking/addresses/list) and make that IP static.
+
+Next, in your angular projects' `environment.production.ts` (both `sys` and and `public`), replace `apiUrl` with the IP of the api container's external ip.
+
+Then, build and push the angular image:
+
+1. `cd client && docker build --build-arg "ENV=PROD" -t audi-ecommerce-concept_production_web .`
+
+2. `docker tag audi-ecommerce-concept_production_web gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_web`
+
+3. `gcloud builds submit --tag gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_web --timeout=3600`
+
+<!-- 3. `docker -- push gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_web` -->
+
+follow the same steps listed about, e.g., deploy and expose the image's ip, and then it's up!
+
+References:
+
+1. https://towardsdatascience.com/how-to-deploy-docker-containers-to-the-cloud-b4d89b2c6c31
+2. https://medium.com/google-cloud/deploying-docker-images-to-google-cloud-using-kubernetes-engine-637af009e594
 
 ---
 

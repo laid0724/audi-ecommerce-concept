@@ -6,6 +6,8 @@ COPY ./Audi/Audi.csproj  ./Audi/Audi.csproj
 RUN dotnet restore Audi
 
 COPY . ./
+COPY docker-env.sh docker-env.sh
+RUN chmod u+x docker-env.sh && ./docker-env.sh
 RUN dotnet publish -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:5.0

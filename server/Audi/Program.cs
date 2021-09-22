@@ -37,7 +37,7 @@ namespace Audi
             var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             var isDevelopment = env == Environments.Development || env == "LocalDocker";
             var configuration = new ConfigurationBuilder()
-                .AddJsonFile($"{(isDevelopment ? "appsettings." + env + ".json" : "appsettings.json")}", optional: false, reloadOnChange: true)
+                .AddJsonFile($"{(isDevelopment ? "appsettings." + env + ".json" : "appsettings.Production.json")}", optional: false, reloadOnChange: true)
                 .AddEnvironmentVariables()
                 .Build();
 

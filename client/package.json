@@ -9,7 +9,7 @@
     "build": "npm run build:public && npm run build:sys",
     "build:data": "ng build --project=data",
     "build:public": "ng build --configuration production --project=public",
-    "build:sys": "ng build --configuration production --project=sys",
+    "build:sys": "ng build --configuration production --project=sys --base-href=/sys/",
     "build:public:docker": "ng build --configuration=localdocker --project=public",
     "build:sys:docker": "ng build --configuration=localdocker --project=sys --base-href=/sys/",
     "build:docker": "npm run build:public:docker && npm run build:sys:docker",

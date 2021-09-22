@@ -2,6 +2,5 @@
 .git
 .gitignore
 .editorconfig
-.gitignore
 *.zip
 *.md
