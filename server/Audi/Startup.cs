@@ -3,8 +3,6 @@ using Audi.Extensions;
 using Audi.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -84,19 +82,28 @@ namespace Audi
 
             app.UseRouting();
 
-            app.UseCors(policy =>
-                policy
-                    .AllowAnyHeader()
-                    .AllowAnyMethod()
-                    // .AllowCredentials()
-                    // FIXME: i really shouldn't do this,
-                    //        but can't figure out the right IP for production env once deployed on GCP, 
-                    //        and i am not about to shell out money for a domain for a side project.
-                    .AllowAnyOrigin()
-                    // .WithOrigins("http://localhost:4200")
-                    // .WithOrigins("http://localhost:4201")
-                    // .WithOrigins("http://localhost:8080")
-            );
+            if (env.IsDevelopment() || env.IsEnvironment("LocalDocker"))
+            {
+                app.UseCors(policy =>
+                    policy
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .AllowAnyOrigin()
+                );
+            }
+
+            if (env.IsProduction())
+            {
+                app.UseCors(policy =>
+                    policy
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .WithOrigins(_config.GetValue<string>("ProductionAngularUrl"))
+                );
+            }
+
 
             app.UseAuthentication();
             app.UseAuthorization();

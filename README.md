@@ -114,9 +114,9 @@ Notes:
 ```
 This app is hosted via GCP with dockerized images of this solution through a pretty hacky way.
 
-Not sure what the best way to do this is as i couldn't figure out how to deploy the docker network created via "docker-compose build" all together.
+Not sure what the best way to do this is as i couldn't figure out how to deploy the entire docker network created via "docker-compose build" together.
 
-Had to push these images one by one to GCP and I don't know how to contain them under one IP with different ports like they are setup in my "docker-compose build".
+I had to push these images one by one to GCP and I don't know how to contain them under one IP with different ports like they are setup in my "docker-compose build".
 ```
 
 To deploy, you will need the following GCP APIs enabled:
@@ -126,7 +126,7 @@ To deploy, you will need the following GCP APIs enabled:
 3. VM instances
 4. Kubernetes Engine
 
-Host your pgsql somewhere, I chose to use AWS RDS because I couldn't figure out how to connect to GCP's Cloud SQL via their auth proxy. (https://aws.amazon.com/getting-started/hands-on/create-connect-postgresql-db/)
+Also, you need to host your pgsql somewhere: I chose to use AWS RDS because I couldn't figure out how to connect to GCP's Cloud SQL via their auth proxy. (https://aws.amazon.com/getting-started/hands-on/create-connect-postgresql-db/)
 
 Get the outgoing IP and credentials of the cloud db, set it up in your `appsettings.Production.json`.
 
@@ -141,8 +141,6 @@ Then, build and deploy your api image to gcloud first:
 <!-- 3. `docker push gcr.io/<YOUR_PROJECT_ID>/audi-ecommerce-concept_production_api` -->
 
 After the image is created in your container registry (https://console.cloud.google.com/gcr/), go to kubernetes (https://console.cloud.google.com/kubernetes/) and create a cluster, then go to workloads and deploy the image.
-
-\*Note: whenever you deploy a new version of an image, go to workloads and make sure the container is using the latest image.
 
 After it is deployed, expose the image (workload) and get its external IP.
 
@@ -160,7 +158,11 @@ Then, build and push the angular image:
 
 <!-- 3. `docker -- push gcr.io/<YOUR_PROJECT_ID>/audi-ecommerce-concept_production_web` -->
 
-follow the same steps listed about, e.g., deploy and expose the image's ip, and then it's up!
+follow the same steps listed about, e.g., deploy and expose the image's ip, set it to static.
+
+lastly, you will need to go to your `appsettings.Production.json` of the dotnet project and set the config property `ProductionAngularUrl` to the angular deployment's IP, and then redeploy the api image. 
+
+See below on how to perform rolling updates on the kubernetes deployment when you push a new docker image.
 
 References:
 
@@ -168,12 +170,13 @@ References:
 2. https://medium.com/google-cloud/deploying-docker-images-to-google-cloud-using-kubernetes-engine-637af009e594
 
 On how to perform rolling updates on GCP Kubernetes, e.g., use new docker image on same workload/service, see:
+
 - https://cloud.google.com/kubernetes-engine/docs/how-to/updating-apps#console
-- basically, once the image is built, go to Container Registry and copy the latest image name, then go to kubernetes engine > workload tab > click into workload and click edit > in yaml tab, update the docker image tag under "containers" > click save
-  - remember to set "imagePullPolicy" to Always in the yaml file
-  - then, go to "KUBECTL" tab in your workload, which opens up the terminal, then:
+- basically, once the image is built, go to Container Registry and copy the latest image name, then go to Kubernetes Engine > Workload tab > click into Workload and click Edit > in yaml tab, update the docker image tag under "containers" > click save
+  - remember to set `imagePullPolicy` to `Always` in the yaml file so you don't need to manually restart your deployment.
+  - if you dont' want to do that, go to "KUBECTL" tab in your workload, which opens up the terminal, then:
     - `kubectl get deployment` to see all deployments
-    - `kubectl rollout restart deployment <deployment_name>` to restart your deployment
+    - `kubectl rollout restart deployment <deployment_name>` to restart your deployment (not necessary if you set `imagePullPolicy` to `Always`)
     - `kubectl rollout status deployment <deployment_name>` to see status of your deployment's rollout
     - `kubectl rollout history deployment <deployment_name>` to see rollout history of a deployment
 

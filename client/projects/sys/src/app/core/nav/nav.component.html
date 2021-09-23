@@ -19,7 +19,11 @@
           ></clr-icon>
         </button>
         <clr-dropdown-menu *clrIfOpen clrPosition="bottom-right">
-          <a clrDropdownItem (click)="changePwModalOpen = true">
+          <a
+            clrDropdownItem
+            (click)="changePwModalOpen = true"
+            *ngIf="!isMasterAdmin && !isProduction"
+          >
             更改密碼 Change Password</a
           >
           <a clrDropdownItem (click)="changePersonalInfoModalOpen = true">

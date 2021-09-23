@@ -10,6 +10,7 @@ import {
 } from '@audi/data';
 import { ClrForm, ClrLoadingState } from '@clr/angular';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'projects/public/src/environments/environment';
 import { Subject } from 'rxjs';
 import { filter, switchMap, take, takeUntil, tap } from 'rxjs/operators';
 
@@ -25,6 +26,8 @@ export class NavComponent implements OnInit, OnDestroy {
 
   user: User | null;
 
+  isProduction: boolean = environment.production;
+
   changePwForm: FormGroup;
   changePwModalOpen: boolean = false;
   changePwBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
@@ -34,6 +37,13 @@ export class NavComponent implements OnInit, OnDestroy {
   changePersonalInfoBtnState: ClrLoadingState = ClrLoadingState.DEFAULT;
 
   destroy$ = new Subject<boolean>();
+
+  get isMasterAdmin(): boolean {
+    if (this.user !== null) {
+      return this.user.email === 'admin@audi.com.tw';
+    }
+    return false;
+  }
 
   constructor(
     private accountService: AccountService,
