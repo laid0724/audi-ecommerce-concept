@@ -167,6 +167,16 @@ References:
 1. https://towardsdatascience.com/how-to-deploy-docker-containers-to-the-cloud-b4d89b2c6c31
 2. https://medium.com/google-cloud/deploying-docker-images-to-google-cloud-using-kubernetes-engine-637af009e594
 
+On how to perform rolling updates on GCP Kubernetes, e.g., use new docker image on same workload/service, see:
+- https://cloud.google.com/kubernetes-engine/docs/how-to/updating-apps#console
+- basically, once the image is built, go to Container Registry and copy the latest image name, then go to kubernetes engine > workload tab > click into workload and click edit > in yaml tab, update the docker image tag under "containers" > click save
+  - remember to set "imagePullPolicy" to Always in the yaml file
+  - then, go to "KUBECTL" tab in your workload, which opens up the terminal, then:
+    - `kubectl get deployment` to see all deployments
+    - `kubectl rollout restart deployment <deployment_name>` to restart your deployment
+    - `kubectl rollout status deployment <deployment_name>` to see status of your deployment's rollout
+    - `kubectl rollout history deployment <deployment_name>` to see rollout history of a deployment
+
 ---
 
 ##### Features to be implemented / Bugs to be fixed, in no particular order:

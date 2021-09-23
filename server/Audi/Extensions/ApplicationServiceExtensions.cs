@@ -19,6 +19,7 @@ namespace Audi.Extensions
         {
 
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+            services.AddSingleton<IConfiguration>(config); // so you can inject config as DI in any class via IConfiguration config
 
             services.AddScoped<IUnitOfWork, UnitOfWork>(); // this will inject all repositories
             services.AddScoped<ITokenService, TokenService>();

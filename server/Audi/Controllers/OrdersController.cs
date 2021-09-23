@@ -11,11 +11,13 @@ using Audi.Interfaces;
 using Audi.Models;
 using Audi.Services.Mailer;
 using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Audi.Controllers
@@ -23,6 +25,8 @@ namespace Audi.Controllers
     public class OrdersController : BaseApiController
     {
         private readonly ILogger<OrdersController> _logger;
+        private readonly bool _isProduction;
+        private readonly string _ProductionAngularUrl;
         private readonly IEmailService _emailService;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
@@ -35,7 +39,9 @@ namespace Audi.Controllers
             IMapper mapper,
             UserManager<AppUser> userManager,
             IEmailService emailService,
-            IHttpContextAccessor httpContextAccessor
+            IHttpContextAccessor httpContextAccessor,
+            IWebHostEnvironment env,
+            IConfiguration config
         )
         {
             _mapper = mapper;
@@ -46,6 +52,9 @@ namespace Audi.Controllers
 
             var request = httpContextAccessor.HttpContext.Request;
             _domain = $"{request.Scheme}://{request.Host}";
+
+            _isProduction = env.IsProduction();
+            _ProductionAngularUrl = config.GetValue<string>("ProductionAngularUrl");
         }
 
         public class Requests
@@ -184,7 +193,9 @@ namespace Audi.Controllers
 
             var jsEncryptedOrderId = btoa(createdOrder.Id.ToString());
 
-            var orderSuccessUrl = $"{_domain}/{language}/checkout/success?order={jsEncryptedOrderId}";
+            var orderSuccessUrl = _isProduction
+                ? $"{_ProductionAngularUrl}/{language}/checkout/success?order={jsEncryptedOrderId}"
+                : $"{_domain}/{language}/checkout/success?order={jsEncryptedOrderId}";
 
             // TODO: create a fancy email template for this
 

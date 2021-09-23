@@ -17,12 +17,17 @@ using Microsoft.AspNetCore.Authorization;
 using Audi.Models;
 using System;
 using Audi.Extensions;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Audi.Controllers
 {
     public class AccountController : BaseApiController
     {
         private readonly ILogger<AccountController> _logger;
+        private readonly bool _isProduction;
+        private readonly string _ProductionAngularUrl;
         private readonly ITokenService _tokenService;
         private readonly IEmailService _emailService;
         private readonly IPhotoService _photoService;
@@ -41,7 +46,9 @@ namespace Audi.Controllers
             IUnitOfWork unitOfWork,
             IHttpContextAccessor httpContextAccessor,
             IMapper mapper,
-            ILogger<AccountController> logger
+            ILogger<AccountController> logger,
+            IWebHostEnvironment env,
+            IConfiguration config
         )
         {
             _signInManager = signInManager;
@@ -55,6 +62,9 @@ namespace Audi.Controllers
 
             var request = httpContextAccessor.HttpContext.Request;
             _domain = $"{request.Scheme}://{request.Host}";
+
+            _isProduction = env.IsProduction();
+            _ProductionAngularUrl = config.GetValue<string>("ProductionAngularUrl");
         }
 
         public class Requests
@@ -615,12 +625,15 @@ namespace Audi.Controllers
 
             if (isAdmin || isModerator)
             {
-                resetPwUrl = $"{_domain}/sys/reset-password?userId={user.Id}&token={tokenEncoded}";
+                resetPwUrl = _isProduction
+                    ? $"{_ProductionAngularUrl}/sys/reset-password?userId={user.Id}&token={tokenEncoded}"
+                    : $"{_domain}/sys/reset-password?userId={user.Id}&token={tokenEncoded}";
             }
             else
             {
-                // TODO: detect language (add language header to argument) and send versions accordingly
-                resetPwUrl = $"{_domain}/reset-password?userId={user.Id}&token={tokenEncoded}";
+                resetPwUrl = _isProduction
+                    ? $"{_ProductionAngularUrl}/reset-password?userId={user.Id}&token={tokenEncoded}"
+                    : $"{_domain}/reset-password?userId={user.Id}&token={tokenEncoded}";
             }
 
             string emailContent = $"請點擊<a href='{resetPwUrl}'>此連結</a>重新設定您的密碼。";
@@ -650,14 +663,101 @@ namespace Audi.Controllers
 
             string verificationUrl = "";
 
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+            Console.WriteLine(_isProduction);
+
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+            Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
+
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+            Console.WriteLine(_ProductionAngularUrl);
+
             if (isAdmin || isModerator)
             {
-                verificationUrl = $"{_domain}/sys/confirm-email?userId={user.Id}&token={tokenEncoded}";
+                verificationUrl = _isProduction
+                    ? $"{_ProductionAngularUrl}/sys/confirm-email?userId={user.Id}&token={tokenEncoded}"
+                    : $"{_domain}/sys/confirm-email?userId={user.Id}&token={tokenEncoded}";
             }
             else
             {
-                // TODO: detect language (add language header to argument) and send versions accordingly
-                verificationUrl = $"{_domain}/confirm-email?userId={user.Id}&token={tokenEncoded}";
+                verificationUrl = _isProduction
+                    ? $"{_ProductionAngularUrl}/confirm-email?userId={user.Id}&token={tokenEncoded}"
+                    : $"{_domain}/confirm-email?userId={user.Id}&token={tokenEncoded}";
             }
 
             string emailContent = $"謝謝您註冊成為Audi會員，請點擊<a href='{verificationUrl}'>此連結</a>完成會員帳號註冊。";
