@@ -134,15 +134,15 @@ Then, build and deploy your api image to gcloud first:
 
 1. `cd server && docker build --build-arg "ENV=PROD" -t audi-ecommerce-concept_production_api .`
 
-2. `docker tag audi-ecommerce-concept_production_api gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_api`
+2. `docker tag audi-ecommerce-concept_production_api gcr.io/<YOUR_PROJECT_ID>/audi-ecommerce-concept_production_api`
 
-3. `gcloud builds submit --tag gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_api`
+3. `gcloud builds submit --tag gcr.io/<YOUR_PROJECT_ID>/audi-ecommerce-concept_production_api`
 
-<!-- 3. `docker push gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_api` -->
+<!-- 3. `docker push gcr.io/<YOUR_PROJECT_ID>/audi-ecommerce-concept_production_api` -->
 
 After the image is created in your container registry (https://console.cloud.google.com/gcr/), go to kubernetes (https://console.cloud.google.com/kubernetes/) and create a cluster, then go to workloads and deploy the image.
 
-\*Note: whenever you deploy a new version of an image, go to workloads and choose the right container.
+\*Note: whenever you deploy a new version of an image, go to workloads and make sure the container is using the latest image.
 
 After it is deployed, expose the image (workload) and get its external IP.
 
@@ -154,11 +154,11 @@ Then, build and push the angular image:
 
 1. `cd client && docker build --build-arg "ENV=PROD" -t audi-ecommerce-concept_production_web .`
 
-2. `docker tag audi-ecommerce-concept_production_web gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_web`
+2. `docker tag audi-ecommerce-concept_production_web gcr.io/<YOUR_PROJECT_ID>/audi-ecommerce-concept_production_web`
 
-3. `gcloud builds submit --tag gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_web --timeout=3600`
+3. `gcloud builds submit --tag gcr.io/<YOUR_PROJECT_ID>/audi-ecommerce-concept_production_web --timeout=3600`
 
-<!-- 3. `docker -- push gcr.io/audi-ecommerce-concept/audi-ecommerce-concept_production_web` -->
+<!-- 3. `docker -- push gcr.io/<YOUR_PROJECT_ID>/audi-ecommerce-concept_production_web` -->
 
 follow the same steps listed about, e.g., deploy and expose the image's ip, and then it's up!
 
