@@ -130,6 +130,10 @@ Also, you need to host your pgsql somewhere: I chose to use AWS RDS because I co
 
 Get the outgoing IP and credentials of the cloud db, set it up in your `appsettings.Production.json`.
 
+Login to docker with `docker login`
+
+Login to gcloud with `gcloud auth login`
+
 Then, build and deploy your api image to gcloud first:
 
 1. `cd server && docker build --build-arg "ENV=PROD" -t audi-ecommerce-concept_production_api .`
