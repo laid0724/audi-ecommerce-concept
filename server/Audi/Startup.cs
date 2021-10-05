@@ -88,7 +88,6 @@ namespace Audi
                     policy
                         .AllowAnyHeader()
                         .AllowAnyMethod()
-                        .AllowCredentials()
                         .AllowAnyOrigin()
                 );
             }
