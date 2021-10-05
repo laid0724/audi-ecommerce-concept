@@ -5,12 +5,12 @@
     <div class="aui-grid">
       <div class="aui-cell aui-cell--12">
         <div
-          class="grid grid-rows-none grid-cols-12"
+          class="grid grid-rows-none grid-cols-12 gap-4"
           *ngFor="let row of wysiwygGrid?.rows"
         >
           <div
             *ngFor="let column of row?.columns"
-            class="p-4 col-span-12"
+            class="col-span-12"
             [ngClass]="{
               'md:col-span-4': column?.width === 4,
               'md:col-span-6': column?.width === 6,
