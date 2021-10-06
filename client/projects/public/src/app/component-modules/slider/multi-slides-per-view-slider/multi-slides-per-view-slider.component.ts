@@ -8,6 +8,10 @@ import {
 } from '@angular/core';
 import { ProjectAsTemplateDirective } from '@audi/data';
 import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { v4 as uuid } from 'uuid';
 
 // Documentation:
 // https://swiperjs.com/angular
@@ -15,9 +19,7 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 // https://swiperjs.com/swiper-api
 
 // import Swiper core and required modules
-import SwiperCore, { Navigation, Autoplay } from 'swiper/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import SwiperCore, { Navigation, Autoplay, Swiper } from 'swiper/core';
 
 // install Swiper modules
 SwiperCore.use([Navigation, Autoplay]);
@@ -70,16 +72,13 @@ export class MultiSlidesPerViewSliderComponent implements OnInit, OnDestroy {
   @Input() slidesPerView: number = 3;
   @Input() spaceBetween: number = 10;
 
-  // breakpoints = {
-  //   0: {
-  //     slidesPerView: 1,
-  //     spaceBetween: 10,
-  //   },
-  //   640: {
-  //     slidesPerView: 3,
-  //     spaceBetween: 30,
-  //   },
-  // };
+  /*
+    HACK
+    by adding unique class to swiper navigations, swiping one slider
+    wont affect other sliders on the same page.
+  */
+  nextArrowUniqueClass: string = uuid();
+  prevArrowUniqueClass: string = uuid();
 
   isDesktop: boolean;
 

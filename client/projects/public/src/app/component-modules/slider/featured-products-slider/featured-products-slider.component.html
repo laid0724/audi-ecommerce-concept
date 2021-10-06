@@ -2,8 +2,8 @@
   #swiper
   [effect]="fadeEffect ? 'fade' : undefined"
   [navigation]="{
-    prevEl: '.previous-arrow',
-    nextEl: '.next-arrow'
+    prevEl: '.featured-product-previous-arrow',
+    nextEl: '.featured-product-next-arrow'
   }"
   [slidesPerView]="1"
   [autoHeight]="true"
@@ -69,7 +69,7 @@
             *ngIf="validProducts.length > 1"
             class="arrows-wrapper hidden md:flex flex-row"
           >
-            <div #prevArrow class="previous-arrow background-color-grey-2">
+            <div #prevArrow class="featured-product-previous-arrow background-color-grey-2">
               <audi-button
                 type="icon-large-not-round"
                 [isDisabled]="
@@ -79,7 +79,7 @@
                 <audi-icon size="large" iconName="back"></audi-icon>
               </audi-button>
             </div>
-            <div #nextArrow class="next-arrow background-color-warm-silver">
+            <div #nextArrow class="featured-product-next-arrow background-color-warm-silver">
               <audi-button
                 type="icon-large-not-round"
                 [isDisabled]="

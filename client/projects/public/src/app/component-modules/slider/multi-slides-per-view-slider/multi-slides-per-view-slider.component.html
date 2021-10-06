@@ -15,13 +15,12 @@
   [allowTouchMove]="true"
   [autoplay]="autoplay ? { delay: autoplayTransitionTime } : false"
 >
-  <!-- [breakpoints]="breakpoints" -->
   <ng-template swiperSlide *ngFor="let slide of slides">
     <ng-container [ngTemplateOutlet]="slide.template"></ng-container>
   </ng-template>
 
   <span slot="container-start">
-    <div #prevArrow class="previous-arrow">
+    <div #prevArrow class="previous-arrow {{ prevArrowUniqueClass }}">
       <audi-icon
         class="clickable"
         [ngClass]="{
@@ -33,7 +32,7 @@
       ></audi-icon>
     </div>
 
-    <div #nextArrow class="next-arrow">
+    <div #nextArrow class="next-arrow {{ nextArrowUniqueClass }}">
       <audi-icon
         class="clickable"
         [ngClass]="{
