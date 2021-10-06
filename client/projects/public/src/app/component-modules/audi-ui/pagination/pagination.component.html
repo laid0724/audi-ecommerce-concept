@@ -100,7 +100,7 @@
     </li>
 
     <!-- Ellipsis -->
-    <li class="aui-pagination__item">
+    <li class="aui-pagination__item" *ngIf="pagination.totalPages > 2">
       <span class="aui-pagination__ellipsis">…</span>
     </li>
 
@@ -119,7 +119,7 @@
     </li>
 
     <!-- Ellipsis -->
-    <li class="aui-pagination__item">
+    <li class="aui-pagination__item" *ngIf="pagination.totalPages > 2">
       <span class="aui-pagination__ellipsis">…</span>
     </li>
 
