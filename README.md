@@ -4,13 +4,13 @@ A conceptual eCommerce site with a full-fledged CMS built for my favorite car br
 
 Stack: .NET Core 5, Postgresql, Angular 12, Tailwind CSS, Clarity, Audi UI. Deployed via Docker and GCP.
 
-[E-Commerce Site Demo](http://35.201.150.30:80/)
+<!-- [E-Commerce Site Demo](http://35.201.150.30:80/) -->
 
 ![App Preview](public-preview-1.png)
 ![App Preview](public-preview-2.png)
 ![App Preview](public-preview-3.png)
 
-[Backend CMS Site Demo](http://35.201.150.30:80/sys/) (username: admin; pw: @udi4dminPw)
+<!-- [Backend CMS Site Demo](http://35.201.150.30:80/sys/) (username: admin; pw: @udi4dminPw) -->
 
 ![App Preview](sys-preview-1.png)
 ![App Preview](sys-preview-2.png)
